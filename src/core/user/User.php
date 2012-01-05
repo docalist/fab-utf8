@@ -2,7 +2,7 @@
 /**
  * @package     fab
  * @subpackage  user
- * @author 		Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author 		Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: User.php 1172 2010-07-02 15:04:49Z daniel.menard.bdsp $
  */
 
@@ -21,9 +21,9 @@ class User
 
 
     /**
-     * Teste si l'utilisateur est connecté (authentifié)
+     * Teste si l'utilisateur est connectÃ© (authentifiÃ©)
      *
-     * @return boolean true si l'utilisateur est connecté, false s'il
+     * @return boolean true si l'utilisateur est connectÃ©, false s'il
      * s'agit d'un visiteur anonyme
      */
     public static function isConnected()
@@ -32,7 +32,7 @@ class User
     }
 
     /**
-     * Vérifie que l'utilisateur est connecté et l'envoie sur la page de
+     * VÃ©rifie que l'utilisateur est connectÃ© et l'envoie sur la page de
      * connexion si ce n'est pas le cas.
      */
     public static function checkConnected()
@@ -50,9 +50,9 @@ class User
     }
 
     /**
-     * Teste si l'utilisateur dispose des droits indiqués.
+     * Teste si l'utilisateur dispose des droits indiquÃ©s.
      *
-     * @param string $level le ou les droit(s) à tester
+     * @param string $level le ou les droit(s) Ã  tester
      * @return boolean true si l'utilisateur dispose du droit requis,
      * false sinon
      */
@@ -62,10 +62,10 @@ class User
     }
 
     /**
-     * Vérifie que l'utilisateur dispose des droits indiqués et génère une
+     * VÃ©rifie que l'utilisateur dispose des droits indiquÃ©s et gÃ©nÃ¨re une
      * erreur 'access denied' sinon.
      *
-     * @param string $level le droit à tester
+     * @param string $level le droit Ã  tester
      */
     public static function checkAccess($rights)
     {
@@ -73,7 +73,7 @@ class User
     }
 
     /**
-     * Génère une erreur 'access denied'
+     * GÃ©nÃ¨re une erreur 'access denied'
      */
     public static function accessDenied()
     {
@@ -93,9 +93,9 @@ class User
     }
 
     /**
-     * Accorde des droits supplémentaire à l'utilisateur.
+     * Accorde des droits supplÃ©mentaire Ã  l'utilisateur.
      *
-     * @param string $rights les droits à accorder
+     * @param string $rights les droits Ã  accorder
      */
     public static function grantAccess($rights)
     {

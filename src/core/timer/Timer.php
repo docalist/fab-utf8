@@ -2,32 +2,32 @@
 /**
  * @package     fab
  * @subpackage  timer
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: Timer.php 922 2008-11-27 16:28:47Z daniel.menard.bdsp $
  */
 
 /**
- * Chonométrage du temps d'exécution du code.
+ * ChonomÃ©trage du temps d'exÃ©cution du code.
  * 
- * Timer est une classe statique permettant de mesurer le temps d'exécution de
+ * Timer est une classe statique permettant de mesurer le temps d'exÃ©cution de
  * certaines sections de code.
  * 
- * Les sections possèdent un nom et sont définies par des appels aux méthodes 
+ * Les sections possÃ¨dent un nom et sont dÃ©finies par des appels aux mÃ©thodes 
  * {@link enter() Timer::enter()} et {@link leave() Timer::leave()}.
  *  
  * Remarque : 
  * Si vous n'indiquez pas de nom pour une section, Timer attribuera 
- * automatiquement le nom de la fonction ou de la méthode dans laquelle vous 
- * êtes.
+ * automatiquement le nom de la fonction ou de la mÃ©thode dans laquelle vous 
+ * Ãªtes.
  * 
- * Les sections peuvent être imbriquées les unes dans les autres à l'infini. 
- * Cela permet d'obtenir plus de détails sur la manière dont une section de code
- * s'exécute.
+ * Les sections peuvent Ãªtre imbriquÃ©es les unes dans les autres Ã  l'infini. 
+ * Cela permet d'obtenir plus de dÃ©tails sur la maniÃ¨re dont une section de code
+ * s'exÃ©cute.
  * 
  * Important :
- * Les appels à {@link enter() Timer::enter()} et {@link leave() Timer::leave()}
+ * Les appels Ã  {@link enter() Timer::enter()} et {@link leave() Timer::leave()}
  * doivent toujours fonctionner par paire : si vous ouvrez une section mais 
- * que vous oubliez de la fermer (ou que vous fites l'inverse), les résultats 
+ * que vous oubliez de la fermer (ou que vous fites l'inverse), les rÃ©sultats 
  * obtenus n'auront aucun sens. 
  * 
  * Exemple d'utilisation :
@@ -39,7 +39,7 @@
  *             ...
  *         Timer::leave();
  *         ...
- *         Timer::enter('Exécution');
+ *         Timer::enter('ExÃ©cution');
  *             ...
  *         Timer::leave();
  *
@@ -53,30 +53,30 @@
  * }
  * </code>
  * 
- * Lorsque l'application est terminée, il suffit d'appeller 
- * {@link printOut() Timer::printOut()} pour afficher le temps d'exécution de 
- * toutes les sections qui ont été chronométrées.
+ * Lorsque l'application est terminÃ©e, il suffit d'appeller 
+ * {@link printOut() Timer::printOut()} pour afficher le temps d'exÃ©cution de 
+ * toutes les sections qui ont Ã©tÃ© chronomÃ©trÃ©es.
  * 
  * L'affichage obtenu a la forme suivante :
  * <code>
  * - Total : 180 ms (100%)
  *     - databaseRequest() : 100 ms (55%)
  *         - Ouverture de la base : 15 ms (8 %)
- *         - Exécution : 80 ms (44%)
+ *         - ExÃ©cution : 80 ms (44%)
  *         - Ouverture de la base : 2 ms (1 %)
  *     - Ecriture des logs : 40 ms (22%)
  * </code>
  * 
  * Pour chaque section, {@link printOut() Timer::printOut()} affiche :
  * - le nom de la section,
- * - le durée d'exécution de la section,
- * - un pourcentage représentant le rapport entre le temps d'exécution de cette
- *   section et le temps total d'exécution indiqué en première ligne.
+ * - le durÃ©e d'exÃ©cution de la section,
+ * - un pourcentage reprÃ©sentant le rapport entre le temps d'exÃ©cution de cette
+ *   section et le temps total d'exÃ©cution indiquÃ© en premiÃ¨re ligne.
  * 
  * Remarque :
- * Si vous additionnez les temps d'exécution ou les pourcentages, vous 
+ * Si vous additionnez les temps d'exÃ©cution ou les pourcentages, vous 
  * n'obtiendrez pas le total. C'est normal, car les sections ne mesurent que le 
- * temps écoulé entre les appels à {@link enter() Timer::enter()} et à 
+ * temps Ã©coulÃ© entre les appels Ã  {@link enter() Timer::enter()} et Ã  
  * {@link leave() Timer::leave()}, pas ce qui se passe ailleurs.
  * 
  * @package     fab
@@ -92,17 +92,17 @@ abstract class Timer
     private static $current=null;
     
     /**
-     * Réinitialise la classe Timer.
+     * RÃ©initialise la classe Timer.
      * 
-     * Cette méthode supprime toutes les sections en cours et réinitialise la
-     * classe Timer comme elle était au démarrage de l'application.
+     * Cette mÃ©thode supprime toutes les sections en cours et rÃ©initialise la
+     * classe Timer comme elle Ã©tait au dÃ©marrage de l'application.
      * 
-     * Il est peu probable que vous ayez à utiliser cette méthode dans votre
+     * Il est peu probable que vous ayez Ã  utiliser cette mÃ©thode dans votre
      * application.
      * 
-     * @param timestamp $time par défaut, l'heure de début du timer est
-     * l'heure en cours. Time permet de faire démarrer la section à une heure 
-     * antérieure.
+     * @param timestamp $time par dÃ©faut, l'heure de dÃ©but du timer est
+     * l'heure en cours. Time permet de faire dÃ©marrer la section Ã  une heure 
+     * antÃ©rieure.
      */
     public static function reset($time=null)
     {
@@ -112,11 +112,11 @@ abstract class Timer
     /**
      * Commence une nouvelle section.
      *
-     * @param string $name le nom de la section qui démarre. Si vous n'indiquez
-     * pas de nom de section, le nom de la méthode appellante est utilisé.
-     * @param timestamp $time par défaut, l'heure de début de la section est
-     * l'heure en cours. Time permet de faire démarrer la section à une heure 
-     * antérieure.
+     * @param string $name le nom de la section qui dÃ©marre. Si vous n'indiquez
+     * pas de nom de section, le nom de la mÃ©thode appellante est utilisÃ©.
+     * @param timestamp $time par dÃ©faut, l'heure de dÃ©but de la section est
+     * l'heure en cours. Time permet de faire dÃ©marrer la section Ã  une heure 
+     * antÃ©rieure.
      */
     public static function enter($name=null, $time=null)
     {
@@ -126,9 +126,9 @@ abstract class Timer
     /**
      * Termine la section en cours.
      * 
-     * @param string $name (optionnel) nom éventuel de la section. Si vous 
-     * indiquez un nom, il doit s'agir exactement du même nom que celui utilisé 
-     * lors de l'appel à start (utile pour résoudre une erreur de séquençage).
+     * @param string $name (optionnel) nom Ã©ventuel de la section. Si vous 
+     * indiquez un nom, il doit s'agir exactement du mÃªme nom que celui utilisÃ© 
+     * lors de l'appel Ã  start (utile pour rÃ©soudre une erreur de sÃ©quenÃ§age).
      */
     public static function leave($name=null)
     {
@@ -139,9 +139,9 @@ abstract class Timer
     /**
      * Retourne la section en cours.
      * 
-     * Lorsque toutes les sections ont été fermées (typiquement, à la fin du
-     * programme), la méthode get() retourne le timer global utilisé pour 
-     * chronométrer l'application.
+     * Lorsque toutes les sections ont Ã©tÃ© fermÃ©es (typiquement, Ã  la fin du
+     * programme), la mÃ©thode get() retourne le timer global utilisÃ© pour 
+     * chronomÃ©trer l'application.
      *
      * @return TimerSection la section en cours.
      */
@@ -153,9 +153,9 @@ abstract class Timer
     }
     
     /**
-     * Affiche le temps d'exécution de toutes les sections enregistrées.
+     * Affiche le temps d'exÃ©cution de toutes les sections enregistrÃ©es.
      * 
-     * @param bool $html true pour générer une sortie html, false pour une
+     * @param bool $html true pour gÃ©nÃ©rer une sortie html, false pour une
      * sortie texte brute.
      */
     public static function printOut($html=true)
@@ -178,14 +178,14 @@ abstract class Timer
 Timer::reset();
 
 /**
- * Mesure le temps d'exécution d'une section de code.
+ * Mesure le temps d'exÃ©cution d'une section de code.
  * 
- * TimerSection est la classe utilisée par {@link Timer} pour mesurer le temps
- * d'exécution.
+ * TimerSection est la classe utilisÃ©e par {@link Timer} pour mesurer le temps
+ * d'exÃ©cution.
  *
- * Chaque instance de cette classe représente le temps d'exécution d'une section
- * unique et possède un nom ({@link getName()}), une durée d'exécution 
- * ({@link getElapsedTime()}) et éventuellement des sous-sections 
+ * Chaque instance de cette classe reprÃ©sente le temps d'exÃ©cution d'une section
+ * unique et possÃ¨de un nom ({@link getName()}), une durÃ©e d'exÃ©cution 
+ * ({@link getElapsedTime()}) et Ã©ventuellement des sous-sections 
  * ({@link getSections()}).
  *   
  * @package     fab
@@ -208,21 +208,21 @@ final class TimerSection extends Timer
     private $name=null;
     
     /**
-     * L'heure de début d'exécution
+     * L'heure de dÃ©but d'exÃ©cution
      *
      * @var timestamp
      */
     private $startTime=null;
     
     /**
-     * L'heure de fin d'exécution
+     * L'heure de fin d'exÃ©cution
      *
      * @var timestamp
      */
     private $endTime=null;
     
     /**
-     * Les sous-sections éventuelles
+     * Les sous-sections Ã©ventuelles
      *
      * @var array
      */
@@ -233,8 +233,8 @@ final class TimerSection extends Timer
      *
      * @param string $name le nom de la section.
      * @param TimerSection $parent la section parente.
-     * @param timestamp $time le timestamp de début de la section (optionnel, 
-     * microtime() sera utilisé si le paramètre n'est pas fourni).
+     * @param timestamp $time le timestamp de dÃ©but de la section (optionnel, 
+     * microtime() sera utilisÃ© si le paramÃ¨tre n'est pas fourni).
      */
     protected function __construct($name, $parent=null, $time=null)
     {
@@ -254,18 +254,18 @@ final class TimerSection extends Timer
     }
     
     /**
-     * Retourne la durée d'exécution de la section.
+     * Retourne la durÃ©e d'exÃ©cution de la section.
      * 
-     * Par défaut, la méthode retourne le temps écoulé entre l'appel à 
-     * {@link Timer::start()} et l'appel à {@link Timer::leave()}.
+     * Par dÃ©faut, la mÃ©thode retourne le temps Ã©coulÃ© entre l'appel Ã  
+     * {@link Timer::start()} et l'appel Ã  {@link Timer::leave()}.
      * 
-     * Si la section n'est pas terminée (i.e. {@link Timer::leave()} n'a 
-     * pas encore été appellée), la méthode retourne le temps écoulé entre 
-     * l'appel à {@link Timer::start()} et maintenant. 
+     * Si la section n'est pas terminÃ©e (i.e. {@link Timer::leave()} n'a 
+     * pas encore Ã©tÃ© appellÃ©e), la mÃ©thode retourne le temps Ã©coulÃ© entre 
+     * l'appel Ã  {@link Timer::start()} et maintenant. 
      *
-     * @return timestamp le temps écoulé (sous la forme d'un réel contenant
-     * les secondes dans la partie entière et les en microsecondes dans sa 
-     * partie décimale).
+     * @return timestamp le temps Ã©coulÃ© (sous la forme d'un rÃ©el contenant
+     * les secondes dans la partie entiÃ¨re et les en microsecondes dans sa 
+     * partie dÃ©cimale).
      */
     public function getElapsedTime()
     {
@@ -295,13 +295,13 @@ final class TimerSection extends Timer
     }
     
     /**
-     * Démarre une nouvelle sous-section.
+     * DÃ©marre une nouvelle sous-section.
      *
      * @param string $name le nom de la sous-section
-     * @param timestamp $time par défaut, l'heure de début de la section est
-     * l'heure en cours. Time permet de faire démarrer la section à une heure 
-     * antérieure.
-     * @return TimerSection la sous-section créée.
+     * @param timestamp $time par dÃ©faut, l'heure de dÃ©but de la section est
+     * l'heure en cours. Time permet de faire dÃ©marrer la section Ã  une heure 
+     * antÃ©rieure.
+     * @return TimerSection la sous-section crÃ©Ã©e.
      */
     protected function & start($name=null, $time=null)
     {
@@ -318,9 +318,9 @@ final class TimerSection extends Timer
     /**
      * Termine la section.
      *
-     * @param string $name (optionnel) nom éventuel de la section. Si vous 
-     * indiquez un nom, il doit s'agir exactement du même nom que celui utilisé 
-     * lors de l'appel à start (utile pour résoudre une erreur de séquençage).
+     * @param string $name (optionnel) nom Ã©ventuel de la section. Si vous 
+     * indiquez un nom, il doit s'agir exactement du mÃªme nom que celui utilisÃ© 
+     * lors de l'appel Ã  start (utile pour rÃ©soudre une erreur de sÃ©quenÃ§age).
      * 
      * @return TimerSection|null la section parente de cette section ou null si
      * la section n'a pas de parent. 
@@ -330,17 +330,17 @@ final class TimerSection extends Timer
         if (! is_null($name))
         {
             if ($name !== $this->name)
-                die('erreur de séquençage. Nom attendu : '.$this->name.', nom indiqué : '.$name);
+                die('erreur de sÃ©quenÃ§age. Nom attendu : '.$this->name.', nom indiquÃ© : '.$name);
         }
         $this->endTime=microtime(true);
         return $this->parent;
     }
 
     /**
-     * Affiche le temps écoulé pour la section et pour chacune de ses 
+     * Affiche le temps Ã©coulÃ© pour la section et pour chacune de ses 
      * sous-sections. 
      *
-     * @param timestamp|null $total le temps total à utiliser pour le calcul
+     * @param timestamp|null $total le temps total Ã  utiliser pour le calcul
      * des pourcentages.
      */
     protected function printOutSection($total=null, $html=true, $indent=0)
