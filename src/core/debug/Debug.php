@@ -2,12 +2,12 @@
 /**
  * @package     fab
  * @subpackage  debug
- * @author 		Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author 		Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: Debug.php 1034 2009-04-02 09:54:00Z daniel.menard.bdsp $
  */
 
 /**
- * Fonctions de débogage
+ * Fonctions de dÃ©bogage
  *
  * @package     fab
  * @subpackage  debug
@@ -33,7 +33,7 @@ class Debug
             foreach($args as $i=>$arg)
             {
                 if ($i) $json.=',';
-                $json.=json_encode(Utils::utf8Encode($arg));
+                $json.=json_encode($arg);
             }
         self::$log2[]=array(Utils::callLevel()-2, Utils::callerClass(3), $level, $json);
     }
@@ -79,7 +79,7 @@ class Debug
             $h=str_replace
             (
                 array(' ', "\n", "\t", '<', '>'),
-                array('·', '\n', '&rarr;', '&lt;','&gt;'),
+                array('Â·', '\n', '&rarr;', '&lt;','&gt;'),
                 $var
             );
             return '<span class="debugDumpString" title="type: string; len: '.strlen($var).'">'
@@ -128,7 +128,7 @@ class Debug
             $h.='<div class="debugDumpObjectItems" id="dumpvar'.$id.'" style="display:'.($level==0?'block':'none').';">';
 
             if (in_array($var, $seen, true))
-                $h.='***récursion***';
+                $h.='***rÃ©cursion***';
             else
             {
                 $id++;
@@ -154,7 +154,7 @@ class Debug
             return $h;
 
         }
-        return 'type non géré dans dump : ' . var_export($var,1);
+        return 'type non gÃ©rÃ© dans dump : ' . var_export($var,1);
 
     }
     private static function showLog(&$i=0)
@@ -171,7 +171,7 @@ class Debug
             {
                 $onclick='onclick="debugToggle(\'log'.$i.'\');return false;"';
                 echo str_repeat('    ', $level),"<li class=\"debugLog$log[2]\">";
-                echo "<a href=\"#\" $onclick><strong>$log[1]</strong> - $log[3] »»»</a>\n";
+                echo "<a href=\"#\" $onclick><strong>$log[1]</strong> - $log[3] Â»Â»Â»</a>\n";
                 self::showLog($i);
                 $log=&Debug::$log[$i];
                 echo str_repeat('    ', $level),"</li>\n";
@@ -201,18 +201,18 @@ class Debug
 
 
         echo 'console.group("$_REQUEST");';
-        echo 'console.log(', json_encode(Utils::utf8Encode($_REQUEST)), ');';
+        echo 'console.log(', json_encode($_REQUEST), ');';
         echo 'console.groupEnd();';
 
         echo 'console.group("Configuration");';
-        echo 'console.log(', json_encode(Utils::utf8Encode(Config::getAll())), ');';
+        echo 'console.log(', json_encode(Config::getAll()), ');';
         echo 'console.groupEnd();';
 
         echo 'console.group("Include/require");';
-        echo 'console.log("%s",', json_encode(Utils::utf8Encode((object)get_included_files())), ');';
+        echo 'console.log("%s",', json_encode((object)get_included_files()), ');';
         echo 'console.groupEnd();';
 
-        echo 'console.group("Trace de l\'exécution");';
+        echo 'console.group("Trace de l\'exÃ©cution");';
         $level=self::$log2[0][0];
         foreach(self::$log2 as $j=>$log)
         {
@@ -270,13 +270,13 @@ class Debug
         // echo "showPhpDebugInformation();";
         echo '</script>';
 
-        echo '<p onclick="showPhpDebugInformation();">Afficher les informations de débogage dans firebug</p>';
+        echo '<p onclick="showPhpDebugInformation();">Afficher les informations de dÃ©bogage dans firebug</p>';
 //            $i++;
 //            if ($i<$nb && Debug::$log[$i][0]>$level)
 //            {
 //                $onclick='onclick="debugToggle(\'log'.$i.'\');return false;"';
 //                echo str_repeat('    ', $level),"<li class=\"debugLog$log[2]\">";
-//                echo "<a href=\"#\" $onclick><strong>$log[1]</strong> - $log[3] »»»</a>\n";
+//                echo "<a href=\"#\" $onclick><strong>$log[1]</strong> - $log[3] Â»Â»Â»</a>\n";
 //                self::showLog($i);
 //                $log=&Debug::$log[$i];
 //                echo str_repeat('    ', $level),"</li>\n";
@@ -299,7 +299,7 @@ class Debug
         self::firebugShowLog();
         return;
         echo '<div id="debugWebBar">';
-        echo '<h1>Barre de débogage</h1>';
+        echo '<h1>Barre de dÃ©bogage</h1>';
         echo '<div id="debugWebBarContent">';
 
         echo '<div class="debugLog">'; // trace : panel
