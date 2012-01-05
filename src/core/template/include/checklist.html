@@ -1,0 +1,15 @@
+<template match="//checklist" name="" label="" src="" class="" test="{true}">
+    <div test="$test" class="holder checklist $class">
+        <label>$label</label>
+        {select('node()[contains(@class,"before")]')}
+        <loop on="$src" as="$key, $record">
+            <if test="{is_array($record)}">
+                <checkbox name="$name" label="{$record['label']}" value="{$record['code']}">{select('@*')}</checkbox>
+            </if>
+            <else>
+                <checkbox name="$name" label="$record" value="{is_string($key) ? trim($key) : $record}">{select('@*')}</checkbox>
+            </else>
+        </loop>
+        {select('node()[not(contains(@class,"before"))]')}
+    </div>
+</template>

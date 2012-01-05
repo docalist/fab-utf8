@@ -1,0 +1,72 @@
+/* Noeuds de type Commentaire */
+<template match = "//comment()"><div class="fbitem" fbtype="comment" content="{select('string(.)')}">{select('string(.)')}</div></template>
+
+/* Blocs spéciaux */
+<template 
+    match = "
+                //loop
+            "
+><div class="fbitem fbcontainer" fbtype="{select('name()')}">{select('@*')}{select('name()')}:<div>{select('node()')}</div></div></template>
+
+/* Eléments blocs pouvant contenir d'autres éléments */
+<template 
+    class = "" style=""
+    match = "
+                //h1
+            |   //h2
+            |   //h3
+            |   //dddiv[not(@fbtype)]
+            |   //p
+            |   //form
+            |   //textbox
+            |   //fieldset   
+            |   //radiolist
+            |   //checklist   
+            "
+><div class="fbitem fbcontainer" _class="$class" _style="$style" fbtype="{select('name()')}">{select('@*')}{select('.')}</div></template>
+
+/* Eléments blocs qui ne peuvent rien contenir */
+<template 
+    match = "
+                //hr   
+            |   //br
+            "
+><div class="fbitem" fbtype="{select('name()')}">{select('@*')}</div></template>
+
+
+/* Eléments inline pouvant contenir d'autres éléments */
+<template 
+    match = "
+                //ssspan[not(@fbtype)]
+            |   //a
+            |   //strong
+            |   //em
+            "
+><span class="fbitem" fbtype="{select('name()')}">{select('@*')}<span class="fbcontainer">{select('node()')}</span></span></template>
+
+/* Eléments inline qui ne peuvent rien contenir */
+<template 
+    match = "
+                //img
+            |   //select   
+            |   //radio   
+            |   //checkbox   
+            |   //submit   
+            |   //reset   
+            |   //button   
+            |   //hidden   
+            "
+><span class="fbitem" fbtype="{select('name()')}">{select('@*')}</span></template>
+
+/* Eléments pouvant contenir du texte éditable */
+/*
+<template 
+    match = "
+                //h1
+            |   //h2
+            |   //h3
+            |   //dddiv[not(@fbtype)]
+            |   //p
+            "
+><tag tag="{select('name()')}" contenteditable="true">Edit:{select('node()|@*')}</tag></template>
+*/

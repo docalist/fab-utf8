@@ -1,0 +1,77 @@
+<def name="icons" value="/FabWeb/modules/AdminSchemas/EditSchema/images" />
+<h1>Editeur de schéma</h1>
+<div id="SchemaEditor">
+    <div id="schema">
+        <ul style="display: none">
+            <li id="schema" rel="schema" hack="{$this->getPropertiesAsAttributes($schema)}">
+                <a>$file</a>
+                <ul>
+                    <loop on="{array(              /*  Libellé          ,  type          , collection, sous-type         */
+        /*                    'properties'    => array('Propriétés'       ,  null          ,  null     ,  null             ), */ 
+                            'fields'        => array('Liste des champs' , 'field'        ,  null     ,  null             ), 
+                            'indices'       => array('Liste des index'  , 'index'        , 'fields'  , 'indexfield'      ), 
+                            'aliases'       => array('Liste des alias'  , 'alias'        , 'indices' , 'aliasindex'      ), 
+                            'lookuptables'  => array('Tables de lookup' , 'lookuptable'  , 'fields'  , 'lookuptablefield'), 
+                            'sortkeys'      => array('Clés de tri'      , 'sortkey'      , 'fields'  , 'sortkeyfield'    ), 
+                        )}"
+                        as="$key, $param">
+                        
+                        <if test="{is_null($param[1])}">
+                            <li id="$key" rel="$key" hack="{$this->getPropertiesAsAttributes($schema->$key)}">
+                                <a>{$param[0]}</a>
+                            </li>
+                        </if>
+                        <else>
+                            <def name="list" value="{$param[2]}" />
+                            <li id="$key" rel="$key">
+                                <a>{$param[0]}</a>
+                                <ul>
+                                    <loop on="{$schema->$key}" as="$item">
+                                        <li rel="{$param[1]}" hack="{$this->getPropertiesAsAttributes($item)}">
+                                            <a>{$item->name}</a>
+                                            <ul test="$list">
+                                                <loop on="{$item->$list}" as="$subitem">
+                                                    <li rel="{$param[3]}" hack="{$this->getPropertiesAsAttributes($subitem)}">
+                                                        <a>{$subitem->name}</a>
+                                                    </li>
+                                                </loop>
+                                            </ul>
+                                        </li>
+                                    </loop>
+                                </ul>
+                            </li>
+                        </else>
+                    </loop>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <form id="form" class="form">
+        <p id="form-title">Propriétés</p>
+        <div id="schema-toolbar" />
+        <table>
+            <tbody>
+            </tbody>
+        </table>
+        <button id="add-property">Ajouter une propriété</button>
+    </form>
+</div>
+<form id="saveform" method="post" action="SaveSchema" style="display: none">
+    <hidden name="file" value="$file" />
+    <textarea name="schema"></textarea>
+</form> 
+
+/*
+<p>
+    <toolbar style="float: right">
+        <item id="save" onclick="SchemaEditor.save()" img="$icons/database_save.png">Enregistrer le schéma...</item>
+    </toolbar>
+</p>
+*/
+<div id="errors">
+    <h1 class="title jqDrag" >Des erreurs ont été détectées</h1>
+    <ul></ul>
+    <toolbar style="float: right; margin: 0.5em 0">
+        <item img="$icons/cancel.png" onclick="jQuery('#errors').hide('normal');">Fermer</item>
+    </toolbar>
+</div>

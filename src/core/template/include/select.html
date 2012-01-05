@@ -1,0 +1,20 @@
+<template match="//select[@src]" name="" label="" src="" class="" size="" id="" test="{true}">
+    <div test="$test" class="holder select $class {$size ? 'multiline' : ''}">
+        <label for="{Template::autoId($id:$name:'select')}">$label</label>
+        {select('node()[contains(@class,"before")]')}
+        <select
+            name="$name"
+            size="$size"
+            id="{Template::lastId()}">{select('@*')}
+            <loop on="$src" as="$key,$record">
+                <if test="{is_array($record)}">
+                    <option value="{$record['code'] === $record['label'] ? '' : $record['code']}">{$record['label']}</option>
+                </if>
+                <else>
+                    <option value="{is_string($key) ? trim($key) : ''}">$record</option>
+                </else>
+            </loop>
+        </select>
+        {select('node()[not(contains(@class,"before"))]')}
+    </div>
+</template>

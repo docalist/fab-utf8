@@ -1,0 +1,71 @@
+<!-- Container général -->
+<div class="ui-formbuilder">
+
+    <!-- Partie gauche : éditeur -->
+    <div class="ui-formbuilder-editor ui-widget ui-corner-all">
+        <!-- Titre de l'éditeur -->
+        <div class="ui-widget-header ui-corner-top"><span>Votre formulaire</span></div>
+
+        <!-- Contenu de l'éditeur -->
+        <div class="ui-first fbcontainer ui-widget-content ui-corner-bottom">
+            <div class="ui-formbuilder-intro ui-state-highlight ui-corner-all">
+                Cliquez ici pour ajouter des éléments ---&gt;
+            </div>
+
+            <div class="fbitem"><label>champ 1 : </label><input type="text" /></div>
+            <div class="fbitem"><label>champ 2 : </label><input type="text" /></div>
+            <div class="fbitem"><label>champ 3 : </label><input type="text" /></div>
+            
+            <fieldset class="fbcontainer fbitem">
+                <legend>un fieldset</legend>
+                <div class="fbitem"><label>sous-champ A : </label><input type="text" /></div>
+                <div class="fbitem"><label>sous-champ B : </label><input type="text" /></div>
+                <div class="fbitem"><label>sous-champ C : </label><input type="text" /></div>
+            </fieldset>
+            
+            <div class="fbitem"><label>champ 4 : </label><input type="text" /></div>
+            <fieldset class="fbcontainer fbitem">
+                <legend>un fieldset vide</legend>
+            </fieldset>
+            <div class="fbitem"><label>champ 5 : </label><input type="text" /></div>
+            <div class="fbitem"><label>champ 6 : </label><input type="text" /></div>
+
+         <div id="deleteItem" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-circle-close"></span></div>
+
+        </div>
+    </div>
+
+    <!-- Partie droite : sidebar -->
+    <div class="ui-formbuilder-sidebar">
+    
+        <!-- Sidebar Outils -->
+        <div class="ui-widget ui-corner-all">
+            <!-- Titre -->
+            <div class="ui-widget-header ui-corner-top"><span>Ajouter</span></div>
+            
+            <!-- Contenu -->
+            <div class="ui-formbuilder-controls ui-widget-content ui-corner-bottom"></div>
+        </div>            
+        
+        <!-- Sidebar Propriétés -->
+        <div class="ui-widget ui-corner-all">
+            <!-- Titre -->
+            <div class="ui-widget-header ui-corner-top"><span>Propriétés</span></div>
+            
+            <!-- Contenu -->
+            <div class="ui-widget-content ui-corner-bottom">
+                <div id="propFor">Propriétés de ?</div>
+                nom: <input type="text" /><br />
+                id: <input type="text" /><br />
+            </div>
+        </div>
+
+        <!-- Sidebar Boutons -->
+        <div class="ui-widget ui-corner-all">
+            <div class="ui-widget-content ui-corner-bottom">
+                <button>Aperçu</button>
+                <button>Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</div>

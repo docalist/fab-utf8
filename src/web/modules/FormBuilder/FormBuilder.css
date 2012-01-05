@@ -1,0 +1,343 @@
+/* Structure de la page : layout trois colonnes basé sur des floats */
+#fb
+{
+    font-size:12px;
+}
+
+#fb-editor
+{
+    min-height: 400px;
+    padding: 5px;
+}
+
+#fb-tools
+{
+    width: 200px;
+    position: absolute;
+    top: 7px;
+    left: 7px;
+}
+
+#fb-tools-list
+{
+    max-height: 600px;
+    overflow-y: auto;
+}
+    
+#fb-properties
+{
+    width: 200px;
+    position: absolute;
+    top: 7px;
+    right: 7px;
+}
+
+#fb-code
+{
+    
+}
+
+/*
+#fb-main
+{
+    margin: 0px 210px 0px 210px;
+    min-height: 400px;
+}
+*/
+#fb-main
+{
+    margin: 0px 210px 0px 210px;
+    min-height: 400px;
+}
+
+#fb-footer
+{
+    margin: 10px 210px 0px 210px;
+}
+
+#fb-footer button
+{
+    float: right;
+}
+
+#deleteItem
+{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+
+    z-index:99999;
+    width: 16px;
+    display: none;
+}
+
+.fb-placeholder
+{
+    min-height: 100px; 
+    line-height: 1.8em;
+}
+
+/* ------------------------------------------------- */
+/*
+#fb-main *
+{
+    min-height: 1em;
+    min-width: 1em;
+}
+*/
+
+.fbtext
+{
+    /* background-color: #eee; */
+    /* padding-right: 100px; */
+    display: block;
+}
+
+div.fbitem
+{
+    background: #fff;
+    position: relative;
+}
+
+span.fbitem
+{
+    background: #fff;
+    margin: 5px;
+    padding: 0px 7px;
+    position: relative;
+}
+
+.fb-show-blocks .fbitem
+{
+    border:1px dotted #aaa;
+    margin: 3px 3px 3px 0px;
+    padding: 3px 7px;
+}
+
+.fbitem:hover
+{
+    /* cursor: move; */
+}
+
+.fb-hover
+{
+    background: #fafafa !important;
+}
+/* Décoration par défaut des blocs : avant=<tag et @name>, aprés=</tag> */
+.fb-show-tags .fbitem:before
+{
+    /* content: "<" attr(fbtype) " " attr(name) ">"; */
+    content: attr(fbtype);
+    color: #000;
+    font-size:12px;
+    font-family: monospace;
+    display: block;
+    background: #eee;
+    margin-left: -7px;
+    margin-right: -7px;
+    margin-top: -3px;
+    padding-left: 3px;
+}
+/*
+.fb-show-tags .fbitem:after
+{
+    content: "</" attr(fbtype) ">";
+    color: blue;
+}
+*/
+/* Décoration des noeuds de type texte */
+.fb-show-tags .fbtext:before
+{
+    content: "[";
+    color: blue;
+}
+
+.fb-show-tags .fbtext:after
+{
+    content: "]";
+    color: blue;
+}
+
+/* Décoration des noeuds de type commentaire */
+.fb-show-tags div[fbtype=comment]
+{
+    white-space: pre;
+}
+
+.fb-show-tags div[fbtype=comment]:before
+{
+    content: "<!--";
+}
+.fb-show-tags div[fbtype=comment]:after
+{
+    content: "-->";
+}
+
+/* Décoration des blocs auto-fermants : rien après */
+.fb-show-tags div[fbtype=br]:before, div[fbtype=hr]:before
+{
+    content: "<" attr(fbtype) "/>";
+}
+
+.fb-show-tags div[fbtype=br]:after, div[fbtype=hr]:after
+{
+    content: "";
+}
+
+
+/* Décoration des fieldsets : affiche le titre plutôt que le nom */
+.fb-show-tags div[fbtype=fieldset]:before
+{
+    content: "<" attr(fbtype) " \"" attr(label) "\">";
+}
+
+
+
+
+
+
+
+
+.fbcontainer
+{
+    min-height: 10px;
+}
+
+/* Corrections des css jquery ui --------------- */
+.ui-accordion .ui-accordion-content 
+{
+    padding: 0;
+}
+
+
+.horizontal.label50 .holder { padding-left: 50px; }
+.horizontal.label50 .holder label { width: 45px; margin-left: -50px; }
+
+.horizontal.label75 .holder { padding-left: 75px; }
+.horizontal.label75 .holder label { width: 70px; margin-left: -75px; }
+
+
+
+
+/* --------------------------------------------- */
+/* Styles des widgets de la palette d'outils     */
+/* --------------------------------------------- */
+.tools-group-header 
+{
+    display: block;
+    padding-left: 20px;
+    background: url(images/control-000-small.png) no-repeat left center;
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+}
+
+.tools-group-header.opened
+{
+    background-image: url(images/control-270-small.png);
+}
+
+.tools-group
+{
+    display: none;
+    padding-bottom: 1em;
+}
+
+.tools-group a
+{
+    display: block;
+    margin-left: 10px;
+    padding-left: 20px;
+    background-repeat: no-repeat;
+    background-position: left center;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Contrôles : groupe "html" */
+.widget-h1
+{
+    background-image: url(images/edit-heading.png);
+}
+.widget-h2
+{
+    background-image: url(images/edit-heading.png);
+}
+.widget-h3
+{
+    background-image: url(images/edit-heading.png);
+}
+.widget-div
+{
+    background-image: url(images/layout.png);
+}
+.widget-p
+{
+    background-image: url(images/edit-pilcrow.png);
+}
+.widget-span
+{
+    background-image: url(images/edit-shade.png);
+}
+.widget-a
+{
+    background-image: url(images/chain--arrow.png);
+}
+.widget-img
+{
+    background-image: url(images/image.png);
+}
+.widget-hr
+{
+    background-image: url(images/border-horizontal.png);
+}
+
+/* Contrôles : groupe "forms" */
+.widget-form
+{
+    background-image: url(images/application-form.png);
+}
+.widget-textbox
+{
+    background-image: url(images/ui-text-field.png);
+}
+.widget-fieldset
+{
+    background-image: url(images/ui-group-box.png);
+}
+.widget-select
+{
+    background-image: url(images/ui-combo-box-blue.png);
+}
+.widget-radiolist
+{
+    background-image: url(images/ui-radio-buttons.png);
+}
+.widget-checklist
+{
+    background-image: url(images/ui-check-boxes.png);
+}
+.widget-radio
+{
+    background-image: url(images/ui-radio-button.png);
+}
+.widget-checkbox
+{
+    background-image: url(images/ui-check-box.png);
+}
+.widget-submit
+{
+    background-image: url(images/ui-button-default.png);
+}
+.widget-reset
+{
+    background-image: url(images/ui-button-navigation-back.png);
+}
+.widget-button
+{
+    background-image: url(images/ui-button.png);
+}
+.widget-hidden
+{
+    background-image: url(images/ui-text-field-hidden.png);
+}

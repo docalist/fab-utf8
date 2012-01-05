@@ -1,0 +1,59 @@
+<def name="icons" value="/FabWeb/modules/AdminSchemas/EditSchema/images" />
+<div id="SchemaEditor">
+    <h1>Editeur de schéma : $file</h1>
+    <div id="schema">
+        <ul style="display: none">
+            <li id="root" rel="schema" hack="{$this->getPropertiesAsAttributes($schema)}">
+                <a>Schéma</a>
+                <ul>
+                    <loop on="{$schema->getChildren()}" as="$name, $child"> /* fields, indices, ... */
+                        <li id="$name" rel="{$child->getType()}">
+                            <a>{$child::getLabels('main')}</a>
+                            <ul test="{$child->hasChildren()}">
+                                <loop on="{$child->getChildren()}" as="$name2, $child2"> /* field, index,... */
+                                    <li rel="{$child2->getType()}" hack="{$this->getPropertiesAsAttributes($child2)}">
+                                        <a>$name2</a>
+                                        <ul test="{$child2->hasChildren()}">
+                                            <loop on="{$child2->getChildren()}" as="$name3, $child3"> /* indexfield, sortkeyfield... */
+                                                <li id="$name3" rel="{$child3->getType()}" hack="{$this->getPropertiesAsAttributes($child3)}">
+                                                    <a>$name3</a>
+                                                </li>
+                                            </loop>
+                                        </ul>
+                                    </li>
+                                </loop>
+                            </ul>
+                        </li>
+                    </loop>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <form id="form" class="form">
+        <div id="schema-toolbar" />
+        <p id="form-title"></p>
+        <table>
+            <tbody>
+            </tbody>
+        </table>
+    </form>
+    <form id="saveform" method="post" action="SaveSchema" style="display: none">
+        <hidden name="file" value="$file" />
+        <textarea name="schema"></textarea>
+    </form> 
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function() \{
+    	 jQuery('#schema').schemaEditor({json_encode($treeConfig)});
+	\});    
+</script>
+/*
+<div id="errors">
+    <h1 class="title jqDrag" >Des erreurs ont été détectées</h1>
+    <ul></ul>
+    <toolbar style="float: right; margin: 0.5em 0">
+        <item img="$icons/cancel.png" onclick="jQuery('#errors').hide('normal');">Fermer</item>
+    </toolbar>
+</div>
+*/

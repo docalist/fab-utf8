@@ -1,0 +1,8 @@
+/* bouton de type submit */ 
+<template match="//submit" name="" label="" class="">
+    <input
+        type="submit"
+        name="$name"
+        value="$label{select('string()')}"
+        class="button submit{rtrim(' '.$class)}">{select('@*')}</input>
+</template>

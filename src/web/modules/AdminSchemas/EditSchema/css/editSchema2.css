@@ -1,0 +1,162 @@
+@CHARSET "ISO-8859-1";
+html,body
+{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#SchemaEditor
+{
+    font-family: verdana,tahoma,helvetica;
+    width: 100%; 
+    height: 95%;
+    position: relative;
+    /* border: 1px solid #eee; */
+}
+#SchemaEditor h1
+{
+    margin: 0;
+    padding : 0;
+}
+#schema
+{
+    width: 209px;
+    float: left;       
+    height: 100%;
+    overflow: auto;
+    /* border-right: 1px solid #eee; */ 
+}
+#schema.jstree ul
+{
+    padding-bottom: 10px;
+}
+#form
+{
+    /* margin-left: 210px; */
+    padding: 0 10px;
+    height: 100%;
+    overflow: auto;
+}
+#form-title
+{
+    font-weight: bold;
+}
+/* tableaux */
+#SchemaEditor table
+{
+    border-collapse : collapse;
+    background:#eee;
+    width: 100%;
+}
+
+#SchemaEditor thead th
+{
+/*    
+    background-color:HighLight;
+    color:HighLightText;
+    padding:0.2em;
+    text-align: left;
+*/    
+}
+#SchemaEditor td
+{
+    /* border-bottom: dotted 1px ThreeDShadow; */
+/*    
+    text-align: left;
+    padding:0;
+    vertical-align: top;
+*/    
+}
+
+#SchemaEditor tbody th
+{
+    /* background-color:HighLight; */
+    /* color:HighLightText; */
+    padding:0.2em;
+    text-align: left;
+    width: 150px;
+    vertical-align: top;
+}
+.jstree a
+{
+    cursor: pointer;
+}
+#SchemaEditor label,
+#SchemaEditor a
+{
+    font-size: 12px;
+}
+
+#SchemaEditor textarea
+{
+    width: 98%;
+/*    
+    border: none;
+    background: transparent;
+    outline: none;
+*/    
+    overflow: hidden;
+    resize: none;
+    outline: none;
+}
+#SchemaEditor input[type="checkbox"],
+#SchemaEditor select
+{
+    margin: 0;    
+}
+#schema-toolbar
+{
+    /* background: #eee; */
+    margin: 10px 0;
+}
+#schema-toolbar a
+{
+    margin-right: 10px;
+    background:  transparent 5px center no-repeat ;
+    color: buttontext;
+    padding: 4px 4px 4px 25px;
+    cursor: pointer;
+    border: 1px outset #eee;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#schema-toolbar a:hover
+{
+    background-color: #eee;
+}
+
+/* La zone d'affichage des erreurs */
+div#errors
+{
+    display: none;
+    background-color: ButtonFace;
+    border: 3px solid ActiveCaption;
+    -moz-border-radius:9px;
+    padding: 1em;
+    position: fixed;
+    width: 50%;
+    left: 25%;
+}
+
+div#errors .title
+{
+    font-size: 100%;
+    padding: 0.3em;
+    margin: -1em -1em 1em -1em;
+    color: CaptionText;
+    background-color: ActiveCaption;
+}
+
+div#errors ul
+{
+    border: 1px inset ThreeDFace;
+    background-color: Window;
+    color: WindowText;
+    padding: 1em 1em 1em 2em;
+    margin: 0;
+    height: 15em; 
+    overflow-y: auto;
+}

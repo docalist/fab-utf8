@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /> 
+        <title>Form builder</title>
+        <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/ui-lightness/jquery-ui.css" />
+        <link href="/FabWeb/FormBuilder/FormBuilder.css" rel="stylesheet" type="text/css" /> 
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/FabWeb/FormBuilder/FormBuilder.js"></script>
+    </head>
+<body>
+    <!-- Container général -->
+    <div class="ui-formbuilder">
+    
+        <!-- Partie gauche : éditeur -->
+        <div class="ui-formbuilder-editor ui-widget ui-corner-all">
+            <!-- Titre de l'éditeur -->
+            <div class="ui-widget-header ui-corner-top"><span>Votre formulaire</span></div>
+    
+            <!-- Contenu de l'éditeur -->
+            <div class="ui-first ui-formbuilder-container ui-widget-content ui-corner-bottom">
+                <div class="ui-formbuilder-intro ui-state-highlight ui-corner-all">
+                    Cliquez ici pour ajouter des éléments ---&gt;
+                </div>
+
+                <div class="item"><label>champ 1 : </label><input type="text" /></div>
+                <div class="item"><label>champ 2 : </label><input type="text" /></div>
+                <div class="item"><label>champ 3 : </label><input type="text" /></div>
+                
+                <fieldset class="ui-formbuilder-container item">
+                    <legend>un fieldset</legend>
+                    <div class="item"><label>sous-champ A : </label><input type="text" /></div>
+                    <div class="item"><label>sous-champ B : </label><input type="text" /></div>
+                    <div class="item"><label>sous-champ C : </label><input type="text" /></div>
+                </fieldset>
+                
+                <div class="item"><label>champ 4 : </label><input type="text" /></div>
+                <fieldset class="ui-formbuilder-container item">
+                    <legend>un fieldset vide</legend>
+                </fieldset>
+                <div class="item"><label>champ 5 : </label><input type="text" /></div>
+                <div class="item"><label>champ 6 : </label><input type="text" /></div>
+ 
+             <div id="deleteItem" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-circle-close"></span></div>
+ 
+            </div>
+        </div>
+    
+        <!-- Partie droite : sidebar -->
+        <div class="ui-formbuilder-sidebar">
+        
+            <!-- Sidebar Outils -->
+            <div class="ui-widget ui-corner-all">
+                <!-- Titre -->
+                <div class="ui-widget-header ui-corner-top"><span>Ajouter</span></div>
+                
+                <!-- Contenu -->
+                <div class="ui-formbuilder-controls ui-widget-content ui-corner-bottom"></div>
+            </div>            
+            
+            <!-- Sidebar Propriétés -->
+            <div class="ui-widget ui-corner-all">
+                <!-- Titre -->
+                <div class="ui-widget-header ui-corner-top"><span>Propriétés</span></div>
+                
+                <!-- Contenu -->
+                <div class="ui-widget-content ui-corner-bottom">
+                    <div id="propFor">Propriétés de ?</div>
+                    nom: <input type="text" /><br />
+                    id: <input type="text" /><br />
+                </div>
+            </div>
+
+            <!-- Sidebar Boutons -->
+            <div class="ui-widget ui-corner-all">
+                <div class="ui-widget-content ui-corner-bottom">
+                    <button>Aperçu</button>
+                    <button>Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

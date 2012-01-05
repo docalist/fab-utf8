@@ -1,0 +1,7 @@
+<template match="//reset" name="" label="" class="">
+    <input
+        type="reset"
+        name="$name"
+        value="$label{select('string()')}"
+        class="button reset{rtrim(' '.$class)}">{select('@*')}</input>
+</template>

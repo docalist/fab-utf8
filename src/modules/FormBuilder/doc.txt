@@ -1,0 +1,20 @@
+Chargement du tempalte à éditer
+-------------------------------
+Le code source du template à éditer est chargé par la méthode actionLoad() qui est appellée sous
+forme de slot dans le FormBuilder.html
+
+L'actionLoad transforme le source du template pour qu'il puisse être édité dans l'éditeur.
+
+La transformation consiste à 
+- exécuter le template (i.e. obtenir le code généré par un tag <textbox /> par exemple.
+- encadre le code obtenu avec un <div class="fbitem" />
+
+Pour exécuter le template, on est obligé de neutraliser le code qu'il contient.
+En effet si on a, par exemple, <textbox name="{$this->getLabel()}" value="$name" />, et qu'on
+exécute ce code directement, on aura des erreurs du style variable inconnue, fonction inconnue, etc.
+On escape donc tous les appels de code pour qu'ils soient générés tels quels :
+<textbox name="\{$this->getLabel()\}" value="\$name" />
+
+Pour la transformation, c'est le template "templates.html" qui est utilisé. On match tous les
+contrôles qu'on connait et on génère un div ou un span selon que le contrôle est un bloc ou un
+élément inline. 

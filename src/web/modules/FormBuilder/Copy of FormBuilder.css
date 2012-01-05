@@ -1,0 +1,72 @@
+.ui-formbuilder .ui-widget
+{
+    margin-bottom: 1em;
+}
+
+.ui-formbuilder .ui-widget-header
+{
+    padding: 0 5px;
+}
+
+.ui-formbuilder .ui-widget-content
+{
+    padding: 5px;
+}
+
+.ui-formbuilder-editor
+{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 270px;
+}
+
+.ui-formbuilder-editor .ui-widget-content
+{
+    min-height: 400px;
+}
+
+.ui-formbuilder-sidebar
+{
+    position: fixed;
+    right: 5px;
+    top: 5px;
+    width: 250px;
+}
+
+/* ------------------- */
+
+.ui-formbuilder-editor .fbitem
+{
+    margin: 1em 0.5em;
+    position: relative;
+}
+
+/*
+.ui-formbuilder-editor .selected, .ui-formbuilder-placeholder
+{
+    background: #E78F08 !important;
+}
+*/
+.ui-formbuilder-placeholder
+{
+    height: 50px;
+}
+
+.ui-formbuilder-intro
+{
+    float: right;
+    margin-top: 30px;
+    padding: 1em;
+}
+
+#deleteItem
+{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+
+    z-index:99999;
+    width: 16px;
+    display: none;
+}

@@ -1,0 +1,4 @@
+<template match="//textbox|//radiolist|//fieldset[@label]">
+<div class="fbitem" fbtype="{select('name()')}">{select('.|@*')}</div>
+</template>
+<textbox name="prenom" label="Votre prénom: " value="Plonge"></textbox><textbox name="nom" label="Votre nom: " value="Dupont"></textbox><radiolist name="sexe" label="Sexe : " src="{array('homme','femme')}"></radiolist><fieldset label="l'Adresse"><textbox name="rue" label="Rue : " value="Rue de la rivière"></textbox><textbox name="codepostal" label="Code postal : " value="007"></textbox><fieldset label="Votre &quot;SOUS-Adresse&quot; :"><textbox name="sousrue" label="Rue : " value="Rue de la rivière"></textbox><textbox name="souscodepostal" label="Code postal : " value="007"></textbox><textbox name="sousville" label="Ville : " value="Evian les bains"></textbox></fieldset><textbox name="ville" label="Ville : " value="Evian les bains"></textbox></fieldset>

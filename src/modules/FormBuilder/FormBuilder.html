@@ -1,0 +1,43 @@
+<div id="fb">
+    /* Editeur */
+    <div id="fb-main" class="ui-widget">
+        <div class="ui-widget-header ui-corner-top"><span>Votre formulaire</span></div>
+        <div id="fb-editor" class="fbcontainer ui-widget-content ui-corner-bottom">
+            <slot name="content" action="/FormBuilder/Load" template="$template" />
+        </div>
+    </div>
+    
+    /* Outils */
+    <div id="fb-tools" class="ui-widget">
+        <div class="ui-widget-header ui-corner-top"><span>Composants</span></div>
+        <div id="fb-tools-list" class="ui-widget-content ui-corner-bottom"></div>
+        <button id="fb-show-blocks">Afficher les blocs</button>
+        <button id="fb-show-tags">Afficher le nom des blocs</button>
+    </div>
+    
+    /* Propriétés */
+    <div id="fb-properties" class="ui-widget">
+        <div class="ui-widget-header ui-corner-top"><span>Propriétés</span></div>
+/*        <div id="fb-properties-list" class="ui-widget-content ui-corner-bottom"></div> */
+        <form id="fb-properties-list" class="form horizontal fullwidth label75 alignright ui-widget-content ui-corner-bottom"></form>
+    </div>
+    
+    
+    /* Pied de page */
+    <div id="fb-footer" class="ui-widget-content">
+        <button>Aperçu</button>
+        <button id="fbsave">Enregistrer</button>
+        <p id="fb-status"></p>
+        <br style="clear:both" />
+    </div>
+    
+    <pre id="fb-code"></pre>
+    
+    <span id="deleteItem" title="Supprimer"><span class="ui-icon ui-icon-circle-close"></span></span>
+    
+</div>
+
+<script type="text/javascript">
+    template='$template';
+    tools={$this->getTools(true)};
+</script>

@@ -1,0 +1,37 @@
+<textbox name="nom" label="Votre nom: " value="Dupont">
+    <preview>
+        <div class="holder textbox ">
+            <label for="nom">Votre nom: </label>
+            <input type="text" id="nom" value="Dupont" name="nom" />
+        </div>
+    </preview>
+</textbox>
+
+<textbox name="prenom" label="Votre prénom: " value="Plonge">
+    <preview>
+        <div class="holder textbox ">   
+            <label for="prenom">Votre prénom: </label>  
+            <input type="text" id="prenom" value="Plonge" name="prenom" /> 
+        </div>
+    </preview>
+</textbox>
+
+<radiolist name="sexe" label="Sexe : " src="{array('homme','femme')}">
+    <preview>
+        <div class="holder radiolist ">
+            <label>Sexe : </label>
+            <span class="radio "> <input type="radio" id="sexe" value="homme" name="sexe" /> <label for="sexe">homme</label> </span>     
+            <span class="radio "> <input type="radio" id="sexe2" value="femme" name="sexe" /> <label for="sexe2">femme</label> </span>    
+        </div>
+    </preview>
+</radiolist>
+
+<fieldset label="un fieldset">
+    <div class="fbitem"><label>sous-champ A : </label><input type="text" /></div>
+    <div class="fbitem"><label>sous-champ B : </label><input type="text" /></div>
+    <div class="fbitem"><label>sous-champ C : </label><input type="text" /></div>
+</fieldset>
+
+<span style="border:1px solid red">
+    <div style="background:yellow">div</div>
+</span>

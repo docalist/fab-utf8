@@ -1,0 +1,50 @@
+/* *****************************************************************************
+    Génère une textbox contenant soit un input[type=text] soit une textarea.
+    Code généré :
+    
+    <div class="holder textbox">
+        <label />
+        <tous les fils class="before" />
+        <input type="text" /> ou <textarea />
+        <tous les autres fils /> 
+    </div>
+    
+    $id$
+***************************************************************************** */
+<template match="//textbox" 
+    name=""         /* le nom du champ à générer */
+    label=""        /* le libellé à générer devant le champ */
+    value=""        /* la valeur initiale du champ */
+    class=""        /* classe supplémentaire à appliquer à la div container */
+    id=""           /* l'id spécifique du controle */
+    rows=""         /* génère un textarea de $rows ligne plutôt qu'un input */ 
+    cols="20"       /* nombre de colonnes du textarea */
+    title=""        /* bulle d'aide du champ */
+    test="{true}"   /* la condition d'affichage */
+    >
+    <div test="$test" class="holder textbox $class">
+        <if test="{$rows}">
+            <def name="autoid" value="{Template::autoId($id:$name:'textarea')}" />
+            <label test="$label" for="$autoid">$label</label>
+            {select('node()[contains(@class,"before")]')}
+            <textarea
+                name="$name"
+                title="$title"
+                rows="$rows"
+                cols="$cols"
+                id="$autoid">$value{select('@*')}</textarea>
+        </if>
+        <else>
+            <def name="autoid" value="{Template::autoId($id:$name:'textbox')}" />
+            <label test="$label" for="$autoid">$label</label>
+            {select('node()[contains(@class,"before")]')}
+            <input
+                type="text" 
+                name="$name" 
+                title="$title"
+                value="$value"
+                id="$autoid">{select('@*')}</input>
+        </else>
+        {select('node()[not(contains(@class,"before"))]')}
+    </div>
+</template>
