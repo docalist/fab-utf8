@@ -2,19 +2,19 @@ LA CLASSE RANGE
 ---------------
 
 
-Constructeur : Range($début, $fin, [$pas = 0])
+Constructeur : Range($dÃ©but, $fin, [$pas = 0])
 
 
-La classe Range représente un itérateur (elle implémente l'interface Iterator) qui permet de boucler
-entre $début et $fin avec un pas spécifique (paramètre optionnel qui vaut 0 par défaut).
+La classe Range reprÃ©sente un itÃ©rateur (elle implÃ©mente l'interface Iterator) qui permet de boucler
+entre $dÃ©but et $fin avec un pas spÃ©cifique (paramÃ¨tre optionnel qui vaut 0 par dÃ©faut).
 
 Remarque :
 Si aucune valeur n'est fournie ou si l'utilisateur passe 0 pour $pas, cette valeur sera
-automatique pour fournir un pas unitaire cohérent par rapport aux valeurs passées pour
-$début et $end (prendra la valeur 1 si $début <= $end et -1 autrement)
+automatique pour fournir un pas unitaire cohÃ©rent par rapport aux valeurs passÃ©es pour
+$dÃ©but et $end (prendra la valeur 1 si $dÃ©but <= $end et -1 autrement)
 
-L'objectif initial de cette classe était de fournir, pour le système de template,
-un moyen de créer des boucles similaires à une boucle PHP for mais avec l'élément <loop /> :
+L'objectif initial de cette classe Ã©tait de fournir, pour le systÃ¨me de template,
+un moyen de crÃ©er des boucles similaires Ã  une boucle PHP for mais avec l'Ã©lÃ©ment <loop /> :
 
 <loop on="new Range(6, -2.3)" as="$i">
 	i = $i;
@@ -25,10 +25,10 @@ i = 6;i = 5;i = 4;i = 3;i = 2;i = 1; i = 0;i = -1; i = -2
 
 Remarque
 --------
-Une exception est générée dans les cas suivant :
+Une exception est gÃ©nÃ©rÃ©e dans les cas suivant :
 
-- $start < $end et $pas est négatif ou si $start > $end et $pas est positif
-- $start ou $end est un caractère et que l'autre est un entier ou un réel
-- $start ou $end est un caractère et que le pas est un réel
-- $start ou $end est une chaîne de caractères
-- $start et $end sont des caractères mais l'un est une minuscule et l'autre une majuscule
+- $start < $end et $pas est nÃ©gatif ou si $start > $end et $pas est positif
+- $start ou $end est un caractÃ¨re et que l'autre est un entier ou un rÃ©el
+- $start ou $end est un caractÃ¨re et que le pas est un rÃ©el
+- $start ou $end est une chaÃ®ne de caractÃ¨res
+- $start et $end sont des caractÃ¨res mais l'un est une minuscule et l'autre une majuscule

@@ -2,37 +2,37 @@
 
 
 /*
- * Range objet d'itération
+ * Range objet d'itÃ©ration
  * 
  * Permet notamment de boucler entre deux valeurs
- * implémente l'interface Iterator
+ * implÃ©mente l'interface Iterator
  *
- * @param $start $end passés au constructeur sont les deux valeurs entre lesquelles l'itération est possible
- * @param $step optionnel indique le pas d'incrémentation de min vers max lors de l'intération
- *          si non renseigné, déterminé en fonction de $start et de $end
+ * @param $start $end passÃ©s au constructeur sont les deux valeurs entre lesquelles l'itÃ©ration est possible
+ * @param $step optionnel indique le pas d'incrÃ©mentation de min vers max lors de l'intÃ©ration
+ *          si non renseignÃ©, dÃ©terminÃ© en fonction de $start et de $end
  */
  class Range implements Iterator
  {
     
-    private $start = 0;       // valeur de départ de l'itération
-    private $end = 0;         // valeur de fin de l'itération
+    private $start = 0;       // valeur de dÃ©part de l'itÃ©ration
+    private $end = 0;         // valeur de fin de l'itÃ©ration
     private $current = 0;     // pointeur valeur courante
-    private $step = 0;        // le pas de l'itération
-    private $key = 0;         // clé de l'élément en cours
+    private $step = 0;        // le pas de l'itÃ©ration
+    private $key = 0;         // clÃ© de l'Ã©lÃ©ment en cours
 
     public function __construct($start, $end, $step = 0)
     {
-        // Teste les cas pour lequel une itération n'a pas de sens
+        // Teste les cas pour lequel une itÃ©ration n'a pas de sens
         if ( gettype($start) === 'string' || gettype($end) === 'string' )
         {
             if ( gettype($start) !== gettype($end) )
                 throw new Exception('Impossible de boucler entre une valeur de type ' . gettype($start) . ' et une valeur de type '. gettype($end) . '.');
                 
             if ( gettype($step) === 'double' )
-                throw new Exception('Impossible de boucler sur des caractères avec un pas de type réel.');
+                throw new Exception('Impossible de boucler sur des caractÃ¨res avec un pas de type rÃ©el.');
                 
             if ( strlen($start) > 1 || strlen($end) > 1)
-                throw new Exception('Impossible de boucler sur des chaînes de caractères.');
+                throw new Exception('Impossible de boucler sur des chaÃ®nes de caractÃ¨res.');
             
             // si $start minu et $end maju ou $start $end minu et $start maju, exception
             if ( (strtolower($start) == $start && $end >= 'A' && $end <= 'Z')
@@ -40,14 +40,14 @@
                 throw new Exception('Impossible de boucler entre une minuscule et une majuscule et vice-versa.');
         }
         
-        if ($step == 0)     // alors, valeur de step à déterminer en fonction de $start et $end
+        if ($step == 0)     // alors, valeur de step Ã  dÃ©terminer en fonction de $start et $end
         {
             if ($start <= $end )
                 $this->step = 1;
             else
                 $this->step = -1;
         }
-        else        // la valeur de $step est celle passée en paramètre
+        else        // la valeur de $step est celle passÃ©e en paramÃ¨tre
         {            
             // Autrement, initialiser $step
             $this->step = $step;   
@@ -58,7 +58,7 @@
             $this->start = $start;
             $this->end = $end;
         }
-        else        // entraînera boucle infinie
+        else        // entraÃ®nera boucle infinie
         {
             throw new Exception('Boucle infinie');
         }
@@ -100,11 +100,11 @@
             $this->current += $this->step;
         }
 
-        // Si on travaille avec des réels, prudence : 1.0+1 != 2.0
+        // Si on travaille avec des rÃ©els, prudence : 1.0+1 != 2.0
         // La doc php indique que :
-        // - la précision dépend de la plate-forme utilisée
-        // - 14 chiffres après la virgule est une précision assez répandue
-        // donc on tronque à 10 chiffres pour ne pas avoir de problèmes
+        // - la prÃ©cision dÃ©pend de la plate-forme utilisÃ©e
+        // - 14 chiffres aprÃ¨s la virgule est une prÃ©cision assez rÃ©pandue
+        // donc on tronque Ã  10 chiffres pour ne pas avoir de problÃ¨mes
         if (is_float($this->current))
             $this->current=round($this->current, 10);
         
