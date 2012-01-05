@@ -2,7 +2,7 @@
 /**
  * @package     fab
  * @subpackage  util
- * @author 		Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author 		Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: Utils.php 1234 2010-12-14 11:20:33Z daniel.menard.bdsp $
  */
 
@@ -17,8 +17,8 @@ final class Utils
 	/**
 	 * constructeur
 	 *
-	 * Le constructeur est privé : il n'est pas possible d'instancier la
-	 * classe. Utilisez directement les méthodes statiques proposées.
+	 * Le constructeur est privÃ© : il n'est pas possible d'instancier la
+	 * classe. Utilisez directement les mÃ©thodes statiques proposÃ©es.
      *
      * @access private
 	 */
@@ -47,11 +47,11 @@ final class Utils
 
 
 	/**
-	 * Ajoute une extension au path indiqué si celui-ci n'en a pas
+	 * Ajoute une extension au path indiquÃ© si celui-ci n'en a pas
 	 *
-	 * @param string $path le path à modifier
+	 * @param string $path le path Ã  modifier
      *
-	 * @param string $ext l'extension à ajouter
+	 * @param string $ext l'extension Ã  ajouter
      *
 	 * @return string le nouveau path
 	 */
@@ -65,14 +65,14 @@ final class Utils
 
 	/**
 	 * Remplace ou supprime l'extension de fichier d'un path.
-	 * Ne touche pas aux extensions présentes dans les noms de répertoires
+	 * Ne touche pas aux extensions prÃ©sentes dans les noms de rÃ©pertoires
 	 * (c:\toto.tmp\aa.jpg).
-	 * Gère à la fois les slashs et les anti-slashs
+	 * GÃ¨re Ã  la fois les slashs et les anti-slashs
 	 *
-	 * @param string $path le path à modifier
+	 * @param string $path le path Ã  modifier
      *
-	 * @param string $ext l'extension à appliquer à $path, ou vide pour supprimer
-	 * l'extension existante. $ext peut être indiqué avec ou sans point de début
+	 * @param string $ext l'extension Ã  appliquer Ã  $path, ou vide pour supprimer
+	 * l'extension existante. $ext peut Ãªtre indiquÃ© avec ou sans point de dÃ©but
 	 */
 	public static function setExtension($path, $ext = '')
 	{
@@ -96,15 +96,15 @@ final class Utils
 
 
 	/**
-	 * Crée le répertoire indiqué
+	 * CrÃ©e le rÃ©pertoire indiquÃ©
 	 *
-	 * La fonction crée en une seule fois tous les répertoires nécessaires du
+	 * La fonction crÃ©e en une seule fois tous les rÃ©pertoires nÃ©cessaires du
 	 * niveau le plus haut au plus bas.
 	 *
-	 * Le répertoire créé a tous les droits (777).
+	 * Le rÃ©pertoire crÃ©Ã© a tous les droits (777).
 	 *
-	 * @param string $path le chemin complet du répertoire à créer
-     * @return bool true si le répertoire a été créé, false sinon
+	 * @param string $path le chemin complet du rÃ©pertoire Ã  crÃ©er
+     * @return bool true si le rÃ©pertoire a Ã©tÃ© crÃ©Ã©, false sinon
      * (droits insuffisants, par exemple)
 	 */
 	public static function makeDirectory($path)
@@ -116,11 +116,11 @@ final class Utils
 
 
 	/**
-	 * Indique si le path passé en paramètre est un chemin relatif
+	 * Indique si le path passÃ© en paramÃ¨tre est un chemin relatif
 	 *
-	 * Remarque : aucun test d'existence du path indiqué n'est fait.
+	 * Remarque : aucun test d'existence du path indiquÃ© n'est fait.
 	 *
-	 * @param string $path le path à tester
+	 * @param string $path le path Ã  tester
      *
 	 * @return bool true si path est un chemin relatif, false sinon
 	 */
@@ -134,11 +134,11 @@ final class Utils
 
 
 	/**
-	 * Indique si le path passé en paramètre est un chemin absolu
+	 * Indique si le path passÃ© en paramÃ¨tre est un chemin absolu
 	 *
-	 * Remarque : aucun test d'existence du path indiqué n'est fait.
+	 * Remarque : aucun test d'existence du path indiquÃ© n'est fait.
 	 *
-	 * @param string $path le path à tester
+	 * @param string $path le path Ã  tester
      *
 	 * @return bool true si path est un chemin absolu, false sinon
 	 */
@@ -149,10 +149,10 @@ final class Utils
 
 
 	/**
-	 * Construit un chemin complet à partir des bouts passés en paramètre.
+	 * Construit un chemin complet Ã  partir des bouts passÃ©s en paramÃ¨tre.
 	 *
-	 * La fonction concatène ses arguments en prenant soin d'ajouter
-	 * correctement le séparateur s'il est nécessaire.
+	 * La fonction concatÃ¨ne ses arguments en prenant soin d'ajouter
+	 * correctement le sÃ©parateur s'il est nÃ©cessaire.
 	 *
 	 * Exemple :
 	 * <code>
@@ -160,13 +160,13 @@ final class Utils
 	 * makePath('/temp/','/dm/','test.txt'); // '/temp/dm/test.txt'
 	 * </code>
 	 *
-	 * Le path obtenu n'est pas normalisé : si les arguments passés contiennent
-	 * des '.' ou des '..' le résultat les contiendra aussi.
+	 * Le path obtenu n'est pas normalisÃ© : si les arguments passÃ©s contiennent
+	 * des '.' ou des '..' le rÃ©sultat les contiendra aussi.
      *
-     * Le séparateur de répertoire, par contre, est normalisé (slashs et
-     * anti-slash sont remplacés par le séparateur du système hôte.)
+     * Le sÃ©parateur de rÃ©pertoire, par contre, est normalisÃ© (slashs et
+     * anti-slash sont remplacÃ©s par le sÃ©parateur du systÃ¨me hÃ´te.)
 	 *
-	 * @param string paramname un nombre variable d'arguments à concaténer
+	 * @param string paramname un nombre variable d'arguments Ã  concatÃ©ner
      *
 	 * @return string le path obtenu
 	 */
@@ -201,21 +201,21 @@ final class Utils
 	 * cleanPath('/a/b/../c/') -> '/a/c/'
 	 * </code>
 	 *
-	 * La fonction ne supprime que les parties '..' qui sont résolvables, ce qui
-	 * peut éviter certains attaques (accéder à un répertoire au dessus du
-	 * répertoire 'root', par exemple).
+	 * La fonction ne supprime que les parties '..' qui sont rÃ©solvables, ce qui
+	 * peut Ã©viter certains attaques (accÃ©der Ã  un rÃ©pertoire au dessus du
+	 * rÃ©pertoire 'root', par exemple).
 	 *
 	 * Exemple :
 	 * <code>
 	 * cleanPath('/a/../../') -> '/../'
 	 * </code>
 	 *
-	 * Pour savoir si le path obtenu est propre, c'est-à-dire si toutes les
-	 * références '..' ont été résolues, utiliser {@link isCleanPath()} après.
+	 * Pour savoir si le path obtenu est propre, c'est-Ã -dire si toutes les
+	 * rÃ©fÃ©rences '..' ont Ã©tÃ© rÃ©solues, utiliser {@link isCleanPath()} aprÃ¨s.
 	 *
-	 * @param string $path le path à normaliser
+	 * @param string $path le path Ã  normaliser
      *
-	 * @return string le path normalisé
+	 * @return string le path normalisÃ©
 	 */
 	public static function cleanPath($path)
 	{
@@ -249,9 +249,9 @@ final class Utils
 
 
 	/**
-	 * Indique si le path fourni contient des éléments '.' ou '..'
+	 * Indique si le path fourni contient des Ã©lÃ©ments '.' ou '..'
 	 *
-	 * @param string $path le path à tester
+	 * @param string $path le path Ã  tester
      *
 	 * @return bool vrai si le path est propre, faux sinon.
 	 */
@@ -262,17 +262,17 @@ final class Utils
 
 
     /**
-     * Recherche un fichier dans une liste de répertoires. Les répertoires sont
-     * examinés dans l'ordre où ils sont fournis.
+     * Recherche un fichier dans une liste de rÃ©pertoires. Les rÃ©pertoires sont
+     * examinÃ©s dans l'ordre oÃ¹ ils sont fournis.
      *
-     * @param string $file le fichier à chercher. Vous pouvez soit indiquer un
+     * @param string $file le fichier Ã  chercher. Vous pouvez soit indiquer un
      * simple nom de fichier (par exemple 'test.php') ou bien un 'bout' de
      * chemin ('/modules/test.php')
      *
-     * @param mixed $directory... les autres paramêtres indiquent les
-     * répertoires dans lesquels le fichier sera recherché.
+     * @param mixed $directory... les autres paramÃªtres indiquent les
+     * rÃ©pertoires dans lesquels le fichier sera recherchÃ©.
      *
-     * @return mixed false si le fichier n'a pas été trouvé, le
+     * @return mixed false si le fichier n'a pas Ã©tÃ© trouvÃ©, le
      * chemin exact du fichier dans le cas contraire.
      */
     public static function searchFile($file /* , $directory1, $directory2... $directoryn */)
@@ -297,7 +297,7 @@ final class Utils
     {
         self::$searchPath=array(Utils::realpath(Runtime::$fabRoot.'core/template'));
         // HACK: le fait de toujours avoir core/template dans le chemin est un hack
-        // il faudrait gérer des "états" et pouvoir revenir à un état donné
+        // il faudrait gÃ©rer des "Ã©tats" et pouvoir revenir Ã  un Ã©tat donnÃ©
     }
     public static function addSearchPath($path)
     {
@@ -306,19 +306,19 @@ final class Utils
     }
 
     /**
-     * Recherche un fichier dans une liste de répertoires, sans tenir compte de la
-     * casse du fichier recherché.
+     * Recherche un fichier dans une liste de rÃ©pertoires, sans tenir compte de la
+     * casse du fichier recherchÃ©.
      *
-     * Les répertoires sont examinés dans l'ordre où ils sont fournis.
+     * Les rÃ©pertoires sont examinÃ©s dans l'ordre oÃ¹ ils sont fournis.
      *
-     * @param string $file le fichier à chercher. Vous pouvez soit indiquer un
+     * @param string $file le fichier Ã  chercher. Vous pouvez soit indiquer un
      * simple nom de fichier (par exemple 'test.php') ou bien un 'bout' de
      * chemin ('/modules/test.php')
      *
-     * @param mixed $directory... les autres paramêtres indiquent les
-     * répertoires dans lesquels le fichier sera recherché.
+     * @param mixed $directory... les autres paramÃªtres indiquent les
+     * rÃ©pertoires dans lesquels le fichier sera recherchÃ©.
      *
-     * @return mixed false si le fichier n'a pas été trouvé, le
+     * @return mixed false si le fichier n'a pas Ã©tÃ© trouvÃ©, le
      * chemin exact du fichier dans le cas contraire.
      */
     public static function searchFileNoCase($file /* , $directory1, $directory2... $directoryn */)
@@ -327,15 +327,15 @@ final class Utils
         for ($i=1; $i<$nb; $i++)
         {
             $dir=rtrim(func_get_arg($i), '/\\');
-            if (is_dir($dir) &&  false !== $handle=opendir($dir)) // si le répertoire n'existe pas, on ignore
+            if (is_dir($dir) &&  false !== $handle=opendir($dir)) // si le rÃ©pertoire n'existe pas, on ignore
             {
                 while (($thisFile=readdir($handle)) !==false)
                 {
                 	if (strcasecmp($file, $thisFile)==0)
                     {
                         // pas de test && is_dir($thisFile)
-                        // faut être tordu pour mettre dans le même répertoire
-                        // un fichier et un sous-répertoire portant le même nom
+                        // faut Ãªtre tordu pour mettre dans le mÃªme rÃ©pertoire
+                        // un fichier et un sous-rÃ©pertoire portant le mÃªme nom
 
                         closedir($handle);
                         return Utils::realpath($dir . DIRECTORY_SEPARATOR . $thisFile);
@@ -348,7 +348,7 @@ final class Utils
     }
 
 
-    // TODO: doc à écrire
+    // TODO: doc Ã  Ã©crire
     public static function convertString($string, $table='bis')
     {
         static $charFroms=null, $tables=null;
@@ -398,7 +398,7 @@ final class Utils
                 'queryparser'=>
                     /*           0123456789ABCDEF*/
                     /* 00 */    '                '.
-                    /* 10 */    '     §          '.
+                    /* 10 */    '     Â§          '.
                     /* 20 */    '  "     ()*+ -. '.
                     /* 30 */    '0123456789:  :  '.
                     /* 40 */    '@abcdefghijklmno'.
@@ -529,7 +529,7 @@ final class Utils
                     /* F0 */    'dnooooo  uuuuyby',
 
 
-                'ident'=> // lettres majus, minus et chiffres (accents et caractères de contrôles supprimés)
+                'ident'=> // lettres majus, minus et chiffres (accents et caractÃ¨res de contrÃ´les supprimÃ©s)
                     /*           0123456789ABCDEF*/
                     /* 00 */    '                '.
                     /* 10 */    '                '.
@@ -550,34 +550,34 @@ final class Utils
             );
         }
         if (! isset($tables[$table]))
-            throw new Exception("La table de conversion de caractères '$table' n'existe pas");
+            throw new Exception("La table de conversion de caractÃ¨res '$table' n'existe pas");
 
     	return strtr($string, $charFroms, $tables[$table]);
     }
 
     /**
-     * Créée une table de conversion utilisable dans la fonction convertString ci-dessus.
+     * CrÃ©Ã©e une table de conversion utilisable dans la fonction convertString ci-dessus.
      *
-     * La fonction utilise iconv (qui doit être disponible) pour générer le source php d'une
-     * table permettant la conversion de caractères SBCS (un octet=un caractère).
+     * La fonction utilise iconv (qui doit Ãªtre disponible) pour gÃ©nÃ©rer le source php d'une
+     * table permettant la conversion de caractÃ¨res SBCS (un octet=un caractÃ¨re).
      *
-     * Utilisation : faire un echo du résultat obtenu et intégrer ce source dans la fonction
+     * Utilisation : faire un echo du rÃ©sultat obtenu et intÃ©grer ce source dans la fonction
      * convertString.
      *
-     * Exemple : pour créer une table conversion dos to ansi (plus exactement CP850 vers CP1252)
+     * Exemple : pour crÃ©er une table conversion dos to ansi (plus exactement CP850 vers CP1252)
      * il suffit de faire echo createConversionTable('CP850','CP1252');
      *
      * Remarques :
      *
-     * <li>l'option //TRANSLIT est ajoutée au charset de destination pour essayer de traduire
-     * approximativement les caractères qui n'ont pas de correspondance exacte.
-     * Par exemple, le caractère 'ƒ' sera traduit par 'f' pour en CP850.
+     * <li>l'option //TRANSLIT est ajoutÃ©e au charset de destination pour essayer de traduire
+     * approximativement les caractÃ¨res qui n'ont pas de correspondance exacte.
+     * Par exemple, le caractÃ¨re 'Æ’' sera traduit par 'f' pour en CP850.
      *
-     * <li>les caractères sans correspondance sont conservés tels quels dans la table.
+     * <li>les caractÃ¨res sans correspondance sont conservÃ©s tels quels dans la table.
      *
-     * @param string $fromCharset le jeu de caractère source
-     * @param string $toCharset le jeu de caractère destination
-     * @return string l'extrait de code PHP permettant de définir la table
+     * @param string $fromCharset le jeu de caractÃ¨re source
+     * @param string $toCharset le jeu de caractÃ¨re destination
+     * @return string l'extrait de code PHP permettant de dÃ©finir la table
      */
     public static function createConversionTable($fromCharset, $toCharset='CP1252')
     {
@@ -585,32 +585,32 @@ final class Utils
         $toOri=$toCharset;
         $toCharset.='//TRANSLIT';
 
-        // Vérifie que la fonction iconv est disponible
+        // VÃ©rifie que la fonction iconv est disponible
         if (! function_exists('iconv'))
             throw new Exception("La fonction iconv n'est pas disponible");
 
-        // Vérifie que les charset indiqués sont valides
+        // VÃ©rifie que les charset indiquÃ©s sont valides
         if (false===@iconv($fromCharset,$toCharset, 'a'))
-            throw new Exception("L'un des charset indiqués n'est pas valide : '$fromCharset', '$toCharset'");
+            throw new Exception("L'un des charset indiquÃ©s n'est pas valide : '$fromCharset', '$toCharset'");
 
-        // Génère l'entête de la table
+        // GÃ©nÃ¨re l'entÃªte de la table
         $table = '$table = // Table de conversion ' . $fromCharset . ' vers ' . $toOri . "\n";
         $table.= '/*          00  01  02  03  04  05  06  07  08  09  0a  0b  0c  0d  0e  0f */' . "\n";
 
-        // Génère chacune des lignes
+        // GÃ©nÃ¨re chacune des lignes
         for ($i=0; $i<16; $i++)
         {
-            // Génère l'entête de la ligne
+            // GÃ©nÃ¨re l'entÃªte de la ligne
             $table .= '/* '. dechex($i). '0 */ "';
 
-            // Génère les 16 valeurs de la ligne
+            // GÃ©nÃ¨re les 16 valeurs de la ligne
             for ($j=0; $j<16; $j++)
             {
-                // Essaie de convertir le caractère
+                // Essaie de convertir le caractÃ¨re
                 $code=$i*16 + $j;
                 $char=@iconv($fromCharset, $toCharset, chr($code));
 
-                // iconv retourne '' si elle n'arraive pas à convertir le caractère
+                // iconv retourne '' si elle n'arraive pas Ã  convertir le caractÃ¨re
                 if ($char!=='') $code=ord($char);
 
                 $table .= '\x'. str_pad(dechex($code), 2, '0', STR_PAD_LEFT);
@@ -620,9 +620,9 @@ final class Utils
             $table .= '"'. ($i<15?' .':';'). "\n";
         }
 
-        // Génère un exemple
+        // GÃ©nÃ¨re un exemple
         $table.= '// Exemple :' . "\n";
-        $h='Le cœur déçu mais l\'âme plutôt naïve, Louÿs rêva de crapaüter en canoë au delà des îles, près du mälström où brûlent les novæ (http://en.wikipedia.org/wiki/Pangram)';
+        $h='Le cÅ“ur dÃ©Ã§u mais l\'Ã¢me plutÃ´t naÃ¯ve, LouÃ¿s rÃªva de crapaÃ¼ter en canoÃ« au delÃ  des Ã®les, prÃ¨s du mÃ¤lstrÃ¶m oÃ¹ brÃ»lent les novÃ¦ (http://en.wikipedia.org/wiki/Pangram)';
         $len=max(strlen($fromCharset),strlen($toOri));
         $table .= '// ' . str_pad($fromCharset,$len) . " : $h\n";
         for($i=0; $i<strlen($h);$i++)
@@ -631,16 +631,16 @@ final class Utils
 
         for($i=128; $i<256; $i++)
             $h.=chr($i);
-        // Retourne le résultat
+        // Retourne le rÃ©sultat
         return $table;
     }
 
 
     /**
-     * Met en minuscule la première lettre de la chaine passée en paramètre et
-     * retourne le résultat obtenu.
+     * Met en minuscule la premiÃ¨re lettre de la chaine passÃ©e en paramÃ¨tre et
+     * retourne le rÃ©sultat obtenu.
      *
-     * @param string $str la chaine à convertir
+     * @param string $str la chaine Ã  convertir
      *
      * @return string la chaine obtenue
      */
@@ -651,29 +651,29 @@ final class Utils
 
 
     /**
-     * Retourne la valeur de la variable passée en paramêtre si celle-ci est
-     * définie et contient autre chose qu'une chaine vide ou la valeur par
-     * défaut sinon.
+     * Retourne la valeur de la variable passÃ©e en paramÃªtre si celle-ci est
+     * dÃ©finie et contient autre chose qu'une chaine vide ou la valeur par
+     * dÃ©faut sinon.
      *
-     * Remarque : la fonction repose sur le fait que la variable à examiner est
-     * passée par référence, bien que la fonction ne modifie aucune variable. Ca
-     * évite que php génère un warning indiquant que la variable n'existe pas.
+     * Remarque : la fonction repose sur le fait que la variable Ã  examiner est
+     * passÃ©e par rÃ©fÃ©rence, bien que la fonction ne modifie aucune variable. Ca
+     * Ã©vite que php gÃ©nÃ¨re un warning indiquant que la variable n'existe pas.
      *
      * On peut appeller la fonction avec une variable simple, un tableau, un
-     * élément de tableau, etc.
+     * Ã©lÃ©ment de tableau, etc.
      *
-     * Remarque 2 : anyVar doit être une variable. ça ne marchera pas si c'est
-     * un appel de fonction, une propriété inexistante d'un objet, une
+     * Remarque 2 : anyVar doit Ãªtre une variable. Ã§a ne marchera pas si c'est
+     * un appel de fonction, une propriÃ©tÃ© inexistante d'un objet, une
      * constante, etc.
      *
-     * Remarque 3 : équivalent à 'empty', mais ne retourne pas vrai pour une
-     * chaine contenant la valeur '0' ou pour un entier 0 ou pour un booléen
+     * Remarque 3 : Ã©quivalent Ã  'empty', mais ne retourne pas vrai pour une
+     * chaine contenant la valeur '0' ou pour un entier 0 ou pour un boolÃ©en
      * false.
      *
-     * @param mixed $anyVar	la variable à examiner.
+     * @param mixed $anyVar	la variable Ã  examiner.
      *
-     * @param mixed $defaultValue la valeur par défaut à retourner si $anyVar
-     * n'est pas définie (optionnel, valeur par défaut null).
+     * @param mixed $defaultValue la valeur par dÃ©faut Ã  retourner si $anyVar
+     * n'est pas dÃ©finie (optionnel, valeur par dÃ©faut null).
      *
      * @return mixed
      */
@@ -687,7 +687,7 @@ final class Utils
         return $anyVar;
     }
 
-// idem mais nb 'illimité' de variables passées par référence. pb : oblige à passer defaultvalue
+// idem mais nb 'illimitÃ©' de variables passÃ©es par rÃ©fÃ©rence. pb : oblige Ã  passer defaultvalue
 // en premier ce qui est contre-intuitif.
 //    public static function getAny($defaultValue, &$var1, &$var2=null, &$var3=null, &$var4=null, &$var5=null)
 //    {
@@ -706,23 +706,23 @@ final class Utils
 
 
     /**
-     * Retourne le path du script qui a appellé la fonction qui appelle
+     * Retourne le path du script qui a appellÃ© la fonction qui appelle
      * callerScript.
      *
      * Exemple : un script 'un.php' appelle une fonction test() qui se trouve
-     * ailleurs. La fonction test() veut savoir qui l'a appellé. Elle appelle
+     * ailleurs. La fonction test() veut savoir qui l'a appellÃ©. Elle appelle
      * callerScript() qui va retourner le path complet de 'un.php'
      *
-     * @param int $level le nombre de parents à ignorer
+     * @param int $level le nombre de parents Ã  ignorer
      *
      * @return string
      */
     public static function callerScript($level=1)
     {
         $stack=debug_backtrace();
-        // En 0, on a la trace pour la fonction qui nous a appellé
-        // En 1, on a la trace de la fonction qui a appellé celle qui nous a appellé.
-        // en général, c'est ça qu'on veut, donc $level=1 par défaut
+        // En 0, on a la trace pour la fonction qui nous a appellÃ©
+        // En 1, on a la trace de la fonction qui a appellÃ© celle qui nous a appellÃ©.
+        // en gÃ©nÃ©ral, c'est Ã§a qu'on veut, donc $level=1 par dÃ©faut
 
         return $stack[$level]['file'];
     }
@@ -731,9 +731,9 @@ final class Utils
     public static function callerObject($level=1)
     {
         $stack=debug_backtrace();
-        // En 0, on a la trace pour la fonction qui nous a appellé
-        // En 1, on a la trace de la fonction qui a appellé celle qui nous a appellé.
-        // en général, c'est ça qu'on veut, donc $level=1 par défaut
+        // En 0, on a la trace pour la fonction qui nous a appellÃ©
+        // En 1, on a la trace de la fonction qui a appellÃ© celle qui nous a appellÃ©.
+        // en gÃ©nÃ©ral, c'est Ã§a qu'on veut, donc $level=1 par dÃ©faut
 
         return isset($stack[$level]['object']) ? $stack[$level]['object'] : null;
     }
@@ -741,9 +741,9 @@ final class Utils
     public static function callerClass($level=1)
     {
         $stack=debug_backtrace();
-        // En 0, on a la trace pour la fonction qui nous a appellé
-        // En 1, on a la trace de la fonction qui a appellé celle qui nous a appellé.
-        // en général, c'est ça qu'on veut, donc $level=1 par défaut
+        // En 0, on a la trace pour la fonction qui nous a appellÃ©
+        // En 1, on a la trace de la fonction qui a appellÃ© celle qui nous a appellÃ©.
+        // en gÃ©nÃ©ral, c'est Ã§a qu'on veut, donc $level=1 par dÃ©faut
 
         return @$stack[$level]['class'].@$stack[$level]['type'].@$stack[$level]['function']; // TODO: pourquoi le @ ?
     }
@@ -781,43 +781,43 @@ final class Utils
     }
 
 
-    // répare $_GET, $_REQUEST et $_POST
+    // rÃ©pare $_GET, $_REQUEST et $_POST
     // remarque : php://input n'est pas disponible avec enctype="multipart/form-data".
     /**
-     * Restaure la valeur correcte des paramètres de la requête pour lesquels
-     * plusieurs valeurs ont été transmises.
+     * Restaure la valeur correcte des paramÃ¨tres de la requÃªte pour lesquels
+     * plusieurs valeurs ont Ã©tÃ© transmises.
      *
-     * Par défaut, en PHP, si on veut plusieurs valeurs pour un même paramètre,
-     * il faut que ce paramètre soit nommé comme un tableau php (i.e. dans un
+     * Par dÃ©faut, en PHP, si on veut plusieurs valeurs pour un mÃªme paramÃ¨tre,
+     * il faut que ce paramÃ¨tre soit nommÃ© comme un tableau php (i.e. dans un
      * formulaire, il faudra indiquer <input name="param[]"... />). Si on ne le
      * fait pas, seule la derniere valeur sera disponible dans PHP (pour
-     * reprendre l'exemple ci-dessus, si on a deux champs input appellés param,
+     * reprendre l'exemple ci-dessus, si on a deux champs input appellÃ©s param,
      * sans les crochets, $_GET['param'] contiendra un scalaire correspondant
-     * à ce qui a été saisi dans le second champ input).
+     * Ã  ce qui a Ã©tÃ© saisi dans le second champ input).
      * cf http://php.net/language.variables.external.php
      *
-     * Le but de cette méthode est de modifier ce comportement de php et de
-     * faire en sorte que, si plusieurs valeurs ont été transmises pour un
-     * paramètre, on récupère dans $_GET, $_POST et $_REQUEST non pas la
-     * dernière valeur transmise mais un tableau de paramètre.
+     * Le but de cette mÃ©thode est de modifier ce comportement de php et de
+     * faire en sorte que, si plusieurs valeurs ont Ã©tÃ© transmises pour un
+     * paramÃ¨tre, on rÃ©cupÃ¨re dans $_GET, $_POST et $_REQUEST non pas la
+     * derniÃ¨re valeur transmise mais un tableau de paramÃ¨tre.
      */
     public static function repairGetPostRequest()
     {
-        // En méthode 'GET', on travaille avec la query_string et $_GET
+        // En mÃ©thode 'GET', on travaille avec la query_string et $_GET
         if (self::isGet())
         {
             $raw = '&'. Runtime::$queryString=$_SERVER['QUERY_STRING'];
             $t= & $_GET;
         }
 
-        // En méthodes POST et PUT, on utilise l'entrée standard et $_POST
+        // En mÃ©thodes POST et PUT, on utilise l'entrÃ©e standard et $_POST
         else
         {
             $raw = '&'. Runtime::$queryString=file_get_contents('php://input');
             $t = & $_POST;
         }
 
-        // Parcourt tous les arguments et modifie ceux qui sont multivalués
+        // Parcourt tous les arguments et modifie ceux qui sont multivaluÃ©s
         foreach($t as $key=>$value)
         {
             $re='/&'.preg_quote(urlencode($key),'~').'=([^&]*)/';
@@ -830,7 +830,7 @@ final class Utils
 
 
     /**
-     * Retourne vrai si on a été appellé en méthode 'GET' ou 'HEAD'
+     * Retourne vrai si on a Ã©tÃ© appellÃ© en mÃ©thode 'GET' ou 'HEAD'
      *
      * @return bool
      */
@@ -841,7 +841,7 @@ final class Utils
 
 
     /**
-     * Retourne vrai si on a été appellé en méthode 'POST' ou 'PUT'
+     * Retourne vrai si on a Ã©tÃ© appellÃ© en mÃ©thode 'POST' ou 'PUT'
      *
      * @return bool
      */
@@ -851,15 +851,15 @@ final class Utils
     }
 
     /**
-     * Détermine si la requête en cours est une requête ajax ou non.
+     * DÃ©termine si la requÃªte en cours est une requÃªte ajax ou non.
      *
-     * La détection est basée sur la présence ou non de l'entête http
-     * X_REQUESTED_WITH qui est ajouté à la requête http par les librairies
+     * La dÃ©tection est basÃ©e sur la prÃ©sence ou non de l'entÃªte http
+     * X_REQUESTED_WITH qui est ajoutÃ© Ã  la requÃªte http par les librairies
      * ajax les plus courante (cas de prototype, jquery, YUI, mais pas
      * de dojo).
      *
-     * @return boolean true si la requête http contient un entête
-     * x-requested-withcontenant la valeur XMLHttpRequest (sensible à la casse)
+     * @return boolean true si la requÃªte http contient un entÃªte
+     * x-requested-withcontenant la valeur XMLHttpRequest (sensible Ã  la casse)
      */
     public static function isAjax()
     {
@@ -869,11 +869,11 @@ final class Utils
 //    /**
 //     * Charge un fichier de configuration au format YAML
 //     *
-//     * Par défaut, la fonction utilise la classe {@link spyc} mais si
-//     * l'extension syck, qui est beaucoup plus rapide, est installée, c'est
-//     * cette extension qui sera utilisée.
+//     * Par dÃ©faut, la fonction utilise la classe {@link spyc} mais si
+//     * l'extension syck, qui est beaucoup plus rapide, est installÃ©e, c'est
+//     * cette extension qui sera utilisÃ©e.
 //     *
-//     * @param string $path le path du fichier à charger
+//     * @param string $path le path du fichier Ã  charger
 //     *
 //     * @return array un tableau associatif contenant la configuration lue
 //     */
@@ -902,7 +902,7 @@ final class Utils
 //    }
 //
     /**
-     * Retourne le path du répertoire 'temp' du système.
+     * Retourne le path du rÃ©pertoire 'temp' du systÃ¨me.
      * Le path obtenu n'a jamais de slash final.
      *
      * @return string le path obtenu
@@ -911,17 +911,17 @@ final class Utils
     {
         static $dir=null;
 
-        // Si on a déjà déterminé le répertoire temp, terminé
+        // Si on a dÃ©jÃ  dÃ©terminÃ© le rÃ©pertoire temp, terminÃ©
         if (!is_null($dir)) return $dir;
 
         /*
-        remarques : la fonction sys_get_temp_dir() a été introduite (en douce!)
-        dans php 5.2.2 mais elle est buggée : elle ne tient pas compte des variables
-        d'environnemenet temp ou tmp éventuellement définies.
-        Par ailleurs, ces variables ne semble plus transmises à php, donc on n'a
-        aucun moyen de les récupérer.
-        Résultat : pour le moment, un appel à Utils::getTempDirectory() retourne
-        toujours le répertoire windows.
+        remarques : la fonction sys_get_temp_dir() a Ã©tÃ© introduite (en douce!)
+        dans php 5.2.2 mais elle est buggÃ©e : elle ne tient pas compte des variables
+        d'environnemenet temp ou tmp Ã©ventuellement dÃ©finies.
+        Par ailleurs, ces variables ne semble plus transmises Ã  php, donc on n'a
+        aucun moyen de les rÃ©cupÃ©rer.
+        RÃ©sultat : pour le moment, un appel Ã  Utils::getTempDirectory() retourne
+        toujours le rÃ©pertoire windows.
         */
 
         // Si la fonction sys_get_temp_dir est dispo (php 6 ?), on l'utilise
@@ -940,25 +940,25 @@ final class Utils
     }
 
     /**
-     * Crée un fichier temporaire et retourne un handle ouvert en écriture
+     * CrÃ©e un fichier temporaire et retourne un handle ouvert en Ã©criture
      *
-     * Le fichier est créé dans le répertoire temporaire du système tel que
-     * retourné par {@link getTempDirectory()}.
+     * Le fichier est crÃ©Ã© dans le rÃ©pertoire temporaire du systÃ¨me tel que
+     * retournÃ© par {@link getTempDirectory()}.
      *
-     * @param int $timeToLive la durée de vie du fichier temporaire, en secondes
-     * Le fichier existera pendant au moins la durée indiquée, mais pourra être supprimé
-     * à tout moment une fois ce délai dépassé. Si timeToLive est à zéro, le fichier sera
-     * supprimé dès la fin de l'exécution du script.
+     * @param int $timeToLive la durÃ©e de vie du fichier temporaire, en secondes
+     * Le fichier existera pendant au moins la durÃ©e indiquÃ©e, mais pourra Ãªtre supprimÃ©
+     * Ã  tout moment une fois ce dÃ©lai dÃ©passÃ©. Si timeToLive est Ã  zÃ©ro, le fichier sera
+     * supprimÃ© dÃ¨s la fin de l'exÃ©cution du script.
      *
-     * @param string $basename le nom de base du fichier à créer
+     * @param string $basename le nom de base du fichier Ã  crÃ©er
      *
-     * @return resource le handle du fichier temporaire, ouvert en accès x+
+     * @return resource le handle du fichier temporaire, ouvert en accÃ¨s x+
      */
     public static function getTempFile($timeToLive=0, $basename='tmp.txt', $type='')
     {
         static $firstCall=true;
 
-        // Si c'est le premier appel, installe le gestionnaire chargé du nettoyage
+        // Si c'est le premier appel, installe le gestionnaire chargÃ© du nettoyage
         if ($firstCall)
         {
         	$firstCall=false;
@@ -967,29 +967,29 @@ final class Utils
 
         if ($timeToLive<0) $timeToLive=0;
 
-        // Détermine le répertoire des fichiers temporaires
+        // DÃ©termine le rÃ©pertoire des fichiers temporaires
     	$dir=self::getTempDirectory().DIRECTORY_SEPARATOR;
 
-        // Extrait de basename l'extension et le préfixe demandés
+        // Extrait de basename l'extension et le prÃ©fixe demandÃ©s
         $ext=Utils::getExtension($basename);
         $basename='fab'.basename($basename, $ext);
 
-        // Essaie de créer un fichier temporaire
+        // Essaie de crÃ©er un fichier temporaire
         for($i=0; $i<100; $i++)
         {
-            // Le nom du fichier généré contient :
+            // Le nom du fichier gÃ©nÃ©rÃ© contient :
             $path=sprintf
             (
                 '%s%s-%d-%d-%d%s',
                 $dir,
-                $basename,      // le nom de base demandé
-                time(),         // la date/heure de création
-                rand(),         // un nombre aléatoire
-                $timeToLive,    // la durée de vie du fichier
-                $ext            // l'extension demandée
+                $basename,      // le nom de base demandÃ©
+                time(),         // la date/heure de crÃ©ation
+                rand(),         // un nombre alÃ©atoire
+                $timeToLive,    // la durÃ©e de vie du fichier
+                $ext            // l'extension demandÃ©e
             );
 
-            // Essaie de créer le fichier, s'il n'existe pas on ré-essaiera avec un autre nombre aléatoire
+            // Essaie de crÃ©er le fichier, s'il n'existe pas on rÃ©-essaiera avec un autre nombre alÃ©atoire
             if (false !== $file=@fopen($path, 'xb+'))
             {
                 if ($timeToLive===0)
@@ -998,15 +998,15 @@ final class Utils
             }
         }
 
-        throw new Exception('Impossible de créer le fichier temporaire');
+        throw new Exception('Impossible de crÃ©er le fichier temporaire');
     }
 
     /**
-     * Supprime les fichiers temporaires créés par getTempFile
+     * Supprime les fichiers temporaires crÃ©Ã©s par getTempFile
      *
-     * Cette fonction est automatiquement installée comme fonction de terminaison
-     * exécutée à la fin du script lorsque getTempFile() est appellée, mais elle peut
-     * aussi être appellée directement.
+     * Cette fonction est automatiquement installÃ©e comme fonction de terminaison
+     * exÃ©cutÃ©e Ã  la fin du script lorsque getTempFile() est appellÃ©e, mais elle peut
+     * aussi Ãªtre appellÃ©e directement.
      */
     public static function cleanTempFiles() // private impossible, register_shutdown_function veut une fonction publique
     {
@@ -1019,8 +1019,8 @@ final class Utils
                 $ttl=(int)$match[2];
 
                  // on ne supprime pas les fichiers qui ont un ttl=0 car sinon, on risque
-                 // de supprimer un fichier qui vient juste d'être créé par un autre script
-                 // (ils seront supprimés à la fin du script, cf getTempFile)
+                 // de supprimer un fichier qui vient juste d'Ãªtre crÃ©Ã© par un autre script
+                 // (ils seront supprimÃ©s Ã  la fin du script, cf getTempFile)
                 if ($ttl!==0)
                     if (time()>$creation+$ttl) @unlink($path);
             }
@@ -1028,10 +1028,10 @@ final class Utils
     }
 
     /**
-     * Retourne l'adresse d'un fichier ouvert (son chemin d'accès pour un fichier local)
+     * Retourne l'adresse d'un fichier ouvert (son chemin d'accÃ¨s pour un fichier local)
      *
-     * Cette fonction a été écrite à l'origine pour connaître le path d'un fichier
-     * temporaire retourné par getTempFile(), c'est simplement un wrapper autour de la
+     * Cette fonction a Ã©tÃ© Ã©crite Ã  l'origine pour connaÃ®tre le path d'un fichier
+     * temporaire retournÃ© par getTempFile(), c'est simplement un wrapper autour de la
      * fonction stream_get_meta_data().
      *
      * @param resource $handle le handle du fichier ouvert
@@ -1044,27 +1044,27 @@ final class Utils
     }
 
     /**
-     * Affiche ou retourne la représentation sous forme de code php
-     * du contenu de la variable passée en paramètre.
+     * Affiche ou retourne la reprÃ©sentation sous forme de code php
+     * du contenu de la variable passÃ©e en paramÃ¨tre.
      *
-     * Cette fonction fait la même chose que la fonction standard
+     * Cette fonction fait la mÃªme chose que la fonction standard
      * {@link http://php.net/var_export var_export()} de php, mais elle
-     * génère un code plus compact pour les tableaux (pour les autres variables,
-     * la sortie générée est la même qu'avec var_export())
+     * gÃ©nÃ¨re un code plus compact pour les tableaux (pour les autres variables,
+     * la sortie gÃ©nÃ©rÃ©e est la mÃªme qu'avec var_export())
      *
-     * - pas de retours chariots ni d'espaces inutiles dans le code généré
-     * - ne génère les index de tableau que s'ils sont différents de
-     * l'index qui serait automatiquement attribué s'il n'avait pas été
-     * spécifié
+     * - pas de retours chariots ni d'espaces inutiles dans le code gÃ©nÃ©rÃ©
+     * - ne gÃ©nÃ¨re les index de tableau que s'ils sont diffÃ©rents de
+     * l'index qui serait automatiquement attribuÃ© s'il n'avait pas Ã©tÃ©
+     * spÃ©cifiÃ©
      *
      * Exemple :
      * avec le tableau
      * <code>$t=array('a', 10=>'b', 'c', 'key'=>'d', 'e');</code>
      *
-     * On génère le code :
+     * On gÃ©nÃ¨re le code :
      * <code>array('a',10=>'b','c','key'=>'d','e')</code>
      *
-     * Alors que la fonction var_export de php génère :
+     * Alors que la fonction var_export de php gÃ©nÃ¨re :
      * <code>
      * array (
      *   0 => 'a',
@@ -1075,13 +1075,13 @@ final class Utils
      * )
      * </code>
      *
-     * @param mixed $var la variable à afficher
-     * @param boolean $return false : la fonction affiche le résultat,
-     * true : la fonction retourne le résultat
+     * @param mixed $var la variable Ã  afficher
+     * @param boolean $return false : la fonction affiche le rÃ©sultat,
+     * true : la fonction retourne le rÃ©sultat
      */
     public static function varExport($var, $return = false)
     {
-        if(is_null($var)) return 'null'; // juste parce que je le préfère en minu...
+        if(is_null($var)) return 'null'; // juste parce que je le prÃ©fÃ¨re en minu...
         if (! is_array($var)) return var_export($var, $return);
 
         $t = array();
@@ -1105,13 +1105,13 @@ final class Utils
     }
 
     /**
-     * Retourne une version colorisée du code php passé en paramètre
+     * Retourne une version colorisÃ©e du code php passÃ© en paramÃ¨tre
      *
      * Il s'agit d'un wrapper autour de la fonction php highlight_string()
-     * qui se charge d'ajouter (puis d'enlever) les tags de début et de fin
+     * qui se charge d'ajouter (puis d'enlever) les tags de dÃ©but et de fin
      * de code php
      *
-     * @param string $php le code php à coloriser
+     * @param string $php le code php Ã  coloriser
      * @return string
      */
     public static function highlight($php)
@@ -1121,13 +1121,13 @@ final class Utils
     }
 
     /**
-     * Retourne le numéro du dernier jour d'un mois (où, ce qui est la même
-     * chose, le nombre de jours d'un mois donné).
+     * Retourne le numÃ©ro du dernier jour d'un mois (oÃ¹, ce qui est la mÃªme
+     * chose, le nombre de jours d'un mois donnÃ©).
      *
-     * La fonction tiens compte des années bissextiles pour le mois de février.
+     * La fonction tiens compte des annÃ©es bissextiles pour le mois de fÃ©vrier.
      *
-     * @param int $month le numéro du mois
-     * @param int $year l'année.
+     * @param int $month le numÃ©ro du mois
+     * @param int $year l'annÃ©e.
      */
     public static function lastDay($month, $year=null)
     {
@@ -1143,48 +1143,48 @@ final class Utils
     }
 
     /**
-     * Génère les termes utilisables dans une équation de recherche booléenne
-     * permettant de rechercher les enregistrements ayant une date située entre la
-     * date de début et de fin données.
+     * GÃ©nÃ¨re les termes utilisables dans une Ã©quation de recherche boolÃ©enne
+     * permettant de rechercher les enregistrements ayant une date situÃ©e entre la
+     * date de dÃ©but et de fin donnÃ©es.
      *
-     * Les jours sont représentés par un terme de la forme 'yyyymmdd', les mois
-     * entiers par un terme avec troncature de la forme 'yyyymm*' et les années entières
+     * Les jours sont reprÃ©sentÃ©s par un terme de la forme 'yyyymmdd', les mois
+     * entiers par un terme avec troncature de la forme 'yyyymm*' et les annÃ©es entiÃ¨res
      * par un terme avec troncature de la forme 'yyyy*'.
      *
-     * L'algorithme utilisé essaie de limiter autant que possible le nombre de termes
-     * générés. Il gère correctement le mois de février, y compris en cas d'année
+     * L'algorithme utilisÃ© essaie de limiter autant que possible le nombre de termes
+     * gÃ©nÃ©rÃ©s. Il gÃ¨re correctement le mois de fÃ©vrier, y compris en cas d'annÃ©e
      * bissextile.
      *
      * Exemple : dateRange('20070101','20080302') va retourner un tableau contenant
      * les termes '2007*', '200801*', '200802*', '20080301' et '20080302'.
      *
-     * Les dates doivent être indiquées au format GNU :
+     * Les dates doivent Ãªtre indiquÃ©es au format GNU :
      * {@link http://www.gnu.org/software/tar/manual/html_node/tar_109.html}
      *
      * Remarques :
      *
      * - les bornes de l'intervalles sont inclues dans l'intervalle.
      *
-     * - si vous utilisez des unités GNU relatives, telles que tomorrow ou +1day,
-     * il faut que la première date indiquée ($fromDate) fixe le temps de référence.
-     * Si la première date est elle-même une unité relative, alors elle sera calculée
-     * par rapport à la date actuelle.
+     * - si vous utilisez des unitÃ©s GNU relatives, telles que tomorrow ou +1day,
+     * il faut que la premiÃ¨re date indiquÃ©e ($fromDate) fixe le temps de rÃ©fÃ©rence.
+     * Si la premiÃ¨re date est elle-mÃªme une unitÃ© relative, alors elle sera calculÃ©e
+     * par rapport Ã  la date actuelle.
      * Autrement dit, dateRange('today','+1week') fonctionnera mais pas
-     * dateRange('+1week','today'). Dans le deuxième cas, +1week sera calculé à partir
-     * de maintenant, puis 'today' sera calculé par rapport à cette date, ce qui fait
+     * dateRange('+1week','today'). Dans le deuxiÃ¨me cas, +1week sera calculÃ© Ã  partir
+     * de maintenant, puis 'today' sera calculÃ© par rapport Ã  cette date, ce qui fait
      * que vous obtiendrez un intervalle d'un seul jour (le jour dans une semaine).
      *
      * - l'algorithme ne pousse pas jusqu'au bout les optimisations permettant de limiter
-     * le nombre de termes générés. Par exemple, si on a les 11 premiers mois de l'année,
-     * il génère tous les mois un par un et non pas '20070*', '200710'et '200711' (idem
-     * pour les jours et les années.
+     * le nombre de termes gÃ©nÃ©rÃ©s. Par exemple, si on a les 11 premiers mois de l'annÃ©e,
+     * il gÃ©nÃ¨re tous les mois un par un et non pas '20070*', '200710'et '200711' (idem
+     * pour les jours et les annÃ©es.
      *
-     * @param $fromDate la date de départ de l'intervalle.
+     * @param $fromDate la date de dÃ©part de l'intervalle.
      *
      * @param $toDate la date de fin de l'intervalle.
      *
      * @return array un tableau contenant tous les tokens de recherche correspondant
-     * à l'intervalle indiqué. Pour créer une équation de recherche à partir du tableau
+     * Ã  l'intervalle indiquÃ©. Pour crÃ©er une Ã©quation de recherche Ã  partir du tableau
      * obtenu, vous pouvez utiliser quelque chose comme :
      *
      * <code>
@@ -1200,16 +1200,16 @@ final class Utils
         // Convertit les dates au format GNU en timestamps
 
         if (false === $fromDate=strtotime($fromDate))
-            throw new Exception('Date de début invalide : '.$fromDate);
+            throw new Exception('Date de dÃ©but invalide : '.$fromDate);
 
         if (false === $toDate=strtotime($toDate))
             throw new Exception('Date de fin invalide : '.$toDate);
 
-        // Inverse les dates si la date de début est après la date de fin
+        // Inverse les dates si la date de dÃ©but est aprÃ¨s la date de fin
         if ($fromDate>$toDate)
           list($fromDate,$toDate)=array($toDate,$fromDate);
 
-        // Extrait l'année, le mois et le jour de chaque date
+        // Extrait l'annÃ©e, le mois et le jour de chaque date
         $t=getdate($fromDate);
         $y1=$t['year'];
         $m1=$t['mon'];
@@ -1224,32 +1224,32 @@ final class Utils
             Algorithme :
             - y1=y2
                 - m1=m2
-                    * jours de y1/m1/d1 à y1/m1/d2 ou y1/m1* si d1=1 et d2=lastday(m1,y1)
+                    * jours de y1/m1/d1 Ã  y1/m1/d2 ou y1/m1* si d1=1 et d2=lastday(m1,y1)
                 - m1<m2
-                    - année complète (d1=1 et m1=1 et m2=12 et d2=12):
+                    - annÃ©e complÃ¨te (d1=1 et m1=1 et m2=12 et d2=12):
                         * y1*
                     - sinon
-                        * pour m1 : jours de y1/m1/d1 à y1/m1/lastDay(m1) ou y1/m1* si d1=1
-                        * mois de y1/m1+1 à y1/m2-1
-                        * pour m2 : jours de y1/m2/01 à y1/m2/d2 ou y1/m2* si d2=lastDay(m2,y1)
+                        * pour m1 : jours de y1/m1/d1 Ã  y1/m1/lastDay(m1) ou y1/m1* si d1=1
+                        * mois de y1/m1+1 Ã  y1/m2-1
+                        * pour m2 : jours de y1/m2/01 Ã  y1/m2/d2 ou y1/m2* si d2=lastDay(m2,y1)
             - y1<y2
-                - y1 année complète (d1=1 et m1=1)
+                - y1 annÃ©e complÃ¨te (d1=1 et m1=1)
                     * y1*
                 - sinon
-                    * pour m1 : jours de y1/m1/d1 à y1/m1/lastDay(m1) ou y1/m1* si d1=1
-                    * pour y1 : mois de y1/m1+1 à y1/12
-                - années de y1+1 à y2-1
-                - y2 année complète (m2=12 et d2=31)
+                    * pour m1 : jours de y1/m1/d1 Ã  y1/m1/lastDay(m1) ou y1/m1* si d1=1
+                    * pour y1 : mois de y1/m1+1 Ã  y1/12
+                - annÃ©es de y1+1 Ã  y2-1
+                - y2 annÃ©e complÃ¨te (m2=12 et d2=31)
                     * y2*
                 -sinon
-                    * pour y2 : mois de y2/01 à y2/m2-1
-                    * pour m2 : jours de y2/m2/01 à y2/m2/d2 ou y2/m2* si d2=lastDay(m2)
+                    * pour y2 : mois de y2/01 Ã  y2/m2-1
+                    * pour m2 : jours de y2/m2/01 Ã  y2/m2/d2 ou y2/m2* si d2=lastDay(m2)
         */
         if ($y1==$y2)
         {
         	if ($m1==$m2)
             {
-                // jours de y1/m1/d1 à y1/m1/d2 ou y1/m1* si d1=1 et d2=lastday(m1,y1)
+                // jours de y1/m1/d1 Ã  y1/m1/d2 ou y1/m1* si d1=1 et d2=lastday(m1,y1)
                 if ($d1==1 && $d2==Utils::lastDay($m1,$y1))
                     $result[]=sprintf('%d%02d*', $y1, $m1);
                 else
@@ -1258,24 +1258,24 @@ final class Utils
             }
             else // m1<m2
             {
-                // année complète
+                // annÃ©e complÃ¨te
                 if ($d1==1 && $m1==1 && $m2==12 && $d2==31)
             	   $result[]=sprintf('%d*', $y1);
                 else
                 {
 
-                    // pour m1 : jours de y1/m1/d1 à y1/m1/lastDay(m1) ou y1/m1* si d1=1
+                    // pour m1 : jours de y1/m1/d1 Ã  y1/m1/lastDay(m1) ou y1/m1* si d1=1
                     if ($d1==1)
                         $result[]=sprintf('%d%02d*', $y1, $m1);
                     else
                         for ($last=Utils::lastDay($m1, $y1) ; $d1 <= $last ; $d1++)
                             $result[]=sprintf('%d%02d%02d'.$wild, $y1, $m1, $d1);
 
-                    // mois de y1/m1+1 à y1/m2-1
+                    // mois de y1/m1+1 Ã  y1/m2-1
                     while (++$m1 < $m2)
                         $result[]=sprintf('%d%02d*', $y1, $m1);
 
-                    // pour m2 : jours de y1/m2/01 à y1/m2/d2 ou y1/m2* si d2=lastDay(m2,y1)
+                    // pour m2 : jours de y1/m2/01 Ã  y1/m2/d2 ou y1/m2* si d2=lastDay(m2,y1)
                     if ($d2==Utils::lastDay($m2,$y1))
                         $result[]=sprintf('%d%02d*', $y1, $m2);
                     else
@@ -1286,37 +1286,37 @@ final class Utils
         }
         else // y1<y2
         {
-            // y1 année complète
+            // y1 annÃ©e complÃ¨te
             if ($d1==1 && $m1==1)
                $result[]=sprintf('%d*', $y1);
             else
             {
-                // pour m1 : jours de y1/m1/d1 à y1/m1/lastDay(m1) ou y1/m1* si d1=1
+                // pour m1 : jours de y1/m1/d1 Ã  y1/m1/lastDay(m1) ou y1/m1* si d1=1
                 if ($d1==1)
                     $result[]=sprintf('%d%02d*', $y1, $m1);
                 else
                     for ($last = Utils::lastDay($m1, $y1) ; $d1 <= $last ; $d1++)
                         $result[]=sprintf('%d%02d%02d'.$wild, $y1, $m1, $d1);
 
-                // pour y1 : mois de y1/m1+1 à y1/12
+                // pour y1 : mois de y1/m1+1 Ã  y1/12
                 while (++$m1 <= 12)
                     $result[]=sprintf('%d%02d*', $y1, $m1);
             }
 
-            // années de y1+1 à y2-1
+            // annÃ©es de y1+1 Ã  y2-1
             while (++$y1 < $y2)
                 $result[]=sprintf('%d*', $y1);
 
-            // y2 année complète
+            // y2 annÃ©e complÃ¨te
             if ($m2==12 && $d2==31)
                $result[]=sprintf('%d*', $y2);
             else
             {
-                // pour y2 : mois de y2/01 à y2/m2-1
+                // pour y2 : mois de y2/01 Ã  y2/m2-1
                 for ($m1=1; $m1<$m2; $m1++)
                     $result[]=sprintf('%d%02d*', $y1, $m1);
 
-                // pour m2 : jours de y2/m2/01 à y2/m2/d2 ou y2/m2* si d2=lastDay(m2)
+                // pour m2 : jours de y2/m2/01 Ã  y2/m2/d2 ou y2/m2* si d2=lastDay(m2)
                 if ($d2==Utils::lastDay($m2,$y2))
                     $result[]=sprintf('%d%02d*', $y2, $m2);
                 else
@@ -1328,7 +1328,7 @@ final class Utils
     }
 
     /**
-     * Formatte une chaine pour qu'elle puisse être écrite dans un fichier CSV.
+     * Formatte une chaine pour qu'elle puisse Ãªtre Ã©crite dans un fichier CSV.
      *
      * Extrait de la {@link http://www.rfc-editor.org/rfc/rfc4180.txt RFC 4180} :
      *
@@ -1340,10 +1340,10 @@ final class Utils
      */
     public static function csvQuote($string, $sep="\t")
     {
-//        // Si on nous a passé un tableau (un champ articles par exemple), convertit en chaine
+//        // Si on nous a passÃ© un tableau (un champ articles par exemple), convertit en chaine
 //        if (is_array($string)) $string=implode($sep,$string);
 
-        // Si la chaine ne contient aucun caractère spécial, on la retourne telle quelle
+        // Si la chaine ne contient aucun caractÃ¨re spÃ©cial, on la retourne telle quelle
         if (strpbrk($string, "\n\r\"".$sep) === false)
             return $string;
 
@@ -1354,36 +1354,36 @@ final class Utils
     private static $captureFile=null;
 
     /**
-     * Handler utilisé par {@link startCapture()} et {@link endCapture()}
+     * Handler utilisÃ© par {@link startCapture()} et {@link endCapture()}
      */
     public static function captureHandler($data, $mode)
     {
         /*
-         * Important : la méthode *DOIT* être publique
-         * Si on appelle ob_start() avec un handler privé, on n'a aucun message d'erreur
+         * Important : la mÃ©thode *DOIT* Ãªtre publique
+         * Si on appelle ob_start() avec un handler privÃ©, on n'a aucun message d'erreur
          * et ob_start() retourne true, mais PHP plante (et apache aussi).
-         * Il faut donc que la méthode soit publique ou bien utiliser une fonction globale
+         * Il faut donc que la mÃ©thode soit publique ou bien utiliser une fonction globale
          * comme handler
          */
 //        $len=strlen($data);
 //        fwrite(self::$captureFile, "\nAppel du handler. mode=$mode, len=$len\n");
         fwrite(self::$captureFile, $data);
-        fflush(self::$captureFile); // sur quelques tests, semble plus rapide de flusher à chaque appel, étonnant...
+        fflush(self::$captureFile); // sur quelques tests, semble plus rapide de flusher Ã  chaque appel, Ã©tonnant...
         return '';
     }
 
     /**
-     * Démarre la redirection de la sortie standard vers un fichier
+     * DÃ©marre la redirection de la sortie standard vers un fichier
      *
-     * A partir du moment où startCapture() est appellée, toutes les sorties générées
-     * depuis echo, print, readfile, etc. sont redirigées vers un fichier.
+     * A partir du moment oÃ¹ startCapture() est appellÃ©e, toutes les sorties gÃ©nÃ©rÃ©es
+     * depuis echo, print, readfile, etc. sont redirigÃ©es vers un fichier.
      *
-     * La redirection prend fin lorsque {@link endCapture()} est appellée.
+     * La redirection prend fin lorsque {@link endCapture()} est appellÃ©e.
      *
-     * Une seule capture peut être active à la fois. Si on appelle startCapture() alors
-     * qu'une capture a déjà été lancée, une exception sera générée.
+     * Une seule capture peut Ãªtre active Ã  la fois. Si on appelle startCapture() alors
+     * qu'une capture a dÃ©jÃ  Ã©tÃ© lancÃ©e, une exception sera gÃ©nÃ©rÃ©e.
      *
-     * Par défaut, la capture se fait vers un fichier temporaire créé par
+     * Par dÃ©faut, la capture se fait vers un fichier temporaire crÃ©Ã© par
      * {@link getTempFile()}.
      *
      * Exemple :
@@ -1391,15 +1391,15 @@ final class Utils
      * Utils::startCapture();
      * </code>
      *
-     * Il est possible d'indiquer la durée de vie du fichier temporaire (ttl)
-     * en paramètre (en secondes).
+     * Il est possible d'indiquer la durÃ©e de vie du fichier temporaire (ttl)
+     * en paramÃ¨tre (en secondes).
      *
      * Exemple :
      * <code>
-     * Utils::startCapture(3600); // crée un fichier temporaire valable pour une heure
+     * Utils::startCapture(3600); // crÃ©e un fichier temporaire valable pour une heure
      * </code>
      *
-     * Si vous souhaitez faire une capture vers un fichier pérenne (non temporaire), vous
+     * Si vous souhaitez faire une capture vers un fichier pÃ©renne (non temporaire), vous
      * pouvez indiquer le path complet du fichier de capture.
      *
      * Exemple :
@@ -1407,33 +1407,33 @@ final class Utils
      *     Utils::startCapture(dirname(__FILE__).'/static.html');
      * </code>
      *
-     * @param mixed $path_or_ttl path du fichier de capture ou durée de vie du fichier temporaire
-     * @param int $chunkSize taille des blocs de capture (passé lors de l'appel à ob_start())
+     * @param mixed $path_or_ttl path du fichier de capture ou durÃ©e de vie du fichier temporaire
+     * @param int $chunkSize taille des blocs de capture (passÃ© lors de l'appel Ã  ob_start())
      * @return string le path du fichier de capture
      */
     public static function startCapture($path_or_ttl=0, $chunkSize=8192)
     {
-        // Erreur si une capture est déjà en cours
+        // Erreur si une capture est dÃ©jÃ  en cours
         if (!is_null(self::$captureFile))
-            throw new Exception('Une capture est déjà en cours');
+            throw new Exception('Une capture est dÃ©jÃ  en cours');
 
-        // Si l'utilisateur nous a passé le path du fichier à créer, on l'ouvre
+        // Si l'utilisateur nous a passÃ© le path du fichier Ã  crÃ©er, on l'ouvre
         if (is_string($path_or_ttl))
         {
             if (!is_resource(self::$captureFile=@fopen($path_or_ttl, 'wb+')))
-                throw new Exception("Impossible de créer le fichier $path_or_ttl");
+                throw new Exception("Impossible de crÃ©er le fichier $path_or_ttl");
         }
 
         // Entier ou null
         else
         {
             if (! is_int($path_or_ttl))
-                throw new Exception('Paramètre incorrect, entier ou chaine attendue');
+                throw new Exception('ParamÃ¨tre incorrect, entier ou chaine attendue');
             self::$captureFile=self::getTempFile($path_or_ttl);
         }
 
         // Installe le gestionnaire
-        if (!ob_start(array(__CLASS__,'captureHandler'), $chunkSize)) // le handler DOIT être une méthode publique (cf commentaire dans captureHandler)
+        if (!ob_start(array(__CLASS__,'captureHandler'), $chunkSize)) // le handler DOIT Ãªtre une mÃ©thode publique (cf commentaire dans captureHandler)
         {
             fclose(self::$captureFile);
             self::$captureFile=null;
@@ -1445,9 +1445,9 @@ final class Utils
     }
 
     /**
-     * Met fin à une capture commencée par un appel à {@link startCapture()}
+     * Met fin Ã  une capture commencÃ©e par un appel Ã  {@link startCapture()}
      *
-     * Génère une exception si aucune captre n'est en cours
+     * GÃ©nÃ¨re une exception si aucune captre n'est en cours
      *
      * @return string le path du fichier de capture
      */
@@ -1457,7 +1457,7 @@ final class Utils
         if (is_null(self::$captureFile))
             throw new Exception('Aucune capture en cours');
 
-        // Flushe les données éventuelles en attente
+        // Flushe les donnÃ©es Ã©ventuelles en attente
         ob_end_flush();
 
         // Ferme le fichier de capture
@@ -1470,17 +1470,17 @@ final class Utils
     }
 
     /**
-     * Applique utf8_encode récursivement sur une variable.
+     * Applique utf8_encode rÃ©cursivement sur une variable.
      *
-     * Les chaines de caractères sont converties en utilisant utf8_encode.
-     * Les autres types simples (entiers, booléens...) sont retournés tels
+     * Les chaines de caractÃ¨res sont converties en utilisant utf8_encode.
+     * Les autres types simples (entiers, boolÃ©ens...) sont retournÃ©s tels
      * quels.
      *
-     * Pour les tableaux, la fonction encode à la fois les valeur et les clés
+     * Pour les tableaux, la fonction encode Ã  la fois les valeur et les clÃ©s
      * si celles-ci sont des chaines.
-     * Les tableaux de tableaux sont gérés et encodés récursivement.
+     * Les tableaux de tableaux sont gÃ©rÃ©s et encodÃ©s rÃ©cursivement.
      *
-     * @param mixed $var le tableau à convertir
+     * @param mixed $var le tableau Ã  convertir
      * @return mixed
      */
     public static function utf8Encode($var)
@@ -1504,17 +1504,17 @@ final class Utils
     }
 
     /**
-     * Applique utf8_decode récursivement sur une variable.
+     * Applique utf8_decode rÃ©cursivement sur une variable.
      *
-     * Les chaines de caractères sont converties en utilisant utf8_decode.
-     * Les autres types simples (entiers, booléens...) sont retournés tels
+     * Les chaines de caractÃ¨res sont converties en utilisant utf8_decode.
+     * Les autres types simples (entiers, boolÃ©ens...) sont retournÃ©s tels
      * quels.
      *
-     * Pour les tableaux, la fonction décode à la fois les valeur et les clés
+     * Pour les tableaux, la fonction dÃ©code Ã  la fois les valeur et les clÃ©s
      * si celles-ci sont des chaines.
-     * Les tableaux de tableaux sont gérés et décodés récursivement.
+     * Les tableaux de tableaux sont gÃ©rÃ©s et dÃ©codÃ©s rÃ©cursivement.
      *
-     * @param mixed $var le tableau à convertir
+     * @param mixed $var le tableau Ã  convertir
      * @return mixed
      */
     public static function utf8Decode($var)
@@ -1538,11 +1538,11 @@ final class Utils
     }
 
     /**
-     * Formatte la taille d'un fichier ou d'un dossier pour un affichage à
+     * Formatte la taille d'un fichier ou d'un dossier pour un affichage Ã 
      * l'utilisateur.
      *
-     * La fonction arrondi la taille à l'unité la plus proche et retourne une
-     * chaine contenant la valeur arrondie suivie d'un espace et de l'unité
+     * La fonction arrondi la taille Ã  l'unitÃ© la plus proche et retourne une
+     * chaine contenant la valeur arrondie suivie d'un espace et de l'unitÃ©
      * (par exemple '199 Mo', '3.89 Mo', etc.)
      *
      * @param int $bytes
@@ -1558,17 +1558,17 @@ final class Utils
         return round($bytes/pow(1024, floor($exp)),2) . ' ' . $symbols[$exp];
     }
 
-    public static function friendlyDate($timestamp, $today='%Hh%M', $yesterday='hier à %Hh%M', $thisYear='%d/%m à %Hh%M', $other='%d/%m/%y à %Hh%M')
+    public static function friendlyDate($timestamp, $today='%Hh%M', $yesterday='hier Ã  %Hh%M', $thisYear='%d/%m Ã  %Hh%M', $other='%d/%m/%y Ã  %Hh%M')
     {
-        // améliorations : pour comparer les dates, on utilise à chaque fois
+        // amÃ©liorations : pour comparer les dates, on utilise Ã  chaque fois
         // date(fmt, $x)===date($fmt)
         // c'est un peu lourd.
-        // a priori, on peut faire la même chose avec un simple modulo :
+        // a priori, on peut faire la mÃªme chose avec un simple modulo :
         // if ($creation % 86400 === time() % 86400) -> aujourd'hui
         // if ($creation % 86400 === (time() % 86400) - 1) -> hier
-        // à tester
+        // Ã  tester
         if(is_null($timestamp)) return '-';
-        if ($timestamp===0) return 'dès que possible';
+        if ($timestamp===0) return 'dÃ¨s que possible';
 
         // aujourd'hui
         if (date('Ymd', $timestamp)===date('Ymd'))
@@ -1578,7 +1578,7 @@ final class Utils
         if (date('Ymd', $timestamp)===date('Ymd', time()-86400))
             return strftime($yesterday, $timestamp);
 
-        // même année
+        // mÃªme annÃ©e
         if (date('Y', $timestamp)===date('Y'))
             return strftime($thisYear, $timestamp);
 
@@ -1587,26 +1587,26 @@ final class Utils
     }
 
     /**
-     * Retourne la durée écoulée passée en paramètre sous forme "humaine"
+     * Retourne la durÃ©e Ã©coulÃ©e passÃ©e en paramÃ¨tre sous forme "humaine"
      * (Par exemple 1 jour 2 heures 20 minutes et 5 secondes)
      *
-     * @param int|float $time durée écoulée en secondes.
+     * @param int|float $time durÃ©e Ã©coulÃ©e en secondes.
      * @return string
      */
     public static function friendlyElapsedTime($time)
     {
         /*
          * Remarque DM+SF, 11/12/09 :
-         * Les floats de php ne sont pas simples à manipuler...
+         * Les floats de php ne sont pas simples Ã  manipuler...
          *
-         * Dans la version précédente, une même valeur (par exemple 4620) ne
-         * donnait pas toujours le même résultat (parfois le bon : "1 h 17 min"
+         * Dans la version prÃ©cÃ©dente, une mÃªme valeur (par exemple 4620) ne
+         * donnait pas toujours le mÃªme rÃ©sultat (parfois le bon : "1 h 17 min"
          * et parfois "1 h 16,: min").
          *
-         * Nous n'avons pas réussi à comprendre le problème (bug php), mais le
-         * fait de caster les floats en int résoud le problème.
+         * Nous n'avons pas rÃ©ussi Ã  comprendre le problÃ¨me (bug php), mais le
+         * fait de caster les floats en int rÃ©soud le problÃ¨me.
          *
-         * => ne pas enlever les (int) qui figurent devant les appels à floor()
+         * => ne pas enlever les (int) qui figurent devant les appels Ã  floor()
          * et round()
          */
 //        if ($time<1) return ((int) round($time*1000)) . ' ms';
@@ -1636,7 +1636,7 @@ final class Utils
 
 
     /**
-     * Retourne la taille sur le disque d'un répertoire
+     * Retourne la taille sur le disque d'un rÃ©pertoire
      *
      * @param string $path
      * @return int
@@ -1669,20 +1669,20 @@ final class Utils
     }
 
     /**
-     * Convertit les urls et les adresses e-mails présentes dans le texte
-     * passé en paramètre en lien cliquable.
+     * Convertit les urls et les adresses e-mails prÃ©sentes dans le texte
+     * passÃ© en paramÃ¨tre en lien cliquable.
      *
-     * La fonction transforme toutes les chaines xxx qui ressemblent à une url
-     * ou à une adresse e-mail en lien html de la forme :
+     * La fonction transforme toutes les chaines xxx qui ressemblent Ã  une url
+     * ou Ã  une adresse e-mail en lien html de la forme :
      * <code>&lt;a href="xxx">xxx&lt;/a></code>
      *
      * La fonction prend garde de ne pas rajouter un tag 'a' aux liens qui
-     * sont déjà englobés dans un tag 'a'.
+     * sont dÃ©jÃ  englobÃ©s dans un tag 'a'.
      *
-     * Les adresses IP sont également reconnues (pour les urls, pas pour les
+     * Les adresses IP sont Ã©galement reconnues (pour les urls, pas pour les
      * e-mails).
      *
-     * @param string $text le texte a transformé
+     * @param string $text le texte a transformÃ©
      * @return string le texte obtenu
      */
     public static function autoLink($text)
@@ -1694,12 +1694,12 @@ final class Utils
         $Ident      = '[\w-]+';                             // un 'mot' du nom de domaine
         $Domain     = "$Ident(?:\.$Ident)*$TopDomain";      // nom de domaine
         $Port       = '\:\d+';                              // port TCP
-        $UrlPath    = '(?:/[^#) /\\n\\r<]+)+';               // path d'un document (y compris éventuelle query string)
+        $UrlPath    = '(?:/[^#) /\\n\\r<]+)+';               // path d'un document (y compris Ã©ventuelle query string)
         $Bookmark   = '#\w+';                               // ancre au sein du document (=id hml valide)
         $DomainIP  = "$Domain|$IP";                         // Une nom de domaine ou une adresse IP
-        $Url        = "($Protocol|www\.|ftp\.)(?:$DomainIP)(?:$Port)?(?:$UrlPath)?/?(?:$Bookmark)?";    // url complète
+        $Url        = "($Protocol|www\.|ftp\.)(?:$DomainIP)(?:$Port)?(?:$UrlPath)?/?(?:$Bookmark)?";    // url complÃ¨te
         $Email      = "$Ident(?:\.$Ident)*@$Domain";         // Adresse e-mail
-        $lead       = '(?:<\w+.*?>)?';                      // utilisé pour tester si l'url est déjà dans un <a>...</a>
+        $lead       = '(?:<\w+.*?>)?';                      // utilisÃ© pour tester si l'url est dÃ©jÃ  dans un <a>...</a>
 
         $text=preg_replace_callback("~($lead)($Url)~", array('Utils','autolinkCallbackForUrls'), $text);
         $text=preg_replace_callback("~($lead)($Email)~", array('Utils','autolinkCallbackForEmails'), $text);
@@ -1707,15 +1707,15 @@ final class Utils
     }
 
     /**
-     * Callback utilisé par {@link autoLink()} pour reconnaître les urls.
+     * Callback utilisÃ© par {@link autoLink()} pour reconnaÃ®tre les urls.
      *
-     * @param array $matches les occurences trouvées par preg_replace_callback()
+     * @param array $matches les occurences trouvÃ©es par preg_replace_callback()
      * @return string le texte obtenu
      */
     private static function autolinkCallbackForUrls(array $matches)
     {
         // 1=lead, 2=url, 3=protocole ou 'www.' ou 'ftp.'
-        if (strpos($matches[1],'<a ')===0) // examine ce qui précède, si c'est '<a xxx' retourne inchangé
+        if (strpos($matches[1],'<a ')===0) // examine ce qui prÃ©cÃ¨de, si c'est '<a xxx' retourne inchangÃ©
             return $matches[0];
 
         $url=$matches[2];
@@ -1730,54 +1730,54 @@ final class Utils
     }
 
     /**
-     * Callback utilisé par {@link autoLink()} pour reconnaître les adresses
+     * Callback utilisÃ© par {@link autoLink()} pour reconnaÃ®tre les adresses
      * e-mails.
      *
-     * @param array $matches les occurences trouvées par preg_replace_callback()
+     * @param array $matches les occurences trouvÃ©es par preg_replace_callback()
      * @return string le texte obtenu
      */
     private static function autolinkCallbackForEmails(array $matches)
     {
         // 1=lead, 2=email
-        if (strpos($matches[1],'<a ')===0) // examine ce qui précède, si c'est '<a xxx' retourne inchangé
+        if (strpos($matches[1],'<a ')===0) // examine ce qui prÃ©cÃ¨de, si c'est '<a xxx' retourne inchangÃ©
             return $matches[0];
 
         return $matches[1].'<a href="mailto:' . $matches[2] . '">' . $matches[2] . '</a>';
     }
 
     /**
-     * Construit la liste des tokens pour un texte donné.
+     * Construit la liste des tokens pour un texte donnÃ©.
      *
      * @param string $text
      * @return array
      */
     public static function tokenize($text, $mode=1)
     {
-        static $charFroms = '\'-ABCDEFGHIJKLMNOPQRSTUVWXYZŒœÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖØÙÚÛÜİŞßàáâãäåæçèéêëìíîïğñòóôõöùúûüışÿ';
-        static $charTo    =  '  abcdefghijklmnopqrstuvwxyzœœaaaaaaæceeeeiiiidnoooooœuuuuytsaaaaaaæceeeeiiiidnooooouuuuyty';
+        static $charFroms = '\'-ABCDEFGHIJKLMNOPQRSTUVWXYZÅ’Å“Ã€ÃÃ‚ÃƒÃ„Ã…Ã†Ã‡ÃˆÃ‰ÃŠÃ‹ÃŒÃÃÃÃÃ‘Ã’Ã“Ã”Ã•Ã–Ã˜Ã™ÃšÃ›ÃœÃÃÃŸÃ Ã¡Ã¢Ã£Ã¤Ã¥Ã¦Ã§Ã¨Ã©ÃªÃ«Ã¬Ã­Ã®Ã¯Ã°Ã±Ã²Ã³Ã´ÃµÃ¶Ã¹ÃºÃ»Ã¼Ã½Ã¾Ã¿';
+        static $charTo    =  '  abcdefghijklmnopqrstuvwxyzÅ“Å“aaaaaaÃ¦ceeeeiiiidnoooooÅ“uuuuytsaaaaaaÃ¦ceeeeiiiidnooooouuuuyty';
 
-        // Caractères spéciaux :
-        // Ø = "O barré", utilisé en danois, féringien et norvégien, translittération : "oe"
-        // ş et Ş = "thorn" (maju et minu). Translittération standard : "th", remplacé par "t" dans notre table.
-        // Ğ et ğ = "eth" (maju et minu). Translittération : "D"
+        // CaractÃ¨res spÃ©ciaux :
+        // Ã˜ = "O barrÃ©", utilisÃ© en danois, fÃ©ringien et norvÃ©gien, translittÃ©ration : "oe"
+        // Ã¾ et Ã = "thorn" (maju et minu). TranslittÃ©ration standard : "th", remplacÃ© par "t" dans notre table.
+        // Ã et Ã° = "eth" (maju et minu). TranslittÃ©ration : "D"
         // Sources : wikipedia + http://www.fao.org/DOCREP/003/Q0929F/q0929f04.htm
 
         // Convertit les sigles en mots
         $text=preg_replace_callback('~(?:[a-z0-9]\.){2,9}~i', array(__CLASS__, 'acronymToTerm'), $text);
 
-        // Convertit les caractères
+        // Convertit les caractÃ¨res
         $text=strtr($text, $charFroms, $charTo);
 
-        // Gère les lettres doubles
-        $text=strtr($text, array('æ'=>'ae', 'œ'=>'oe'));
+        // GÃ¨re les lettres doubles
+        $text=strtr($text, array('Ã¦'=>'ae', 'Å“'=>'oe'));
 
-        // Retourne un tableau contenant tous les mots présents
+        // Retourne un tableau contenant tous les mots prÃ©sents
         return str_word_count($text, $mode, '0123456789@_');
     }
 
 
     /**
-     * Fonction utilitaire utilisée par {@link tokenize()} pour convertir
+     * Fonction utilitaire utilisÃ©e par {@link tokenize()} pour convertir
      * les acronymes en mots
      *
      * @param array $matches
@@ -1789,10 +1789,10 @@ final class Utils
     }
 
     /**
-     * Retourne le type mime du fichier dont le nom est passé en
-     * paramètre en se basant sur l'extension.
+     * Retourne le type mime du fichier dont le nom est passÃ© en
+     * paramÃ¨tre en se basant sur l'extension.
      *
-     * Retourne un type mime générique si l'extension est absente ou
+     * Retourne un type mime gÃ©nÃ©rique si l'extension est absente ou
      * n'est pas reconnue.
      *
      * @param string $path
@@ -1800,7 +1800,7 @@ final class Utils
      */
     public static function mimeType($path)
     {
-        // types mimes autorisés pour le site fab
+        // types mimes autorisÃ©s pour le site fab
         $mimes=array
         (
             '.htm'      => 'text/html',
@@ -1829,99 +1829,99 @@ final class Utils
     }
 
     /**
-     * Ajoute une clé et une valeur dans un tableau.
+     * Ajoute une clÃ© et une valeur dans un tableau.
      *
-     * La fonction ajoute la clé et la valeur indiquées à la fin du tableau.
-     * Si la clé existe déjà dans le tableau, la valeur existante est convertie
-     * en tableau et la valeur indiquée est ajoutée à la fin du tableau obtenu.
+     * La fonction ajoute la clÃ© et la valeur indiquÃ©es Ã  la fin du tableau.
+     * Si la clÃ© existe dÃ©jÃ  dans le tableau, la valeur existante est convertie
+     * en tableau et la valeur indiquÃ©e est ajoutÃ©e Ã  la fin du tableau obtenu.
      *
-     * Cette fonction est utile pour gérer une liste de clés auxquelles peuvent
-     * être associées une ou plusieurs valeurs. Le tableau obtenu contiendra
-     * toutes les clés indiquées, dans l'ordre dans lequel elles ont été
-     * rencontrées pour la première fois, et chaque clé indiquera la ou les
-     * valeurs associées. Pour chaque clé, count(value) indique le nombre de
-     * fois ou la clé a été rencontrée.
+     * Cette fonction est utile pour gÃ©rer une liste de clÃ©s auxquelles peuvent
+     * Ãªtre associÃ©es une ou plusieurs valeurs. Le tableau obtenu contiendra
+     * toutes les clÃ©s indiquÃ©es, dans l'ordre dans lequel elles ont Ã©tÃ©
+     * rencontrÃ©es pour la premiÃ¨re fois, et chaque clÃ© indiquera la ou les
+     * valeurs associÃ©es. Pour chaque clÃ©, count(value) indique le nombre de
+     * fois ou la clÃ© a Ã©tÃ© rencontrÃ©e.
      *
-     * Remarque : la valeur doit être de type scalaire ou objet, cela ne
+     * Remarque : la valeur doit Ãªtre de type scalaire ou objet, cela ne
      * marchera pas si vous passez un tableau.
      *
-     * La fonction {@link arrayPrependKey()} est très similaire mais effectue
+     * La fonction {@link arrayPrependKey()} est trÃ¨s similaire mais effectue
      * les insertions en ordre inverse.
      *
-     * @param array $array le tableau à modifier
-     * @param scalar $key la clé à ajouter au tableau
-     * @param scalar|object $value la valeur associée à la clé
+     * @param array $array le tableau Ã  modifier
+     * @param scalar $key la clÃ© Ã  ajouter au tableau
+     * @param scalar|object $value la valeur associÃ©e Ã  la clÃ©
      */
     public static function arrayAppendKey(array & $array, $key, $value)
     {
-        // Si la clé n'existe pas déjà, on l'insère à la fin du tableau
+        // Si la clÃ© n'existe pas dÃ©jÃ , on l'insÃ¨re Ã  la fin du tableau
         if (!array_key_exists($key, $array))
         {
             $array[$key]=$value;
             return;
         }
 
-        // La clé existe déjà
+        // La clÃ© existe dÃ©jÃ 
         $item=& $array[$key];
 
-        // Si c'est déjà un tableau, ajoute la valeur à la fin du tableau
+        // Si c'est dÃ©jÃ  un tableau, ajoute la valeur Ã  la fin du tableau
         if (is_array($item))
             $item[]=$value;
 
-        // Sinon, crée un tableau contenant la valeur existante et la valeur indiquée
+        // Sinon, crÃ©e un tableau contenant la valeur existante et la valeur indiquÃ©e
         else
             $item=array($item, $value);
     }
 
     /**
-     * Ajoute une clé et une valeur dans un tableau.
+     * Ajoute une clÃ© et une valeur dans un tableau.
      *
-     * La fonction ajoute la clé et la valeur indiquées au début du tableau.
-     * Si la clé existe déjà dans le tableau, la valeur existante est convertie
-     * en tableau et la valeur indiquée est ajoutée au début du tableau obtenu.
+     * La fonction ajoute la clÃ© et la valeur indiquÃ©es au dÃ©but du tableau.
+     * Si la clÃ© existe dÃ©jÃ  dans le tableau, la valeur existante est convertie
+     * en tableau et la valeur indiquÃ©e est ajoutÃ©e au dÃ©but du tableau obtenu.
      *
-     * Cette fonction est utile pour gérer une liste de clés auxquelles peuvent
-     * être associées une ou plusieurs valeurs. Le tableau obtenu contiendra
-     * toutes les clés indiquées, en ordre inverse de l'ordre dans lequel elles
-     * ont été rencontrées pour la première fois, et chaque clé indiquera la ou
-     * les valeurs associées (en ordre inverse également).
+     * Cette fonction est utile pour gÃ©rer une liste de clÃ©s auxquelles peuvent
+     * Ãªtre associÃ©es une ou plusieurs valeurs. Le tableau obtenu contiendra
+     * toutes les clÃ©s indiquÃ©es, en ordre inverse de l'ordre dans lequel elles
+     * ont Ã©tÃ© rencontrÃ©es pour la premiÃ¨re fois, et chaque clÃ© indiquera la ou
+     * les valeurs associÃ©es (en ordre inverse Ã©galement).
      *
-     * Remarque : la valeur doit être de type scalaire ou objet, cela ne
+     * Remarque : la valeur doit Ãªtre de type scalaire ou objet, cela ne
      * marchera pas si vous passez un tableau.
      *
-     * La fonction {@link arrayAppendKey()} est très similaire mais effectue
+     * La fonction {@link arrayAppendKey()} est trÃ¨s similaire mais effectue
      * les insertions en ordre normal.
      *
-     * @param array $array le tableau à modifier
-     * @param scalar $key la clé à ajouter au tableau
-     * @param scalar|object $value la valeur associée à la clé
+     * @param array $array le tableau Ã  modifier
+     * @param scalar $key la clÃ© Ã  ajouter au tableau
+     * @param scalar|object $value la valeur associÃ©e Ã  la clÃ©
      */
     public static function arrayPrependKey(array & $array, $key, $value)
     {
-        // Si la clé n'existe pas déjà, on l'insère au début du tableau
+        // Si la clÃ© n'existe pas dÃ©jÃ , on l'insÃ¨re au dÃ©but du tableau
         if (!array_key_exists($key, $array))
         {
             $array=array($key=>$value) + $array; // y-a-t-il un autre moyen ?
             return;
         }
 
-        // La clé existe déjà
+        // La clÃ© existe dÃ©jÃ 
         $item=& $array[$key];
 
-        // Si c'est déjà un tableau, ajoute la valeur au début du tableau
+        // Si c'est dÃ©jÃ  un tableau, ajoute la valeur au dÃ©but du tableau
         if (is_array($item))
             array_unshift($item, $value);
 
-        // Sinon, crée un tableau contenant la valeur indiquée et la valeur existante
+        // Sinon, crÃ©e un tableau contenant la valeur indiquÃ©e et la valeur existante
         else
             $item=array($value, $item);
     }
 
     /**
-     * Convertit en octets une taille indiquée dans php.ini.
+     * Convertit en octets une taille indiquÃ©e dans php.ini.
      *
      * @size string une taille en
-     * {@link http://fr.php.net/manual/fr/faq.using.php#faq.using.shorthandbytes "notation sténographique"}
+     * {@link http://fr.php.net/manual/fr/faq.using.php#faq.using.shorthandbytes "notation stÃ©nographique"}
      * ( 2M, 2K, 3G...)
      *
      * @return int la taille en octets.
@@ -1943,7 +1943,7 @@ final class Utils
     }
 
     /*
-     * Retourne la taille maximale autorisé pour un fichier uploadé.
+     * Retourne la taille maximale autorisÃ© pour un fichier uploadÃ©.
      *
      * @return int la taille maximale en octets.
      */
@@ -1959,20 +1959,20 @@ final class Utils
 
 
     /**
-     * Vérifie et stocke sur le serveur un fichier uploadé par l'utilisateur.
+     * VÃ©rifie et stocke sur le serveur un fichier uploadÃ© par l'utilisateur.
      *
-     * @param array $file un élément du tableau
-     * {@link http://php.net/features.file-upload $_FILES} décrivant le fichier
-     * uploadé par l'utilisateur
+     * @param array $file un Ã©lÃ©ment du tableau
+     * {@link http://php.net/features.file-upload $_FILES} dÃ©crivant le fichier
+     * uploadÃ© par l'utilisateur
      *
-     * @param string $path le path final sur le serveur du fichier uploadé. Si
-     * le fichier uploadé est valide (pas d'erreur, etc.) il sera déplacé vers
+     * @param string $path le path final sur le serveur du fichier uploadÃ©. Si
+     * le fichier uploadÃ© est valide (pas d'erreur, etc.) il sera dÃ©placÃ© vers
      * ce path en utilisant la fonction
      * {@link http://php.net/move_uploaded_file move_uploaded_file()} de php.
      *
-     * @param callback $callback méthode à appeler pour vérifier que le
-     * fichier uploadé est valide. Le callback sera appelé avec en paramètre le
-     * path complet du fichier à valider. Elle doit retourner true si le fichier
+     * @param callback $callback mÃ©thode Ã  appeler pour vÃ©rifier que le
+     * fichier uploadÃ© est valide. Le callback sera appelÃ© avec en paramÃ¨tre le
+     * path complet du fichier Ã  valider. Elle doit retourner true si le fichier
      * est valide ou un message d'erreur dans le cas contraire :
      * <code>
      * public function callback(string $path) : true|string
@@ -1980,10 +1980,10 @@ final class Utils
      *
      * @return string|bool la fonction retourne :
      * - string : en cas d'erreur
-     * - true : si le fichier est ok (il a été validé et stocké dans $path)
-     * - false : le tableau passé en paramètre ne contenait aucun fichier
-     * uploadé (cela se produit si le formulaire a été validé mais que le input
-     * file était vide).
+     * - true : si le fichier est ok (il a Ã©tÃ© validÃ© et stockÃ© dans $path)
+     * - false : le tableau passÃ© en paramÃ¨tre ne contenait aucun fichier
+     * uploadÃ© (cela se produit si le formulaire a Ã©tÃ© validÃ© mais que le input
+     * file Ã©tait vide).
      */
     public static function uploadFile($file, $path, $callback=null)
     {
@@ -2001,11 +2001,11 @@ final class Utils
                         case $result===true: // ok
                             break;
 
-                        case is_null($result): // ok aussi, le callback n'a pas signalé d'erreur
+                        case is_null($result): // ok aussi, le callback n'a pas signalÃ© d'erreur
                             break;
 
                         case $result===false: // non attendu, cas d'erreur
-                            $result='le callback a retourné false';
+                            $result='le callback a retournÃ© false';
                             // pas de break : voulu
 
                         default:    // erreur
@@ -2020,61 +2020,61 @@ final class Utils
                 return true;
 
             case UPLOAD_ERR_INI_SIZE:
-                return sprintf("Impossible de charger le fichier '%s' : la taille du fichier dépasse la taille maximale autorisée par le serveur", $file['name']);
+                return sprintf("Impossible de charger le fichier '%s' : la taille du fichier dÃ©passe la taille maximale autorisÃ©e par le serveur", $file['name']);
 
             case UPLOAD_ERR_FORM_SIZE:
-                return sprintf("Impossible de charger le fichier '%s' : la taille du fichier dépasse la taille maximale autorisée par le formulaire (MAX_FILE_SIZE)", $file['name']);
+                return sprintf("Impossible de charger le fichier '%s' : la taille du fichier dÃ©passe la taille maximale autorisÃ©e par le formulaire (MAX_FILE_SIZE)", $file['name']);
 
             case UPLOAD_ERR_PARTIAL:
-                return sprintf("Impossible de charger le fichier '%s' : le fichier n'a été que partiellement téléchargé",$file['name']);
+                return sprintf("Impossible de charger le fichier '%s' : le fichier n'a Ã©tÃ© que partiellement tÃ©lÃ©chargÃ©",$file['name']);
 
-            case UPLOAD_ERR_NO_FILE: // le input file est vide, pas de fichier à uploader
+            case UPLOAD_ERR_NO_FILE: // le input file est vide, pas de fichier Ã  uploader
                 return false;
 
             case UPLOAD_ERR_NO_TMP_DIR:
                 return sprintf("Impossible de charger le fichier '%s' : erreur de configuration du serveur, dossier temporaire manquant", $file['name']);
 
             case UPLOAD_ERR_CANT_WRITE:
-                return sprintf("Impossible de charger le fichier '%s' : échec de l'écriture du fichier sur le disque", $file['name']);
+                return sprintf("Impossible de charger le fichier '%s' : Ã©chec de l'Ã©criture du fichier sur le disque", $file['name']);
 
             default:
-                return sprintf('Impossible de charger le fichier "%s" : erreur non gérée : "%d"', $file['name'], $file['error']);
+                return sprintf('Impossible de charger le fichier "%s" : erreur non gÃ©rÃ©e : "%d"', $file['name'], $file['error']);
         }
     }
 
 
     /**
-     * Retourne la taille du contenu présent dans un fichier compressé au format
+     * Retourne la taille du contenu prÃ©sent dans un fichier compressÃ© au format
      * gzip (.gz).
      *
-     * La méthode détermine la taille du contenu en consultant les quatre octets
-     * qui figurent à la fin du fichier.
+     * La mÃ©thode dÃ©termine la taille du contenu en consultant les quatre octets
+     * qui figurent Ã  la fin du fichier.
      *
      * Remarque :
-     * La méthode vérifie que le fichier que vous passez en paramètre (quelle
-     * que soit son extension) est bien un fichier au format gzip en vérifiant
-     * dans les deux premiers octets du fichier sont conformes à la signature
+     * La mÃ©thode vÃ©rifie que le fichier que vous passez en paramÃ¨tre (quelle
+     * que soit son extension) est bien un fichier au format gzip en vÃ©rifiant
+     * dans les deux premiers octets du fichier sont conformes Ã  la signature
      * standard d'un fichier gzip.
      *
-     * Il vous appartient de vérifier que le fichier que vous indiquez est bien
-     * un fichier compressé. Si vous appellez la méthode avec autre chose qu'un
+     * Il vous appartient de vÃ©rifier que le fichier que vous indiquez est bien
+     * un fichier compressÃ©. Si vous appellez la mÃ©thode avec autre chose qu'un
      * fichier .gz, elle retournera n'importe quoi.
      *
      * @param string $path le path d'un fichier .gz
-     * @return int|false la taille du contenu stocké dans le fichier ou false
+     * @return int|false la taille du contenu stockÃ© dans le fichier ou false
      * si une erreur survient (fichier inexistant, fichier vide, ...)
      */
     public static function gzSize($path)
     {
-        // La taille du contenu est stockée dans le fichier .gz à la fin du
-        // fichier (champ ISIZE) sous la forme d'un entier 32 bits stockés en
+        // La taille du contenu est stockÃ©e dans le fichier .gz Ã  la fin du
+        // fichier (champ ISIZE) sous la forme d'un entier 32 bits stockÃ©s en
         // mode "little indian".
         // cf http://tools.ietf.org/html/rfc1952#page-6
 
         // Ouvre le fichier
         if (!$f=@fopen($path, 'r')) return false;
 
-        // Vérifie que c'est bien un fichier au format gzip
+        // VÃ©rifie que c'est bien un fichier au format gzip
         $id=fread($f, 2);
         if ($id !== "\x1f\x8b")
             die('pas un gz');
@@ -2092,21 +2092,21 @@ final class Utils
         // Convertit en entier
         $size=unpack('V', $size);   // V = little indian
 
-        // unpack retourne un tableau contenant un seul élément
+        // unpack retourne un tableau contenant un seul Ã©lÃ©ment
         $size=end($size);
 
-        // Convertit l'entier signé en entier non signé
+        // Convertit l'entier signÃ© en entier non signÃ©
         if ($size <0) $size += 4294967296;
 
-        // Retourne le résultat
+        // Retourne le rÃ©sultat
         return $size;
     }
 
     /*
-     * Encode les caractères '<', '>', '&', '’' (apostrophe courbe) et '–'
-     * (tirets long) en entités numériques hexadécimales.
+     * Encode les caractÃ¨res '<', '>', '&', 'â€™' (apostrophe courbe) et 'â€“'
+     * (tirets long) en entitÃ©s numÃ©riques hexadÃ©cimales.
      *
-     * @param string $xml la chaine à encoder.
+     * @param string $xml la chaine Ã  encoder.
      * @return string
      */
     public static function xmlEncode($xml)
@@ -2116,60 +2116,60 @@ final class Utils
             '<'=>'&#x3C;',
             '>'=>'&#x3E;',
             '&'=>'&#x26;',
-            '’'=>'&#x92;',
-            '–'=>'&#x96;'
+            'â€™'=>'&#x92;',
+            'â€“'=>'&#x96;'
         );
 
         return strtr($xml, $table);
     }
 
     /**
-     * Met en évidence les corrections apportées à une chaine de caractères en
-     * détectant les mots qui ont été modifiés.
+     * Met en Ã©vidence les corrections apportÃ©es Ã  une chaine de caractÃ¨res en
+     * dÃ©tectant les mots qui ont Ã©tÃ© modifiÃ©s.
      *
-     * Cette fonction est destinée à être utilisée avec le correcteur
+     * Cette fonction est destinÃ©e Ã  Ãªtre utilisÃ©e avec le correcteur
      * orthographique de xapian : elle met en "surbrillance" les mots qui ont
-     * été corrigés.
+     * Ã©tÃ© corrigÃ©s.
      *
-     * Elle fonctionne en faisant la liste des mots présents dans la chaine
-     * originale qui ne figurent pas dans la chaine corrigée. Elle ajoute
-     * ensuite les chaines $before et $after devant et après chacun de ces
-     * mots puis retourne le résultat.
+     * Elle fonctionne en faisant la liste des mots prÃ©sents dans la chaine
+     * originale qui ne figurent pas dans la chaine corrigÃ©e. Elle ajoute
+     * ensuite les chaines $before et $after devant et aprÃ¨s chacun de ces
+     * mots puis retourne le rÃ©sultat.
      *
      * @param string $original la chaine originale.
-     * @param string $corrected la chaine corrigée.
-     * @param string $format le format (style sprintf) à utiliser pour mettre
-     * en évidence chacun des mots.
-     * @return string la chaine résultat.
+     * @param string $corrected la chaine corrigÃ©e.
+     * @param string $format le format (style sprintf) Ã  utiliser pour mettre
+     * en Ã©vidence chacun des mots.
+     * @return string la chaine rÃ©sultat.
      */
     public static function highlightCorrections($original, $corrected, $format='<strong>%s</strong>')
     {
-        // Crée un tableau contenant la liste des mots de $original qui ne sont pas dans $corrected
+        // CrÃ©e un tableau contenant la liste des mots de $original qui ne sont pas dans $corrected
         $t1=array_flip(Utils::tokenize($original));
         $t2=array_flip(Utils::tokenize($corrected));
         $t=array_diff_key($t2, $t1);
 
-        // Génère un tableau de remplacement pour strtr()
+        // GÃ©nÃ¨re un tableau de remplacement pour strtr()
         foreach($t as $search=>& $replace)
             $replace=sprintf($format, $search);
 
-        // Met les mots en surbrillance et retourne le résultat
+        // Met les mots en surbrillance et retourne le rÃ©sultat
         return strtr($corrected, $t);
     }
 
 
     /**
-     * Méthode de remplacement de la fonction php {@link realpath()}.
+     * MÃ©thode de remplacement de la fonction php {@link realpath()}.
      *
-     * Le comportement de realpath() a changé à partir de php 5.2.4 : la fonction peut parfois
+     * Le comportement de realpath() a changÃ© Ã  partir de php 5.2.4 : la fonction peut parfois
      * retourner <code>true</code> pour des fichiers qui n'existe pas.
      * (source : http://php.net/manual/en/function.realpath.php#82770).
      *
-     * Bug rencontré sur Mac OS X (avec Bruno Bernard Simon).
+     * Bug rencontrÃ© sur Mac OS X (avec Bruno Bernard Simon).
      *
-     * @param string $path le chemin du fichier à tester.
+     * @param string $path le chemin du fichier Ã  tester.
      * @return string|false retourne le chemin canonique du fichier ou <code>false</code> si le
-     * fichier indiqué n'existe pas.
+     * fichier indiquÃ© n'existe pas.
      */
     public static function realpath($path)
     {
@@ -2179,32 +2179,32 @@ final class Utils
 
 
     /**
-     * Permet de gérer facilement les singuliers et les pluriels dans une phrase.
+     * Permet de gÃ©rer facilement les singuliers et les pluriels dans une phrase.
      *
      * Exemples d'utilisation :
      * <code>
-     * echo Utils::pluralize('{Aucune|Une|%d} occurence{s} trouvée{s}.', $count);
-     * echo Utils::pluralize("{Aucune|Une|%d} tâche{s} {n'a|a|ont} été exécutée{s}.", $count);
+     * echo Utils::pluralize('{Aucune|Une|%d} occurence{s} trouvÃ©e{s}.', $count);
+     * echo Utils::pluralize("{Aucune|Une|%d} tÃ¢che{s} {n'a|a|ont} Ã©tÃ© exÃ©cutÃ©e{s}.", $count);
      * </code>
      *
-     * Les blocs entre accolades représentent les parties de la chaine qui seront pluralisées.
+     * Les blocs entre accolades reprÃ©sentent les parties de la chaine qui seront pluralisÃ©es.
      *
-     * La forme générale est la suivante : <code>{Aucune|Singulier|Pluriel}</code> :
-     * - {xxx} : génère 'xxx' si $count > 1, rien sinon.
-     * - {xxx|yyy} : génère 'xxx' si $count <= 1, 'yyy' sinon.
-     * - {xxx|yyy|zzz} : génère 'xxx' si $count==0, 'yyy' si $count$=1, 'zzz' sinon.
+     * La forme gÃ©nÃ©rale est la suivante : <code>{Aucune|Singulier|Pluriel}</code> :
+     * - {xxx} : gÃ©nÃ¨re 'xxx' si $count > 1, rien sinon.
+     * - {xxx|yyy} : gÃ©nÃ¨re 'xxx' si $count <= 1, 'yyy' sinon.
+     * - {xxx|yyy|zzz} : gÃ©nÃ¨re 'xxx' si $count==0, 'yyy' si $count$=1, 'zzz' sinon.
      *
-     * Dans la chaine <code>$string</code>, '%d' sera remplacé par <code>$count</code>.
+     * Dans la chaine <code>$string</code>, '%d' sera remplacÃ© par <code>$count</code>.
      *
      * Vous pouvez inclure dans la chaine <code>$string</code> d'autre tags sprintf() et passer des
-     * arguments supplémentaires à la méthode.
+     * arguments supplÃ©mentaires Ã  la mÃ©thode.
      *
      * Exemple :
      * <code>
-     * echo Utils::pluralize('%d tâche{s} exécutée{s} sur %d au total.', $nb, $total);
+     * echo Utils::pluralize('%d tÃ¢che{s} exÃ©cutÃ©e{s} sur %d au total.', $nb, $total);
      * </code>
      *
-     * Inspiré et adapté de :
+     * InspirÃ© et adaptÃ© de :
      * - http://blog.jaysalvat.com/article/gerer-facilement-les-singuliers-pluriels-en-php
      * - http://joshduck.com/blog/2010/08/13/a-php-snipped-for-pluralizing-strings/
      *
@@ -2223,7 +2223,7 @@ final class Utils
         preg_match_all('~\{(.*?)\}~', $string, $matches);
         foreach($matches[1] as $key=>$value)
         {
-            // Sépare les alternatives
+            // SÃ©pare les alternatives
             $parts = explode('|', $value);
 
             // Aucune
@@ -2238,23 +2238,23 @@ final class Utils
             else
                 $replace = (count($parts) == 1) ? $parts[0] : ((count($parts) == 2) ? $parts[1] : $parts[2]);
 
-            // Insère le résultat
+            // InsÃ¨re le rÃ©sultat
             $string = str_replace($matches[0][$key], $replace , $string);
         }
 
-        // Retourne le résultat
+        // Retourne le rÃ©sultat
         return $string;
     }
 }
 /*
 for ($i=0; $i<=2; $i++)
-    echo Utils::pluralize('{Aucune|Une|%d} occurence{s} trouvée{s} sur %d (%s).<br/>', $i, 100, 'done');
+    echo Utils::pluralize('{Aucune|Une|%d} occurence{s} trouvÃ©e{s} sur %d (%s).<br/>', $i, 100, 'done');
 
 for ($i=0; $i<=2; $i++)
-    echo Utils::pluralize('%d tâche{s} exécutée{s} sur %d au total.<br />', $i, 7);
+    echo Utils::pluralize('%d tÃ¢che{s} exÃ©cutÃ©e{s} sur %d au total.<br />', $i, 7);
 
 for ($i=0; $i<=2; $i++)
-    echo Utils::pluralize("{Aucune|Une|%d} tâche{s} {n'a|a|ont} été exécutée{s} sur %d au total.<br />", $i, 7);
+    echo Utils::pluralize("{Aucune|Une|%d} tÃ¢che{s} {n'a|a|ont} Ã©tÃ© exÃ©cutÃ©e{s} sur %d au total.<br />", $i, 7);
 
     die();
 ?>
