@@ -2,18 +2,18 @@
 /**
  * @package     fab
  * @subpackage  security
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>
  * @version     SVN: $Id$
  */
 
 
 /**
- * Module de sécurité basé sur un fichier texte contenant la liste des
+ * Module de sÃ©curitÃ© basÃ© sur un fichier texte contenant la liste des
  * utilisateurs du site.
  *
  * Ce module utilise le fichier <code>FileBasedSecurity.config</code> pour toutes ses options de
- * configuration : le fichier de Fab fournit des valeurs par défaut et celui qui est définit dans
- * l'application permet de changer ces valeurs par défaut.
+ * configuration : le fichier de Fab fournit des valeurs par dÃ©faut et celui qui est dÃ©finit dans
+ * l'application permet de changer ces valeurs par dÃ©faut.
  *
  * Exemple de fichier FileBasedSecurity.config :
  * <code>
@@ -21,19 +21,19 @@
  *         <!--
  *             Path du fichier contenant la liste des utilisateurs.
  *
- *             Il peut s'agit d'un chemin "absolu" (commençant par un slash). Dans ce cas,
- *             le fichier est recherché par rapport à la racine de l'application. Si c'est un
- *             chemin relatif, il est recherché dans le répertoire /data de l'application
+ *             Il peut s'agit d'un chemin "absolu" (commenÃ§ant par un slash). Dans ce cas,
+ *             le fichier est recherchÃ© par rapport Ã  la racine de l'application. Si c'est un
+ *             chemin relatif, il est recherchÃ© dans le rÃ©pertoire /data de l'application
  *             (exemple : users/list.txt -> /data/users/list.txt).
  *
- *             L'application doit explicitement créer un fichier FileBasedSecurity.config
- *             dans son répertoire /config et indiquer le path du fichier utilisé.
+ *             L'application doit explicitement crÃ©er un fichier FileBasedSecurity.config
+ *             dans son rÃ©pertoire /config et indiquer le path du fichier utilisÃ©.
  *          -->
  *         <path>/data/users.txt</path>
  *
  *         <!--
- *             Paramètres du fichier CSV : séparateur de champs (virgule par défault),
- *             caractère de délimitation (guillemet par défaut).
+ *             ParamÃ¨tres du fichier CSV : sÃ©parateur de champs (virgule par dÃ©fault),
+ *             caractÃ¨re de dÃ©limitation (guillemet par dÃ©faut).
  *             Consulter la fonction {@link http://php.net/fgetcsv} pour plus d'infos.
  *         -->
  *         <delimiter>,</delimiter>
@@ -41,96 +41,96 @@
  *     </file>
  *
  *     <!--
- *         Paramètres du cookie.
+ *         ParamÃ¨tres du cookie.
  *
- *         Consulter {@link http://php.net/setcookie} pour plus d'informations sur les différentes options.
+ *         Consulter {@link http://php.net/setcookie} pour plus d'informations sur les diffÃ©rentes options.
  *     -->
  *     <cookie>
- *          <!-- nom du cookie généré ('user' par défaut) -->
+ *          <!-- nom du cookie gÃ©nÃ©rÃ© ('user' par dÃ©faut) -->
  *         <name>user</name>
  *
  *          <!--
- *             Durée de vie, en secondes du cookie généré (10 jours par défaut).
- *             Si l'utilisateur coche la case "se souvenir de moi", le cookie généré sera valide
- *             pour la durée indiquée ci-dessous, sinon, lifetime est ignoré et le cookie est
- *             effacé dès que l'utilisateur ferme son navigateur (et au maximum 24h).
+ *             DurÃ©e de vie, en secondes du cookie gÃ©nÃ©rÃ© (10 jours par dÃ©faut).
+ *             Si l'utilisateur coche la case "se souvenir de moi", le cookie gÃ©nÃ©rÃ© sera valide
+ *             pour la durÃ©e indiquÃ©e ci-dessous, sinon, lifetime est ignorÃ© et le cookie est
+ *             effacÃ© dÃ¨s que l'utilisateur ferme son navigateur (et au maximum 24h).
  *         -->
  *         <lifetime>864000</lifetime>
  *
- *          <!-- path du cookie ('/' par défaut) -->
+ *          <!-- path du cookie ('/' par dÃ©faut) -->
  *         <path>/</path>
  *
- *          <!-- domaine du cookie (null par défaut) -->
+ *          <!-- domaine du cookie (null par dÃ©faut) -->
  *         <domain />
  *
- *          <!-- http-only (true par défaut) -->
+ *          <!-- http-only (true par dÃ©faut) -->
  *         <http-only>true</http-only>
  *     </cookie>
  * </code>
  *
- * La liste des utilisateurs du site est gérée dans un fichier texte au format
- * {@link http://fr.wikipedia.org/wiki/Comma-separated_values CSV} avec une ligne d'entête
- * indiquant le nom des différentes colonnes.
+ * La liste des utilisateurs du site est gÃ©rÃ©e dans un fichier texte au format
+ * {@link http://fr.wikipedia.org/wiki/Comma-separated_values CSV} avec une ligne d'entÃªte
+ * indiquant le nom des diffÃ©rentes colonnes.
  *
- * Le chemin du fichier (<code><file.path></code>) et le format utilisé sont indiqués dans le
- * fichier de configuration (séparateur de colonnes, caractères d'échappement, etc.)
+ * Le chemin du fichier (<code><file.path></code>) et le format utilisÃ© sont indiquÃ©s dans le
+ * fichier de configuration (sÃ©parateur de colonnes, caractÃ¨res d'Ã©chappement, etc.)
  *
  * Le fichier CSV DOIT contenir les colonnes "login", "password" et "rights" et il PEUT contenir
- * des colonnes supplémentaires (nom, prénom, e-mail, etc.) qui seront chargées automatiquement
- * et deviendront des propriétés publiques de l'utilisateur en cours
- * (exemple d'utilisation : <code>User::get('prénom')</code>).
+ * des colonnes supplÃ©mentaires (nom, prÃ©nom, e-mail, etc.) qui seront chargÃ©es automatiquement
+ * et deviendront des propriÃ©tÃ©s publiques de l'utilisateur en cours
+ * (exemple d'utilisation : <code>User::get('prÃ©nom')</code>).
  *
  * Remarques :
  * - L'ordre des colonnes dans le fichier n'a pas d'importance.
- * - Les espaces de début et de fin de colonne sont ignorés.
- * - Les lignes vides sont ignorées.
+ * - Les espaces de dÃ©but et de fin de colonne sont ignorÃ©s.
+ * - Les lignes vides sont ignorÃ©es.
  *
  * La colonne "rights" doit indiquer les permissions dont dispose l'utilisateur sous la forme
- * d'une liste de droits séparés par une virgule (utiliser des guillemets si la virgule est
- * utilisée comme séparateur de colonnes) : par exemple <code>"AdminBase, EditContacts"</code>.
+ * d'une liste de droits sÃ©parÃ©s par une virgule (utiliser des guillemets si la virgule est
+ * utilisÃ©e comme sÃ©parateur de colonnes) : par exemple <code>"AdminBase, EditContacts"</code>.
  *
  * Exemple :
  * <code>
  * login, password, rights, firstname, surname, mail
- * dmenard, abcd123, AdminFab, Daniel, Ménard, daniel.menard@ehesp.fr
- * ferron, efgh456, "AdminBase,AdminEmploi", Séverine, Ferron, severine.ferron@ehesp.fr
+ * dmenard, abcd123, AdminFab, Daniel, MÃ©nard, daniel.menard@ehesp.fr
+ * ferron, efgh456, "AdminBase,AdminEmploi", SÃ©verine, Ferron, severine.ferron@ehesp.fr
  * test, "ijkl 789",,"compte de test, aucun droits",,
  * </code>
  *
  * Pour se connecter, l'utilisateur appelle l'action {@link actionLogin() Login} et saisit son
  * identifiant (login) et son mot de passe. Il peut aussi activer l'option "se souvenir de moi"
- * pour éviter d'avoir à se reconnecter à chacune de ses visites.
+ * pour Ã©viter d'avoir Ã  se reconnecter Ã  chacune de ses visites.
  *
- * Lorsqu'il valide ses informations, le login et le mot de passe sont vérifiés : ils doivent
- * correspondre à un utilisateur existant dans le fichier et la comparaison tient compte de la
- * casse des caractères. Si les codes sont invalides, le formulaire est réaffiché avec un message
- * d'erreur. Sinon, un cookie est généré et l'utilisateur est connecté au site.
+ * Lorsqu'il valide ses informations, le login et le mot de passe sont vÃ©rifiÃ©s : ils doivent
+ * correspondre Ã  un utilisateur existant dans le fichier et la comparaison tient compte de la
+ * casse des caractÃ¨res. Si les codes sont invalides, le formulaire est rÃ©affichÃ© avec un message
+ * d'erreur. Sinon, un cookie est gÃ©nÃ©rÃ© et l'utilisateur est connectÃ© au site.
  *
- * Les paramètres du cookie généré sont définis dans le fichier de configuration (nom du cookie,
+ * Les paramÃ¨tres du cookie gÃ©nÃ©rÃ© sont dÃ©finis dans le fichier de configuration (nom du cookie,
  * path, domaine, etc.)
  *
- * La valeur du cookie est cryptée avec un double mécanisme d'encodage utilisant les fonctions
+ * La valeur du cookie est cryptÃ©e avec un double mÃ©canisme d'encodage utilisant les fonctions
  * {@link http://php.net/hash_hmac hash_hmac()} et {@link http://php.net/md5 md5()} et utiliser
- * une clé (salt) qui dépend à la fois du login et du mot de passe de l'utilisateur.
+ * une clÃ© (salt) qui dÃ©pend Ã  la fois du login et du mot de passe de l'utilisateur.
  *
- * Par défaut, le cookie généré n'est valable que pour la durée de la visite de l'utilisateur
- * (le cookie est effacé dès que le navigateur est fermé) avec une durée de vie maximale de 24
+ * Par dÃ©faut, le cookie gÃ©nÃ©rÃ© n'est valable que pour la durÃ©e de la visite de l'utilisateur
+ * (le cookie est effacÃ© dÃ¨s que le navigateur est fermÃ©) avec une durÃ©e de vie maximale de 24
  * heures (si le navigateur reste ouvert plus de 24 heures, l'utilisateur devra se reconnecter).
  *
- * Si l'utilisateur a coché l'option "Se souvenir de moi", le cookie généré est valable tant que
- * la durée indiquée dans la clé <code><cookie.lifetime></code> n'est pas écoulée.
+ * Si l'utilisateur a cochÃ© l'option "Se souvenir de moi", le cookie gÃ©nÃ©rÃ© est valable tant que
+ * la durÃ©e indiquÃ©e dans la clÃ© <code><cookie.lifetime></code> n'est pas Ã©coulÃ©e.
  *
- * Enfin, le module dispose d'une action {@link actionLogout() Logout} qui permet à l'utilisateur
- * de se déconnecter et d'effacer de son navigateur le cookie généré lors de la connexion.
+ * Enfin, le module dispose d'une action {@link actionLogout() Logout} qui permet Ã  l'utilisateur
+ * de se dÃ©connecter et d'effacer de son navigateur le cookie gÃ©nÃ©rÃ© lors de la connexion.
  *
  * Utilisation du module :
  *
- * Pour utiliser le module, commencez par créer dans le répertoire <code>/config</code> de
+ * Pour utiliser le module, commencez par crÃ©er dans le rÃ©pertoire <code>/config</code> de
  * l'application un fichier <code>FileBasedSecurity.config</code> et un fichier CSV contenant
- * la liste des utilisateurs du site (cf modèles ci-dessus).
+ * la liste des utilisateurs du site (cf modÃ¨les ci-dessus).
  *
- * Il suffit ensuite d'indiquer à Fab que c'est le module FileBasedScurity qui est utilisé pour
- * gérer la sécurité du site en ajoutant le code suivant dans le fichier
+ * Il suffit ensuite d'indiquer Ã  Fab que c'est le module FileBasedScurity qui est utilisÃ© pour
+ * gÃ©rer la sÃ©curitÃ© du site en ajoutant le code suivant dans le fichier
  * <code>general.config</code> de l'application :
  *
  * <code>
@@ -141,29 +141,29 @@
  *
  * @package     fab
  * @subpackage  security
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>
  */
 class FileBasedSecurity extends BaseSecurity
 {
     /**
-     * Valide le login et le mot de passe saisis par l'utilisateur dans le formulaire généré
+     * Valide le login et le mot de passe saisis par l'utilisateur dans le formulaire gÃ©nÃ©rÃ©
      * par {@link actionLogin()}, connecte l'utilisateur si ceux-ci sont corrects puis le redirige
      * vers une autre page.
      *
-     * On fait ce travail dans preExecute() plutôt que dans {@link actionLogin()} car pour
-     * faire la redirection, on ne veut avoir ni thème, ni layout (on pourrait sinon obtenir
+     * On fait ce travail dans preExecute() plutÃ´t que dans {@link actionLogin()} car pour
+     * faire la redirection, on ne veut avoir ni thÃ¨me, ni layout (on pourrait sinon obtenir
      * une erreur "headers already sent").
      *
-     * @return bool <code>true</code> si l'utilisateur a été connecté, <code>false</code> sinon.
+     * @return bool <code>true</code> si l'utilisateur a Ã©tÃ© connectÃ©, <code>false</code> sinon.
      */
     public function preExecute()
     {
         if ($this->method === 'actionLogin')
         {
-            // Connecte l'utilisateur si les données du formulaire sont correctes
+            // Connecte l'utilisateur si les donnÃ©es du formulaire sont correctes
             if
             (
-                Utils::isPost()                             // c'est une requête POST
+                Utils::isPost()                             // c'est une requÃªte POST
                 && isset($_COOKIE['test'])                  // le navigateur supporte les cookies
                 && isset($_POST['login'])                   // on a un login
                 && isset($_POST['password'])                // on a un mot de passe
@@ -176,7 +176,7 @@ class FileBasedSecurity extends BaseSecurity
                 // Stocke le cookie de connexion
                 $this->setCookie($user);
 
-                // Détermine l'url de la page vers laquelle on va rediriger l'utilisateur
+                // DÃ©termine l'url de la page vers laquelle on va rediriger l'utilisateur
                 if (isset($_POST['redirect']))
                     $url = Routing::linkFor($_POST['redirect'], true);
                 else
@@ -185,35 +185,35 @@ class FileBasedSecurity extends BaseSecurity
                 // Redirige l'utilisateur
                 Runtime::redirect($url);
 
-                // Indique à fab qu'on a fait le boulot et qu'il ne faut pas appeller actionLogin()
+                // Indique Ã  fab qu'on a fait le boulot et qu'il ne faut pas appeller actionLogin()
                 return true;
             }
 
-            // Sinon, génère un cookie de test pour vérifier que le navigateur supporte les cookies
+            // Sinon, gÃ©nÃ¨re un cookie de test pour vÃ©rifier que le navigateur supporte les cookies
             setcookie('test', 1);
 
-            // Laisse actionLogin() afficher le formulaire et les erreurs éventuelles
+            // Laisse actionLogin() afficher le formulaire et les erreurs Ã©ventuelles
         }
     }
 
 
     /**
-     * Affiche un formulaire permettant à l'utilisateur de saisir ses codes d'accès (identifiant
+     * Affiche un formulaire permettant Ã  l'utilisateur de saisir ses codes d'accÃ¨s (identifiant
      * et mot de passe).
      *
-     * La méthode utilise le template <code>login.html</code>.
+     * La mÃ©thode utilise le template <code>login.html</code>.
      *
      * @param string $login identifiant de l'utilisateur.
      * @param string $password mot de passe de l'utilisateur.
-     * @param bool $remember 1 si l'utilisateur a coché l'option "se souvenir de moi", 0 sinon.
-     * @param string $redirect url de la page vers laquelle sera redirigé l'utilisateur s'il
-     * parvient à se connecter.
+     * @param bool $remember 1 si l'utilisateur a cochÃ© l'option "se souvenir de moi", 0 sinon.
+     * @param string $redirect url de la page vers laquelle sera redirigÃ© l'utilisateur s'il
+     * parvient Ã  se connecter.
      */
     public function actionLogin($login='', $password='', $remember=0, $redirect='/')
     {
-        // Si on nous a transmis des paramètres, on vérifie le login et le mot de passe.
-        // Le travail a déjà été fait en partie dans {@link preExecute()}, on refait une partie
-        // du boulot ici juste pour pouvoir afficher un message d'erreur correct à l'utilisateur.
+        // Si on nous a transmis des paramÃ¨tres, on vÃ©rifie le login et le mot de passe.
+        // Le travail a dÃ©jÃ  Ã©tÃ© fait en partie dans {@link preExecute()}, on refait une partie
+        // du boulot ici juste pour pouvoir afficher un message d'erreur correct Ã  l'utilisateur.
         $error = false;
         if (Utils::isPost())
         {
@@ -223,11 +223,11 @@ class FileBasedSecurity extends BaseSecurity
 
             // Pas de login
             elseif ($login == '')
-                $error = "Vous n'avez pas indiqué l'identifiant.";
+                $error = "Vous n'avez pas indiquÃ© l'identifiant.";
 
             // Pas de password
             elseif($password == '')
-                $error = "Vous n'avez pas indiqué le mot de passe.";
+                $error = "Vous n'avez pas indiquÃ© le mot de passe.";
 
             // On a les deux
             else
@@ -251,10 +251,10 @@ class FileBasedSecurity extends BaseSecurity
 
 
     /**
-     * Déconnecte l'utilisateur en cours et le redirige vers l'url passée en paramètre.
+     * DÃ©connecte l'utilisateur en cours et le redirige vers l'url passÃ©e en paramÃ¨tre.
      *
-     * @param string $redirect url de la page vers laquelle sera redirigé l'utilisateur après avoir
-     * été déconnecté.
+     * @param string $redirect url de la page vers laquelle sera redirigÃ© l'utilisateur aprÃ¨s avoir
+     * Ã©tÃ© dÃ©connectÃ©.
      */
     public function actionLogout($redirect='/')
     {
@@ -264,43 +264,43 @@ class FileBasedSecurity extends BaseSecurity
 
 
     /**
-     * Charge la liste des utilisateurs du site à partir du fichier.
+     * Charge la liste des utilisateurs du site Ã  partir du fichier.
      *
-     * La méthode charge le fichier indiqué dans la clé <code><security.file></code> du fichier
-     * de configuration et construit un tableau indexé par login d'utilisateur.
+     * La mÃ©thode charge le fichier indiquÃ© dans la clÃ© <code><security.file></code> du fichier
+     * de configuration et construit un tableau indexÃ© par login d'utilisateur.
      *
-     * Le path du fichier indiqué est soit un chemin "absolu" (commençant par un slash) par rapport
-     * à la racine de l'application (par exemple <code>/private/users.txt</code>), soit un chemin
-     * relatif au répertoire <code>/data</code> de l'application
+     * Le path du fichier indiquÃ© est soit un chemin "absolu" (commenÃ§ant par un slash) par rapport
+     * Ã  la racine de l'application (par exemple <code>/private/users.txt</code>), soit un chemin
+     * relatif au rÃ©pertoire <code>/data</code> de l'application
      * (exemple : <code>users/list.txt -> /data/users/list.txt</code>).
      *
-     * @return array un tableau contenant tous les utilisateurs définits dans le fichier.
+     * @return array un tableau contenant tous les utilisateurs dÃ©finits dans le fichier.
      */
     private function loadUsers()
     {
-        // Vérifie qu'un fichier de login/mot de passe a été fourni
+        // VÃ©rifie qu'un fichier de login/mot de passe a Ã©tÃ© fourni
         if (is_null($path=$this->config['file']['path']))
-            throw new Exception(__CLASS__ . ' : aucun fichier d\'utilisateurs n\'a été indiqué dans la clé security.file du fichier de configuration.');
+            throw new Exception(__CLASS__ . ' : aucun fichier d\'utilisateurs n\'a Ã©tÃ© indiquÃ© dans la clÃ© security.file du fichier de configuration.');
 
-        // Détermine le path exact du fichier
+        // DÃ©termine le path exact du fichier
         if (Utils::isRelativePath($path))
             $path=Utils::makePath(Runtime::$root, 'data', $path);
         else
             $path=Utils::makePath(Runtime::$root, $path);
 
-        // Vérifie que le fichier indiqué existe
+        // VÃ©rifie que le fichier indiquÃ© existe
         if (! file_exists($path))
-            throw new Exception(__CLASS__ . ' : impossible de trouver le fichier d\'utilisateurs indiqué dans la clé security.file du fichier de configuration.');
+            throw new Exception(__CLASS__ . ' : impossible de trouver le fichier d\'utilisateurs indiquÃ© dans la clÃ© security.file du fichier de configuration.');
 
-        // Récupère les paramètres du fichier
+        // RÃ©cupÃ¨re les paramÃ¨tres du fichier
         $delimiter = $this->config['file']['delimiter'];
         $enclosure = $this->config['file']['enclosure'];
 
         // Ouvre le fichier
         if (!is_resource($file = fopen($path, 'r')))
-            throw new Exception(__CLASS__ . ' : impossible de charger le fichier d\'utilisateurs indiqué dans la clé security.file du fichier de configuration.');
+            throw new Exception(__CLASS__ . ' : impossible de charger le fichier d\'utilisateurs indiquÃ© dans la clÃ© security.file du fichier de configuration.');
 
-        // Charge la ligne d'entête, ignore les espaces et vérifie qu'elle est correcte
+        // Charge la ligne d'entÃªte, ignore les espaces et vÃ©rifie qu'elle est correcte
         $header = fgetcsv($file, 1000, $delimiter, $enclosure);
         $header = array_map('trim', $header);
         if (! in_array('login', $header) || ! in_array('password', $header))
@@ -319,10 +319,10 @@ class FileBasedSecurity extends BaseSecurity
             if (count($user) != count($header))
                 throw new Exception(__CLASS__ . ' : erreur ligne ' . $line . ' du fichier d\'utilisateurs, nombre de colonnes incorrect.');
 
-            // Supprime les espaces de début et de fin de colonne
+            // Supprime les espaces de dÃ©but et de fin de colonne
             $user = array_map('trim', $user);
 
-            // Crée un tableau indexé par nom de champ
+            // CrÃ©e un tableau indexÃ© par nom de champ
             $user = array_combine($header, $user);
             $users[$user['login']] = (object) $user;
 
@@ -331,32 +331,32 @@ class FileBasedSecurity extends BaseSecurity
         // Ferme le fichier
         fclose($file);
 
-        // Ok, terminé
+        // Ok, terminÃ©
         return $users;
     }
 
 
     /**
-     * Vérifie que l'identifiant et le mot de passe passés en paramètre sont valides
+     * VÃ©rifie que l'identifiant et le mot de passe passÃ©s en paramÃ¨tre sont valides
      * et retourne l'objet User correspondant.
      *
      * @param string $login l'identifiant de l'utilisateur (login)
      * @param string $password le mot de passe de l'utilisateur.
-     * @return object un objet contenant les propriétés de l'utilisateur.
+     * @return object un objet contenant les propriÃ©tÃ©s de l'utilisateur.
      */
     private function getUser($login, $password)
     {
         // Charge la liste des utilisateurs
         $users = $this->loadUsers();
 
-        // Vérifie que le login indiqué existe
+        // VÃ©rifie que le login indiquÃ© existe
         if (! isset($users[$login]))
             return false;
 
         // Charge l'utilisateur
         $user = $users[$login];
 
-        // Vérifie que le mot de passe est correct
+        // VÃ©rifie que le mot de passe est correct
         if ($user->password !== $password)
             return false;
 
@@ -366,11 +366,11 @@ class FileBasedSecurity extends BaseSecurity
 
 
     /**
-     * Définit le cookie utilisateur en cryptant sa valeur.
+     * DÃ©finit le cookie utilisateur en cryptant sa valeur.
      *
-     * @param object $user un objet utilisateur tel que retourné par {@link getUser()}.
-     * @param bool $remember <code>true</code> pour générer un cookie persistant, <code>false</code>
-     * pour générer un cookie de session.
+     * @param object $user un objet utilisateur tel que retournÃ© par {@link getUser()}.
+     * @param bool $remember <code>true</code> pour gÃ©nÃ©rer un cookie persistant, <code>false</code>
+     * pour gÃ©nÃ©rer un cookie de session.
      */
     private function setCookie($user, $remember=false)
     {
@@ -379,12 +379,12 @@ class FileBasedSecurity extends BaseSecurity
         // Calcule la date d'expiration du cookie
         if ($remember)
         {
-            // expire après la durée indiquée dans la config
+            // expire aprÃ¨s la durÃ©e indiquÃ©e dans la config
             $validUntil = $expire = time() + $cookie['lifetime'];
         }
         else
         {
-            // cookie valide jusqu'à ce que le navigateur doit fermé
+            // cookie valide jusqu'Ã  ce que le navigateur doit fermÃ©
             $expire = 0;
 
             // mais pas si le navigateur reste ouvert plus de 24h
@@ -396,12 +396,12 @@ class FileBasedSecurity extends BaseSecurity
         $hash = hash_hmac('md5', $user->login . '|' . $validUntil, $key);
         $value = sprintf('%s|%d|%s', $user->login, $validUntil, $hash);
 
-        // Le hash présent dans le cookie résulte d'une double encodage.
-        // D'abord, on calcule une clé de cryptage basée sur le login de l'utilisateur
-        // et la date d'expiration du cookie, ensuite on encode à nouveau le login
-        // et la date d'expiration en utilisant cette clé.
+        // Le hash prÃ©sent dans le cookie rÃ©sulte d'une double encodage.
+        // D'abord, on calcule une clÃ© de cryptage basÃ©e sur le login de l'utilisateur
+        // et la date d'expiration du cookie, ensuite on encode Ã  nouveau le login
+        // et la date d'expiration en utilisant cette clÃ©.
 
-        // Crée le cookie
+        // CrÃ©e le cookie
         setcookie
         (
             $cookie['name'],
@@ -417,7 +417,7 @@ class FileBasedSecurity extends BaseSecurity
 
 
     /**
-     * Efface le cookie utilisateur généré par un appel précédent à
+     * Efface le cookie utilisateur gÃ©nÃ©rÃ© par un appel prÃ©cÃ©dent Ã 
      * {@link setCookie()}.
      */
     private function clearCookie()
@@ -443,41 +443,41 @@ class FileBasedSecurity extends BaseSecurity
      * Teste si l'utilisateur dispose d'un cookie de connexion valide et, si c'est le cas,
      * le connecte au site.
      *
-     * @return bool <code>true</code> si l'utilisateur a un cookie valide et qu'il a été connecté,
+     * @return bool <code>true</code> si l'utilisateur a un cookie valide et qu'il a Ã©tÃ© connectÃ©,
      * <false> sinon.
      */
     private function checkCookie()
     {
-        // Récupère le nom du cookie
+        // RÃ©cupÃ¨re le nom du cookie
         $name = $this->config['cookie']['name'];
         if (isset($_COOKIE[$name]))
         {
             $cookie = $_COOKIE[$name];
 
-            // Récupère le contenu du cookie : login|date d'expiration|hash
+            // RÃ©cupÃ¨re le contenu du cookie : login|date d'expiration|hash
             $parts = explode('|', $_COOKIE[$name]);
             if ( count($parts) !== 3 ) return;
             list($login, $validUntil, $hash) = $parts;
 
-            // Si le cookie a expiré, l'utilisateur n'est plus connecté
+            // Si le cookie a expirÃ©, l'utilisateur n'est plus connectÃ©
             if ( $validUntil < time() ) return;
 
-            // Charge la liste des utilisateurs si ce n'est pas déjà fait
+            // Charge la liste des utilisateurs si ce n'est pas dÃ©jÃ  fait
             $users = $this->loadUsers();
 
-            // Vérifie que l'utilisateur indiqué existe
+            // VÃ©rifie que l'utilisateur indiquÃ© existe
             if (! isset($users[$login])) return;
             $user = $users[$login];
 
-            // Vérifie que le cookie n'a pas été trafiqué.
-            // Le hash présent dans le cookie résulte d'une double encodage.
-            // D'abord, on calcule une clé de cryptage basée sur le login de l'utilisateur
-            // et la date d'expiration du cookie, ensuite on encode à nouveau le login
-            // et la date d'expiration en utilisant cette clé.
+            // VÃ©rifie que le cookie n'a pas Ã©tÃ© trafiquÃ©.
+            // Le hash prÃ©sent dans le cookie rÃ©sulte d'une double encodage.
+            // D'abord, on calcule une clÃ© de cryptage basÃ©e sur le login de l'utilisateur
+            // et la date d'expiration du cookie, ensuite on encode Ã  nouveau le login
+            // et la date d'expiration en utilisant cette clÃ©.
             $key = md5($user->login . $user->password . '|' . $validUntil);
             $correctHash = hash_hmac('md5', $user->login . '|' . $validUntil, $key);
 
-            // Si le hash obtenu est différent du hash présent dans le cookie, abandon.
+            // Si le hash obtenu est diffÃ©rent du hash prÃ©sent dans le cookie, abandon.
             if ($hash != $correctHash ) return;
 
             foreach ($user as $property => $value)
@@ -488,9 +488,9 @@ class FileBasedSecurity extends BaseSecurity
     }
 
     /**
-     * Indique si l'utilisateur en cours est connecté (authentifié)
+     * Indique si l'utilisateur en cours est connectÃ© (authentifiÃ©)
      *
-     * @return boolean true si l'utilisateur est connecté, false s'il
+     * @return boolean true si l'utilisateur est connectÃ©, false s'il
      * s'agit d'un visiteur anonyme
      */
     public function isConnected()
@@ -500,11 +500,11 @@ class FileBasedSecurity extends BaseSecurity
 
 
     /**
-     * Essaie de connecter l'utilisateur au site si celui-ci a envoyé
+     * Essaie de connecter l'utilisateur au site si celui-ci a envoyÃ©
      * un cookie de connexion valide.
      *
-     * La méthode <code>initialize()</code> est appellée automatiquement par la méthode
-     * {@link Module::loadModule()} une fois que la configuration du module a été chargée.
+     * La mÃ©thode <code>initialize()</code> est appellÃ©e automatiquement par la mÃ©thode
+     * {@link Module::loadModule()} une fois que la configuration du module a Ã©tÃ© chargÃ©e.
      */
     public function initialize()
     {
