@@ -3,48 +3,48 @@
 /**
  * @package     fab
  * @subpackage  Admin
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: AdminSchemas.php 1196 2010-07-16 16:21:13Z daniel.menard.bdsp $
  */
 
 /**
- * Module d'administration des schémas.
+ * Module d'administration des schÃ©mas.
  *
  * @package     fab
  * @subpackage  Admin
  */
 /**
- * Module d'administration permettant de gérer les {@link DatabaseSchema schémas
- * de bases de données de l'application}.
+ * Module d'administration permettant de gÃ©rer les {@link DatabaseSchema schÃ©mas
+ * de bases de donnÃ©es de l'application}.
  *
- * Les schémas de bases de données sont des fichiers
- * {@link http://fr.wikipedia.org/wiki/Xml xml} stockés dans le répertoire
- * <code>/data/schemas</code> de l'application et qui définissent la structure
- * d'une base de données (liste des champs, des index, paramètres, etc.)
+ * Les schÃ©mas de bases de donnÃ©es sont des fichiers
+ * {@link http://fr.wikipedia.org/wiki/Xml xml} stockÃ©s dans le rÃ©pertoire
+ * <code>/data/schemas</code> de l'application et qui dÃ©finissent la structure
+ * d'une base de donnÃ©es (liste des champs, des index, paramÃ¨tres, etc.)
  *
- * Ce module permet de lister tous les schémas de l'application ainsi que les
- * {@link /AdminSchemas modèles de schémas proposés par fab}.
+ * Ce module permet de lister tous les schÃ©mas de l'application ainsi que les
+ * {@link /AdminSchemas modÃ¨les de schÃ©mas proposÃ©s par fab}.
  *
- * Il hérite du module {@link AdminFiles} et dispose donc des actions
+ * Il hÃ©rite du module {@link AdminFiles} et dispose donc des actions
  * de base permettant de {@link AdminFiles::actionCopy() copier},
  * {@link AdminFiles::actionRename() renommer},
  * {@link AdminFiles::actionDelete() supprimer} et
- * {@link AdminFiles::actionDownload() télécharger} un fichier de schéma ainsi
- * que de la possibilité {@link actionEdit() d'éditer le code xml} d'un schéma
- * ou de {@link AdminFiles::copyFrom() créer un nouveau schéma à partir d'un
- * modèle proposé par fab}.
+ * {@link AdminFiles::actionDownload() tÃ©lÃ©charger} un fichier de schÃ©ma ainsi
+ * que de la possibilitÃ© {@link actionEdit() d'Ã©diter le code xml} d'un schÃ©ma
+ * ou de {@link AdminFiles::copyFrom() crÃ©er un nouveau schÃ©ma Ã  partir d'un
+ * modÃ¨le proposÃ© par fab}.
  *
- * <code>AdminSchemas</code> introduit un éditeur spécifique qui permet de
- * {@link actionNew() créer}, {@link actionEditSchema() modifier} et
- * {@link actionSaveSchema() sauvegarder} un schéma de façon plus intuitive
+ * <code>AdminSchemas</code> introduit un Ã©diteur spÃ©cifique qui permet de
+ * {@link actionNew() crÃ©er}, {@link actionEditSchema() modifier} et
+ * {@link actionSaveSchema() sauvegarder} un schÃ©ma de faÃ§on plus intuitive
  * qu'en intervenant sur le code xml sous-jacent et dispose d'une fonction de
- * validation intégrée qui empêche la création d'un
- * {@link DatabaseSchema::validate() schéma invalide}.
+ * validation intÃ©grÃ©e qui empÃªche la crÃ©ation d'un
+ * {@link DatabaseSchema::validate() schÃ©ma invalide}.
  *
  * Pour plus d'informations, vous pouvez consulter :
  * - La documentation de l'action {@link AdminDatabases::actionSetSchema SetSchema}
  *   du module d'administration {@link /AdminDatabases AdminDatabases} qui permet
- *   d'appliquer un schéma à une base de données.
+ *   d'appliquer un schÃ©ma Ã  une base de donnÃ©es.
  * - {@link DatabaseSchema l'API de la classe DatabaseSchema}.
  *
  * @package     fab
@@ -53,9 +53,9 @@
 class AdminSchemas extends AdminFiles
 {
     /**
-     * Page d'accueil du module d'administration des schémas de bases de données.
+     * Page d'accueil du module d'administration des schÃ©mas de bases de donnÃ©es.
      *
-     * Affiche la liste des schémas disponibles.
+     * Affiche la liste des schÃ©mas disponibles.
      */
     public function actionIndex()
     {
@@ -67,16 +67,16 @@ class AdminSchemas extends AdminFiles
 
 
     /**
-     * Retourne la liste des schémas connus du système.
+     * Retourne la liste des schÃ©mas connus du systÃ¨me.
      *
-     * Par défaut, la fonction retourne la liste des schémas de l'application.
-     * Si $fab est à true, c'est la liste des schémas de fab qui sera retournée.
+     * Par dÃ©faut, la fonction retourne la liste des schÃ©mas de l'application.
+     * Si $fab est Ã  true, c'est la liste des schÃ©mas de fab qui sera retournÃ©e.
      *
-     * @param bool $fab true pour récupérer les schémas définis dans fab,
-     * false (valeur par défaut) pour retourner les schémas de l'application.
+     * @param bool $fab true pour rÃ©cupÃ©rer les schÃ©mas dÃ©finis dans fab,
+     * false (valeur par dÃ©faut) pour retourner les schÃ©mas de l'application.
      *
-     * @return array un tableau contenant le path de tous les schémas
-     * disponibles (la clé associé contient le nom du schéma, c'est-à-dire
+     * @return array un tableau contenant le path de tous les schÃ©mas
+     * disponibles (la clÃ© associÃ© contient le nom du schÃ©ma, c'est-Ã -dire
      * <code>basename($path)</code>).
      */
     public static function getSchemas($fab=false)
@@ -93,7 +93,7 @@ class AdminSchemas extends AdminFiles
             $schemas[$file]=basename($file);
         }
 
-        // Trie par ordre alphabétique du nom
+        // Trie par ordre alphabÃ©tique du nom
         uksort($schemas, 'strcoll');
 
         return $schemas;
@@ -101,7 +101,7 @@ class AdminSchemas extends AdminFiles
 
 
     /**
-     * Retourne le schéma dont le nom est passé en paramètre.
+     * Retourne le schÃ©ma dont le nom est passÃ© en paramÃ¨tre.
      *
      * @return DatabaseSchema|false
      */
@@ -130,9 +130,9 @@ class AdminSchemas extends AdminFiles
     }
 
     /**
-     * Edite un schéma de l'application.
+     * Edite un schÃ©ma de l'application.
      *
-     * @param string $file le nom du fichier xml à éditer
+     * @param string $file le nom du fichier xml Ã  Ã©diter
      */
     public function actionEditSchema($file)
     {
@@ -143,10 +143,10 @@ class AdminSchemas extends AdminFiles
 
         $dir='data/schemas/';
 
-        // Vérifie que le fichier indiqué existe
+        // VÃ©rifie que le fichier indiquÃ© existe
         $path=Runtime::$root.$dir.$file;
         if (! file_exists($path))
-            throw new Exception("Le schéma $file n'existe pas.");
+            throw new Exception("Le schÃ©ma $file n'existe pas.");
 
 //         $schema = fab\Schema::fromXml(file_get_contents($path));
 //         echo '<pre style="overflow: hidden;width: 49%; float: left; border : 1px solid red">';
@@ -154,11 +154,11 @@ class AdminSchemas extends AdminFiles
 //         echo "</pre>";
 //         return;
 
-        // Charge le schéma
+        // Charge le schÃ©ma
 //         $schema=new DatabaseSchema(file_get_contents($path));
         $schema = fab\Schema::fromXml(file_get_contents($path));
 
-        // Valide et redresse le schéma, ignore les éventuelles erreurs
+        // Valide et redresse le schÃ©ma, ignore les Ã©ventuelles erreurs
 //        $schema->validate();
 //        $schema=Utils::utf8Encode($schema);
 /*
@@ -173,13 +173,13 @@ class AdminSchemas extends AdminFiles
         {
             $node = array();
 
-            // Fils autorisés
+            // Fils autorisÃ©s
             if (is_subclass_of($class, 'fab\Schema\NodesCollection'))
                 $node['valid_children'] = $class::getValidChildren();
             else
                 $node['valid_children'] = array();
 
-            // Propriétés par défaut du noeud
+            // PropriÃ©tÃ©s par dÃ©faut du noeud
             $node['defaults'] = $class::getDefaultProperties();
 
             // Icones
@@ -189,7 +189,7 @@ class AdminSchemas extends AdminFiles
                 $icon = "$path/$icon";
             $node['icon'] = $icons;
 
-            // Libellés à utiliser
+            // LibellÃ©s Ã  utiliser
             $node['label'] = $class::getLabels();
 
             $types[$type] = $node;
@@ -204,14 +204,14 @@ class AdminSchemas extends AdminFiles
     	);
 //         echo '<pre>', var_export($treeConfig,true), '</pre>';
 // return;
-        // Charge le schéma dans l'éditeur
+        // Charge le schÃ©ma dans l'Ã©diteur
         Template::run
         (
             Config::get('template'),
             array
             (
-                'schema'=>$schema, // hum.... envoie de l'utf-8 dans une page html déclarée en iso-8859-1...
-        		//'schema'=>$schema->toJson(), // hum.... envoie de l'utf-8 dans une page html déclarée en iso-8859-1...
+                'schema'=>$schema, // hum.... envoie de l'utf-8 dans une page html dÃ©clarÃ©e en iso-8859-1...
+        		//'schema'=>$schema->toJson(), // hum.... envoie de l'utf-8 dans une page html dÃ©clarÃ©e en iso-8859-1...
                 'saveUrl'=>'SaveSchema',
                 'saveParams'=>"{file:'$file'}",
                 'title'=>'Modification de '.$file,
@@ -223,29 +223,29 @@ class AdminSchemas extends AdminFiles
 
 
     /**
-     * Vérifie et sauvegarde un schéma.
+     * VÃ©rifie et sauvegarde un schÃ©ma.
      *
-     * Cette action permet d'enregistrer un schéma modifié avec l'éditeur de
+     * Cette action permet d'enregistrer un schÃ©ma modifiÃ© avec l'Ã©diteur de
      * structure.
      *
-     * Elle commence par valider le schéma passé en paramètre. Si des
-     * erreurs sont détectées, une réponse au format JSON est générée. Cette
-     * réponse contient un tableau contenant la liste des erreurs rencontrées.
-     * La réponse sera interprétée par l'éditeur de schéma qui affiche la
-     * liste des erreurs à l'utilisateur.
+     * Elle commence par valider le schÃ©ma passÃ© en paramÃ¨tre. Si des
+     * erreurs sont dÃ©tectÃ©es, une rÃ©ponse au format JSON est gÃ©nÃ©rÃ©e. Cette
+     * rÃ©ponse contient un tableau contenant la liste des erreurs rencontrÃ©es.
+     * La rÃ©ponse sera interprÃ©tÃ©e par l'Ã©diteur de schÃ©ma qui affiche la
+     * liste des erreurs Ã  l'utilisateur.
      *
-     * Si aucune erreur n'a été détectée, le schéma est enregistré.
-     * Dans ce cas, une chaine de caractères au format JSON est retournée
-     * à l'éditeur. Elle indique l'url vers laquelle l'utilisateur va être
-     * redirigé.
+     * Si aucune erreur n'a Ã©tÃ© dÃ©tectÃ©e, le schÃ©ma est enregistrÃ©.
+     * Dans ce cas, une chaine de caractÃ¨res au format JSON est retournÃ©e
+     * Ã  l'Ã©diteur. Elle indique l'url vers laquelle l'utilisateur va Ãªtre
+     * redirigÃ©.
      *
      * @param string $file le nom du fichier xml dans lequel enregistrer le
-     * schéma.
+     * schÃ©ma.
      *
-     * @param string $schema une chaine de caractères au format JSON contenant le
-     * schéma à valider et à enregistrer.
+     * @param string $schema une chaine de caractÃ¨res au format JSON contenant le
+     * schÃ©ma Ã  valider et Ã  enregistrer.
      *
-     * @throws Exception si le fichier indiqué n'existe pas.
+     * @throws Exception si le fichier indiquÃ© n'existe pas.
      */
     public function actionSaveSchema($file, $schema)
     {
@@ -262,12 +262,12 @@ class AdminSchemas extends AdminFiles
         return;
         $dir='data/schemas/';
 
-        // Vérifie que le fichier indiqué existe
+        // VÃ©rifie que le fichier indiquÃ© existe
         $path=Runtime::$root.$dir.$file;
         if (! file_exists($path))
-            throw new Exception("Le schéma $file n'existe pas.");
+            throw new Exception("Le schÃ©ma $file n'existe pas.");
 */
-        // Charge le schéma
+        // Charge le schÃ©ma
         //$schema=new DatabaseSchema($schema);
 //         echo "<pre>$schema</pre>";
 //         return;
@@ -299,20 +299,20 @@ echo "</pre>";
 //         echo json_last_error();
         //echo $schema->toXml();
 return;
-        // Valide le schéma et détecte les erreurs éventuelles
+        // Valide le schÃ©ma et dÃ©tecte les erreurs Ã©ventuelles
         $result=$schema->validate();
 
         // S'il y a des erreurs, retourne un tableau JSON contenant la liste
         if ($result !== true)
             return Response::create('JSON')->setContent($result);
 
-        // Compile le schéma (attribution des ID, etc.)
+        // Compile le schÃ©ma (attribution des ID, etc.)
         $schema->compile();
 
-        // Met à jour la date de dernière modification (et de création éventuellement)
+        // Met Ã  jour la date de derniÃ¨re modification (et de crÃ©ation Ã©ventuellement)
         $schema->setLastUpdate();
 
-        // Aucune erreur : sauvegarde le schéma
+        // Aucune erreur : sauvegarde le schÃ©ma
         file_put_contents($path, $schema->toXml());
 
         // Retourne l'url vers laquelle on redirige l'utilisateur
@@ -324,10 +324,10 @@ return;
 
 
     /**
-     * Crée un nouveau schéma (vide).
+     * CrÃ©e un nouveau schÃ©ma (vide).
      *
-     * Vérifie que le fichier indiqué existe, demande le nouveau nom
-     * du fichier, vérifie que ce nom n'est pas déjà pris, renomme le
+     * VÃ©rifie que le fichier indiquÃ© existe, demande le nouveau nom
+     * du fichier, vÃ©rifie que ce nom n'est pas dÃ©jÃ  pris, renomme le
      * fichier, redirige vers la page d'accueil.
      */
     public function actionNew($file='')
@@ -337,15 +337,15 @@ return;
         $error='';
         if ($file !== '')
         {
-            // Ajoute l'extension '.xml' si nécessaire
+            // Ajoute l'extension '.xml' si nÃ©cessaire
             $file=Utils::defaultExtension($file, '.xml');
             if (Utils::getExtension($file) !== '.xml')
                 $file.='.xml';
 
-            // Vérifie que le fichier indiqué n'existe pas déjà
+            // VÃ©rifie que le fichier indiquÃ© n'existe pas dÃ©jÃ 
             $path=Runtime::$root.$dir.$file;
             if ($file !== '' && file_exists($path))
-                $error='Il existe déjà un fichier portant ce nom.';
+                $error='Il existe dÃ©jÃ  un fichier portant ce nom.';
         }
 
         if ($file==='' || $error !='')
@@ -358,20 +358,20 @@ return;
             return;
         }
 
-        // Crée un nouveau schéma
+        // CrÃ©e un nouveau schÃ©ma
         $schema=new DatabaseSchema();
 
-        // Enregistre le schéma dans le fichier indiqué
+        // Enregistre le schÃ©ma dans le fichier indiquÃ©
         file_put_contents($path, $schema->toXml());
 
         Runtime::redirect('/'.$this->module);
     }
 
     /**
-     * Slot permettant à un autre module de choisir un schéma.
+     * Slot permettant Ã  un autre module de choisir un schÃ©ma.
      *
-     * @param string $link le lien à appliquer à chaque schéma.
-     * @param bool $fab true pou afficher les schémas de l'application,
+     * @param string $link le lien Ã  appliquer Ã  chaque schÃ©ma.
+     * @param bool $fab true pou afficher les schÃ©mas de l'application,
      * false pour afficher ceux de fab.
      */
     public function actionChoose($link='Edit?file=%s', $fab=false)
