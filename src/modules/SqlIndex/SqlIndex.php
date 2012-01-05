@@ -2,15 +2,15 @@
 /**
  * @package     fab
  * @subpackage  modules
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>
  * @version     SVN: $Id$
  */
 
 /**
- * Ce module permet d'indexer des données SQL présentes dans une base de
- * données relationnelle accessible via PDO (mysql, sqlite, etc.)
+ * Ce module permet d'indexer des donnÃ©es SQL prÃ©sentes dans une base de
+ * donnÃ©es relationnelle accessible via PDO (mysql, sqlite, etc.)
  *
- * Les données à indexer sont définies via des requêtes SQL indiquées dans la
+ * Les donnÃ©es Ã  indexer sont dÃ©finies via des requÃªtes SQL indiquÃ©es dans la
  * configuration du module.
  *
  * @package     fab
@@ -19,26 +19,26 @@
 class SqlIndex extends Module
 {
     /**
-     * Crée une connexion PDO à la base de données SQL utilisée pour l'indexation.
+     * CrÃ©e une connexion PDO Ã  la base de donnÃ©es SQL utilisÃ©e pour l'indexation.
      *
-     * Par défaut, la méthode utilise les informations indiquées dans le fichier de
-     * configuration du module (dsn, user, password...) pour se connecter à la base.
+     * Par dÃ©faut, la mÃ©thode utilise les informations indiquÃ©es dans le fichier de
+     * configuration du module (dsn, user, password...) pour se connecter Ã  la base.
      *
-     * Les modules descendant peuvent surcharger cette méthode pour mettre en oeuvre d'autres
-     * méthodes de connexion.
+     * Les modules descendant peuvent surcharger cette mÃ©thode pour mettre en oeuvre d'autres
+     * mÃ©thodes de connexion.
      *
-     * Par exemple, si les paramètres de connexion sont déjà disponibles ailleurs (dans le
+     * Par exemple, si les paramÃ¨tres de connexion sont dÃ©jÃ  disponibles ailleurs (dans le
      * fichier de config de Wordpress, par exemple), il est souhaitable de surcharger cette
-     * méthode pour éviter de dupliquer l'information.
+     * mÃ©thode pour Ã©viter de dupliquer l'information.
      *
-     * @return PDO une connexion ouverte à la base de données.
-     * @throws PDOException si la tentative de connexion à la base de données échoue.
+     * @return PDO une connexion ouverte Ã  la base de donnÃ©es.
+     * @throws PDOException si la tentative de connexion Ã  la base de donnÃ©es Ã©choue.
      */
     protected function getDatabaseConnection()
     {
         $dsn = Config::get("source.dsn");
         if (empty($dsn))
-            throw new Exception("La chaine de connexion à la base de données SQL n'a pas été indiquée.");
+            throw new Exception("La chaine de connexion Ã  la base de donnÃ©es SQL n'a pas Ã©tÃ© indiquÃ©e.");
 
         $username = Config::get("source.username");
         $password = Config::get("source.password");
@@ -49,45 +49,45 @@ class SqlIndex extends Module
 
 
     /**
-     * Signale une erreur dans une requête SQL.
+     * Signale une erreur dans une requÃªte SQL.
      *
      * @param PDO|PDOStatement $source la source de l'erreur
-     * @param string $sql optionnel, la requête sql exécutée.
+     * @param string $sql optionnel, la requÃªte sql exÃ©cutÃ©e.
      */
     protected function reportSqlError($source, $sql=null)
     {
         if (is_null($sql) && $source instanceof PDOStatement) $sql = $source->querystring;
 
         $error = $source->errorInfo();
-        echo "<p>Une erreur est survenue lors de l'exécution de la requête : <pre>$sql</pre>";
+        echo "<p>Une erreur est survenue lors de l'exÃ©cution de la requÃªte : <pre>$sql</pre>";
         echo $error[2], "</p>";
     }
 
     /**
-     * Indexe les données
+     * Indexe les donnÃ©es
      */
     public function actionIndex($confirm = false)
     {
-        // Récupère le nom de la base Xapian à créer
+        // RÃ©cupÃ¨re le nom de la base Xapian Ã  crÃ©er
         $database = Config::get('database');
         if (empty($database))
-            throw new Exception("Le nom de la base de données à créer n'a pas été indiqué");
+            throw new Exception("Le nom de la base de donnÃ©es Ã  crÃ©er n'a pas Ã©tÃ© indiquÃ©");
 
-        // Détermine son path
+        // DÃ©termine son path
         $databasePath = Config::get("db.$database.path", $database);
         if (Utils::isRelativePath($databasePath))
             $databasePath = Utils::makePath(Runtime::$root, 'data/db', $databasePath);
 
-        // Récupère le schéma à utiliser pour la base xapian
+        // RÃ©cupÃ¨re le schÃ©ma Ã  utiliser pour la base xapian
         $schema = Config::get('schema');
         if (empty($schema))
-            throw new Exception("Le nom du schéma à utiliser n'a pas été indiqué.");
+            throw new Exception("Le nom du schÃ©ma Ã  utiliser n'a pas Ã©tÃ© indiquÃ©.");
 
-        // Détermine son path
+        // DÃ©termine son path
         if (false === $schema=Utils::searchFile($schema, Runtime::$root . 'data/schemas/'))
-            throw new Exception('Impossible de trouver le schéma indiqué dans la config.');
+            throw new Exception('Impossible de trouver le schÃ©ma indiquÃ© dans la config.');
 
-        // Crée une connexion à la base de données SQL
+        // CrÃ©e une connexion Ã  la base de donnÃ©es SQL
         $db = $this->getDatabaseConnection();
 
         echo "<h1>", Config::get('title'), '</h1>';
@@ -97,19 +97,19 @@ class SqlIndex extends Module
         {
             printf
             (
-                "<p>Vous allez lancer l'indexation des données de la base de données <strong>%s</strong> (%s, %s) dans la base Xapian <strong>%s</strong>.</p>",
+                "<p>Vous allez lancer l'indexation des donnÃ©es de la base de donnÃ©es <strong>%s</strong> (%s, %s) dans la base Xapian <strong>%s</strong>.</p>",
                 Config::get('source.label'),
                 $db->getAttribute(PDO::ATTR_DRIVER_NAME),
                 $db->getAttribute(PDO::ATTR_CONNECTION_STATUS),
                 $database
             );
-            echo "<p>La base <strong>$database</strong> va être écrasée puis sera reconstruite.</p>";
+            echo "<p>La base <strong>$database</strong> va Ãªtre Ã©crasÃ©e puis sera reconstruite.</p>";
 
-            echo '<p><a href="?confirm=true">Cliquez ici pour confirmer que c\'est bien ça que vous voulez faire...</a></p>';
+            echo '<p><a href="?confirm=true">Cliquez ici pour confirmer que c\'est bien Ã§a que vous voulez faire...</a></p>';
             return;
         }
 
-        // Crée une tâche au sein du taskmanager
+        // CrÃ©e une tÃ¢che au sein du taskmanager
         if (! User::hasAccess('cli'))
         {
             $id=Task::create()
@@ -124,34 +124,34 @@ class SqlIndex extends Module
             Runtime::redirect('/TaskManager/TaskStatus?id='.$id);
         }
 
-        echo "<p>1. Création de la base xapian $database...</p>";
+        echo "<p>1. CrÃ©ation de la base xapian $database...</p>";
 
-        // Charge le schéma de la base Xapian
+        // Charge le schÃ©ma de la base Xapian
         $dbs=new DatabaseSchema(file_get_contents($schema));
 
-        // Crée la base Xapian
-        echo "<p>2. Connexion à la base de données SQL...</p>";
+        // CrÃ©e la base Xapian
+        echo "<p>2. Connexion Ã  la base de donnÃ©es SQL...</p>";
         $xapianDb=Database::create($database, $dbs, 'xapian');
 
         // Pre-query
-        echo "<p>3. Exécution des requêtes de pré-traitement...</p>";
+        echo "<p>3. ExÃ©cution des requÃªtes de prÃ©-traitement...</p>";
         foreach ((array) Config::get("data.before") as $sql)
             if (false === $result = $db->exec($sql))
                 return $this->reportSqlError($db, $sql);
 
 
-        echo "<p>4. Indexation des données...</p>";
+        echo "<p>4. Indexation des donnÃ©es...</p>";
         $total = 0;
         echo '<ul>';
         foreach((array)Config::get("data.datasets") as $name=>$dataset)
         {
             echo "<li>";
-            echo "<p>Jeu de données ", is_int($name) ? ("numéro ".($name+1)) : "\"$name\"", "...</p>";
+            echo "<p>Jeu de donnÃ©es ", is_int($name) ? ("numÃ©ro ".($name+1)) : "\"$name\"", "...</p>";
             $nb = 0;
 
             // Prepare les statements pour les "other-fields"
-            echo "<p>Préparation des requêtes 'other-fields'...</p>";
-            $other = array(); // chaque item contient : le statement et un tableau contenant les noms des paramètres
+            echo "<p>PrÃ©paration des requÃªtes 'other-fields'...</p>";
+            $other = array(); // chaque item contient : le statement et un tableau contenant les noms des paramÃ¨tres
             foreach((array)Config::get("data.datasets.$name.other-fields") as $sql)
             {
                 $statement = $db->prepare($sql);
@@ -160,19 +160,19 @@ class SqlIndex extends Module
                 $other[] = array($statement, $matches[1]);
             }
 
-            // Exécute la requête principale
-            echo "<p>Exécution de la requête principale...</p>";
+            // ExÃ©cute la requÃªte principale
+            echo "<p>ExÃ©cution de la requÃªte principale...</p>";
             $sql = Config::get("data.datasets.$name.query");
             if (false === $records = $db->query($sql, PDO::FETCH_ASSOC))
             {
                 return $this->reportSqlError($db, $sql);
             }
 
-            // Indexe toutes les réponses
+            // Indexe toutes les rÃ©ponses
             echo "<p>Indexation...</p>";
             foreach($records as $record)
             {
-                // Exécute chacune des requêtes "other-field" pour le record obtenu.
+                // ExÃ©cute chacune des requÃªtes "other-field" pour le record obtenu.
                 foreach($other as $item)
                 {
                     $statement = $item[0];
@@ -206,7 +206,7 @@ class SqlIndex extends Module
                     if (isset($record[$field]))
                         $record[$field] = explode(trim($sep), $record[$field]);
 
-                // Crée l'enregistrement xapian
+                // CrÃ©e l'enregistrement xapian
                 $xapianDb->addRecord();
                 foreach($record as $field=>$value)
                 {
@@ -222,21 +222,21 @@ class SqlIndex extends Module
                 ++$nb;
 
                 // debug
-//                $record['Content'] = 'supprimé';
+//                $record['Content'] = 'supprimÃ©';
 //                echo "<pre>", var_export($record, true), "</pre>";
             }
-            echo Utils::pluralize('<p>%d enregistrement{s} ajouté{s} dans la base Xapian.</p>', $nb);
+            echo Utils::pluralize('<p>%d enregistrement{s} ajoutÃ©{s} dans la base Xapian.</p>', $nb);
             echo "</li>";
             $total += $nb;
         }
         echo '</ul>';
 
         // Post-query
-        echo "<p>Exécution des requêtes de post-traitement...</p>";
+        echo "<p>ExÃ©cution des requÃªtes de post-traitement...</p>";
         foreach ((array) Config::get("data.after") as $sql)
             if (false === $result = $db->exec($sql))
                 return $this->reportSqlError($db, $sql);
 
-        echo Utils::pluralize('<p>Terminé. La base Xapian contient %d enregistrement{s} au total.</p>', $total);
+        echo Utils::pluralize('<p>TerminÃ©. La base Xapian contient %d enregistrement{s} au total.</p>', $total);
     }
 }
