@@ -1,6 +1,6 @@
 <?php
 /**
- * Module de consultation de thesaurus (monolingue, monohiérarchique)
+ * Module de consultation de thesaurus (monolingue, monohiÃ©rarchique)
  * 
  * @package     fab
  * @subpackage  modules
@@ -14,40 +14,40 @@ class ThesaurusModule extends DatabaseModule
     }
         
     /**
-     * Affiche la hiérarchie d'un champ sémantique.
+     * Affiche la hiÃ©rarchie d'un champ sÃ©mantique.
      * 
      * Principe : 
-     * - L'utilisateur passe en paramètre le libellé (?Fre=<terme>) d'un champ 
-     *   sémantique (c'est-à-dire un terme pour lequel TG est vide).
+     * - L'utilisateur passe en paramÃ¨tre le libellÃ© (?Fre=<terme>) d'un champ 
+     *   sÃ©mantique (c'est-Ã -dire un terme pour lequel TG est vide).
      * - On recherche tous les enregistrements pour lesquels MT=<terme>
-     * - On parcourt toutes les réponses obtenues pour constituer un tableau 
-     *   qui pour chaque TG trouvé contient un tableau contenant les TS.
-     * - On utilise la méthode {@link makeHierarchy()} qui reconstitue la 
-     *   hiérarchie complète du champ sémantique demandée à partir de ce tableau.
-     * - On appelle le template indiqué par la méthode {@link getTemplate()} 
-     *   pour afficher le résultat.
+     * - On parcourt toutes les rÃ©ponses obtenues pour constituer un tableau 
+     *   qui pour chaque TG trouvÃ© contient un tableau contenant les TS.
+     * - On utilise la mÃ©thode {@link makeHierarchy()} qui reconstitue la 
+     *   hiÃ©rarchie complÃ¨te du champ sÃ©mantique demandÃ©e Ã  partir de ce tableau.
+     * - On appelle le template indiquÃ© par la mÃ©thode {@link getTemplate()} 
+     *   pour afficher le rÃ©sultat.
      */
     public function actionHierarchy()
     {
-        // Ouvre la base de données
+        // Ouvre la base de donnÃ©es
         $this->openDatabase();
 
-        // Détermine la recherche à exécuter        
+        // DÃ©termine la recherche Ã  exÃ©cuter        
         $this->equation=$this->getEquation();
 
-        // Récupère le libellé exact du terme demandé
+        // RÃ©cupÃ¨re le libellÃ© exact du terme demandÃ©
         if (! $this->select($this->equation, 1, 1, '+'))
         {
-            $this->showNoAnswer("La requête $this->equation n'a donné aucune réponse.");
+            $this->showNoAnswer("La requÃªte $this->equation n'a donnÃ© aucune rÃ©ponse.");
             return;
         }
         $term=$this->selection['Fre'];
         
-        // Lance une requête MT:<terme>, gère le cas aucune réponse
+        // Lance une requÃªte MT:<terme>, gÃ¨re le cas aucune rÃ©ponse
         $this->equation='MT:' . $this->termToQuery($term);
         if (! $this->select($this->equation, -1, 1, '+'))
         {
-            $this->showNoAnswer("Le terme $term ne désigne pas un champ sémantique du thésaurus.");
+            $this->showNoAnswer("Le terme $term ne dÃ©signe pas un champ sÃ©mantique du thÃ©saurus.");
             return;
         }
         
@@ -59,14 +59,14 @@ class ThesaurusModule extends DatabaseModule
             Utils::arrayAppendKey($hierarchy, $record['TG'], $record['Fre']);
         }    
 
-        // Reconstitue la hiérarchie du terme
+        // Reconstitue la hiÃ©rarchie du terme
         $this->makeHierarchy($hierarchy[$term], $hierarchy);
 
-        // Détermine le template à utiliser
+        // DÃ©termine le template Ã  utiliser
         if (! $template=$this->getTemplate())
-            throw new Exception('Le template à utiliser n\'a pas été indiqué');
+            throw new Exception('Le template Ã  utiliser n\'a pas Ã©tÃ© indiquÃ©');
         
-        // Exécute le template
+        // ExÃ©cute le template
         Template::run
         (
             $template,
@@ -75,18 +75,18 @@ class ThesaurusModule extends DatabaseModule
     }
     
     /**
-     * Reconstitue la hiérarchie complète d'un champ sémantique.
+     * Reconstitue la hiÃ©rarchie complÃ¨te d'un champ sÃ©mantique.
      * 
-     * @param array $term un tableau désignant le terme dont on veut reconstituer
-     * la hiérarchie. 
+     * @param array $term un tableau dÃ©signant le terme dont on veut reconstituer
+     * la hiÃ©rarchie. 
      * @param array $allTerms un tableau contenant tous les termes.
-     * En sortie, ne contiendra plus que le terme recherché.
+     * En sortie, ne contiendra plus que le terme recherchÃ©.
      * 
      * Important :
-     * - $term doit obligatoirement être l'un des éléments du tableau 
+     * - $term doit obligatoirement Ãªtre l'un des Ã©lÃ©ments du tableau 
      *   <code>$hierarchy</code>. Exemple :
      *   <code>makeHierarchy($t['famille'], $t)</code>
-     * - les deux paramètrs son "by ref".
+     * - les deux paramÃ¨trs son "by ref".
      * 
      * @see actionHierarchy()
      */
@@ -110,16 +110,16 @@ class ThesaurusModule extends DatabaseModule
     }
     
     /**
-     * Nettoie le terme passé en paramètre pour qu'il puisse être utilisé dans 
-     * une requête pour faire une recherche à l'article.
+     * Nettoie le terme passÃ© en paramÃ¨tre pour qu'il puisse Ãªtre utilisÃ© dans 
+     * une requÃªte pour faire une recherche Ã  l'article.
      * 
-     * Le traitement consiste à 
-     * - remplacer par un esapce les caractères reconnus comme opérateurs
-     *   (crochets, parenthèses, &, +, - 
-     * (neutralise les crochets présents dans le terme et l'encadre de crochets)
+     * Le traitement consiste Ã  
+     * - remplacer par un esapce les caractÃ¨res reconnus comme opÃ©rateurs
+     *   (crochets, parenthÃ¨ses, &, +, - 
+     * (neutralise les crochets prÃ©sents dans le terme et l'encadre de crochets)
      * 
-     * @param string $term le terme à nettoyer
-     * @param string le bout de requête obtenu
+     * @param string $term le terme Ã  nettoyer
+     * @param string le bout de requÃªte obtenu
      */ 
     public function termToQuery($term, $asValue=true, $encode=true)
     {
