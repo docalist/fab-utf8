@@ -2,12 +2,12 @@
 /**
  * @package     fab
  * @subpackage  modules
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: DedupFirstValue.php 693 2008-05-07 15:26:05Z daniel.menard.bdsp $
  */
 
 /**
- * Méthodes de dédoublonnage basée sur la comparaison des articles 
+ * MÃ©thodes de dÃ©doublonnage basÃ©e sur la comparaison des articles 
  * 
  * @package     fab
  * @subpackage  modules

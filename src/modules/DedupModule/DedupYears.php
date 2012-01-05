@@ -2,15 +2,15 @@
 /**
  * @package     fab
  * @subpackage  modules
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: DedupYears.php 693 2008-05-07 15:26:05Z daniel.menard.bdsp $
  */
 
 /**
- * Méthodes de dédoublonnage basée sur la comparaison des années.
+ * MÃ©thodes de dÃ©doublonnage basÃ©e sur la comparaison des annÃ©es.
  * 
- * Seules les années écrites sous la forme d'un nombre de quatre chiffres 
- * commençant par 1 ou 2 sont prises en comptes (i.e. 1998 ou 2007 mais pas 98) 
+ * Seules les annÃ©es Ã©crites sous la forme d'un nombre de quatre chiffres 
+ * commenÃ§ant par 1 ou 2 sont prises en comptes (i.e. 1998 ou 2007 mais pas 98) 
  * 
  * @package     fab
  * @subpackage  modules
@@ -19,22 +19,22 @@
 class DedupYears extends DedupTokens
 {
     /**
-     * Retourne une équation de recherche contenant les articles présents dans 
-     * la valeur passée en paramètre.
+     * Retourne une Ã©quation de recherche contenant les articles prÃ©sents dans 
+     * la valeur passÃ©e en paramÃ¨tre.
      *
-     * Si un même article apparait plusieurs fois, il n'apparaitra qu'une seule 
-     * fois dans l'équation finale.
+     * Si un mÃªme article apparait plusieurs fois, il n'apparaitra qu'une seule 
+     * fois dans l'Ã©quation finale.
      * 
-     * Si la valeur passée en paramètre est vide (null ou chaine vide) un 
-     * tableau vide est retourné.
+     * Si la valeur passÃ©e en paramÃ¨tre est vide (null ou chaine vide) un 
+     * tableau vide est retournÃ©.
      * 
      * @param null|string|array $value
      * @return array
      */
     protected function getTokens($value)
     {
-        // Si c'est un tableau, on le linéarise
-        if (is_array($value)) $value=implode('¤', $value);
+        // Si c'est un tableau, on le linÃ©arise
+        if (is_array($value)) $value=implode('Â¤', $value);
         
         if (preg_match_all('~\b(?:1|2)\d{3}\b~', $value, $matches))
             return array_flip($matches[0]);

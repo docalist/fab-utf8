@@ -2,7 +2,7 @@
 /**
  * @package     fab
  * @subpackage  modules
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: DedupModule.php 1050 2009-05-11 16:23:36Z severine.ferron.bdsp $
  */
 
@@ -14,17 +14,17 @@ require_once(dirname(__FILE__).'/DedupYears.php');
 
 /**
  * Ce module permet de rechercher et de traiter des doublons potentiels au sein 
- * d'une base de données.
+ * d'une base de donnÃ©es.
  * 
- * Il fonctionne à partir d'un lot de notices indiqués par une équation de 
- * recherche. Pour chacune des notices sélectionnées, des tests (définis dans 
- * le fichier de configuration) vont être exécutés.
+ * Il fonctionne Ã  partir d'un lot de notices indiquÃ©s par une Ã©quation de 
+ * recherche. Pour chacune des notices sÃ©lectionnÃ©es, des tests (dÃ©finis dans 
+ * le fichier de configuration) vont Ãªtre exÃ©cutÃ©s.
  * 
- * Une fois ces tests exécutés, on obtient une liste de notices qui sont des 
- * doublons potentiels de la notice étudiée.
+ * Une fois ces tests exÃ©cutÃ©s, on obtient une liste de notices qui sont des 
+ * doublons potentiels de la notice Ã©tudiÃ©e.
  * 
- * Le dédoublonnage a proprement parler sera ensuite réalisé par un humain qui
- * décidera si les doublons potentiels détectés sont effectivement des doublons
+ * Le dÃ©doublonnage a proprement parler sera ensuite rÃ©alisÃ© par un humain qui
+ * dÃ©cidera si les doublons potentiels dÃ©tectÃ©s sont effectivement des doublons
  * ou non et supprimera ou fusionnera certaines des notices.
  * 
  * @package     fab
@@ -33,7 +33,7 @@ require_once(dirname(__FILE__).'/DedupYears.php');
 class DedupModule extends Module
 {
     /**
-     * La sélection contenant les notices pour lesquelles on va rechercher
+     * La sÃ©lection contenant les notices pour lesquelles on va rechercher
      * des doublons potentiels.
      * 
      * @var Database
@@ -42,32 +42,32 @@ class DedupModule extends Module
     
     /**
      * Permet de lancer une recherche de doublons potentiels pour les notices 
-     * sélectionnées par l'équation passée en paramètre.
+     * sÃ©lectionnÃ©es par l'Ã©quation passÃ©e en paramÃ¨tre.
      * 
-     * L'action commence par afficher un template à l'utilisateur lui indiquant
-     * le nombre de notices sélectionnées et lui demandant de confirmer le 
-     * lancement du dédoublonnage.
+     * L'action commence par afficher un template Ã  l'utilisateur lui indiquant
+     * le nombre de notices sÃ©lectionnÃ©es et lui demandant de confirmer le 
+     * lancement du dÃ©doublonnage.
      * 
-     * Elle crée ensuite une tâche au sein du {@link TaskManager} qui exécutera
+     * Elle crÃ©e ensuite une tÃ¢che au sein du {@link TaskManager} qui exÃ©cutera
      * l'action {@link actionDedup() Dedup}.
      *
-     * @param string $_equation l'équation de recherche qui définit les notices
+     * @param string $_equation l'Ã©quation de recherche qui dÃ©finit les notices
      * pour lesquelles on souhaite rechercher des doublons potentiels.
      * 
-     * @param bool $confirm un booléen indiquant si l'action a été confirmée.
-     * Lorsque <code>$confirm</code> est à <code>false</code>, une demande de 
-     * confirmation est demandée à l'utilisateur. Lorsque <code>confirm </code>
-     * est à <code>true</code>, la tâche est créée.
+     * @param bool $confirm un boolÃ©en indiquant si l'action a Ã©tÃ© confirmÃ©e.
+     * Lorsque <code>$confirm</code> est Ã  <code>false</code>, une demande de 
+     * confirmation est demandÃ©e Ã  l'utilisateur. Lorsque <code>confirm </code>
+     * est Ã  <code>true</code>, la tÃ¢che est crÃ©Ã©e.
      * 
-     * @throws Exception si aucune équation de recherche n'a été indiquée ou si
-     * aucune notice ne correspond à cette équation.
+     * @throws Exception si aucune Ã©quation de recherche n'a Ã©tÃ© indiquÃ©e ou si
+     * aucune notice ne correspond Ã  cette Ã©quation.
      */
     public function actionIndex($_equation, $confirm=false)
     {
         // Lance la recherche dans la base
         $this->selection=$this->search($_equation, array('max'=>-1));
         
-        // Demande confirmation à l'utilisateur
+        // Demande confirmation Ã  l'utilisateur
         if (!$confirm)
         {
             Template::run
@@ -78,7 +78,7 @@ class DedupModule extends Module
             return;
         }
 
-        // Crée une tâche au sein du gestionnaire de tâches
+        // CrÃ©e une tÃ¢che au sein du gestionnaire de tÃ¢ches
         $id=Task::create()
             ->setRequest($this->request->setAction('Dedup')->keepOnly('_equation'))
             ->setTime(0)
@@ -91,7 +91,7 @@ class DedupModule extends Module
     }
     
     /**
-     * Exécute le dédoublonnage des notices 
+     * ExÃ©cute le dÃ©doublonnage des notices 
      *
      * @param string $_equation
      */
@@ -100,7 +100,7 @@ class DedupModule extends Module
         // Lance la recherche dans la base
         $this->selection=$this->search($_equation, array('max'=>-1, 'sort'=>'+'));
         
-        echo '<h1>Recherche de doublons pour l\'équation ', $_equation, ' : ', $this->selection->count(), ' notice(s) à étudier</h1>';
+        echo '<h1>Recherche de doublons pour l\'Ã©quation ', $_equation, ' : ', $this->selection->count(), ' notice(s) Ã  Ã©tudier</h1>';
         
         $tests=Config::get('tests');
         
@@ -113,15 +113,15 @@ class DedupModule extends Module
     }
 
     /**
-     * Exécute le dédoublonnage lors de la saisie d'une notice
+     * ExÃ©cute le dÃ©doublonnage lors de la saisie d'une notice
      */
     public function actionDedupData()
     {
-        // On nous a passé des données, crée une "fausse" sélection avec
-        // les paramètres de la requête
+        // On nous a passÃ© des donnÃ©es, crÃ©e une "fausse" sÃ©lection avec
+        // les paramÃ¨tres de la requÃªte
         $this->selection=array($this->request->getParameters());
 
-        // Récupère les tests à réaliser
+        // RÃ©cupÃ¨re les tests Ã  rÃ©aliser
         $tests=Config::get('tests');
         
         // Lance les tests
@@ -129,12 +129,12 @@ class DedupModule extends Module
     }
     
     /**
-     * Affiche une description "en clair" des tests qui seront appliqués
+     * Affiche une description "en clair" des tests qui seront appliquÃ©s
      * aux notices
      */
     private function dumpTests(array $tests)
     {
-        echo "Pour chacune des notices sélectionnées, le programme va rechercher dans la base :<br />";
+        echo "Pour chacune des notices sÃ©lectionnÃ©es, le programme va rechercher dans la base :<br />";
 
         echo "<ul>";
         foreach($tests as $num=>$test)
@@ -142,7 +142,7 @@ class DedupModule extends Module
             echo '<li>';
             
             $cond=array(); // conditions
-            $t=array(); // tests à faire
+            $t=array(); // tests Ã  faire
             foreach ($test as $field=>$options)
             {
                 if (is_scalar($options))
@@ -173,7 +173,7 @@ class DedupModule extends Module
                         if ($min===100)
                             echo 'un champ ', $field, ' identique';
                         else
-                            echo 'un champ ', $field, ' similaire à ', $min, '%';
+                            echo 'un champ ', $field, ' similaire Ã  ', $min, '%';
                     }
                     $first=false;
                         
@@ -187,7 +187,7 @@ class DedupModule extends Module
                 {
                     if (!$first) echo ' et ';
                     if (is_null($options))
-                        echo $field, ' est renseigné';
+                        echo $field, ' est renseignÃ©';
                     else
                         echo $field, '=', $options;
                     $first=false;
@@ -201,31 +201,31 @@ class DedupModule extends Module
 
     
     /**
-     * Exécute tous les tests passés en paramètre sur les notices présentes
-     * dans la sélection en cours
+     * ExÃ©cute tous les tests passÃ©s en paramÃ¨tre sur les notices prÃ©sentes
+     * dans la sÃ©lection en cours
      *
-     * @param Array $tests les tests à exécuter
+     * @param Array $tests les tests Ã  exÃ©cuter
      * @param String $format le format d'affichage des notices (le source
      * d'un template)
      */
     private function runTests(array $tests, $format1, $format2)
     {
-        // format1 peut être null dans le cas de la recherche de doublons
-        // à partir des données passées en paramètre
+        // format1 peut Ãªtre null dans le cas de la recherche de doublons
+        // Ã  partir des donnÃ©es passÃ©es en paramÃ¨tre
         if (! is_null($format1))
             $path1=__FILE__.'/'.md5($format1).'.html';
         $path2=__FILE__.'/'.md5($format2).'.html';
         
         $duplicates=$this->search(null);
         
-        // Nombre de notices ou nombre de tableau de données passées en paramètre
+        // Nombre de notices ou nombre de tableau de donnÃ©es passÃ©es en paramÃ¨tre
         $nbRecord=is_array($this->selection) ? count($this->selection) : $this->selection->count();
         
         echo "\n", '<ol>', "\n";
         foreach($this->selection as $rank=>$record)
         {
-            // Si les données ont été passées en paramètre, $this->selection
-            // devient le tableau des paramètres (ParamName => ParamValue)
+            // Si les donnÃ©es ont Ã©tÃ© passÃ©es en paramÃ¨tre, $this->selection
+            // devient le tableau des paramÃ¨tres (ParamName => ParamValue)
             if (is_array($this->selection))
                 $this->selection=$this->selection[$rank];
                 
@@ -238,22 +238,22 @@ class DedupModule extends Module
                 {
                     echo '<li>';
                     Template::runSource($path1, $format1, $record);
-                    echo '<p style="color: red">WARNING : impossible de dédoublonner cette notice, aucun test ne s\'applique<p>';
+                    echo '<p style="color: red">WARNING : impossible de dÃ©doublonner cette notice, aucun test ne s\'applique<p>';
                     echo '</li>';
                 }
                 else
                 {
-                    echo '<p style="color: red">Impossible de dédoublonner cette notice, aucun test ne s\'applique<p>';
+                    echo '<p style="color: red">Impossible de dÃ©doublonner cette notice, aucun test ne s\'applique<p>';
                 }
                 continue;
             }
 
-            if (debug) echo 'Equation générée : <a href="',Routing::linkFor('/Base/Search?_defaultop=or&_equation='.urlencode($equation)), '">', $equation, '</a><br />';
+            if (debug) echo 'Equation gÃ©nÃ©rÃ©e : <a href="',Routing::linkFor('/Base/Search?_defaultop=or&_equation='.urlencode($equation)), '">', $equation, '</a><br />';
 
             if ($duplicates->search($equation, array('sort'=>'%', 'max'=>50)))
             {
                 if (debug) echo $duplicates->searchInfo('internalquery'), '<br />';
-                if (debug) echo $duplicates->count(), ' réponses<br />';
+                if (debug) echo $duplicates->count(), ' rÃ©ponses<br />';
 
                 $first=true;
                 $hasDuplicates=false;
@@ -263,9 +263,9 @@ class DedupModule extends Module
                     $score=0;
                     if ($this->isDuplicate($tests, $duplicate, $score))
                     {
-                        // Premier doublon trouvé : affiche la notice étudiée.
-                        // Si c'est une recherche de doublon à partir de données
-                        // passées en paramètre (saisie), n'affiche rien
+                        // Premier doublon trouvÃ© : affiche la notice Ã©tudiÃ©e.
+                        // Si c'est une recherche de doublon Ã  partir de donnÃ©es
+                        // passÃ©es en paramÃ¨tre (saisie), n'affiche rien
                         if ($first) 
                         {
                             if (! is_null($format1))
@@ -291,9 +291,9 @@ class DedupModule extends Module
             }
             else
             {
-                // Message affiché si on est dans le cas de données passées en paramètre (format1 est null)
+                // Message affichÃ© si on est dans le cas de donnÃ©es passÃ©es en paramÃ¨tre (format1 est null)
                 if (is_null($format1))
-                    echo '<p>Aucun doublon trouvé</p>';
+                    echo '<p>Aucun doublon trouvÃ©</p>';
             }
             
             TaskManager::progress($rank, $nbRecord);
@@ -304,18 +304,18 @@ class DedupModule extends Module
 
     
     /**
-     * Crée une équation de recherche permettant de rechercher les doublons 
-     * potentiels pour la notice en cours à partir des tests passés en 
-     * paramètre.
+     * CrÃ©e une Ã©quation de recherche permettant de rechercher les doublons 
+     * potentiels pour la notice en cours Ã  partir des tests passÃ©s en 
+     * paramÃ¨tre.
      * 
-     * La fonction examine tous les tests indiqués et va créer une équation de 
-     * recherche pour ceux qui peuvent être appliqués à la notice en cours.
+     * La fonction examine tous les tests indiquÃ©s et va crÃ©er une Ã©quation de 
+     * recherche pour ceux qui peuvent Ãªtre appliquÃ©s Ã  la notice en cours.
      * 
-     * Les équations provenant de chacun des tests retenus sont combinées en
-     * OU pour former l'équation finale à exécuter.
+     * Les Ã©quations provenant de chacun des tests retenus sont combinÃ©es en
+     * OU pour former l'Ã©quation finale Ã  exÃ©cuter.
      * 
-     * @return string|null l'équation finale obtenue ou null si aucun des tests
-     * indiqués ne s'applique à la notice en cours.
+     * @return string|null l'Ã©quation finale obtenue ou null si aucun des tests
+     * indiquÃ©s ne s'applique Ã  la notice en cours.
      */
     private function createEquation($tests)
     {
@@ -330,14 +330,14 @@ class DedupModule extends Module
                 // Le champ indique une valeur (par exemple <type>ouvrage</type>)
                 if (is_scalar($options))
                 {
-                    // Le test ne s'applique que si la notice en cours a la valeur indiquée
+                    // Le test ne s'applique que si la notice en cours a la valeur indiquÃ©e
                     if (! $this->fieldContains($field, $options))
                     { 
-                        if (debug) echo 'Test ', $numTest+1, ' ignoré (', $field, ' ne contient pas ', $options, ')<br />';
+                        if (debug) echo 'Test ', $numTest+1, ' ignorÃ© (', $field, ' ne contient pas ', $options, ')<br />';
                         continue 2;
                     }
 
-                    // tester dans notice étudiée si field=options
+                    // tester dans notice Ã©tudiÃ©e si field=options
                     $method='DedupTokens';
                     $method=new $method();
                     
@@ -345,15 +345,15 @@ class DedupModule extends Module
 
                 }
                 
-                // Le champ indique des critères (type, min...)
+                // Le champ indique des critÃ¨res (type, min...)
                 else
                 {
-                    // Récupère la valeur du champ
+                    // RÃ©cupÃ¨re la valeur du champ
                     $value=isset($this->selection[$field]) ? $this->selection[$field] : null; 
 
                     if (is_null($value) || $value==='')
                     { 
-                        if (debug) echo 'Test ', $numTest+1, ' ignoré (', $field, ' non renseigné)<br />';
+                        if (debug) echo 'Test ', $numTest+1, ' ignorÃ© (', $field, ' non renseignÃ©)<br />';
                         continue 2;
                     }
                     
@@ -372,22 +372,22 @@ class DedupModule extends Module
         
         if (debug) echo '<br />';
         
-        // Résultat
+        // RÃ©sultat
         
-        // Construit la partie "sauf" de l'équation si on dispose d'un numéro de référence
+        // Construit la partie "sauf" de l'Ã©quation si on dispose d'un numÃ©ro de rÃ©fÃ©rence
         $REF=isset($this->selection['REF']) ? $this->selection['REF'] : null;
         $REF=($REF!=='0' && ! is_null($REF)) ? " -REF:$REF" : '';
         
-        // Combine toutes les équations
+        // Combine toutes les Ã©quations
         $equations=implode(' OR ', $equations);
         
-        // Retourne le résultat
+        // Retourne le rÃ©sultat
         return $equations!=='' ? '(' . $equations. ')'. $REF : '';
     }
 
     /**
-     * Teste si les deux notices passées en paramètre sont effectivement des
-     * doublons en utilisant les tests indiqués
+     * Teste si les deux notices passÃ©es en paramÃ¨tre sont effectivement des
+     * doublons en utilisant les tests indiquÃ©s
      *
      * @param array $tests
      * @param DatabaseRecord $selection
@@ -401,7 +401,7 @@ class DedupModule extends Module
             if (debug) echo '<br />test ', $numTest+1, ' :<br />';
             foreach($test as $field=>$options)
             {
-                // Récupère la valeur du champ
+                // RÃ©cupÃ¨re la valeur du champ
                 $value=isset($this->selection[$field]) ? $this->selection[$field] : null;             
                 
                 // cas d'une valeur
@@ -428,64 +428,64 @@ class DedupModule extends Module
                 $min=(int)Utils::get($options['min'], '100%');
 
                 $method='Dedup' . ucfirst(Utils::get($options['compare'], 'tokens'));
-                if (debug) echo 'comparaison des tokens de ', $field, ' avec la méthode ', $method, '<br />';
+                if (debug) echo 'comparaison des tokens de ', $field, ' avec la mÃ©thode ', $method, '<br />';
                 $method=new $method();
                 
                 $score=$method->compare($value, $duplicate[$field]);
                 if ($score < $min)
                 {
-                    if (debug) echo 'score inférieur à min=', $min, ', passage au test suivant<br />';
+                    if (debug) echo 'score infÃ©rieur Ã  min=', $min, ', passage au test suivant<br />';
                     continue 2;
                 }
-                if (debug) echo 'score &gt;= à min=', $min, ', on continue<br />';
+                if (debug) echo 'score &gt;= Ã  min=', $min, ', on continue<br />';
             }
-            if (debug) echo 'tous les tests ont réussis<br />';
+            if (debug) echo 'tous les tests ont rÃ©ussis<br />';
             return true;
         }
         return false;
     }
     
     /**
-     * Teste si le champ indiqué contient la valeur recherchée.
+     * Teste si le champ indiquÃ© contient la valeur recherchÃ©e.
      * 
-     * Si le champ est multivalué (champ articles), le test réussi si l'un
-     * des articles correspond à la valeur recherchée, sinon, le test réussi
-     * si le champ contient la valeur recherchée.
+     * Si le champ est multivaluÃ© (champ articles), le test rÃ©ussi si l'un
+     * des articles correspond Ã  la valeur recherchÃ©e, sinon, le test rÃ©ussi
+     * si le champ contient la valeur recherchÃ©e.
      * 
-     * La comparaison ne tient pas compte de la casse des caractères ni des
+     * La comparaison ne tient pas compte de la casse des caractÃ¨res ni des
      * accents.
      * 
      * @param string $field le nom du champ dans lequel il faut rechercher
-     * @param string|null $value la valeur recherchée
-     * @return bool true si le champ contient la valeur recherchée.
+     * @param string|null $value la valeur recherchÃ©e
+     * @return bool true si le champ contient la valeur recherchÃ©e.
      */
     private function fieldContains($field, $value)
     {
-        // Récupère la valeur du champ
+        // RÃ©cupÃ¨re la valeur du champ
         $field=isset($this->selection[$field]) ? $this->selection[$field] : null;
         
-        // Convertit la valeur recherchée en minuscules et supprime les accents
+        // Convertit la valeur recherchÃ©e en minuscules et supprime les accents
         $value=trim(Utils::convertString($value, 'lower'));
         
-        // Si le champ est vide, value doit être vide aussi 
+        // Si le champ est vide, value doit Ãªtre vide aussi 
         if (is_null($field))
         {
             return is_null($value) || $value==='';
         }
 
-        // Explose le champ à l'aide du séparateur défini en config
-        // TODO : problème car le sep '/' est un caractère commun qui peut se trouver dans des champs texte
+        // Explose le champ Ã  l'aide du sÃ©parateur dÃ©fini en config
+        // TODO : problÃ¨me car le sep '/' est un caractÃ¨re commun qui peut se trouver dans des champs texte
         $sep=Config::get('sep');
         if (isset($sep))
             $field=explode($sep,$field);
         
-        // Si le champ est monovalué, on compare directement les valeurs
+        // Si le champ est monovaluÃ©, on compare directement les valeurs
 //        if (is_scalar($field))
 //        {
 //            return trim(Utils::convertString($field, 'lower')) === $value;
 //        }
         
-        // Si le champ est un champ articles, teste si l'un des articles correspond à la valeur recherchée
+        // Si le champ est un champ articles, teste si l'un des articles correspond Ã  la valeur recherchÃ©e
         if (is_array($field))
         {
             foreach($field as $v)
@@ -496,14 +496,14 @@ class DedupModule extends Module
         }
 
         // Autre chose ?
-        throw new Exception('non géré '.var_export(string,true));
+        throw new Exception('non gÃ©rÃ© '.var_export(string,true));
         
     }
     
     /**
-     * Supprime de la valeur passée ne paramètre value tout ce qui peut être 
-     * génant dans une équation de recherche (opérateurs booléens, + et -, 
-     * guillemets, crochets, parenthèses...)
+     * Supprime de la valeur passÃ©e ne paramÃ¨tre value tout ce qui peut Ãªtre 
+     * gÃ©nant dans une Ã©quation de recherche (opÃ©rateurs boolÃ©ens, + et -, 
+     * guillemets, crochets, parenthÃ¨ses...)
      *
      * @param unknown_type $value
      * @return unknown
@@ -527,17 +527,17 @@ class DedupModule extends Module
     
     protected function search($equation=null, $options=null)
     {
-        // Le fichier de config du module indique la base à utiliser
+        // Le fichier de config du module indique la base Ã  utiliser
         $database=Config::get('database');
 
         if (is_null($database))
-            throw new Exception('La base de données à utiliser n\'a pas été indiquée dans le fichier de configuration du module');
+            throw new Exception('La base de donnÃ©es Ã  utiliser n\'a pas Ã©tÃ© indiquÃ©e dans le fichier de configuration du module');
 
         $selection=Database::open($database);
         if (! is_null($equation))
         {
             if (! $selection->search($equation, $options))
-                throw new Exception("Aucune réponse pour l'équation $equation");
+                throw new Exception("Aucune rÃ©ponse pour l'Ã©quation $equation");
         }
         return $selection;
     }
@@ -545,7 +545,7 @@ class DedupModule extends Module
     public function actionEdit(array $REF)
     {
         if (count($REF) !== 2)
-            throw new InvalidArgumentException('Vous devez indiquer deux numéros de notices valides.');
+            throw new InvalidArgumentException('Vous devez indiquer deux numÃ©ros de notices valides.');
             
         Template::run
         (

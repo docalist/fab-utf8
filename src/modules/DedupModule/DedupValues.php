@@ -2,12 +2,12 @@
 /**
  * @package     fab
  * @subpackage  modules
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: DedupValues.php 711 2008-05-23 17:10:04Z daniel.menard.bdsp $
  */
 
 /**
- * Méthodes de dédoublonnage basée sur la comparaison des articles 
+ * MÃ©thodes de dÃ©doublonnage basÃ©e sur la comparaison des articles 
  * 
  * @package     fab
  * @subpackage  modules
@@ -16,14 +16,14 @@
 class DedupValues extends DedupTokens
 {
     /**
-     * Retourne une équation de recherche contenant les articles présents dans 
-     * la valeur passée en paramètre.
+     * Retourne une Ã©quation de recherche contenant les articles prÃ©sents dans 
+     * la valeur passÃ©e en paramÃ¨tre.
      *
-     * Si un même article apparait plusieurs fois, il n'apparaitra qu'une seule 
-     * fois dans l'équation finale.
+     * Si un mÃªme article apparait plusieurs fois, il n'apparaitra qu'une seule 
+     * fois dans l'Ã©quation finale.
      * 
-     * Si la valeur passée en paramètre est vide (null ou chaine vide) un 
-     * tableau vide est retourné.
+     * Si la valeur passÃ©e en paramÃ¨tre est vide (null ou chaine vide) un 
+     * tableau vide est retournÃ©.
      * 
      * @param null|string|array $value
      * @return array

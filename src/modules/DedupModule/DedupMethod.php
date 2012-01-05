@@ -2,12 +2,12 @@
 /**
  * @package     fab
  * @subpackage  modules
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: DedupMethod.php 719 2008-05-29 17:38:46Z daniel.menard.bdsp $
  */
 
 /**
- * Classe de base de toutes les méthodes de dédoublonnage 
+ * Classe de base de toutes les mÃ©thodes de dÃ©doublonnage 
  * 
  * @package     fab
  * @subpackage  modules

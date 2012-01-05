@@ -2,12 +2,12 @@
 /**
  * @package     fab
  * @subpackage  modules
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: DedupTokens.php 711 2008-05-23 17:10:04Z daniel.menard.bdsp $
  */
 
 /**
- * Méthodes de dédoublonnage basée sur la comparaison des tokens 
+ * MÃ©thodes de dÃ©doublonnage basÃ©e sur la comparaison des tokens 
  * 
  * @package     fab
  * @subpackage  modules
@@ -16,17 +16,17 @@
 class DedupTokens extends DedupMethod
 {
     /**
-     * Retourne une équation de recherche contenant les mots significatifs
-     * présents dans la valeur passée en paramètre.
+     * Retourne une Ã©quation de recherche contenant les mots significatifs
+     * prÃ©sents dans la valeur passÃ©e en paramÃ¨tre.
      *
-     * Si la valeur passée en paramètre est un tableau, celui-ci est linéarisé 
-     * (concaténation des articles).
+     * Si la valeur passÃ©e en paramÃ¨tre est un tableau, celui-ci est linÃ©arisÃ© 
+     * (concatÃ©nation des articles).
      * 
-     * Si un même mot apparait plusieurs fois, il n'apparaitra qu'une seule 
-     * fois dans l'équation finale.
+     * Si un mÃªme mot apparait plusieurs fois, il n'apparaitra qu'une seule 
+     * fois dans l'Ã©quation finale.
      * 
-     * Si la valeur passée en paramètre est vide (null ou chaine vide) un 
-     * tableau vide est retournée.
+     * Si la valeur passÃ©e en paramÃ¨tre est vide (null ou chaine vide) un 
+     * tableau vide est retournÃ©e.
      * 
      * @param null|string|array $value
      * @return array
@@ -45,19 +45,19 @@ class DedupTokens extends DedupMethod
         if ($value===$lastValue) return $tokens;
         $lastValue=$value;
         
-        // Si value est un tableau, on le linéarise
-        if (is_array($value)) $value=implode('¤', $value);
+        // Si value est un tableau, on le linÃ©arise
+        if (is_array($value)) $value=implode('Â¤', $value);
 
         // Extrait les tokens
         $tokens=Utils::tokenize($value);
         
-        // Dédoublonne
+        // DÃ©doublonne
         $tokens=array_flip($tokens);
 
-        // Supprime tous les mots qui posent problème dans une équation (opérateurs)
+        // Supprime tous les mots qui posent problÃ¨me dans une Ã©quation (opÃ©rateurs)
         $tokens=array_diff_key($tokens, $operators);
         
-        // Retourne le résultat
+        // Retourne le rÃ©sultat
         return $tokens;
     }
     
@@ -66,7 +66,7 @@ class DedupTokens extends DedupMethod
         // Extrait les tokens
         $tokens=$this->getTokens($value);
         
-        // Concatène les tokens
+        // ConcatÃ¨ne les tokens
         $equation=implode(' ', array_keys($tokens));
         
         if (count($tokens)>1) $equation='(' . $equation . ')';
