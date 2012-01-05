@@ -2,7 +2,7 @@
 /**
  * @package     fab
  * @subpackage  modules
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: NotFound.php 921 2008-11-27 16:24:04Z daniel.menard.bdsp $
  */
 
@@ -11,13 +11,13 @@
 /**
  * Module NotFound
  * 
- * Génère une erreur "404 - page non trouvée".
- * Ce module est appellé automatiquement lorsqu'on n'est pas en mode debug
+ * GÃ©nÃ¨re une erreur "404 - page non trouvÃ©e".
+ * Ce module est appellÃ© automatiquement lorsqu'on n'est pas en mode debug
  * et que l'utilisateur demande un module ou une action qui n'existent 
  * pas.
  * 
- * En mode debug, ce module n'est pas appellé, fab affiche à la place une
- * exception permettant de vérifier l'erreur.
+ * En mode debug, ce module n'est pas appellÃ©, fab affiche Ã  la place une
+ * exception permettant de vÃ©rifier l'erreur.
  * 
  * @package     fab
  * @subpackage  modules
