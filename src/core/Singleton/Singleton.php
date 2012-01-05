@@ -2,30 +2,30 @@
 /**
  * @package     Bdsp
  * @subpackage  core
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>
  * @version     SVN: $Id: Singleton.php 925 2008-12-02 15:18:52Z daniel.menard.bdsp $
  */
 
 /**
- * Interface définissant un singleton.
+ * Interface dÃ©finissant un singleton.
  * 
  * Cette interface sert essentiellement de "signature" aux modules qui 
  * fonctionnent comme des singletons. Pour tester si un module est un 
  * singleton, il suffit alors d'utiliser :
  * <code>if ($module instanceOf 'Singleton') ...</code>.
  * 
- * Pour qu'une classe fonctionne réellement comme un Singleton, celle-ci doit
- * normallement implémenter plusieurs méthodes telles que 
+ * Pour qu'une classe fonctionne rÃ©ellement comme un Singleton, celle-ci doit
+ * normallement implÃ©menter plusieurs mÃ©thodes telles que 
  * <code>getInstance()</code>, <code>hasInstance()</code>, 
- * <code>releaseInstance()</code>. Elle doit également empêcher que de 
- * nouvelles instances de la classes ne soient créées, ce qui peut être fait en 
- * générant une exception si les méthodes <code>__construct()</code>, 
- * <code>__clone()</code> ou <code>__wakeup()</code> sont appellées ou en 
- * réduisant la visibilité de ces méthodes (<code>private</code> ou 
+ * <code>releaseInstance()</code>. Elle doit Ã©galement empÃªcher que de 
+ * nouvelles instances de la classes ne soient crÃ©Ã©es, ce qui peut Ãªtre fait en 
+ * gÃ©nÃ©rant une exception si les mÃ©thodes <code>__construct()</code>, 
+ * <code>__clone()</code> ou <code>__wakeup()</code> sont appellÃ©es ou en 
+ * rÃ©duisant la visibilitÃ© de ces mÃ©thodes (<code>private</code> ou 
  * <code>protected</code>).
  * 
- * Pour éviter d'être trop "rigide", cette interface ne définit que la méthode 
- * <code>getInstance()<code> qui est la seule méthode réellement indispensable;
+ * Pour Ã©viter d'Ãªtre trop "rigide", cette interface ne dÃ©finit que la mÃ©thode 
+ * <code>getInstance()<code> qui est la seule mÃ©thode rÃ©ellement indispensable;
  * 
  * @package     Bdsp
  * @subpackage  core 
