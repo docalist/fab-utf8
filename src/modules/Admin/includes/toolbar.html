@@ -14,7 +14,7 @@
     contenant l'icone éventuelle et le contenu indiqué.
 */
 <template match="//toolbar//item[not(@type)]" img="" alt=" " class="">
-    <a class="button $class"><if test="$img"><img src="$img" alt="$alt" /> ;</if>{select('node()|@*')}</a>
+    <a class="button $class"><if test="$img"><img src="$img" alt="$alt" /> </if>{select('node()|@*')}</a>
 </template>
 
 
