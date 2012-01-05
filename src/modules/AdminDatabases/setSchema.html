@@ -1,9 +1,9 @@
 <h1>{$this->getTitle()}</h1>
 <if test="$confirm">
-    <h2>Le schéma {basename($schema)} a été enregistré dans la base $database.</h2>
+    <h2>Le schÃ©ma {basename($schema)} a Ã©tÃ© enregistrÃ© dans la base $database.</h2>
     
     <p>
-        La base $database a maintenant la structure définie dans le schéma
+        La base $database a maintenant la structure dÃ©finie dans le schÃ©ma
         {basename($schema)}.
     </p>
     
@@ -12,7 +12,7 @@
     <switch test="$level">
         <case test="0">
             <p>
-                Il est inutile de réindexer la base.
+                Il est inutile de rÃ©indexer la base.
             </p>
             <form action="index">
                 <okcancel cancel="false" />
@@ -20,22 +20,22 @@
         </case>
         <case test="1">
             <p>
-                Pour purger la base des données qui ne sont plus utiles, <strong>nous 
-                vous conseillons de lancer une réindexation complète de la 
+                Pour purger la base des donnÃ©es qui ne sont plus utiles, <strong>nous 
+                vous conseillons de lancer une rÃ©indexation complÃ¨te de la 
                 base</strong>.
             </p>
         </case>
         <case test="2">
             <p>
-                Pour que les index, les tables et les clés de tri que vous avez 
-                créés ou modifiés fonctionnent correctement, <strong>vous devez
-                lancer une réindexation complète de la base</strong>.
+                Pour que les index, les tables et les clÃ©s de tri que vous avez 
+                crÃ©Ã©s ou modifiÃ©s fonctionnent correctement, <strong>vous devez
+                lancer une rÃ©indexation complÃ¨te de la base</strong>.
             </p>
         </case>
     </switch>
 
     <form action="Reindex" test="$level">
-        <okcancel ok="Lancer la réindexation maintenant..." cancel="Ne pas réindexer maintenant" />
+        <okcancel ok="Lancer la rÃ©indexation maintenant..." cancel="Ne pas rÃ©indexer maintenant" />
         <hidden name="database" value="$database" />
     </form>
 </if>
@@ -75,28 +75,28 @@
         color: #fff;
     \}
     </style>
-    <h2>Modification du schéma de la base $database</h2>
+    <h2>Modification du schÃ©ma de la base $database</h2>
     
     <p>
-        Vous allez remplacer le schéma actuel de la base de données 
-        <strong>$database</strong> par la structure définie dans le modèle 
+        Vous allez remplacer le schÃ©ma actuel de la base de donnÃ©es 
+        <strong>$database</strong> par la structure dÃ©finie dans le modÃ¨le 
         <strong>{basename($schema)}</strong>. 
     </p>
     
     <p>
-        Selon la nature des modifications à apporter, vous devrez peut-être  
-        lancer ensuite une réindexation complète de la base (par exemple pour
-        constituer un nouvel index, il faut réindexer toutes les notices présentes).
+        Selon la nature des modifications Ã  apporter, vous devrez peut-Ãªtre  
+        lancer ensuite une rÃ©indexation complÃ¨te de la base (par exemple pour
+        constituer un nouvel index, il faut rÃ©indexer toutes les notices prÃ©sentes).
     </p>
     
     <p>
-        Dans le cas présent, voici la liste des modifications qui seront effectuées : 
+        Dans le cas prÃ©sent, voici la liste des modifications qui seront effectuÃ©es : 
     </p>    
     
     <table id="changes">
         <tr>
-            <th>Modification apportée au schéma</th>
-            <th>Ré-indexation</th>
+            <th>Modification apportÃ©e au schÃ©ma</th>
+            <th>RÃ©-indexation</th>
         </tr>
         <loop on="$changes" as="$change,$level">
             <tr class="level$level">
@@ -104,7 +104,7 @@
                 <td>
                     <switch test="$level">
                         <case test="0">inutile</case>
-                        <case test="1">conseillée</case>
+                        <case test="1">conseillÃ©e</case>
                         <case test="2">obligatoire</case>
                     </switch>
                 </td>
@@ -114,29 +114,29 @@
     <switch test="{max($changes)}">
         <case test="0">
             <p>
-                Toutes ces modifications vont pouvoir être appliquées 
-                immédiatement, il ne sera pas nécessaire de réindexer la base.
+                Toutes ces modifications vont pouvoir Ãªtre appliquÃ©es 
+                immÃ©diatement, il ne sera pas nÃ©cessaire de rÃ©indexer la base.
             </p>
         </case>
         <case test="1">
             <p>
-                Les modifications vont prendre effet immédiatement, mais pour 
-                purger la base des données qui ne sont plus utiles, <strong>nous 
-                vous conseillons de lancer ensuite une réindexation complète de 
+                Les modifications vont prendre effet immÃ©diatement, mais pour 
+                purger la base des donnÃ©es qui ne sont plus utiles, <strong>nous 
+                vous conseillons de lancer ensuite une rÃ©indexation complÃ¨te de 
                 la base</strong>.
             </p>
         </case>
         <case test="2">
             <p>
                 Pour que toutes vos modifications prennent effet, <strong>vous 
-                devrez ensuite lancer une réindexation complète de la base</strong>.
+                devrez ensuite lancer une rÃ©indexation complÃ¨te de la base</strong>.
             </p>
         </case>
     </switch>
      
      <p>Voulez-vous modifier la structure de la base <strong>$database</strong> ?</p>
     <form style="float: right">
-        <okcancel ok="Appliquer le nouveau schéma" />
+        <okcancel ok="Appliquer le nouveau schÃ©ma" />
         <hidden name="database" value="$database" />
         <hidden name="schema" value="$schema" />
         <hidden name="confirm" value="true" />

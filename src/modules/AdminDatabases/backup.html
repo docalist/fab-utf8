@@ -1,43 +1,43 @@
 <def name="database" value="{$this->request->get('database')}" />
 
-<h1>Génération d'un dump de la base $database</h1>
+<h1>GÃ©nÃ©ration d'un dump de la base $database</h1>
 
 <p>
-    Un "dump" est un cliché de la base de données à un instant donné.
-    C'est un fichier xml compressé (.xml.gz) qui contient à la fois le 
-    schéma de la base et tous les enregistrements qu'elle contient.
+    Un "dump" est un clichÃ© de la base de donnÃ©es Ã  un instant donnÃ©.
+    C'est un fichier xml compressÃ© (.xml.gz) qui contient Ã  la fois le 
+    schÃ©ma de la base et tous les enregistrements qu'elle contient.
 </p>
 
 <p>
-    Un dump permet de recréer facilement la base de données en cas de besoin en
+    Un dump permet de recrÃ©er facilement la base de donnÃ©es en cas de besoin en
     utilisant <a href="/AdminBases/Restore?database=$database">l'option 
     restauration du module d'administration</a>.
 </p>
 
 <p>
-    C'est également un moyen pratique pour conserver, à des fins historiques, 
-    certaines versions d'une base de données ou pour transférer le contenu d'une 
-    base de données d'un serveur à l'autre. Par ailleurs, un fichier de dump 
-    étant un simple fichier xml, les outils xml existants, s'ils sont capables
-    de traiter des fichiers volumineux, peuvent être utilisés (exemples 
-    d'applications possibles : extraction de données, statistiques, etc.) 
+    C'est Ã©galement un moyen pratique pour conserver, Ã  des fins historiques, 
+    certaines versions d'une base de donnÃ©es ou pour transfÃ©rer le contenu d'une 
+    base de donnÃ©es d'un serveur Ã  l'autre. Par ailleurs, un fichier de dump 
+    Ã©tant un simple fichier xml, les outils xml existants, s'ils sont capables
+    de traiter des fichiers volumineux, peuvent Ãªtre utilisÃ©s (exemples 
+    d'applications possibles : extraction de donnÃ©es, statistiques, etc.) 
 </p>
 
 <p>
-    Une stratégie de sauvegarde typique consiste à générer un nouveau fichier
-    de dump toutes les nuits et à faire en sorte que ces fichiers de dump soient
-    sauvegardés par le serveur hébergeant le site.
+    Une stratÃ©gie de sauvegarde typique consiste Ã  gÃ©nÃ©rer un nouveau fichier
+    de dump toutes les nuits et Ã  faire en sorte que ces fichiers de dump soient
+    sauvegardÃ©s par le serveur hÃ©bergeant le site.
 </p>
 
 <p>
-    Cette page permet de générer ponctuellement un nouveau dump (par exemple
+    Cette page permet de gÃ©nÃ©rer ponctuellement un nouveau dump (par exemple
     avant de faire une modification importante sur la base) ou de planifier 
-    une tâche qui réalisera un dump à intervalles réguliers (exécution périodique,
+    une tÃ¢che qui rÃ©alisera un dump Ã  intervalles rÃ©guliers (exÃ©cution pÃ©riodique,
     par exemple toutes les nuits).
 </p>
 
 <p>
-    Le nom du fichier contenant le dump sera généré automatiquement à partir du
+    Le nom du fichier contenant le dump sera gÃ©nÃ©rÃ© automatiquement Ã  partir du
     nom de la base, de la date au format AAAAMMJJ et de l'heure en cours 
     au format HHMMSS ($database-{strftime('%Y%m%d-%H%M%S')}.xml par exemple).
 </p>
@@ -45,7 +45,7 @@
 <form action="">
     <p test="$error" class="error">$error</p>
     
-    <fieldset label="Créer un dump : ">
+    <fieldset label="CrÃ©er un dump : ">
         <plantask />
     </fieldset>
     

@@ -1,7 +1,7 @@
-<!-- Path des images utilisées -->
+<!-- Path des images utilisÃ©es -->
 <def name="icons" value="/FabWeb/modules/AdminDatabases/images" />
 <h1>{$this->getTitle()}</h1>
-<h2>Restauration de la base $database à partir d'un fichier dump</h2>
+<h2>Restauration de la base $database Ã  partir d'un fichier dump</h2>
 
     <def name="request" value="{$this->request->copy()->keepOnly('database')}" />
 <if test="{count($files)===0}">
@@ -30,13 +30,13 @@
     <div id="otherFiles" style="clear: both; display: none; padding-top: 3em;">
         <div id="warning">
             <p>
-                Les fichiers ci-dessous sont également des fichiers de dump mais 
-                qui ne correspondent pas, a priori, à la base $database.
+                Les fichiers ci-dessous sont Ã©galement des fichiers de dump mais 
+                qui ne correspondent pas, a priori, Ã  la base $database.
             </p>
             <p>
-                Ces dumps peuvent être utiles si vous souhaitez restaurer dans
-                la base $database des données provenant d'une autre base de 
-                données.
+                Ces dumps peuvent Ãªtre utiles si vous souhaitez restaurer dans
+                la base $database des donnÃ©es provenant d'une autre base de 
+                donnÃ©es.
             </p>
             <p>
                 N'utilisez ces fichiers de dump que si vous savez ce que vous 

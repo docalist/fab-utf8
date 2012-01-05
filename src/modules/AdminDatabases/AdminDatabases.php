@@ -3,19 +3,19 @@
 /**
  * @package     fab
  * @subpackage  Admin
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: AdminDatabases.php 1257 2011-05-29 11:46:11Z daniel.menard.35@gmail.com $
  */
 
 /**
- * Module d'administration permettant de gérer les bases de données de
+ * Module d'administration permettant de gÃ©rer les bases de donnÃ©es de
  * l'application.
  *
- * Ce module permet de lister les bases de données de l'application et offre des
- * fonctions permettant de {@link actionNew() créer une nouvelle base}, de
+ * Ce module permet de lister les bases de donnÃ©es de l'application et offre des
+ * fonctions permettant de {@link actionNew() crÃ©er une nouvelle base}, de
  * {@link actionSetSchema() modifier la structure} d'une base existante en lui
- * appliquant un nouveau {@link DatabaseSchema schéma} et de lancer une
- * {@link actionReindex() réindexation complète} de la base.
+ * appliquant un nouveau {@link DatabaseSchema schÃ©ma} et de lancer une
+ * {@link actionReindex() rÃ©indexation complÃ¨te} de la base.
  *
  * @package     fab
  * @subpackage  Admin
@@ -25,8 +25,8 @@ class AdminDatabases extends Admin
     /**
      * La base en cours.
      *
-     * Cette propriété n'est utilisée que par {@link actionReindex()} pour
-     * permettre aux templates d'accéder à la base de données en cours
+     * Cette propriÃ©tÃ© n'est utilisÃ©e que par {@link actionReindex()} pour
+     * permettre aux templates d'accÃ©der Ã  la base de donnÃ©es en cours
      * (par exemple pour afficher le nombre de notices).
      *
      * @var XapianDatabaseDriver
@@ -35,16 +35,16 @@ class AdminDatabases extends Admin
 
 
     /**
-     * Retourne la liste des bases de données connues du système.
+     * Retourne la liste des bases de donnÃ©es connues du systÃ¨me.
      *
-     * La méthode utilise le fichier de configuration
-     * {@link /AdminConfig#db.config db.config} pour établir la liste des bases
-     * de données.
+     * La mÃ©thode utilise le fichier de configuration
+     * {@link /AdminConfig#db.config db.config} pour Ã©tablir la liste des bases
+     * de donnÃ©es.
      *
-     * @return array|null un tableau contenant le nom des bases référencées dans
-     * le fichier de configuration. Le tableau obtenu est trié par ordre
-     * alphabétique. La méthode retourne <code>null</code> si aucune base n'est
-     * définie.
+     * @return array|null un tableau contenant le nom des bases rÃ©fÃ©rencÃ©es dans
+     * le fichier de configuration. Le tableau obtenu est triÃ© par ordre
+     * alphabÃ©tique. La mÃ©thode retourne <code>null</code> si aucune base n'est
+     * dÃ©finie.
      */
     public static function getDatabases()
     {
@@ -61,16 +61,16 @@ class AdminDatabases extends Admin
 
 
     /**
-     * Retourne des informations sur la base dont le nom est passé en paramètre.
+     * Retourne des informations sur la base dont le nom est passÃ© en paramÃ¨tre.
      *
-     * @param string $name le nom de la base à examiner.
+     * @param string $name le nom de la base Ã  examiner.
      *
-     * @return StdClass un objet contenant les propriétés suivantes :
-     * - <code>type</code> : le type de base de données
+     * @return StdClass un objet contenant les propriÃ©tÃ©s suivantes :
+     * - <code>type</code> : le type de base de donnÃ©es
      * - <code>path</code> : le path exact de la base
      * - <code>count</code> : le nombre total d'enregistrements dans la base
-     * - <code>error</code> : un message d'erreur si la base de données indiquée
-     *   n'existe pas ou ne peut pas être ouverte
+     * - <code>error</code> : un message d'erreur si la base de donnÃ©es indiquÃ©e
+     *   n'existe pas ou ne peut pas Ãªtre ouverte
      */
     public static function getDatabaseInfo($name)
     {
@@ -112,8 +112,8 @@ class AdminDatabases extends Admin
      *
      * {@inheritdoc}
      *
-     * La méthode ajoute au tableau retourné par la classe parente le nom du
-     * fichier éventuel passé en paramètre dans <code>$file</code>.
+     * La mÃ©thode ajoute au tableau retournÃ© par la classe parente le nom du
+     * fichier Ã©ventuel passÃ© en paramÃ¨tre dans <code>$file</code>.
      *
      * @return array
      */
@@ -121,7 +121,7 @@ class AdminDatabases extends Admin
     {
         $breadCrumbs=parent::getBreadCrumbsArray();
 
-        // Si on a un nom de base en paramêtre, on l'ajoute
+        // Si on a un nom de base en paramÃªtre, on l'ajoute
         if ($file=$this->request->get('database'))
             $breadCrumbs[$this->request->getUrl()]=$file;
 
@@ -130,14 +130,14 @@ class AdminDatabases extends Admin
 
 
     /**
-     * Page d'accueil du module d'administration des bases de données.
+     * Page d'accueil du module d'administration des bases de donnÃ©es.
      *
-     * Affiche la liste des bases de données de l'application.
+     * Affiche la liste des bases de donnÃ©es de l'application.
      *
-     * La méthode exécute le template définit dans la clé
+     * La mÃ©thode exÃ©cute le template dÃ©finit dans la clÃ©
      * <code><template></code> du fichier de configuration en lui passant
-     * en paramètre une variable <code>$database</code> contenant la liste
-     * des bases telle que retournée par {@link getDatabases()}.
+     * en paramÃ¨tre une variable <code>$database</code> contenant la liste
+     * des bases telle que retournÃ©e par {@link getDatabases()}.
      */
     public function actionIndex()
     {
@@ -151,58 +151,58 @@ class AdminDatabases extends Admin
 
 
     /**
-     * Lance une réindexation complète de la base de données dont le
-     * nom est passé en paramètre.
+     * Lance une rÃ©indexation complÃ¨te de la base de donnÃ©es dont le
+     * nom est passÃ© en paramÃ¨tre.
      *
-     * Dans un premier temps, on affiche une page à l'utilisateur lui indiquant
-     * comment fonctionne la réindexation et lui demandant de confirmer son
+     * Dans un premier temps, on affiche une page Ã  l'utilisateur lui indiquant
+     * comment fonctionne la rÃ©indexation et lui demandant de confirmer son
      * choix.
      *
-     * La page affichée correspond au template indiqué dans la clé
+     * La page affichÃ©e correspond au template indiquÃ© dans la clÃ©
      * <code><template></code> du fichier de configuration. Celui-ci est
-     * appellé avec une variable <code>$database</code> qui indique le nom
-     * de la base de données à réindexer.
+     * appellÃ© avec une variable <code>$database</code> qui indique le nom
+     * de la base de donnÃ©es Ã  rÃ©indexer.
      *
-     * Ce template doit réappeller l'action Reindex en passant en paramètre
-     * la valeur <code>true</code> pour le paramètre <code>$confirm</code>.
+     * Ce template doit rÃ©appeller l'action Reindex en passant en paramÃ¨tre
+     * la valeur <code>true</code> pour le paramÃ¨tre <code>$confirm</code>.
      *
-     * La méthode crée alors une {@link Task tâche} au sein du
-     * {@link /TaskManager gestionnaire de tâches} qui se charge d'effectuer
-     * la réindexation.
+     * La mÃ©thode crÃ©e alors une {@link Task tÃ¢che} au sein du
+     * {@link /TaskManager gestionnaire de tÃ¢ches} qui se charge d'effectuer
+     * la rÃ©indexation.
      *
      * Remarque :
-     * Si la base de données est vide (aucun document), la méthode Reindex
-     * refusera de lancer la réindexation et affichera un message d'erreur
+     * Si la base de donnÃ©es est vide (aucun document), la mÃ©thode Reindex
+     * refusera de lancer la rÃ©indexation et affichera un message d'erreur
      * indiquant que c'est inutile.
      *
-     * @param string $database le nom de la base à réindexer.
+     * @param string $database le nom de la base Ã  rÃ©indexer.
      * @param bool $confirm le flag de confirmation.
      */
     public function actionReindex($database, $confirm=false)
     {
-        // Si on est en ligne de commande, lance la réindexation proprement dite
+        // Si on est en ligne de commande, lance la rÃ©indexation proprement dite
         if (User::hasAccess('cli'))
         {
-            // Ouvre la base en écriture (pour la verrouiller)
+            // Ouvre la base en Ã©criture (pour la verrouiller)
             $this->selection=Database::open($database, false);
 
-            // Lance la réindexation
+            // Lance la rÃ©indexation
             $this->selection->reindex();
             return;
         }
 
-        // Sinon, interface web : demande confirmation et crée la tâche
+        // Sinon, interface web : demande confirmation et crÃ©e la tÃ¢che
 
-        // Ouvre la base et vérifie qu'elle contient des notices
+        // Ouvre la base et vÃ©rifie qu'elle contient des notices
         $this->selection=Database::open($database, true);
         $this->selection->search('*', array('max'=>-1, 'sort'=>'+'));
         if ($this->selection->count()==0)
             return Response::create('Html')->setContent
             (
-                '<p>La base ' . $database . ' ne contient aucun document, il est inutile de lancer une réindexation complète.</p>'
+                '<p>La base ' . $database . ' ne contient aucun document, il est inutile de lancer une rÃ©indexation complÃ¨te.</p>'
             );
 
-        // Demande confirmation à l'utilisateur
+        // Demande confirmation Ã  l'utilisateur
         if (!$confirm)
             return Response::create('Html')->setTemplate
             (
@@ -211,11 +211,11 @@ class AdminDatabases extends Admin
                 array('database'=>$database)
             );
 
-        // Crée une tâche au sein du gestionnaire de tâches
+        // CrÃ©e une tÃ¢che au sein du gestionnaire de tÃ¢ches
         $id=Task::create()
             ->setRequest($this->request)
             ->setTime(0)
-            ->setLabel('Réindexation complète de la base ' . $database)
+            ->setLabel('RÃ©indexation complÃ¨te de la base ' . $database)
             ->setStatus(Task::Waiting)
             ->save()
             ->getId();
@@ -225,59 +225,59 @@ class AdminDatabases extends Admin
 
 
     /**
-     * Modifie la structure d'une base de données existante en lui appliquant
-     * un nouveau {@link DatabaseSchema schéma}.
+     * Modifie la structure d'une base de donnÃ©es existante en lui appliquant
+     * un nouveau {@link DatabaseSchema schÃ©ma}.
      *
-     * La méthode commence par afficher le template
+     * La mÃ©thode commence par afficher le template
      * <code>chooseSchema.html</code> avec une variable <code>$database</code>
-     * qui indique le nom de la base de données à modifier.
+     * qui indique le nom de la base de donnÃ©es Ã  modifier.
      *
      * Ce template contient des slots qui utilisent l'action
-     * {AdminSchemas::actionChoose()} pour présenter à l'utilisateur la liste
-     * des schémas disponibles dans l'application et dans fab.
+     * {AdminSchemas::actionChoose()} pour prÃ©senter Ã  l'utilisateur la liste
+     * des schÃ©mas disponibles dans l'application et dans fab.
      *
-     * L'utilisateur choisit alors le schéma qu'il souhaite appliquer à la base.
+     * L'utilisateur choisit alors le schÃ©ma qu'il souhaite appliquer Ã  la base.
      *
-     * La méthode va alors effectuer une comparaison entre le schéma actuel
-     * de la base de données et le schéma choisi par l'utilisateur.
+     * La mÃ©thode va alors effectuer une comparaison entre le schÃ©ma actuel
+     * de la base de donnÃ©es et le schÃ©ma choisi par l'utilisateur.
      *
-     * Si les schémas sont identiques, le template <code>nodiff.html</code>
-     * est affiché.
+     * Si les schÃ©mas sont identiques, le template <code>nodiff.html</code>
+     * est affichÃ©.
      *
-     * Dans le cas contraire, la méthode va afficher la liste de toutes les
-     * modifications apportées (champs ajoutés, supprimés...) et va demander
-     * à l'utilisateur de confirmer qu'il veut appliquer ce nouveau schéma à
+     * Dans le cas contraire, la mÃ©thode va afficher la liste de toutes les
+     * modifications apportÃ©es (champs ajoutÃ©s, supprimÃ©s...) et va demander
+     * Ã  l'utilisateur de confirmer qu'il veut appliquer ce nouveau schÃ©ma Ã 
      * la base.
      *
-     * Elle exécute pour cela le template indiqué dans la clé
+     * Elle exÃ©cute pour cela le template indiquÃ© dans la clÃ©
      * <code><template></code> du fichier de configuration en lui passant en
-     * paramètre :
-     * - <code>$database</code> : le nom de la base qui va être modifiée ;
-     * - <code>$schema</code> : le nom du nouveau schema qui va être appliqué à
+     * paramÃ¨tre :
+     * - <code>$database</code> : le nom de la base qui va Ãªtre modifiÃ©e ;
+     * - <code>$schema</code> : le nom du nouveau schema qui va Ãªtre appliquÃ© Ã 
      *   la base ;
-     * - <code>$changes</code> : la liste des différences entre le schéma actuel
-     *   de la base de données et le nouveau schéma. Cette liste est établie
-     *   en appellant la méthode {@link DatabaseSchema::compare()} du nouveau
-     *   schéma.
+     * - <code>$changes</code> : la liste des diffÃ©rences entre le schÃ©ma actuel
+     *   de la base de donnÃ©es et le nouveau schÃ©ma. Cette liste est Ã©tablie
+     *   en appellant la mÃ©thode {@link DatabaseSchema::compare()} du nouveau
+     *   schÃ©ma.
      * - <code>$confirm</code> : la valeur <code>false</code> indiquant que
-     *   la modification de la base n'a pas encore été effectuée.
+     *   la modification de la base n'a pas encore Ã©tÃ© effectuÃ©e.
      *
-     * Si l'utilisateur confirme son choix, la méthode va alors appliquer le
-     * nouveau schéma à la base puis va réafficher le même template avec cette
-     * fois-ci la variable <code>$confirm</code> à <code>true</code>.
+     * Si l'utilisateur confirme son choix, la mÃ©thode va alors appliquer le
+     * nouveau schÃ©ma Ã  la base puis va rÃ©afficher le mÃªme template avec cette
+     * fois-ci la variable <code>$confirm</code> Ã  <code>true</code>.
      *
-     * Ce second appel permet d'afficher à l'utilisateur un réacapitulatif de
-     * ce qui a été effectué et de lui proposer de lancer une
-     * {@link actionReindex() réindexation complète de la base} s'il y a lieu.
+     * Ce second appel permet d'afficher Ã  l'utilisateur un rÃ©acapitulatif de
+     * ce qui a Ã©tÃ© effectuÃ© et de lui proposer de lancer une
+     * {@link actionReindex() rÃ©indexation complÃ¨te de la base} s'il y a lieu.
      *
-     * @param string $database le nom de la base à réindexer.
-     * @param string $schema le nom du schema à appliquer.
-     * @param bool $confirm un flag indiquant si l'utilisateur a confirmé
+     * @param string $database le nom de la base Ã  rÃ©indexer.
+     * @param string $schema le nom du schema Ã  appliquer.
+     * @param bool $confirm un flag indiquant si l'utilisateur a confirmÃ©
      * don choix.
      */
     public function actionSetSchema($database, $schema='', $confirm=false)
     {
-        // Choisit le schéma à appliquer à la base
+        // Choisit le schÃ©ma Ã  appliquer Ã  la base
         if($schema==='')
             return Response::create('Html')->setTemplate
             (
@@ -289,21 +289,21 @@ class AdminDatabases extends Admin
                 )
             );
 
-        // Vérifie que le schéma indiqué existe
+        // VÃ©rifie que le schÃ©ma indiquÃ© existe
         if (Utils::isRelativePath($schema) || ! file_exists($schema))
-            throw new Exception('Le schéma '. basename($schema) . "n'existe pas");
+            throw new Exception('Le schÃ©ma '. basename($schema) . "n'existe pas");
 
-        // Charge le schéma
+        // Charge le schÃ©ma
         $newSchema=new DatabaseSchema(file_get_contents($schema));
 
-        // Ouvre la base de données et récupère le schéma actuel de la base
+        // Ouvre la base de donnÃ©es et rÃ©cupÃ¨re le schÃ©ma actuel de la base
         $this->selection=Database::open($database, !$confirm); // confirm=false -> readonly=true, confirm=true->readonly=false
         $oldSchema=$this->selection->getSchema();
 
-        // Compare l'ancien et la nouveau schémas
+        // Compare l'ancien et la nouveau schÃ©mas
         $changes=$newSchema->compare($oldSchema);
 
-        // Affiche une erreur si aucune modification n'a été apportée
+        // Affiche une erreur si aucune modification n'a Ã©tÃ© apportÃ©e
         if (count($changes)===0)
             return Response::create('Html')->setTemplate
             (
@@ -316,7 +316,7 @@ class AdminDatabases extends Admin
                 )
             );
 
-        // Affiche la liste des modifications apportées et demande confirmation à l'utilisateur
+        // Affiche la liste des modifications apportÃ©es et demande confirmation Ã  l'utilisateur
         if (! $confirm)
             return Response::create('Html')->setTemplate
             (
@@ -331,10 +331,10 @@ class AdminDatabases extends Admin
                 )
             );
 
-        // Applique la nouvelle structure à la base
+        // Applique la nouvelle structure Ã  la base
         $this->selection->setSchema($newSchema);
 
-        // Affiche le résultat et propose (éventuellement) de réindexer
+        // Affiche le rÃ©sultat et propose (Ã©ventuellement) de rÃ©indexer
         return Response::create('Html')->setTemplate
         (
             $this,
@@ -351,56 +351,56 @@ class AdminDatabases extends Admin
 
 
     /**
-     * Crée une nouvelle base de données.
+     * CrÃ©e une nouvelle base de donnÃ©es.
      *
-     * La méthode commence par demander à l'utilisateur le nom de la base
-     * de données à créer et vérifie que ce nom est correct.
+     * La mÃ©thode commence par demander Ã  l'utilisateur le nom de la base
+     * de donnÃ©es Ã  crÃ©er et vÃ©rifie que ce nom est correct.
      *
-     * Elle utilise pour cela le template <code>new.html</code> qui est appellé
+     * Elle utilise pour cela le template <code>new.html</code> qui est appellÃ©
      * avec une variable <code>$database</code> contenant le nom de la base
-     * à créer et une variable <code>$error</code> qui contiendra un message
-     * d'erreur si le nom de la base indiquée n'est pas correct (il existe déjà
-     * une base de données ou un dossier portant ce nom).
+     * Ã  crÃ©er et une variable <code>$error</code> qui contiendra un message
+     * d'erreur si le nom de la base indiquÃ©e n'est pas correct (il existe dÃ©jÃ 
+     * une base de donnÃ©es ou un dossier portant ce nom).
      *
-     * Elle demande ensuite le nom du {@link DatabaseSchema schéma} à utiliser
-     * et vérifie que celui-ci est correct.
+     * Elle demande ensuite le nom du {@link DatabaseSchema schÃ©ma} Ã  utiliser
+     * et vÃ©rifie que celui-ci est correct.
      *
      * Elle utilise pour cela le template <code>newChooseSchema.html</code> qui
-     * est appellé avec une variable <code>$database</code> contenant le nom de
-     * la base à créer, une variable <code>$schema</code> contenant le nom
-     * du schéma choisi et une variable <code>$error</code> qui contiendra un
-     * message d'erreur si une erreur est trouvée dans le schéma (schéma
+     * est appellÃ© avec une variable <code>$database</code> contenant le nom de
+     * la base Ã  crÃ©er, une variable <code>$schema</code> contenant le nom
+     * du schÃ©ma choisi et une variable <code>$error</code> qui contiendra un
+     * message d'erreur si une erreur est trouvÃ©e dans le schÃ©ma (schÃ©ma
      * inexistant, non valide, etc.)
      *
-     * Si tout est correct, la méthode crée ensuite la base de données dans le
-     * répertoire <code>/data/db/</code> de l'application puis crée un nouvel
+     * Si tout est correct, la mÃ©thode crÃ©e ensuite la base de donnÃ©es dans le
+     * rÃ©pertoire <code>/data/db/</code> de l'application puis crÃ©e un nouvel
      * alias dans le fichier {@link /AdminConfig#db.config db.config} de l'application.
      *
-     * Enfin, l'utilisateur est redirigé vers la {@link actionIndex() page
-     * d'accueil} du module sur la base de données créée.
+     * Enfin, l'utilisateur est redirigÃ© vers la {@link actionIndex() page
+     * d'accueil} du module sur la base de donnÃ©es crÃ©Ã©e.
      *
-     * @param string $database le nom de la base à créer.
-     * @param string $schema le path du schéma à utiliser pour
-     * la structure initiale de la base de données.
+     * @param string $database le nom de la base Ã  crÃ©er.
+     * @param string $schema le path du schÃ©ma Ã  utiliser pour
+     * la structure initiale de la base de donnÃ©es.
      */
     public function actionNew($database='', $schema='')
     {
         $error='';
 
-        // Vérifie le nom de la base indiquée
+        // VÃ©rifie le nom de la base indiquÃ©e
         if ($database !== '')
         {
             if (! is_null(Config::get('db.'.$database)))
-                $error="Il existe déjà une base de données nommée $database. ";
+                $error="Il existe dÃ©jÃ  une base de donnÃ©es nommÃ©e $database. ";
             else
             {
                 $path=Runtime::$root . 'data/db/' . $database;
                 if (is_dir($path))
-                    $error="Il existe déjà un dossier $database dans le répertoire data/db de l'application.";
+                    $error="Il existe dÃ©jÃ  un dossier $database dans le rÃ©pertoire data/db de l'application.";
             }
         }
 
-        // Demande le nom de la base à créer
+        // Demande le nom de la base Ã  crÃ©er
         if ($database === '' || $error !== '')
             return Response::create('Html')->setTemplate
             (
@@ -413,20 +413,20 @@ class AdminDatabases extends Admin
                 )
             );
 
-        // Vérifie le nom du schéma indiqué
+        // VÃ©rifie le nom du schÃ©ma indiquÃ©
         if ($schema !== '')
         {
             if (! file_exists($schema))
-                $error = 'Le schéma <strong>' . basename($schema) . "</strong> n'existe pas.";
+                $error = 'Le schÃ©ma <strong>' . basename($schema) . "</strong> n'existe pas.";
             else
             {
                 $dbs=new DatabaseSchema(file_get_contents($schema));
                 if (true !== $errors=$dbs->validate())
-                    $error = "Impossible d'utiliser le schéma <strong>" . basename($schema) . "</strong> :<br />" . implode('<br />', $errors);
+                    $error = "Impossible d'utiliser le schÃ©ma <strong>" . basename($schema) . "</strong> :<br />" . implode('<br />', $errors);
             }
         }
 
-        // Affiche le template si nécessaire
+        // Affiche le template si nÃ©cessaire
         if ($schema === '' || $error !== '')
             return Response::create('Html')->setTemplate
             (
@@ -440,10 +440,10 @@ class AdminDatabases extends Admin
                 )
             );
 
-        // OK, on a tous les paramètres et ils sont tous vérifiés
+        // OK, on a tous les paramÃ¨tres et ils sont tous vÃ©rifiÃ©s
 
 
-        // Crée la base
+        // CrÃ©e la base
         Database::create($path, $dbs, 'xapian');
 
         // Charge le fichier de config db.config
@@ -473,8 +473,8 @@ class AdminDatabases extends Admin
     private function xmlEntities($data)
     {
         /*
-         * XML 1.0 définit la liste des caractères unicode autorisés dans
-         * un fichier xml de la façon suivante :
+         * XML 1.0 dÃ©finit la liste des caractÃ¨res unicode autorisÃ©s dans
+         * un fichier xml de la faÃ§on suivante :
          *
          * #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
          * (source : http://www.w3.org/TR/REC-xml/#charsets)
@@ -489,8 +489,8 @@ class AdminDatabases extends Admin
 //        );
 
         /*
-         * Dans notre cas, la chaine passée est de l'ansi. On ne teste que les
-         * caractères < 255
+         * Dans notre cas, la chaine passÃ©e est de l'ansi. On ne teste que les
+         * caractÃ¨res < 255
          */
         $result=preg_replace_callback
         (
@@ -504,7 +504,7 @@ class AdminDatabases extends Admin
 
     private function xmlEntitiesCallback($match)
     {
-        echo 'caractère illégal : ' , var_export($match[0], true), ', code=', ord($match[0]), '<br />';
+        echo 'caractÃ¨re illÃ©gal : ' , var_export($match[0], true), ', code=', ord($match[0]), '<br />';
         return '&#'.ord($match[0]).';';
 
     }
@@ -526,49 +526,50 @@ class AdminDatabases extends Admin
 
         if (is_bool($value))
         {
-            $xml->writeElement(utf8_encode($tag), $value ? 'TRUE' : 'FALSE');
+            $xml->writeElement($tag, $value ? 'TRUE' : 'FALSE');
             return;
         }
 
         if (is_int($value) || is_float($value))
         {
-            $xml->writeElement(utf8_encode($tag), (string) $value);
+            $xml->writeElement($tag, (string) $value);
             return;
         }
 
         if (is_string($value))
         {
             /*
-             * XML 1.0 définit la liste des caractères unicode autorisés dans
-             * un fichier xml de la façon suivante :
+             * XML 1.0 dÃ©finit la liste des caractÃ¨res unicode autorisÃ©s dans
+             * un fichier xml de la faÃ§on suivante :
              *
              * #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
              * (source : http://www.w3.org/TR/REC-xml/#charsets)
              *
-             * Tout autre caractère fera que le fichier xml sera mal formé et ne
-             * pourra pas être chargé.
+             * Tout autre caractÃ¨re fera que le fichier xml sera mal formÃ© et ne
+             * pourra pas Ãªtre chargÃ©.
              *
-             * Dans fab, un champ, au moins en théorie, peut contenir des
-             * caractères binaires. On a le cas dans ascoweb avec la notice
-             * 90691 dont le résumé contient "\x05\x05" (?).
+             * Dans fab, un champ, au moins en thÃ©orie, peut contenir des
+             * caractÃ¨res binaires. On a le cas dans ascoweb avec la notice
+             * 90691 dont le rÃ©sumÃ© contient "\x05\x05" (?).
              *
-             * Il faut donc qu'on vérifie tous les caractères. Dans notre cas,
-             * la chaine passée est de l'ansi. On ne teste donc que les
-             * caractères [0-255].
+             * Il faut donc qu'on vÃ©rifie tous les caractÃ¨res. Dans notre cas,
+             * la chaine passÃ©e est de l'ansi. On ne teste donc que les
+             * caractÃ¨res [0-255].
              *
-             * Si la chaine passée est "propre", on l'écrit telle quelle. Sinon,
-             * on va encoder la totalité de la chaine en base64 et on va ajouter
+             * Si la chaine passÃ©e est "propre", on l'Ã©crit telle quelle. Sinon,
+             * on va encoder la totalitÃ© de la chaine en base64 et on va ajouter
              * l'attribut base64="true" au tag.
              *
              * Remarque : dans notre traitement on suppose implicitement que
-             * si une chaine ansi ne contient pas de caractères illégaux, la
-             * chaine obtenue après appel de utf8_encode() n'en contiendra pas
+             * si une chaine ansi ne contient pas de caractÃ¨res illÃ©gaux, la
+             * chaine obtenue aprÃ¨s appel de utf8_encode() n'en contiendra pas
              * non plus.
              *
              */
+            die('todo : AdminDatabases/xmlWriteField, le traitement actuel ne fonctionne que pour de l\'ansi');
             if (0===preg_match('~[^\x09\x0A\x0D\x20-\xFF]~', $value))
             {
-                $xml->writeElement(utf8_encode($tag), utf8_encode($value));
+                $xml->writeElement($tag, $value);
             }
             else
             {
@@ -585,29 +586,29 @@ class AdminDatabases extends Admin
             return;
         }
 
-        throw new Exception('Type de valeur non géré : ', debug_zval_dump($value));
+        throw new Exception('Type de valeur non gÃ©rÃ© : ', debug_zval_dump($value));
     }
 
      /**
      * Backup
      *
-     * Fonction récupérée du répertoire
+     * Fonction rÃ©cupÃ©rÃ©e du rÃ©pertoire
      * WebApache\Fab septembre 2007, avant checked out from google\modules\DatabaseAdmin
      */
     public function actionBackup($database, $taskTime='', $taskRepeat='')
     {
-        // Vérifie que le répertoire /data/backup existe, essaie de le créer sinon
+        // VÃ©rifie que le rÃ©pertoire /data/backup existe, essaie de le crÃ©er sinon
         $dir=Runtime::$root.'data' . DIRECTORY_SEPARATOR . 'backup' . DIRECTORY_SEPARATOR;
         if (!is_dir($dir))
         {
             if (! @mkdir($dir))
-                throw new Exception('Impossible de créer le répertoire ' . $dir);
+                throw new Exception('Impossible de crÃ©er le rÃ©pertoire ' . $dir);
         }
 
         // Partie interface utilisateur
         if (! User::hasAccess('cli'))
         {
-            // 1. Permet à l'utilisateur de planifier le dump
+            // 1. Permet Ã  l'utilisateur de planifier le dump
             if ($taskTime==='')
                 return Response::create('Html')->setTemplate
                 (
@@ -616,15 +617,15 @@ class AdminDatabases extends Admin
                     array('error'=>'')
                 );
 
-            // Détermine un titre pour la tâche de dump
+            // DÃ©termine un titre pour la tÃ¢che de dump
             $title=sprintf
             (
                 'Dump %s de la base %s',
-                ($taskRepeat ? 'périodique' : 'ponctuel'),
+                ($taskRepeat ? 'pÃ©riodique' : 'ponctuel'),
                 $database
             );
 
-            // 2. Crée la tâche
+            // 2. CrÃ©e la tÃ¢che
             $id=Task::create()
                 ->setRequest($this->request->keepOnly('database'))
                 ->setTime($taskTime)
@@ -650,18 +651,18 @@ class AdminDatabases extends Admin
         $count=$selection->count();
         echo '<p>La base contient ', $count, ' notices</p>';
 
-        // Détermine le path du fichier à générer
+        // DÃ©termine le path du fichier Ã  gÃ©nÃ©rer
         $path=$database . '-' . strftime('%Y%m%d-%H%M%S') . '.xml.gz';
-        echo '<p>Génération du fichier ', $path, '</p>';
+        echo '<p>GÃ©nÃ©ration du fichier ', $path, '</p>';
         $path=$dir . $path;
 
         if (file_exists($path))
         {
-            throw new Exception('Le fichier de dump existe déjà.');
+            throw new Exception('Le fichier de dump existe dÃ©jÃ .');
         }
 
         $gzPath='compress.zlib://'.$path;
-        // à tester : stockage sur un ftp distant ?
+        // Ã  tester : stockage sur un ftp distant ?
 
         // Ouvre le fichier
         $xml=new XmlWriter();
@@ -669,13 +670,13 @@ class AdminDatabases extends Admin
         //$xml->setIndent(true);
         $xml->setIndentString('    ');
 
-        // Génère le prologue xml
+        // GÃ©nÃ¨re le prologue xml
         $xml->startDocument('1.0', 'UTF-8', 'yes');
 
         // Tag racine
         $xml->startElement('database');     // <database>
 
-        // Ajoute une référence de schema.  Permet d'utiliser xsi:nil pour les
+        // Ajoute une rÃ©fÃ©rence de schema.  Permet d'utiliser xsi:nil pour les
         // valeurs null et xsi:type pour indiquer le type d'un champ
         $xml->writeAttribute('xmlns:xsd', 'http://www.w3.org/2001/XMLSchema');
         $xml->writeAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
@@ -685,17 +686,17 @@ class AdminDatabases extends Admin
         $xml->writeAttribute('timestamp', time());
         $xml->writeAttribute('date', strftime('%d/%m/%Y %H:%M:%S'));
 
-        // Schéma de la base
+        // SchÃ©ma de la base
         $xml->writeRaw("\n");
         $xml->writeRaw($selection->getSchema(true)->toXml(false, '    '));
 
         /*
-             Remarque : dans la ligne ci-dessus, on appelle getSchema(true) pour récupérer le
-             schéma "brut" tel qu'il est stocké dans les metadata de la base, c'est à dire sans
-             les propriétés _stopwords.
+             Remarque : dans la ligne ci-dessus, on appelle getSchema(true) pour rÃ©cupÃ©rer le
+             schÃ©ma "brut" tel qu'il est stockÃ© dans les metadata de la base, c'est Ã  dire sans
+             les propriÃ©tÃ©s _stopwords.
          */
 
-        // Données
+        // DonnÃ©es
         $xml->startElement('records');     // <records>
 
         $xml->writeAttribute('count', $count);
@@ -727,21 +728,21 @@ class AdminDatabases extends Admin
         $xml=null;
         TaskManager::progress();
 
-        echo '<p>Dump terminé.</p>';
+        echo '<p>Dump terminÃ©.</p>';
         echo '<p>Taille du fichier : ', Utils::formatSize(filesize($path)), '</p>';
 
         // Suppression des dump les plus anciens
-        $maxDumps=$this->ConfigDatabaseGet('maxdumps', $database, 7);  // Nombre maximum de dumps par base de données (default : 7 jours)
-        $maxDays=$this->ConfigDatabaseGet('maxdays', $database, 0);    // Nombre de jours pendant lesquels les dumps sont conservés (default : tous)
+        $maxDumps=$this->ConfigDatabaseGet('maxdumps', $database, 7);  // Nombre maximum de dumps par base de donnÃ©es (default : 7 jours)
+        $maxDays=$this->ConfigDatabaseGet('maxdays', $database, 0);    // Nombre de jours pendant lesquels les dumps sont conservÃ©s (default : tous)
 
-        echo '<h2>Suppression éventuelle des dumps antérieurs</h2>';
-        echo '<p>Paramètres : </p>';
+        echo '<h2>Suppression Ã©ventuelle des dumps antÃ©rieurs</h2>';
+        echo '<p>ParamÃ¨tres : </p>';
         echo '<ul>';
-        echo '<li>Nombre maximum de dumps autorisés pour la base ', $database, ' : ', ($maxDumps===0 ? 'illimité' : $maxDumps), '</li>';
-        echo '<li>Durée de conservation des dumps de la base ', $database, ' : ', ($maxDays===0 ? 'illimitée' : $maxDays.' jour(s)'), '</li>';
+        echo '<li>Nombre maximum de dumps autorisÃ©s pour la base ', $database, ' : ', ($maxDumps===0 ? 'illimitÃ©' : $maxDumps), '</li>';
+        echo '<li>DurÃ©e de conservation des dumps de la base ', $database, ' : ', ($maxDays===0 ? 'illimitÃ©e' : $maxDays.' jour(s)'), '</li>';
         echo '</ul>';
 
-        // Calcule la date "maintenant moins maxDays, à minuit"
+        // Calcule la date "maintenant moins maxDays, Ã  minuit"
         $t=getDate(($maxDays===0) ? 0 : time());
         $t=mktime(0,0,0,$t['mon'],$t['mday']-$maxDays+1,$t['year']);
 
@@ -753,7 +754,7 @@ class AdminDatabases extends Admin
         $files=glob($dir . $database . '-????????-??????.xml.gz');
         sort($files);
 
-        echo '<p>Fichiers supprimés : </p>';
+        echo '<p>Fichiers supprimÃ©s : </p>';
         $nb=0;
         echo '<ul>';
         foreach($files as $index=>$path)
@@ -771,8 +772,8 @@ class AdminDatabases extends Admin
 
     }
     /**
-     * Fonction utilitaire utilisée par actionBackup pour
-     * récupérer la valeur de maxDumps et maxDays dans la config.
+     * Fonction utilitaire utilisÃ©e par actionBackup pour
+     * rÃ©cupÃ©rer la valeur de maxDumps et maxDays dans la config.
      *
      * @param string $key
      * @param string $database
@@ -786,7 +787,7 @@ class AdminDatabases extends Admin
             $t=Config::get("$key.$database", $default);
         }
         if (! is_int($t))
-            throw new Exception('Configuration : valeur incorrecte pour la clé ' . $key . ', entier attendu.');
+            throw new Exception('Configuration : valeur incorrecte pour la clÃ© ' . $key . ', entier attendu.');
         return $t;
     }
 
@@ -829,7 +830,7 @@ class AdminDatabases extends Admin
         switch ($node->getAttribute('xsi:type'))
         {
             case '':
-                $value=utf8_decode($value);
+                $value=$value;
                 break;
 
             case 'xsd:base64Binary':
@@ -837,7 +838,7 @@ class AdminDatabases extends Admin
                 break;
 
             default:
-                throw new DumpException('Valeur non supportée pour l\'attribut xsi:type : ' . $node->getAttribute('xsi:type'));
+                throw new DumpException('Valeur non supportÃ©e pour l\'attribut xsi:type : ' . $node->getAttribute('xsi:type'));
         }
         return $value;
     }
@@ -875,12 +876,12 @@ class AdminDatabases extends Admin
 
                 case XML_TEXT_NODE:
                     if (! $child->isWhitespaceInElementContent())
-                        throw new DumpException('seuls des blancs sont autorisés entre des tags <item>'.var_export($child->nodeValue, true));
+                        throw new DumpException('seuls des blancs sont autorisÃ©s entre des tags <item>'.var_export($child->nodeValue, true));
 //                    echo 'noeud type texte contenant des clancs<br />';
                     break;
 
                 default:
-                    throw new Exception('Type de noeud non autorisé entre des tags <item>' . var_export($child,true));
+                    throw new Exception('Type de noeud non autorisÃ© entre des tags <item>' . var_export($child,true));
             }
         }
         return $value;
@@ -888,13 +889,13 @@ class AdminDatabases extends Admin
 
     public function actionRestore($database, $file='', $confirm=false)
     {
-        // Path du répertoire contenant les backups
+        // Path du rÃ©pertoire contenant les backups
         $dir=Runtime::$root.'data' . DIRECTORY_SEPARATOR . 'backup' . DIRECTORY_SEPARATOR;
 
-        // Choix du fichier de dump à restaurer
+        // Choix du fichier de dump Ã  restaurer
         if ($file==='')
         {
-            // Détermine la liste des dumps pour cette base
+            // DÃ©termine la liste des dumps pour cette base
             $files=array();
             $otherFiles=array();
             foreach(glob($dir . '*.xml.gz') as $path)
@@ -906,11 +907,11 @@ class AdminDatabases extends Admin
                     $otherFiles[$path]=basename($path);
             }
 
-            // Trie les dumps par nom (et donc par date) décroissante
+            // Trie les dumps par nom (et donc par date) dÃ©croissante
             ksort($files, SORT_LOCALE_STRING);
             ksort($otherFiles, SORT_LOCALE_STRING);
 
-            // Demande à l'utilisateur de choisir le dump
+            // Demande Ã  l'utilisateur de choisir le dump
             return Response::create('Html')->setTemplate
             (
                 $this,
@@ -924,7 +925,7 @@ class AdminDatabases extends Admin
             );
         }
 
-        // Détermine le path complet du fichier de dump et vérifie qu'il existe
+        // DÃ©termine le path complet du fichier de dump et vÃ©rifie qu'il existe
         $path=$dir . $file;
         if (!file_exists($path))
             throw new Exception('Le fichier de dump ' . $file . ' n\'existe pas');
@@ -942,15 +943,15 @@ class AdminDatabases extends Admin
                 )
             );
 
-        // Crée une tâche au sein du taskmanager
+        // CrÃ©e une tÃ¢che au sein du taskmanager
         if (! User::hasAccess('cli'))
         {
-            // 2. Crée la tâche
+            // 2. CrÃ©e la tÃ¢che
             $id=Task::create()
                 ->setRequest($this->request)
                 ->setTime(0)
                 ->setRepeat(null)
-                ->setLabel('Restauration de la base ' . $database . ' à partir du fichier ' . $file)
+                ->setLabel('Restauration de la base ' . $database . ' Ã  partir du fichier ' . $file)
                 ->setStatus(Task::Waiting)
                 ->save()
                 ->getId();
@@ -974,17 +975,17 @@ class AdminDatabases extends Admin
         $xml->read();
 
         // <schema>
-        echo '<li>Chargement du schéma de la base à partir du fichier dump...</li>';
+        echo '<li>Chargement du schÃ©ma de la base Ã  partir du fichier dump...</li>';
         $this->expect($xml, 'schema');
         $doc=new DOMDocument();
         $doc->appendChild($xml->expand());
         $dbs=new DatabaseSchema($doc->saveXML());
         if (! $dbs->validate())
-            throw new Exception('Le schéma enregistré dans le fichier dump ' . $file . ' n\'est pas valide. Impossible de poursuivre la restauration de la base.');
+            throw new Exception('Le schÃ©ma enregistrÃ© dans le fichier dump ' . $file . ' n\'est pas valide. Impossible de poursuivre la restauration de la base.');
 
-        // Crée la base une fois qu'on a le schéma
-        echo '<li>Suppression de la base de données existante...</li>';
-        echo '<li>Création de la base ', $database, ' à partir du schéma du dump...</li>';
+        // CrÃ©e la base une fois qu'on a le schÃ©ma
+        echo '<li>Suppression de la base de donnÃ©es existante...</li>';
+        echo '<li>CrÃ©ation de la base ', $database, ' Ã  partir du schÃ©ma du dump...</li>';
         $db = Database::create($database, $dbs, 'xapian');
 
         $xml->next();
@@ -994,7 +995,7 @@ class AdminDatabases extends Admin
         $count=$xml->getAttribute('count');
         $xml->read();
 
-        echo '<li>Chargement des ', $count, ' enregistrements présents dans le fichier de dump...</li>';
+        echo '<li>Chargement des ', $count, ' enregistrements prÃ©sents dans le fichier de dump...</li>';
         $i=0;
         $start=microtime(true);
         while($xml->name !== 'records' || $xml->nodeType !== XMLReader::END_ELEMENT)
@@ -1011,7 +1012,7 @@ class AdminDatabases extends Admin
                 $node=$xml->expand();
                 if ($node===false)
                 {
-                    echo 'Une erreur s\'est produite, expand()  retourné false<br />';
+                    echo 'Une erreur s\'est produite, expand()  retournÃ© false<br />';
                     echo 'nodeType : ', $this->nodeType($xml), '<br />';
                     echo 'tag name : ', $xml->name, '<br />';
                     echo 'tag value: ', $xml->value, '<br />';
@@ -1047,20 +1048,20 @@ class AdminDatabases extends Admin
 
         TaskManager::progress();
 
-        echo '<li>La restauration est terminée.</li>';
+        echo '<li>La restauration est terminÃ©e.</li>';
         echo '</ol>';
     }
 
 
     /**
-     * Supprime la base de données dont le nom est passé en paramètre.
+     * Supprime la base de donnÃ©es dont le nom est passÃ© en paramÃ¨tre.
      *
-     * La base est complètement supprimée. Si la base est représentée
-     * par un répertoire (cas d'une base xapian, par exemple), l'intégralité
-     * du répertoire est supprimée, y compris si le répertoire contient des
-     * fichiers qui n'ont rien à vir avec la base.
+     * La base est complÃ¨tement supprimÃ©e. Si la base est reprÃ©sentÃ©e
+     * par un rÃ©pertoire (cas d'une base xapian, par exemple), l'intÃ©gralitÃ©
+     * du rÃ©pertoire est supprimÃ©e, y compris si le rÃ©pertoire contient des
+     * fichiers qui n'ont rien Ã  vir avec la base.
      *
-     * @param string $database le nom de la base à supprimer.
+     * @param string $database le nom de la base Ã  supprimer.
      * @param bool $confirm un flag de confirmation.
      */
     public function actionDelete($database, $confirm=false)
@@ -1073,7 +1074,7 @@ class AdminDatabases extends Admin
                 array('database'=>$database)
             );
 
-        // Utilise /config/db.config pour convertir l'alias en chemin et déterminer le type de base
+        // Utilise /config/db.config pour convertir l'alias en chemin et dÃ©terminer le type de base
         $path=Config::get("db.$database.path", $database);
 
         // Si c'est un chemin relatif, recherche dans /data/db
@@ -1082,7 +1083,7 @@ class AdminDatabases extends Admin
 
 
         if (! $this->delete($path))
-            throw new Exception('La suppression de la base a échouée.');
+            throw new Exception('La suppression de la base a Ã©chouÃ©e.');
 
         // Charge le fichier de config db.config
         $pathConfig=Runtime::$root.'config' . DIRECTORY_SEPARATOR . 'db.config';
@@ -1115,7 +1116,7 @@ class AdminDatabases extends Admin
      * @param       string   $dirname    Directory to delete
      * @return      bool     Returns TRUE on success, FALSE on failure
      */
-    private function delete($dirname) // todo: !DRY , figure déjà dans AdminFiles
+    private function delete($dirname) // todo: !DRY , figure dÃ©jÃ  dans AdminFiles
     {
         // Sanity check
         if (!file_exists($dirname)) {
