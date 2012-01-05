@@ -2,12 +2,12 @@
 /**
  * @package     fab
  * @subpackage  core
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id$
  */
 
 /**
- * Classe ancêtre de toutes les classes de fab.
+ * Classe ancÃªtre de toutes les classes de fab.
  *
  * @package     fab
  * @subpackage  core
@@ -23,11 +23,11 @@ class Object
 
 
 
-// Code à ajouter dans l'autoload de fab pour qu'un objet charge automatiquement
+// Code Ã  ajouter dans l'autoload de fab pour qu'un objet charge automatiquement
 // sa propre config :
 /*
 
-        // todo : ConfigName=basename(path) sans l'extension = nom du fichier config à charger
+        // todo : ConfigName=basename(path) sans l'extension = nom du fichier config Ã  charger
 
 
         if (is_subclass_of($class, 'Object') && class_exists('Config'))
@@ -43,7 +43,7 @@ class Object
                 Config::load($path, $class);
             }
 
-            if (!empty(Runtime::$env))   // charge la config spécifique à l'environnement
+            if (!empty(Runtime::$env))   // charge la config spÃ©cifique Ã  l'environnement
             {
                 if (file_exists($path=Runtime::$fabRoot.'config'.DIRECTORY_SEPARATOR. $class . '.' . Runtime::$env . '.config'))
                 {

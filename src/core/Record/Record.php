@@ -2,7 +2,7 @@
 /**
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  * @version     SVN: $Id$
  */
 
@@ -10,16 +10,16 @@
  * Classe de base pour toutes les classes <code>Record</code> de la chaine de traitement.
  *
  * La classe <code>Record</code> enrichit la classe {@link AbstractRecord} en
- * ajoutant des méthodes transversales utilisables par toutes les interfaces.
+ * ajoutant des mÃ©thodes transversales utilisables par toutes les interfaces.
  *
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  */
 abstract class Record extends AbstractRecord
 {
     /**
-     * Garantit que la mention "et al.", si elle figure dans les auteurs, se trouve en dernière
+     * Garantit que la mention "et al.", si elle figure dans les auteurs, se trouve en derniÃ¨re
      * position.
      *
      * @param $field

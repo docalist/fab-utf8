@@ -2,19 +2,19 @@
 /**
  * @package     fab
  * @subpackage  request
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: Request.php 1077 2010-01-05 16:28:37Z daniel.menard.bdsp $
  */
 
 /**
- * Une requête représentant l'environnement et les paramètres de l'action
- * qui sera exécutée.
+ * Une requÃªte reprÃ©sentant l'environnement et les paramÃ¨tres de l'action
+ * qui sera exÃ©cutÃ©e.
  *
- * L'objet Request est destiné à éviter que les tableaux $_GET, $_POST, etc.
- * ne soient accédés directement.
+ * L'objet Request est destinÃ© Ã  Ã©viter que les tableaux $_GET, $_POST, etc.
+ * ne soient accÃ©dÃ©s directement.
  *
- * Certaines méthodes retourne $this pour permettre de chainer les appels de
- * méthodes :
+ * Certaines mÃ©thodes retourne $this pour permettre de chainer les appels de
+ * mÃ©thodes :
  *
  * <code>
  * $request
@@ -23,8 +23,8 @@
  *     ->set('query', 'health');
  * </code>
  *
- * Request propose également des méthodes (chainées) permettant de valider
- * aisément les paramètres de la requête :
+ * Request propose Ã©galement des mÃ©thodes (chainÃ©es) permettant de valider
+ * aisÃ©ment les paramÃ¨tres de la requÃªte :
  *
  * <code>
  * $request
@@ -40,23 +40,23 @@
 class Request
 {
     /**
-     * Les paramètres de la requête
+     * Les paramÃ¨tres de la requÃªte
      *
      * @var array
      */
     private $_parameters=array();
 
     /**
-     * Le nom exact du module auquel est destinée cette requête ou null
-     * si la requête n'a pas encore été routée
+     * Le nom exact du module auquel est destinÃ©e cette requÃªte ou null
+     * si la requÃªte n'a pas encore Ã©tÃ© routÃ©e
      *
      * @var string|null
      */
     private $_module=null;
 
     /**
-     * Le nom exact de l'action à laquelle est destinée cette requête ou null
-     * si la requête n'a pas encore été routée
+     * Le nom exact de l'action Ã  laquelle est destinÃ©e cette requÃªte ou null
+     * si la requÃªte n'a pas encore Ã©tÃ© routÃ©e
      *
      * @var string|null
      */
@@ -77,13 +77,13 @@ class Request
     private $_check;
 
     /**
-     * Construit un nouvel objet Request avec les paramètres indiqués.
+     * Construit un nouvel objet Request avec les paramÃ¨tres indiquÃ©s.
      *
-     * Des paramètres supplémentaires peuvent être ajoutés à la requête
+     * Des paramÃ¨tres supplÃ©mentaires peuvent Ãªtre ajoutÃ©s Ã  la requÃªte
      * en utilisant {@link set()} et {@link add()}
      *
-     * @param array $parameters ... des tableaux contenant les paramètres
-     * initiaux de la requête.
+     * @param array $parameters ... des tableaux contenant les paramÃ¨tres
+     * initiaux de la requÃªte.
      */
     public function __construct(array $parameters=array())
     {
@@ -98,17 +98,17 @@ class Request
     }
 
     /**
-     * Méthode statique permettant de créer un nouvel objet Request avec les
-     * paramètres indiqués.
+     * MÃ©thode statique permettant de crÃ©er un nouvel objet Request avec les
+     * paramÃ¨tres indiquÃ©s.
      *
-     * Php ne permet pas de chainer des méthodes après un appel à new :
-     * <code>$request=new Request()->setAction('/');</code> génère une erreur.
+     * Php ne permet pas de chainer des mÃ©thodes aprÃ¨s un appel Ã  new :
+     * <code>$request=new Request()->setAction('/');</code> gÃ©nÃ¨re une erreur.
      *
-     * La méthode statique create permet de contourner le problème en écrivant :
+     * La mÃ©thode statique create permet de contourner le problÃ¨me en Ã©crivant :
      * <code>$request=Request::create()->setAction('/');</code>
      *
-     * @param array $parameters ... des tableaux contenant les paramètres
-     * initiaux de la requête.
+     * @param array $parameters ... des tableaux contenant les paramÃ¨tres
+     * initiaux de la requÃªte.
      */
     public static function create(array $parameters=array())
     {
@@ -122,7 +122,7 @@ class Request
     }
 
     /**
-     * Clone la requête en cours
+     * Clone la requÃªte en cours
      *
      * @return Request
      */
@@ -132,23 +132,23 @@ class Request
     }
 
     /**
-     * Ajoute un tableau de paramètres à la requête
+     * Ajoute un tableau de paramÃ¨tres Ã  la requÃªte
      *
      * @param array $parameters
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function addParameters(array $parameters)
     {
         foreach($parameters as $key=>$value)
         {
-            // Si la clé n'existe pas déjà, on l'insère à la fin du tableau
+            // Si la clÃ© n'existe pas dÃ©jÃ , on l'insÃ¨re Ã  la fin du tableau
             if (!array_key_exists($key, $this->_parameters))
             {
                 $this->_parameters[$key]=$value;
                 continue;
             }
 
-            // Existe déjà, c'est un tableau, ajoute la valeur à la fin
+            // Existe dÃ©jÃ , c'est un tableau, ajoute la valeur Ã  la fin
             if (is_array($this->_parameters[$key]))
             {
                 // tableau + tableau
@@ -160,7 +160,7 @@ class Request
                     $this->_parameters[$key][]=$value;
             }
 
-            // Existe déjà, simple valeur, crée un tableau contenant la valeur existante et la valeur indiquée
+            // Existe dÃ©jÃ , simple valeur, crÃ©e un tableau contenant la valeur existante et la valeur indiquÃ©e
             else
             {
                 // valeur + tableau
@@ -176,8 +176,8 @@ class Request
     }
 
     /**
-     * Retourne le nom exact du module auquel est destiné la requête ou null
-     * si la requête n'a pas encore été routée
+     * Retourne le nom exact du module auquel est destinÃ© la requÃªte ou null
+     * si la requÃªte n'a pas encore Ã©tÃ© routÃ©e
      *
      * @return string|null
      */
@@ -188,10 +188,10 @@ class Request
 
 
     /**
-     * Modifie le nom du module auquel est destinée la requête
+     * Modifie le nom du module auquel est destinÃ©e la requÃªte
      *
      * @param string $module
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function setModule($module=null)
     {
@@ -201,8 +201,8 @@ class Request
 
 
     /**
-     * Retourne le nom exact de l'action à laquelle est destinée la requête ou
-     * null si la requête n'a pas encore été routée
+     * Retourne le nom exact de l'action Ã  laquelle est destinÃ©e la requÃªte ou
+     * null si la requÃªte n'a pas encore Ã©tÃ© routÃ©e
      *
      * @return string|null
      */
@@ -213,10 +213,10 @@ class Request
 
 
     /**
-     * Modifie le nom de l'action à laquelle est destinée la requête
+     * Modifie le nom de l'action Ã  laquelle est destinÃ©e la requÃªte
      *
-     * @param string $action la nouvelle action de la requête
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @param string $action la nouvelle action de la requÃªte
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function setAction($action=null)
     {
@@ -226,15 +226,15 @@ class Request
 
 
     /**
-     * Retourne la valeur du paramètre indiqué ou null si le nom indiqué ne
-     * figure pas dans les paramètres de la requête.
+     * Retourne la valeur du paramÃ¨tre indiquÃ© ou null si le nom indiquÃ© ne
+     * figure pas dans les paramÃ¨tres de la requÃªte.
      *
-     * __get est une méthode magique de php qui permet d'accéder aux paramètres
-     * de la requête comme s'il s'agissait de propriétés de l'objet Request
+     * __get est une mÃ©thode magique de php qui permet d'accÃ©der aux paramÃ¨tres
+     * de la requÃªte comme s'il s'agissait de propriÃ©tÃ©s de l'objet Request
      * (par exemple <code>$request->item</code>)
      *
-     * La méthode {@link get()} est similaire mais permet d'indiquer une valeur
-     * par défaut.
+     * La mÃ©thode {@link get()} est similaire mais permet d'indiquer une valeur
+     * par dÃ©faut.
      *
      * @param string $key
      * @return mixed
@@ -248,11 +248,11 @@ class Request
 
 
     /**
-     * Retourne la valeur du paramètre indiqué ou la valeur par défaut spécifiée
-     * si le nom indiqué ne figure pas dans les paramètres de la requête.
+     * Retourne la valeur du paramÃ¨tre indiquÃ© ou la valeur par dÃ©faut spÃ©cifiÃ©e
+     * si le nom indiquÃ© ne figure pas dans les paramÃ¨tres de la requÃªte.
      *
-     * get est similaire à {@link __get()} mais permet d'indiquer une valeur par
-     * défaut (par exemple <code>$request->get('item', 'abc')</code>)
+     * get est similaire Ã  {@link __get()} mais permet d'indiquer une valeur par
+     * dÃ©faut (par exemple <code>$request->get('item', 'abc')</code>)
      *
      * @param string $key
      * @param mixed $default
@@ -268,14 +268,14 @@ class Request
 
 
     /**
-     * Modifie la valeur du paramètre indiqué.
+     * Modifie la valeur du paramÃ¨tre indiquÃ©.
      *
-     * __set est une méthode magique de php qui permet de modifier les
-     * paramètres de la requête comme s'il s'agissait de propriétés de
+     * __set est une mÃ©thode magique de php qui permet de modifier les
+     * paramÃ¨tres de la requÃªte comme s'il s'agissait de propriÃ©tÃ©s de
      * l'objet Request (par exemple <code>$request->item = 12</code>)
      *
-     * Set remplace complètement la valeur existante. Pour ajouter une valeur
-     * à un paramètre existant, utiliser {@link add()}
+     * Set remplace complÃ¨tement la valeur existante. Pour ajouter une valeur
+     * Ã  un paramÃ¨tre existant, utiliser {@link add()}
      *
      * @param string $key
      * @param mixed $value
@@ -287,7 +287,7 @@ class Request
 
 
     /**
-     * Modifie la valeur du paramètre indiqué ou celle du paramètre en cours de
+     * Modifie la valeur du paramÃ¨tre indiquÃ© ou celle du paramÃ¨tre en cours de
      * validation.
      *
      * Exemples :
@@ -297,7 +297,7 @@ class Request
      * </code>
      * @param string $key
      * @param mixed $value
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function set($key=null, $value=null)
     {
@@ -314,17 +314,17 @@ class Request
     }
 
     /**
-     * Supprime tous les paramètres de la requête sauf ceux dont le nom est
-     * indiqué en paramètre.
+     * Supprime tous les paramÃ¨tres de la requÃªte sauf ceux dont le nom est
+     * indiquÃ© en paramÃ¨tre.
      *
      * Exemple :
      * <code>
      * $request->keepOnly('REF'); // supprime tous sauf REF
      * </code>
      *
-     * @param string $arg nom du premier paramètre à conserver. Vous pouvez
-     * indiquer autant d'argument arg que nécessaire
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @param string $arg nom du premier paramÃ¨tre Ã  conserver. Vous pouvez
+     * indiquer autant d'argument arg que nÃ©cessaire
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function keepOnly($arg)
     {
@@ -334,10 +334,10 @@ class Request
     }
 
     /**
-     * Supprime le paramètre indiqué
+     * Supprime le paramÃ¨tre indiquÃ©
      *
-     * __unset est une méthode magique de php qui permet de supprimer les
-     * paramètres de la requête comme s'il s'agissait de propriétés de
+     * __unset est une mÃ©thode magique de php qui permet de supprimer les
+     * paramÃ¨tres de la requÃªte comme s'il s'agissait de propriÃ©tÃ©s de
      * l'objet Request (par exemple <code>unset($request->item)</code>)
      *
      * @param string $key
@@ -349,25 +349,25 @@ class Request
 
 
     /**
-     * Supprime un paramètre de la requête.
+     * Supprime un paramÃ¨tre de la requÃªte.
      *
      * Exemples :
-     * - <code>$request->clear('item')</code> // supprime le paramètre
-     *   item de la requête ;
+     * - <code>$request->clear('item')</code> // supprime le paramÃ¨tre
+     *   item de la requÃªte ;
      * - <code>$request->clear('item', 'article')</code> // supprime la
-     *   valeur 'article' du paramètre item de la requête.
+     *   valeur 'article' du paramÃ¨tre item de la requÃªte.
      *
-     * @param string $key le nom du paramètre à supprimer.
-     * @param mixed $value optionnel : la valeur à effacer.
-     * Par défaut (lorsque $value n'est pas indiqué, clear efface complètement
-     * le paramétre indiqué par $key. Si $value est indiqué et que $key désigne
-     * un tableau, seule la valeur indiquée va être supprimée de la requête.
-     * Si $key désigne un scalaire, le paramètre ne sera supprimé que si la valeur
-     * associée correspond à $value.
+     * @param string $key le nom du paramÃ¨tre Ã  supprimer.
+     * @param mixed $value optionnel : la valeur Ã  effacer.
+     * Par dÃ©faut (lorsque $value n'est pas indiquÃ©, clear efface complÃ¨tement
+     * le paramÃ©tre indiquÃ© par $key. Si $value est indiquÃ© et que $key dÃ©signe
+     * un tableau, seule la valeur indiquÃ©e va Ãªtre supprimÃ©e de la requÃªte.
+     * Si $key dÃ©signe un scalaire, le paramÃ¨tre ne sera supprimÃ© que si la valeur
+     * associÃ©e correspond Ã  $value.
      *
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      *
-     * @todo : accepter plusieurs paramètres pour permettre de vider
+     * @todo : accepter plusieurs paramÃ¨tres pour permettre de vider
      * plusieurs arguments d'un coup
      */
     public function clear($key=null, $value=null)
@@ -406,10 +406,10 @@ class Request
     }
 
     /**
-     * Supprime de la requête tous les paramètres dont la valeur est
+     * Supprime de la requÃªte tous les paramÃ¨tres dont la valeur est
      * une chaine vide, un tableau vide ou la valeur null.
      *
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function clearNull()
     {
@@ -434,7 +434,7 @@ class Request
     }
 
     /**
-     * Indique si la requête contient des paramètres
+     * Indique si la requÃªte contient des paramÃ¨tres
      *
      * @return bool
      */
@@ -445,7 +445,7 @@ class Request
 
 
     /**
-     * Retourne tous les paramètres présents dans la requête
+     * Retourne tous les paramÃ¨tres prÃ©sents dans la requÃªte
      *
      * @return array
      */
@@ -456,13 +456,13 @@ class Request
 
 
     /**
-     * Détermine si le paramètre indiqué est défini dans la requête
+     * DÃ©termine si le paramÃ¨tre indiquÃ© est dÃ©fini dans la requÃªte
      *
-     * __isset() est une méthode magique de php qui permet de tester l'existence
-     * d'un paramètre comme s'il s'agissait d'une propriété de l'objet Request.
+     * __isset() est une mÃ©thode magique de php qui permet de tester l'existence
+     * d'un paramÃ¨tre comme s'il s'agissait d'une propriÃ©tÃ© de l'objet Request.
      *
-     * La fonction {@link has()} fait la même chose mais prend le nom de
-     * l'argument en paramètre.
+     * La fonction {@link has()} fait la mÃªme chose mais prend le nom de
+     * l'argument en paramÃ¨tre.
      *
      * @param string $key
      * @return bool
@@ -473,14 +473,14 @@ class Request
     }
 
     /**
-     * Détermine si le paramètre indiqué existe dans la requête.
+     * DÃ©termine si le paramÃ¨tre indiquÃ© existe dans la requÃªte.
      *
-     * La fonction retourne true même si le paramètre à la valeur null
+     * La fonction retourne true mÃªme si le paramÃ¨tre Ã  la valeur null
      *
-     * @param string $key le nom du paramètre à tester.
-     * @param mixed $value optionnel, la valeur à tester. Lorsque $value
-     * est indiquée, la méthode retourne true si le paramètre $key figure
-     * dans la requête et s'il contient la valeur $value.
+     * @param string $key le nom du paramÃ¨tre Ã  tester.
+     * @param mixed $value optionnel, la valeur Ã  tester. Lorsque $value
+     * est indiquÃ©e, la mÃ©thode retourne true si le paramÃ¨tre $key figure
+     * dans la requÃªte et s'il contient la valeur $value.
      *
      * @return bool
      */
@@ -496,36 +496,36 @@ class Request
 
 
     /**
-     * Ajoute une valeur au paramètre indiqué
+     * Ajoute une valeur au paramÃ¨tre indiquÃ©
      *
-     * Add ajoute le paramètre indiqué à la liste des paramètres de la requête.
-     * Si le paramètre indiqué existait déjà, la valeur existante est transformée
-     * en tableau et la valeur indiquée est ajoutée au tableau obtenu.
+     * Add ajoute le paramÃ¨tre indiquÃ© Ã  la liste des paramÃ¨tres de la requÃªte.
+     * Si le paramÃ¨tre indiquÃ© existait dÃ©jÃ , la valeur existante est transformÃ©e
+     * en tableau et la valeur indiquÃ©e est ajoutÃ©e au tableau obtenu.
      *
-     * Pour remplacer complètement la valeur d'un paramètre existant, utiliser
+     * Pour remplacer complÃ¨tement la valeur d'un paramÃ¨tre existant, utiliser
      * {@link set()}
      *
      * @param string $key
      * @param mixed $value
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function add($key, $value)
     {
-        // Si la clé n'existe pas déjà, on l'insère à la fin du tableau
+        // Si la clÃ© n'existe pas dÃ©jÃ , on l'insÃ¨re Ã  la fin du tableau
         if (!array_key_exists($key, $this->_parameters))
         {
             $this->_parameters[$key]=$value;
             return $this;
         }
 
-        // La clé existe déjà
+        // La clÃ© existe dÃ©jÃ 
         $item=& $this->_parameters[$key];
 
-        // Si c'est déjà un tableau, ajoute la valeur à la fin du tableau
+        // Si c'est dÃ©jÃ  un tableau, ajoute la valeur Ã  la fin du tableau
         if (is_array($item))
             $item[]=$value;
 
-        // Sinon, crée un tableau contenant la valeur existante et la valeur indiquée
+        // Sinon, crÃ©e un tableau contenant la valeur existante et la valeur indiquÃ©e
         else
             $item=array($item, $value);
 
@@ -534,13 +534,13 @@ class Request
 
 
     /**
-     * Retourne la valeur d'un paramètre figurant dans un autre tableau
-     * que {@link _parameters} ou la valeur par défaut indiquée
+     * Retourne la valeur d'un paramÃ¨tre figurant dans un autre tableau
+     * que {@link _parameters} ou la valeur par dÃ©faut indiquÃ©e
      *
-     * @param array $array le tableau dans lequel la clé indiquée va être
-     * recherchée
-     * @param string $key la clé à rechercher
-     * @param mixed $default la valeur par défaut à retourner si $key ne figure
+     * @param array $array le tableau dans lequel la clÃ© indiquÃ©e va Ãªtre
+     * recherchÃ©e
+     * @param string $key la clÃ© Ã  rechercher
+     * @param mixed $default la valeur par dÃ©faut Ã  retourner si $key ne figure
      * pas dans le tableau $array
      * @return string|null
      */
@@ -592,16 +592,16 @@ class Request
 
 
     /**
-     * Détermine si la requête en cours est une requête ajax ou non.
+     * DÃ©termine si la requÃªte en cours est une requÃªte ajax ou non.
      *
-     * La détection est basée sur la présence ou non de l'entête http
-     * <code>X_REQUESTED_WITH</code> qui est ajouté à la requête http par
+     * La dÃ©tection est basÃ©e sur la prÃ©sence ou non de l'entÃªte http
+     * <code>X_REQUESTED_WITH</code> qui est ajoutÃ© Ã  la requÃªte http par
      * les librairies ajax les plus courante (cas de prototype, jquery, YUI,
      * mais pas de dojo).
      *
-     * @return bool true si la requête http contient un entête
+     * @return bool true si la requÃªte http contient un entÃªte
      * <code>X_REQUESTED_WITH</code> contenant la valeur
-     * <code>XMLHttpRequest</code> (sensible à la casse)
+     * <code>XMLHttpRequest</code> (sensible Ã  la casse)
      */
     public function isAjax()
     {
@@ -610,17 +610,17 @@ class Request
 
 
     /**
-     * Fonction exécutée à chaque fois qu'une fonction de validation est appellée.
+     * Fonction exÃ©cutÃ©e Ã  chaque fois qu'une fonction de validation est appellÃ©e.
      *
      * Si $key est non null, une nouvelle validation commence et la fonction
-     * retourne la valeur de ce paramètre.
+     * retourne la valeur de ce paramÃ¨tre.
      *
      * Si $ref est null, la validation en cours continue et la fonction retourne
-     * la valeur actuelle du paramètre en cours.
+     * la valeur actuelle du paramÃ¨tre en cours.
      *
-     * Une exception est générée si check est appellée avec $key==null et qu'il
-     * n'y a pas de validation en cours et si check() est appellée avec un nom
-     * alors qu'il y a déjà une validation en cours.
+     * Une exception est gÃ©nÃ©rÃ©e si check est appellÃ©e avec $key==null et qu'il
+     * n'y a pas de validation en cours et si check() est appellÃ©e avec un nom
+     * alors qu'il y a dÃ©jÃ  une validation en cours.
      *
      * @param string|null $key
      * @return mixed
@@ -632,7 +632,7 @@ class Request
             if (is_null($this->_checkName))
             {
                 $stack=debug_backtrace();
-                throw new BadMethodCallException(sprintf('%s::%s() appellée sans indiquer le nom du paramètre à vérifier', __CLASS__, $stack[1]['function']));
+                throw new BadMethodCallException(sprintf('%s::%s() appellÃ©e sans indiquer le nom du paramÃ¨tre Ã  vÃ©rifier', __CLASS__, $stack[1]['function']));
             }
         }
         else
@@ -640,7 +640,7 @@ class Request
             if (!is_null($this->_checkName))
             {
                 $stack=debug_backtrace();
-                throw new BadMethodCallException(sprintf('Appel de %s::%s("%s") alors que "%s" est déjà en cours de validation. Oubli de ok() au dernier appel ?' , __CLASS__, $stack[1]['function'], $key, $this->_checkName));
+                throw new BadMethodCallException(sprintf('Appel de %s::%s("%s") alors que "%s" est dÃ©jÃ  en cours de validation. Oubli de ok() au dernier appel ?' , __CLASS__, $stack[1]['function'], $key, $this->_checkName));
             }
             $this->_check=$this->get($key);
             $this->_checkName=$key;
@@ -650,15 +650,15 @@ class Request
 
 
     /**
-     * Validation : vérifie un paramètre requis
+     * Validation : vÃ©rifie un paramÃ¨tre requis
      *
-     * Le paramètre est considéré comme 'absent' si sa valeur est null, un
+     * Le paramÃ¨tre est considÃ©rÃ© comme 'absent' si sa valeur est null, un
      * tableau vide, une chaine vide ou une chaine ne contenant que des blancs.
      *
-     * Si la valeur du paramètre est un tableau, le test est appliqué à chacun
-     * des éléments du tableau.
+     * Si la valeur du paramÃ¨tre est un tableau, le test est appliquÃ© Ã  chacun
+     * des Ã©lÃ©ments du tableau.
      *
-     * La valeur actuelle du paramètre en cours de validation n'est pas modifiée
+     * La valeur actuelle du paramÃ¨tre en cours de validation n'est pas modifiÃ©e
      * par le test.
      *
      * Exemples d'utilisation :
@@ -669,8 +669,8 @@ class Request
      * </code>
      *
      * @param string|null $key
-     * @return Request $this pour permettre le chainage des appels de méthodes
-     * @throws RequestParameterRequired si le test échoue
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
+     * @throws RequestParameterRequired si le test Ã©choue
      */
     public function required($key=null)
     {
@@ -693,12 +693,12 @@ class Request
     }
 
     /**
-     * Validation : définit la valeur par défaut d'un paramètre de la requête
+     * Validation : dÃ©finit la valeur par dÃ©faut d'un paramÃ¨tre de la requÃªte
      *
      * @param string|null $key
      * @param scalar $default
      *
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function defaults($key, $default=null)
     {
@@ -719,17 +719,17 @@ class Request
 
 
     /**
-     * Validation : vérifie un booléen
+     * Validation : vÃ©rifie un boolÃ©en
      *
-     * bool() reconnaît les booléens mais aussi les chaines
+     * bool() reconnaÃ®t les boolÃ©ens mais aussi les chaines
      * <code>'true','on', '1' </code> et <code>'false','off','0'</code>
-     * (quelque soit la casse et les espaces de début ou de fin éventuels).
+     * (quelque soit la casse et les espaces de dÃ©but ou de fin Ã©ventuels).
      *
-     * Si la valeur du paramètre est un tableau, le test est appliqué à chacun
-     * des éléments du tableau.
+     * Si la valeur du paramÃ¨tre est un tableau, le test est appliquÃ© Ã  chacun
+     * des Ã©lÃ©ments du tableau.
      *
-     * A l'issue du test, la valeur du paramètre en cours de validation est
-     * toujours un booléen ou un tableau de booléens
+     * A l'issue du test, la valeur du paramÃ¨tre en cours de validation est
+     * toujours un boolÃ©en ou un tableau de boolÃ©ens
      *
      * Exemples d'utilisation :
      * <code>
@@ -738,9 +738,9 @@ class Request
      * </code>
      *
      * @param string|null $key
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      *
-     * @throws RequestParameterBoolExpected si le test échoue
+     * @throws RequestParameterBoolExpected si le test Ã©choue
      */
     public function bool($key=null)
     {
@@ -786,15 +786,15 @@ class Request
 
 
     /**
-     * Validation : vérifie un entier
+     * Validation : vÃ©rifie un entier
      *
-     * int() reconnaît les entiers mais aussi les chaines représentant un entier
-     * (les espaces de début ou de fin éventuels sont ignorés).
+     * int() reconnaÃ®t les entiers mais aussi les chaines reprÃ©sentant un entier
+     * (les espaces de dÃ©but ou de fin Ã©ventuels sont ignorÃ©s).
      *
-     * Si la valeur du paramètre est un tableau, le test est appliqué à chacun
-     * des éléments du tableau.
+     * Si la valeur du paramÃ¨tre est un tableau, le test est appliquÃ© Ã  chacun
+     * des Ã©lÃ©ments du tableau.
      *
-     * A l'issue du test, la valeur du paramètre en cours de validation est
+     * A l'issue du test, la valeur du paramÃ¨tre en cours de validation est
      * toujours un entier ou un tableau d'entiers.
      *
      * Exemples d'utilisation :
@@ -805,9 +805,9 @@ class Request
      * </code>
      *
      * @param string|null $key
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      *
-     * @throws RequestParameterIntExpected si le test échoue
+     * @throws RequestParameterIntExpected si le test Ã©choue
      */
     public function int($key=null)
     {
@@ -868,14 +868,14 @@ class Request
 
 
     /**
-     * Validation : vérifie qu'un paramètre est supérieur ou égal au minimum
-     * autorisé
+     * Validation : vÃ©rifie qu'un paramÃ¨tre est supÃ©rieur ou Ã©gal au minimum
+     * autorisÃ©
      *
-     * Si la valeur du paramètre est un tableau, le test est appliqué à chacun
-     * des éléments du tableau.
+     * Si la valeur du paramÃ¨tre est un tableau, le test est appliquÃ© Ã  chacun
+     * des Ã©lÃ©ments du tableau.
      *
-     * A l'issue du test, la valeur du paramètre en cours de validation est
-     * toujours du même type que l'argument $min indiqué.
+     * A l'issue du test, la valeur du paramÃ¨tre en cours de validation est
+     * toujours du mÃªme type que l'argument $min indiquÃ©.
      *
      * Exemples d'utilisation :
      *
@@ -887,9 +887,9 @@ class Request
      *
      * @param string|null $key
      * @param scalar $min
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      *
-     * @throws RequestParameterMinExpected si le test échoue
+     * @throws RequestParameterMinExpected si le test Ã©choue
      */
     public function min($key, $min=null)
     {
@@ -923,14 +923,14 @@ class Request
 
 
     /**
-     * Validation : vérifie qu'un paramètre est inférieur ou égal au maximum
-     * autorisé
+     * Validation : vÃ©rifie qu'un paramÃ¨tre est infÃ©rieur ou Ã©gal au maximum
+     * autorisÃ©
      *
-     * Si la valeur du paramètre est un tableau, le test est appliqué à chacun
-     * des éléments du tableau.
+     * Si la valeur du paramÃ¨tre est un tableau, le test est appliquÃ© Ã  chacun
+     * des Ã©lÃ©ments du tableau.
      *
-     * A l'issue du test, la valeur du paramètre en cours de validation est
-     * toujours du même type que l'argument $max indiqué.
+     * A l'issue du test, la valeur du paramÃ¨tre en cours de validation est
+     * toujours du mÃªme type que l'argument $max indiquÃ©.
      *
      * Exemples d'utilisation :
      *
@@ -943,9 +943,9 @@ class Request
      * @param string|null $key
      * @param scalar $max
      *
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      *
-     * @throws RequestParameterMaxExpected si le test échoue
+     * @throws RequestParameterMaxExpected si le test Ã©choue
      */
     public function max($key, $max=null)
     {
@@ -978,35 +978,35 @@ class Request
 
 
     /**
-     * Validation : vérifie qu'un paramètre contient l'une des valeurs autorisées
+     * Validation : vÃ©rifie qu'un paramÃ¨tre contient l'une des valeurs autorisÃ©es
      *
-     * Si la valeur du paramètre est un tableau, le test est appliqué à chacun
-     * des éléments du tableau.
+     * Si la valeur du paramÃ¨tre est un tableau, le test est appliquÃ© Ã  chacun
+     * des Ã©lÃ©ments du tableau.
      *
-     * Si les valeurs autorisées sont des chaines, la casse des caractères et
-     * les éventuels espaces de début et de fin sont ignorés.
+     * Si les valeurs autorisÃ©es sont des chaines, la casse des caractÃ¨res et
+     * les Ã©ventuels espaces de dÃ©but et de fin sont ignorÃ©s.
      *
-     * A l'issue du test, la valeur du paramètre en cours de validation est
-     * toujours strictement identique à l'une des valeurs autorisées.
+     * A l'issue du test, la valeur du paramÃ¨tre en cours de validation est
+     * toujours strictement identique Ã  l'une des valeurs autorisÃ©es.
      *
-     * Vous pouvez appeller de deux façons différentes :
-     * - soit en indiquant les valeurs autorisées en paramètres
-     * - soit en passant un paramètre unique de type tableau contenant les
-     *   différentes valeurs autorisées.
+     * Vous pouvez appeller de deux faÃ§ons diffÃ©rentes :
+     * - soit en indiquant les valeurs autorisÃ©es en paramÃ¨tres
+     * - soit en passant un paramÃ¨tre unique de type tableau contenant les
+     *   diffÃ©rentes valeurs autorisÃ©es.
      *
      * Exemples d'utilisation :
      *
      * <code>
      * $request->oneof('nb',2,4,6)->ok();
-     * $request->oneof('nb',array(2,4,6))->ok(); // valeurs autorisées sous forme de tableau
+     * $request->oneof('nb',array(2,4,6))->ok(); // valeurs autorisÃ©es sous forme de tableau
      * $request->oneof('author', 'azimov', 'bradbury')->ok();
      * $request->required('nb')->oneof(2,4,6)->ok();
      * </code>
      *
      * @param string|array|null $key
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      *
-     * @throws RequestParameterBadValue si le test échoue
+     * @throws RequestParameterBadValue si le test Ã©choue
      */
     public function oneof($key)
     {
@@ -1050,17 +1050,17 @@ class Request
 
 
     /**
-     * Validation : vérifie qu'un paramètre contient l'une des valeurs autorisées
-     * et la convertit vers une valeur de référence.
+     * Validation : vÃ©rifie qu'un paramÃ¨tre contient l'une des valeurs autorisÃ©es
+     * et la convertit vers une valeur de rÃ©fÃ©rence.
      *
-     * Si la valeur du paramètre est un tableau, le test est appliqué à chacun
-     * des éléments du tableau.
+     * Si la valeur du paramÃ¨tre est un tableau, le test est appliquÃ© Ã  chacun
+     * des Ã©lÃ©ments du tableau.
      *
-     * Si les valeurs autorisées sont des chaines, la casse des caractères et
-     * les éventuels espaces de début et de fin sont ignorés.
+     * Si les valeurs autorisÃ©es sont des chaines, la casse des caractÃ¨res et
+     * les Ã©ventuels espaces de dÃ©but et de fin sont ignorÃ©s.
      *
-     * A l'issue du test, la valeur du paramètre en cours de validation est
-     * toujours strictement identique à l'une des valeurs de conversion.
+     * A l'issue du test, la valeur du paramÃ¨tre en cours de validation est
+     * toujours strictement identique Ã  l'une des valeurs de conversion.
      *
      * Exemples d'utilisation :
      *
@@ -1070,9 +1070,9 @@ class Request
      *
      * @param string|null $key
      * @param array|null $values
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      *
-     * @throws RequestParameterBadValue si le test échoue
+     * @throws RequestParameterBadValue si le test Ã©choue
      */
     public function convert($key, array $values=null)
     {
@@ -1107,12 +1107,12 @@ class Request
     }
 
     /**
-     * Validation : vérifie qu'un paramètre n'a qu'une seule valeur (ie n'est pas
+     * Validation : vÃ©rifie qu'un paramÃ¨tre n'a qu'une seule valeur (ie n'est pas
      * un tableau)
      *
-     * Si le paramètre est un scalaire, le test réussit. Si le paramètre est un
-     * tableau ne contenant qu'un seul élément, celui-ci est transformé en
-     * scalaire. Dans tous les autres cas, le test échoue.
+     * Si le paramÃ¨tre est un scalaire, le test rÃ©ussit. Si le paramÃ¨tre est un
+     * tableau ne contenant qu'un seul Ã©lÃ©ment, celui-ci est transformÃ© en
+     * scalaire. Dans tous les autres cas, le test Ã©choue.
      *
      * Exemples d'utilisation :
      * <code>
@@ -1121,10 +1121,10 @@ class Request
      * </code>
      *
      * @param string|null $key
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      *
-     * @throws RequestParameterUniqueValueExpected si le paramètre est un tableau
-     * contenant plusieurs éléments
+     * @throws RequestParameterUniqueValueExpected si le paramÃ¨tre est un tableau
+     * contenant plusieurs Ã©lÃ©ments
      */
     public function unique($key=null)
     {
@@ -1153,12 +1153,12 @@ class Request
     }
 
     /**
-     * Validation : transforme un paramètre en tableau de valeurs
+     * Validation : transforme un paramÃ¨tre en tableau de valeurs
      *
-     * Le paramètre en cours est transformé en tableau si ce n'en est pas
-     * déjà un.
+     * Le paramÃ¨tre en cours est transformÃ© en tableau si ce n'en est pas
+     * dÃ©jÃ  un.
      *
-     * A l'issue du test, la valeur du paramètre en cours de validation est
+     * A l'issue du test, la valeur du paramÃ¨tre en cours de validation est
      * toujours un tableau.
      *
      * Exemples d'utilisation :
@@ -1168,7 +1168,7 @@ class Request
      * </code>
      *
      * @param string|null $key
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function asArray($key=null)
     {
@@ -1178,33 +1178,33 @@ class Request
 
 
     /**
-     * Validation : transforme un paramètre en tableau et vérifie le nombre
-     * d'éléments qu'il possède.
+     * Validation : transforme un paramÃ¨tre en tableau et vÃ©rifie le nombre
+     * d'Ã©lÃ©ments qu'il possÃ¨de.
      *
-     * Si $min et $max ont été indiqués, le test réussit si le nombre d'éléments
+     * Si $min et $max ont Ã©tÃ© indiquÃ©s, le test rÃ©ussit si le nombre d'Ã©lÃ©ments
      * du tableau est compris entre min et max (bornes incluses).
      *
-     * Si seul $min est indiqué, le test réussit si le tableau a exactement $min
-     * éléments.
+     * Si seul $min est indiquÃ©, le test rÃ©ussit si le tableau a exactement $min
+     * Ã©lÃ©ments.
      *
-     * A l'issue du test, la valeur du paramètre en cours de validation est
+     * A l'issue du test, la valeur du paramÃ¨tre en cours de validation est
      * toujours un tableau.
      *
      *
      * Exemples d'utilisation :
      *
      * <code>
-     * $request->count('refs',2)->ok(); // ok si exactement 2 éléments
-     * $request->required('refs')->count(2,3)->ok(); // ok si 2 ou 3 éléments
+     * $request->count('refs',2)->ok(); // ok si exactement 2 Ã©lÃ©ments
+     * $request->required('refs')->count(2,3)->ok(); // ok si 2 ou 3 Ã©lÃ©ments
      * </code>
      *
      * @param string|null $key
      * @param int $min
      * @param int $max
      *
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      *
-     * @throws RequestParameterCountException si le test échoue
+     * @throws RequestParameterCountException si le test Ã©choue
      */
     public function count($key, $min=null, $max=null)
     {
@@ -1242,8 +1242,8 @@ class Request
 
 
     /**
-     * Validation : termine la validation d'un paramètre et retourne la valeur
-     * finale du paramètre.
+     * Validation : termine la validation d'un paramÃ¨tre et retourne la valeur
+     * finale du paramÃ¨tre.
      *
      * Exemple d'utilisation :
      *
@@ -1261,8 +1261,8 @@ class Request
     }
 
     /**
-     * Retourne la requête en cours sous la forme d'une url indiquant le module,
-     * l'action et les paramètres actuels de la requête
+     * Retourne la requÃªte en cours sous la forme d'une url indiquant le module,
+     * l'action et les paramÃ¨tres actuels de la requÃªte
      *
      * @return string
      */
@@ -1274,11 +1274,11 @@ class Request
     }
 
     /**
-     * Alias de {@link getUrl()} : retourne la requête en cours sous forme
+     * Alias de {@link getUrl()} : retourne la requÃªte en cours sous forme
      * d'url.
      *
-     * __toString est une méthode magique de php qui est appellée lorsque PHP
-     * a besoin de convertir un objet en chaine de caractères.
+     * __toString est une mÃ©thode magique de php qui est appellÃ©e lorsque PHP
+     * a besoin de convertir un objet en chaine de caractÃ¨res.
      *
      * @return string
      */
@@ -1302,8 +1302,8 @@ class CliRequest extends Request
 }
 */
 /**
- * Classe de base des exceptions générées par les fonctions de validation
- * de paramètres de {@link Request}
+ * Classe de base des exceptions gÃ©nÃ©rÃ©es par les fonctions de validation
+ * de paramÃ¨tres de {@link Request}
  *
  * @package     fab
  * @subpackage  module
@@ -1312,13 +1312,13 @@ class RequestParameterException extends Exception
 {
     public function __construct($message)
     {
-        parent::__construct('Requête incorrecte : '.$message);
+        parent::__construct('RequÃªte incorrecte : '.$message);
     }
 };
 
 
 /**
- * Exception générée par {@link Request::required()} lorsqu'un paramètre
+ * Exception gÃ©nÃ©rÃ©e par {@link Request::required()} lorsqu'un paramÃ¨tre
  * est absent
  *
  * @package     fab
@@ -1328,14 +1328,14 @@ class RequestParameterRequired extends RequestParameterException
 {
     public function __construct($param)
     {
-        parent::__construct(sprintf('paramètre %s requis', $param));
+        parent::__construct(sprintf('paramÃ¨tre %s requis', $param));
     }
 };
 
 
 /**
- * Exception générée par {@link Request::oneof()} lorsqu'un paramètre
- * a une valeur autorisée
+ * Exception gÃ©nÃ©rÃ©e par {@link Request::oneof()} lorsqu'un paramÃ¨tre
+ * a une valeur autorisÃ©e
  *
  * @package     fab
  * @subpackage  module
@@ -1350,7 +1350,7 @@ class RequestParameterBadValue extends RequestParameterException
 
 
 /**
- * Exception générée par {@link Request::unique()} lorsqu'un paramètre
+ * Exception gÃ©nÃ©rÃ©e par {@link Request::unique()} lorsqu'un paramÃ¨tre
  * a plusieurs valeurs
  *
  * @package     fab
@@ -1366,8 +1366,8 @@ class RequestParameterUniqueValueExpected extends RequestParameterBadValue
 
 
 /**
- * Exception générée par {@link Request::bool()} lorsqu'un paramètre
- * n'est pas un booléen
+ * Exception gÃ©nÃ©rÃ©e par {@link Request::bool()} lorsqu'un paramÃ¨tre
+ * n'est pas un boolÃ©en
  *
  * @package     fab
  * @subpackage  module
@@ -1376,13 +1376,13 @@ class RequestParameterBoolExpected extends RequestParameterBadValue
 {
     public function __construct($param, $value)
     {
-        parent::__construct($param, $value, 'booléen attendu');
+        parent::__construct($param, $value, 'boolÃ©en attendu');
     }
 };
 
 
 /**
- * Exception générée par {@link Request::int()} lorsqu'un paramètre
+ * Exception gÃ©nÃ©rÃ©e par {@link Request::int()} lorsqu'un paramÃ¨tre
  * n'est pas un entier
  *
  * @package     fab
@@ -1398,8 +1398,8 @@ class RequestParameterIntExpected extends RequestParameterBadValue
 
 
 /**
- * Exception générée par {@link Request::min()} lorsqu'un paramètre
- * est inférieur au minimum autorisé
+ * Exception gÃ©nÃ©rÃ©e par {@link Request::min()} lorsqu'un paramÃ¨tre
+ * est infÃ©rieur au minimum autorisÃ©
  *
  * @package     fab
  * @subpackage  module
@@ -1414,8 +1414,8 @@ class RequestParameterMinExpected extends RequestParameterBadValue
 
 
 /**
- * Exception générée par {@link Request::max()} lorsqu'un paramètre
- * dépasse le maximum autorisé
+ * Exception gÃ©nÃ©rÃ©e par {@link Request::max()} lorsqu'un paramÃ¨tre
+ * dÃ©passe le maximum autorisÃ©
  *
  * @package     fab
  * @subpackage  module
@@ -1430,7 +1430,7 @@ class RequestParameterMaxExpected extends RequestParameterBadValue
 
 
 /**
- * Exception générée par {@link Request::count()} lorsqu'un paramètre
+ * Exception gÃ©nÃ©rÃ©e par {@link Request::count()} lorsqu'un paramÃ¨tre
  * n'a pas le nombre correct de valeurs attendues
  *
  * @package     fab
@@ -1443,7 +1443,7 @@ class RequestParameterCountException extends RequestParameterBadValue
         if (is_null($max))
             parent::__construct($param, $value, sprintf('%s valeurs attendues', $min));
         else
-            parent::__construct($param, $value, sprintf('de %s à %s valeurs attendues', $min, $max));
+            parent::__construct($param, $value, sprintf('de %s Ã  %s valeurs attendues', $min, $max));
     }
 };
 

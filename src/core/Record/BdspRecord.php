@@ -2,16 +2,16 @@
 /**
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  * @version     SVN: $Id$
  */
 
 /**
- * Représente un enregistrement au format Bdsp.
+ * ReprÃ©sente un enregistrement au format Bdsp.
  *
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  * @version     SVN: $Id$
  */
 class BdspRecord extends Record
@@ -23,58 +23,58 @@ class BdspRecord extends Record
      */
     protected $format = array
     (
-        'Ref',      // No de référence de l'enregistrement
+        'Ref',      // No de rÃ©fÃ©rence de l'enregistrement
         'Typdoc',   // Type de document principal
         'TypdocB',  // Type de document secondaire
         'AutPhys',  // Auteurs physiques
         'AutColl',  // Auteurs collectifs. Ajouter " / com." pour un commanditaire
         'TitorigM', // Titre original du document au niveau monographique
         'TitorigA', // Titre original du document au niveau analytique
-        'TitFran',  // Traduction en français de TITORIGM ou TITORIGA
+        'TitFran',  // Traduction en franÃ§ais de TITORIGM ou TITORIGA
         'TitEng',   // Traduction en anglais de TITORIGM ou TITORIGA
         'TitCol',   // Titre de la collection
-        'Diplom',   // Intitulé du diplôme
-        'TitCong',  // Titre original du congrès
-        'TitCongF', // Traduction en français de TITCONG
-        'VilCong',  // Ville du congrès
-        'DatEdit',  // Date d'édition sous la forme AAAA/MM/JJ
-        'DatCong',  // Date de tenue du congrès
-        'TitPerio', // Titre développé du périodique
-        'NoVol',    // Numéro de volume, ou tomaison
-        'NoFasc',   // Numéro de fascicule
-        'NumDiv',   // Mention d'édition, numéro spéciaux, législation, etc.
+        'Diplom',   // IntitulÃ© du diplÃ´me
+        'TitCong',  // Titre original du congrÃ¨s
+        'TitCongF', // Traduction en franÃ§ais de TITCONG
+        'VilCong',  // Ville du congrÃ¨s
+        'DatEdit',  // Date d'Ã©dition sous la forme AAAA/MM/JJ
+        'DatCong',  // Date de tenue du congrÃ¨s
+        'TitPerio', // Titre dÃ©veloppÃ© du pÃ©riodique
+        'NoVol',    // NumÃ©ro de volume, ou tomaison
+        'NoFasc',   // NumÃ©ro de fascicule
+        'NumDiv',   // Mention d'Ã©dition, numÃ©ro spÃ©ciaux, lÃ©gislation, etc.
         'PageColl', // Pagination et mentions de collation
-        'RefBib',   // Références bibliographiques
-        'Issn',     // Numéro ISSN (identificateur du périodique)
-        'VilEd',    // Editeurs sous la forme Ville : Nom d'éditeur
-        'Isbn',     // Numéro ISBN (identificateur de l'ouvrage)
-        'CodPays',  // Pays d'édition du document, code ISO 3 lettres
+        'RefBib',   // RÃ©fÃ©rences bibliographiques
+        'Issn',     // NumÃ©ro ISSN (identificateur du pÃ©riodique)
+        'VilEd',    // Editeurs sous la forme Ville : Nom d'Ã©diteur
+        'Isbn',     // NumÃ©ro ISBN (identificateur de l'ouvrage)
+        'CodPays',  // Pays d'Ã©dition du document, code ISO 3 lettres
         'CodLang',  // Langue du document, code ISO 3 lettres
-        'LangResu', // Langue du résumé qui figure dans le champ RESUM
-        'Resum',    // Résumé du document
-        'MotsCles', // Mots-clés BDSP
+        'LangResu', // Langue du rÃ©sumÃ© qui figure dans le champ RESUM
+        'Resum',    // RÃ©sumÃ© du document
+        'MotsCles', // Mots-clÃ©s BDSP
         'NouvDesc', // Candidats descripteurs
         'CodInist', // Cote dans le plan de classement INIST
-        'Ident',    // Sigle du producteur et cote d'accès au document
-//      'Period',   // Periode couverte (si impossible à mettre dans MOTSCLES)
-        'Adr',      // Adresse complète du document en texte intégral
+        'Ident',    // Sigle du producteur et cote d'accÃ¨s au document
+//      'Period',   // Periode couverte (si impossible Ã  mettre dans MOTSCLES)
+        'Adr',      // Adresse complÃ¨te du document en texte intÃ©gral
 
     );
 
 
     /**
-     * Séparateur utilisé pour les champs articles
+     * SÃ©parateur utilisÃ© pour les champs articles
      *
      * @var string
      */
-    protected $sep = '· '; // chr(0183)
+    protected $sep = 'Â· '; // chr(0183)
 
 
     /**
-     * Surcharge la méthode héritée de Record : dans le cas d'un enregistrement
+     * Surcharge la mÃ©thode hÃ©ritÃ©e de Record : dans le cas d'un enregistrement
      * au format BDSP, le convertir au format BDSP n'a pas de sens.
      *
-     * La méthode se contente de retourner <code>$this</code>.
+     * La mÃ©thode se contente de retourner <code>$this</code>.
      *
      * @return $this
      */

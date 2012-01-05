@@ -2,16 +2,16 @@
 /**
  * @package     fab
  * @subpackage  core
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id$
  */
 
 /**
- * Classe représentant une collection de paramètres constitués d'un nom et d'une
- * valeur associée.
+ * Classe reprÃ©sentant une collection de paramÃ¨tres constituÃ©s d'un nom et d'une
+ * valeur associÃ©e.
  *
- * Certaines méthodes retourne $this pour permettre de chainer les appels de
- * méthodes :
+ * Certaines mÃ©thodes retourne $this pour permettre de chainer les appels de
+ * mÃ©thodes :
  *
  * <code>
  * $parameters
@@ -20,8 +20,8 @@
  *     ->set('format', 'html');
  * </code>
  *
- * Parameters propose également des méthodes (chainées) permettant de valider
- * aisément les paramètres :
+ * Parameters propose Ã©galement des mÃ©thodes (chainÃ©es) permettant de valider
+ * aisÃ©ment les paramÃ¨tres :
  *
  * <code>
  * $parameters
@@ -38,21 +38,21 @@
 class Parameters
 {
     /**
-     * Les paramètres de la requête
+     * Les paramÃ¨tres de la requÃªte
      *
      * @var array
      */
     private $_parameters=array();
 
     /**
-     * Nom du paramètre en cours de validation
+     * Nom du paramÃ¨tre en cours de validation
      *
      * @var string
      */
     private $_checkName;
 
     /**
-     * Valeur actuelle du paramètre en cours de validation
+     * Valeur actuelle du paramÃ¨tre en cours de validation
      *
      * @var mixed
      */
@@ -60,12 +60,12 @@ class Parameters
 
 
     /**
-     * Construit une nouvelle collection de paramètres.
+     * Construit une nouvelle collection de paramÃ¨tres.
      *
-     * Des paramètres supplémentaires peuvent être ajoutés à la collection
+     * Des paramÃ¨tres supplÃ©mentaires peuvent Ãªtre ajoutÃ©s Ã  la collection
      * en utilisant {@link set()} et {@link add()}
      *
-     * @param array $parameters ... des tableaux contenant les paramètres
+     * @param array $parameters ... des tableaux contenant les paramÃ¨tres
      * initiaux de la collection.
      */
     public function __construct(array $parameters=array())
@@ -82,17 +82,17 @@ class Parameters
 
 
     /**
-     * Méthode statique permettant de créer une nouvelle collection de
-     * paramètres.
+     * MÃ©thode statique permettant de crÃ©er une nouvelle collection de
+     * paramÃ¨tres.
      *
-     * Php ne permet pas de chainer des méthodes après un appel à new :
+     * Php ne permet pas de chainer des mÃ©thodes aprÃ¨s un appel Ã  new :
      * <code>$parameters=new Parameters()->set('max', 10);</code>
-     * génère une erreur.
+     * gÃ©nÃ¨re une erreur.
      *
-     * La méthode statique create permet de contourner le problème en écrivant :
+     * La mÃ©thode statique create permet de contourner le problÃ¨me en Ã©crivant :
      * <code>$parameters=Parameters::create()->set('max', 10);</code>
      *
-     * @param array $parameters ... des tableaux contenant les paramètres
+     * @param array $parameters ... des tableaux contenant les paramÃ¨tres
      * initiaux de la collection.
      */
     public static function create(array $parameters=array())
@@ -120,23 +120,23 @@ class Parameters
 
 
     /**
-     * Ajoute un tableau de paramètres à la collection.
+     * Ajoute un tableau de paramÃ¨tres Ã  la collection.
      *
      * @param array $parameters
-     * @return Parameters $this pour permettre le chainage des appels de méthodes.
+     * @return Parameters $this pour permettre le chainage des appels de mÃ©thodes.
      */
     public function addParameters(array $parameters)
     {
         foreach($parameters as $key=>$value)
         {
-            // Si la clé n'existe pas déjà, on l'insère à la fin du tableau
+            // Si la clÃ© n'existe pas dÃ©jÃ , on l'insÃ¨re Ã  la fin du tableau
             if (!array_key_exists($key, $this->_parameters))
             {
                 $this->_parameters[$key]=$value;
                 continue;
             }
 
-            // Existe déjà, c'est un tableau, ajoute la valeur à la fin
+            // Existe dÃ©jÃ , c'est un tableau, ajoute la valeur Ã  la fin
             if (is_array($this->_parameters[$key]))
             {
                 // tableau + tableau
@@ -148,7 +148,7 @@ class Parameters
                     $this->_parameters[$key][]=$value;
             }
 
-            // Existe déjà, simple valeur, crée un tableau contenant la valeur existante et la valeur indiquée
+            // Existe dÃ©jÃ , simple valeur, crÃ©e un tableau contenant la valeur existante et la valeur indiquÃ©e
             else
             {
                 // valeur + tableau
@@ -165,15 +165,15 @@ class Parameters
 
 
     /**
-     * Retourne la valeur du paramètre indiqué ou null si la collection ne
-     * contient pas le paramètre demandé.
+     * Retourne la valeur du paramÃ¨tre indiquÃ© ou null si la collection ne
+     * contient pas le paramÃ¨tre demandÃ©.
      *
-     * __get est une méthode magique de php qui permet d'accéder aux paramètres
-     * de la collection comme s'il s'agissait de propriétés de l'objet
+     * __get est une mÃ©thode magique de php qui permet d'accÃ©der aux paramÃ¨tres
+     * de la collection comme s'il s'agissait de propriÃ©tÃ©s de l'objet
      * Parameters (par exemple <code>$parameters->max</code>)
      *
-     * La méthode {@link get()} est similaire mais permet d'indiquer une valeur
-     * par défaut.
+     * La mÃ©thode {@link get()} est similaire mais permet d'indiquer une valeur
+     * par dÃ©faut.
      *
      * @param string $key
      * @return mixed
@@ -187,11 +187,11 @@ class Parameters
 
 
     /**
-     * Retourne la valeur du paramètre indiqué ou la valeur par défaut spécifiée
-     * si le paramètre indiqué ne figure pas dans la collection.
+     * Retourne la valeur du paramÃ¨tre indiquÃ© ou la valeur par dÃ©faut spÃ©cifiÃ©e
+     * si le paramÃ¨tre indiquÃ© ne figure pas dans la collection.
      *
-     * get est similaire à {@link __get()} mais permet d'indiquer une valeur par
-     * défaut (par exemple <code>$request->get('item', 'abc')</code>)
+     * get est similaire Ã  {@link __get()} mais permet d'indiquer une valeur par
+     * dÃ©faut (par exemple <code>$request->get('item', 'abc')</code>)
      *
      * @param string $key
      * @param mixed $default
@@ -207,14 +207,14 @@ class Parameters
 
 
     /**
-     * Modifie la valeur d'un paramètre.
+     * Modifie la valeur d'un paramÃ¨tre.
      *
-     * __set est une méthode magique de php qui permet de modifier un
-     * paramètre comme s'il s'agissait d'une propriété de l'objet Parameters
+     * __set est une mÃ©thode magique de php qui permet de modifier un
+     * paramÃ¨tre comme s'il s'agissait d'une propriÃ©tÃ© de l'objet Parameters
      * (par exemple <code>$parametrs->max = 10</code>)
      *
-     * Set remplace complètement la valeur existante. Pour ajouter une valeur
-     * à un paramètre existant, utiliser {@link add()}
+     * Set remplace complÃ¨tement la valeur existante. Pour ajouter une valeur
+     * Ã  un paramÃ¨tre existant, utiliser {@link add()}
      *
      * @param string $key
      * @param mixed $value
@@ -226,13 +226,13 @@ class Parameters
 
 
     /**
-     * Modifie la valeur d'un paramètre.
+     * Modifie la valeur d'un paramÃ¨tre.
      *
      * Exemple : $parameters->set('item', 12)
      *
      * @param string $key
      * @param mixed $value
-     * @return Request $this pour permettre le chainage des appels de méthodes
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function set($key, $value)
     {
@@ -242,10 +242,10 @@ class Parameters
 
 
     /**
-     * Supprime le paramètre indiqué
+     * Supprime le paramÃ¨tre indiquÃ©
      *
-     * __unset est une méthode magique de php qui permet de supprimer un
-     * paramètre comme s'il s'agissait d'une propriété de l'objet Parameters
+     * __unset est une mÃ©thode magique de php qui permet de supprimer un
+     * paramÃ¨tre comme s'il s'agissait d'une propriÃ©tÃ© de l'objet Parameters
      * (par exemple <code>unset($parameters->max)</code>)
      *
      * @param string $key
@@ -257,28 +257,28 @@ class Parameters
 
 
     /**
-     * Supprime des paramètres de la collection.
+     * Supprime des paramÃ¨tres de la collection.
      *
-     * La méthode <code>clear()</code> permet de supprimer :
-     * - tous les paramètres qui figure dans la collection,
-     * - un paramètre unique,
-     * - une valeur précise d'un paramètre.
+     * La mÃ©thode <code>clear()</code> permet de supprimer :
+     * - tous les paramÃ¨tres qui figure dans la collection,
+     * - un paramÃ¨tre unique,
+     * - une valeur prÃ©cise d'un paramÃ¨tre.
      *
      * Exemples :
-     * - <code>$parameters->clear('item')</code> // supprime le paramètre
-     *   item de la requête ;
+     * - <code>$parameters->clear('item')</code> // supprime le paramÃ¨tre
+     *   item de la requÃªte ;
      * - <code>$parameters->clear('item', 'article')</code> // supprime la
-     *   valeur 'article' du paramètre item de la requête.
+     *   valeur 'article' du paramÃ¨tre item de la requÃªte.
      *
-     * @param string $key le nom du paramètre à supprimer.
-     * @param mixed $value optionnel : la valeur à effacer.
-     * Par défaut (lorsque $value n'est pas indiqué, clear efface complètement
-     * le paramétre indiqué par $key. Si $value est indiqué et que $key désigne
-     * un tableau, seule la valeur indiquée va être supprimée de la requête.
-     * Si $key désigne un scalaire, le paramètre ne sera supprimé que si la valeur
-     * associée correspond à $value.
+     * @param string $key le nom du paramÃ¨tre Ã  supprimer.
+     * @param mixed $value optionnel : la valeur Ã  effacer.
+     * Par dÃ©faut (lorsque $value n'est pas indiquÃ©, clear efface complÃ¨tement
+     * le paramÃ©tre indiquÃ© par $key. Si $value est indiquÃ© et que $key dÃ©signe
+     * un tableau, seule la valeur indiquÃ©e va Ãªtre supprimÃ©e de la requÃªte.
+     * Si $key dÃ©signe un scalaire, le paramÃ¨tre ne sera supprimÃ© que si la valeur
+     * associÃ©e correspond Ã  $value.
      *
-     * @return Parameters $this pour permettre le chainage des appels de méthodes.
+     * @return Parameters $this pour permettre le chainage des appels de mÃ©thodes.
      */
     public function clear($key=null, $value=null)
     {
@@ -316,17 +316,17 @@ class Parameters
     }
 
     /**
-     * Supprime tous les paramètres sauf ceux dont le nom est indiqué en
-     * paramètre.
+     * Supprime tous les paramÃ¨tres sauf ceux dont le nom est indiquÃ© en
+     * paramÃ¨tre.
      *
      * Exemple :
      * <code>
      * $parameters->keepOnly('max', 'format'); // supprime tous sauf max et format
      * </code>
      *
-     * @param string $arg nom du premier paramètre à conserver. Vous pouvez
-     * indiquer autant d'argument arg que nécessaire
-     * @return Parameters $this pour permettre le chainage des appels de méthodes.
+     * @param string $arg nom du premier paramÃ¨tre Ã  conserver. Vous pouvez
+     * indiquer autant d'argument arg que nÃ©cessaire
+     * @return Parameters $this pour permettre le chainage des appels de mÃ©thodes.
      */
     public function keepOnly($arg)
     {
@@ -337,12 +337,12 @@ class Parameters
 
 
     /**
-     * Supprime tous les paramètres vides.
+     * Supprime tous les paramÃ¨tres vides.
      *
-     * La méthode <code>clearNull()</code> supprime de la collection tous les
-     * paramètres dont la valeur est une chaine vide, un tableau vide ou la valeur null.
+     * La mÃ©thode <code>clearNull()</code> supprime de la collection tous les
+     * paramÃ¨tres dont la valeur est une chaine vide, un tableau vide ou la valeur null.
      *
-     * @return Parameters $this pour permettre le chainage des appels de méthodes.
+     * @return Parameters $this pour permettre le chainage des appels de mÃ©thodes.
      */
     public function clearNull()
     {
@@ -367,7 +367,7 @@ class Parameters
     }
 
     /**
-     * Indique si la collection contient des paramètres.
+     * Indique si la collection contient des paramÃ¨tres.
      *
      * @return bool
      */
@@ -378,7 +378,7 @@ class Parameters
 
 
     /**
-     * Retourne tous les paramètres présents dans la collection.
+     * Retourne tous les paramÃ¨tres prÃ©sents dans la collection.
      *
      * @return array
      */
@@ -389,13 +389,13 @@ class Parameters
 
 
     /**
-     * Détermine si le paramètre indiqué existe.
+     * DÃ©termine si le paramÃ¨tre indiquÃ© existe.
      *
-     * __isset() est une méthode magique de php qui permet de tester l'existence
-     * d'un paramètre comme s'il s'agissait d'une propriété de l'objet Parameters.
+     * __isset() est une mÃ©thode magique de php qui permet de tester l'existence
+     * d'un paramÃ¨tre comme s'il s'agissait d'une propriÃ©tÃ© de l'objet Parameters.
      *
-     * La fonction {@link has()} fait la même chose mais prend le nom de
-     * l'argument en paramètre.
+     * La fonction {@link has()} fait la mÃªme chose mais prend le nom de
+     * l'argument en paramÃ¨tre.
      *
      * @param string $key
      * @return bool
@@ -407,13 +407,13 @@ class Parameters
 
 
     /**
-     * Détermine si le paramètre indiqué existe.
+     * DÃ©termine si le paramÃ¨tre indiquÃ© existe.
      *
-     * La fonction retourne true même si le paramètre à la valeur null
+     * La fonction retourne true mÃªme si le paramÃ¨tre Ã  la valeur null
      *
-     * @param string $key le nom du paramètre à tester.
-     * @param mixed $value optionnel, la valeur à tester. Lorsque $value
-     * est indiquée, la méthode retourne true si le paramètre $key est définit
+     * @param string $key le nom du paramÃ¨tre Ã  tester.
+     * @param mixed $value optionnel, la valeur Ã  tester. Lorsque $value
+     * est indiquÃ©e, la mÃ©thode retourne true si le paramÃ¨tre $key est dÃ©finit
      * et s'il contient la valeur $value.
      *
      * @return bool
@@ -430,36 +430,36 @@ class Parameters
 
 
     /**
-     * Ajoute une valeur au paramètre indiqué.
+     * Ajoute une valeur au paramÃ¨tre indiquÃ©.
      *
-     * Add ajoute le paramètre indiqué à la liste des paramètres de la requête.
-     * Si le paramètre indiqué existait déjà, la valeur existante est transformée
-     * en tableau et la valeur indiquée est ajoutée au tableau obtenu.
+     * Add ajoute le paramÃ¨tre indiquÃ© Ã  la liste des paramÃ¨tres de la requÃªte.
+     * Si le paramÃ¨tre indiquÃ© existait dÃ©jÃ , la valeur existante est transformÃ©e
+     * en tableau et la valeur indiquÃ©e est ajoutÃ©e au tableau obtenu.
      *
-     * Pour remplacer complètement la valeur d'un paramètre existant, utiliser
-     * la méthode {@link set()}.
+     * Pour remplacer complÃ¨tement la valeur d'un paramÃ¨tre existant, utiliser
+     * la mÃ©thode {@link set()}.
      *
      * @param string $key
      * @param mixed $value
-     * @return Request $this pour permettre le chainage des appels de méthodes.
+     * @return Request $this pour permettre le chainage des appels de mÃ©thodes.
      */
     public function add($key, $value)
     {
-        // Si la clé n'existe pas déjà, on l'insère à la fin du tableau
+        // Si la clÃ© n'existe pas dÃ©jÃ , on l'insÃ¨re Ã  la fin du tableau
         if (!array_key_exists($key, $this->_parameters))
         {
             $this->_parameters[$key]=$value;
             return $this;
         }
 
-        // La clé existe déjà
+        // La clÃ© existe dÃ©jÃ 
         $item=& $this->_parameters[$key];
 
-        // Si c'est déjà un tableau, ajoute la valeur à la fin du tableau
+        // Si c'est dÃ©jÃ  un tableau, ajoute la valeur Ã  la fin du tableau
         if (is_array($item))
             $item[]=$value;
 
-        // Sinon, crée un tableau contenant la valeur existante et la valeur indiquée
+        // Sinon, crÃ©e un tableau contenant la valeur existante et la valeur indiquÃ©e
         else
             $item=array($item, $value);
 
@@ -468,17 +468,17 @@ class Parameters
 
 
     /**
-     * Fonction exécutée à chaque fois qu'une fonction de validation est appellée.
+     * Fonction exÃ©cutÃ©e Ã  chaque fois qu'une fonction de validation est appellÃ©e.
      *
      * Si $key est non null, une nouvelle validation commence et la fonction
-     * retourne la valeur de ce paramètre.
+     * retourne la valeur de ce paramÃ¨tre.
      *
      * Si $ref est null, la validation en cours continue et la fonction retourne
-     * la valeur actuelle du paramètre en cours.
+     * la valeur actuelle du paramÃ¨tre en cours.
      *
-     * Une exception est générée si check est appellée avec $key==null et qu'il
-     * n'y a pas de validation en cours et si check() est appellée avec un nom
-     * alors qu'il y a déjà une validation en cours.
+     * Une exception est gÃ©nÃ©rÃ©e si check est appellÃ©e avec $key==null et qu'il
+     * n'y a pas de validation en cours et si check() est appellÃ©e avec un nom
+     * alors qu'il y a dÃ©jÃ  une validation en cours.
      *
      * @param string|null $key
      * @return mixed
@@ -490,7 +490,7 @@ class Parameters
             if (is_null($this->_checkName))
             {
                 $stack=debug_backtrace();
-                throw new BadMethodCallException(sprintf('%s::%s() appellée sans indiquer le nom du paramètre à vérifier', __CLASS__, $stack[1]['function']));
+                throw new BadMethodCallException(sprintf('%s::%s() appellÃ©e sans indiquer le nom du paramÃ¨tre Ã  vÃ©rifier', __CLASS__, $stack[1]['function']));
             }
         }
         else
@@ -498,7 +498,7 @@ class Parameters
             if (!is_null($this->_checkName))
             {
                 $stack=debug_backtrace();
-                throw new BadMethodCallException(sprintf('Appel de %s::%s("%s") alors que "%s" est déjà en cours de validation. Oubli de ok() au dernier appel ?' , __CLASS__, $stack[1]['function'], $key, $this->_checkName));
+                throw new BadMethodCallException(sprintf('Appel de %s::%s("%s") alors que "%s" est dÃ©jÃ  en cours de validation. Oubli de ok() au dernier appel ?' , __CLASS__, $stack[1]['function'], $key, $this->_checkName));
             }
             $this->_check=$this->get($key);
             $this->_checkName=$key;
@@ -508,15 +508,15 @@ class Parameters
 
 
     /**
-     * Validation : génère une exception si le paramètre indiqué n'existe pas.
+     * Validation : gÃ©nÃ¨re une exception si le paramÃ¨tre indiquÃ© n'existe pas.
      *
-     * Le paramètre est considéré comme 'absent' si sa valeur est null, un
+     * Le paramÃ¨tre est considÃ©rÃ© comme 'absent' si sa valeur est null, un
      * tableau vide, une chaine vide ou une chaine ne contenant que des blancs.
      *
-     * Si la valeur du paramètre est un tableau, le test est appliqué à chacun
-     * des éléments du tableau.
+     * Si la valeur du paramÃ¨tre est un tableau, le test est appliquÃ© Ã  chacun
+     * des Ã©lÃ©ments du tableau.
      *
-     * La valeur actuelle du paramètre en cours de validation n'est pas modifiée
+     * La valeur actuelle du paramÃ¨tre en cours de validation n'est pas modifiÃ©e
      * par le test.
      *
      * Exemples d'utilisation :
@@ -527,8 +527,8 @@ class Parameters
      * </code>
      *
      * @param string|null $key
-     * @return Parameters $this pour permettre le chainage des appels de méthodes
-     * @throws ParametersParameterRequired si le test échoue
+     * @return Parameters $this pour permettre le chainage des appels de mÃ©thodes
+     * @throws ParametersParameterRequired si le test Ã©choue
      */
     public function required($key=null)
     {
@@ -551,13 +551,13 @@ class Parameters
     }
 
     /**
-     * Validation : donne une valeur par défaut à un paramètre si celui-ci n'est
-     * pas déjà définit.
+     * Validation : donne une valeur par dÃ©faut Ã  un paramÃ¨tre si celui-ci n'est
+     * pas dÃ©jÃ  dÃ©finit.
      *
      * @param string|null $key
      * @param scalar $default
      *
-     * @return Parameters $this pour permettre le chainage des appels de méthodes.
+     * @return Parameters $this pour permettre le chainage des appels de mÃ©thodes.
      */
     public function defaults($key, $default=null)
     {
@@ -578,18 +578,18 @@ class Parameters
 
 
     /**
-     * Validation : génère une exception si le paramètre indiqué n'est pas un
-     * booléen.
+     * Validation : gÃ©nÃ¨re une exception si le paramÃ¨tre indiquÃ© n'est pas un
+     * boolÃ©en.
      *
-     * La méthode <code>bool()</code> reconnaît les booléens mais aussi les
+     * La mÃ©thode <code>bool()</code> reconnaÃ®t les boolÃ©ens mais aussi les
      * chaines <code>'true','on', '1' </code> et <code>'false','off','0'</code>
-     * (quelque soit la casse et les espaces de début ou de fin éventuels).
+     * (quelque soit la casse et les espaces de dÃ©but ou de fin Ã©ventuels).
      *
-     * Si la valeur du paramètre est un tableau, le test est appliqué à chacun
-     * des éléments du tableau.
+     * Si la valeur du paramÃ¨tre est un tableau, le test est appliquÃ© Ã  chacun
+     * des Ã©lÃ©ments du tableau.
      *
-     * A l'issue du test, la valeur du paramètre en cours de validation est
-     * toujours un booléen ou un tableau de booléens
+     * A l'issue du test, la valeur du paramÃ¨tre en cours de validation est
+     * toujours un boolÃ©en ou un tableau de boolÃ©ens
      *
      * Exemples d'utilisation :
      * <code>
@@ -599,9 +599,9 @@ class Parameters
      *
      * @param string|null $key
      * @return Parameters $this pour permettre le chainage des appels de
-     * méthodes.
+     * mÃ©thodes.
      *
-     * @throws ParametersParameterBoolExpected si le test échoue
+     * @throws ParametersParameterBoolExpected si le test Ã©choue
      */
     public function bool($key=null)
     {
@@ -647,17 +647,17 @@ class Parameters
 
 
     /**
-     * Validation : génère une exception si le paramètre indiqué n'est pas un
+     * Validation : gÃ©nÃ¨re une exception si le paramÃ¨tre indiquÃ© n'est pas un
      * entier.
      *
-     * La méthode <code>int()</code> reconnaît les entiers mais aussi les
-     * chaines représentant un entier (les espaces de début ou de fin éventuels
-     * sont ignorés).
+     * La mÃ©thode <code>int()</code> reconnaÃ®t les entiers mais aussi les
+     * chaines reprÃ©sentant un entier (les espaces de dÃ©but ou de fin Ã©ventuels
+     * sont ignorÃ©s).
      *
-     * Si la valeur du paramètre est un tableau, le test est appliqué à chacun
-     * des éléments du tableau.
+     * Si la valeur du paramÃ¨tre est un tableau, le test est appliquÃ© Ã  chacun
+     * des Ã©lÃ©ments du tableau.
      *
-     * A l'issue du test, la valeur du paramètre en cours de validation est
+     * A l'issue du test, la valeur du paramÃ¨tre en cours de validation est
      * toujours un entier ou un tableau d'entiers.
      *
      * Exemples d'utilisation :
@@ -668,9 +668,9 @@ class Parameters
      * </code>
      *
      * @param string|null $key
-     * @return Parameters $this pour permettre le chainage des appels de méthodes
+     * @return Parameters $this pour permettre le chainage des appels de mÃ©thodes
      *
-     * @throws ParametersParameterIntExpected si le test échoue
+     * @throws ParametersParameterIntExpected si le test Ã©choue
      */
     public function int($key=null)
     {
@@ -721,14 +721,14 @@ class Parameters
 
 
     /**
-     * Validation : Génère une exception si le paramètre indiqué est inférieur
-     * au minimum autorisé.
+     * Validation : GÃ©nÃ¨re une exception si le paramÃ¨tre indiquÃ© est infÃ©rieur
+     * au minimum autorisÃ©.
      *
-     * Si la valeur du paramètre est un tableau, le test est appliqué à chacun
-     * des éléments du tableau.
+     * Si la valeur du paramÃ¨tre est un tableau, le test est appliquÃ© Ã  chacun
+     * des Ã©lÃ©ments du tableau.
      *
-     * A l'issue du test, la valeur du paramètre en cours de validation est
-     * toujours du même type que l'argument <code>$min</code> indiqué.
+     * A l'issue du test, la valeur du paramÃ¨tre en cours de validation est
+     * toujours du mÃªme type que l'argument <code>$min</code> indiquÃ©.
      *
      * Exemples d'utilisation :
      *
@@ -741,9 +741,9 @@ class Parameters
      * @param string|null $key
      * @param scalar $min
      * @return Parameters $this pour permettre le chainage des appels de
-     * méthodes.
+     * mÃ©thodes.
      *
-     * @throws ParametersParameterMinExpected si le test échoue
+     * @throws ParametersParameterMinExpected si le test Ã©choue
      */
     public function min($key, $min=null)
     {
@@ -777,14 +777,14 @@ class Parameters
 
 
     /**
-     * Validation : génère une exception si le paramètre indiqué est supérieur
-     * au maximum autorisé.
+     * Validation : gÃ©nÃ¨re une exception si le paramÃ¨tre indiquÃ© est supÃ©rieur
+     * au maximum autorisÃ©.
      *
-     * Si la valeur du paramètre est un tableau, le test est appliqué à chacun
-     * des éléments du tableau.
+     * Si la valeur du paramÃ¨tre est un tableau, le test est appliquÃ© Ã  chacun
+     * des Ã©lÃ©ments du tableau.
      *
-     * A l'issue du test, la valeur du paramètre en cours de validation est
-     * toujours du même type que l'argument <code>$max</code> indiqué.
+     * A l'issue du test, la valeur du paramÃ¨tre en cours de validation est
+     * toujours du mÃªme type que l'argument <code>$max</code> indiquÃ©.
      *
      * Exemples d'utilisation :
      *
@@ -797,9 +797,9 @@ class Parameters
      * @param string|null $key
      * @param scalar $max
      *
-     * @return Parameters $this pour permettre le chainage des appels de méthodes
+     * @return Parameters $this pour permettre le chainage des appels de mÃ©thodes
      *
-     * @throws ParamatersParameterMaxExpected si le test échoue
+     * @throws ParamatersParameterMaxExpected si le test Ã©choue
      */
     public function max($key, $max=null)
     {
@@ -832,17 +832,17 @@ class Parameters
 
 
     /**
-     * Validation : génère une exception si le paramètre indiqué contient une
-     * valeur non autorisée.
+     * Validation : gÃ©nÃ¨re une exception si le paramÃ¨tre indiquÃ© contient une
+     * valeur non autorisÃ©e.
      *
-     * Si la valeur du paramètre est un tableau, le test est appliqué à chacun
-     * des éléments du tableau.
+     * Si la valeur du paramÃ¨tre est un tableau, le test est appliquÃ© Ã  chacun
+     * des Ã©lÃ©ments du tableau.
      *
-     * Si les valeurs autorisées sont des chaines, la casse des caractères et
-     * les éventuels espaces de début et de fin sont ignorés.
+     * Si les valeurs autorisÃ©es sont des chaines, la casse des caractÃ¨res et
+     * les Ã©ventuels espaces de dÃ©but et de fin sont ignorÃ©s.
      *
-     * A l'issue du test, la valeur du paramètre en cours de validation est
-     * toujours strictement identique à l'une des valeurs autorisées.
+     * A l'issue du test, la valeur du paramÃ¨tre en cours de validation est
+     * toujours strictement identique Ã  l'une des valeurs autorisÃ©es.
      *
      * Exemples d'utilisation :
      *
@@ -854,9 +854,9 @@ class Parameters
      *
      * @param string|null $key
      * @return Parameters $this pour permettre le chainage des appels de
-     * méthodes.
+     * mÃ©thodes.
      *
-     * @throws ParametersParameterBadValue si le test échoue.
+     * @throws ParametersParameterBadValue si le test Ã©choue.
      */
     public function oneof($key)
     {
@@ -897,11 +897,11 @@ class Parameters
 
 
     /**
-     * Validation : génère une exception si le paramètre indiqué est multivalué.
+     * Validation : gÃ©nÃ¨re une exception si le paramÃ¨tre indiquÃ© est multivaluÃ©.
      *
-     * Si le paramètre est un scalaire, le test réussit. Si le paramètre est un
-     * tableau ne contenant qu'un seul élément, celui-ci est transformé en
-     * scalaire. Dans tous les autres cas, le test échoue.
+     * Si le paramÃ¨tre est un scalaire, le test rÃ©ussit. Si le paramÃ¨tre est un
+     * tableau ne contenant qu'un seul Ã©lÃ©ment, celui-ci est transformÃ© en
+     * scalaire. Dans tous les autres cas, le test Ã©choue.
      *
      * Exemples d'utilisation :
      * <code>
@@ -911,10 +911,10 @@ class Parameters
      *
      * @param string|null $key
      * @return Parameters $this pour permettre le chainage des appels de
-     * méthodes.
+     * mÃ©thodes.
      *
-     * @throws ParametersParameterUniqueValueExpected si le paramètre est un
-     * tableau contenant plusieurs éléments.
+     * @throws ParametersParameterUniqueValueExpected si le paramÃ¨tre est un
+     * tableau contenant plusieurs Ã©lÃ©ments.
      */
     public function unique($key=null)
     {
@@ -944,12 +944,12 @@ class Parameters
 
 
     /**
-     * Validation : transforme un paramètre en tableau de valeurs.
+     * Validation : transforme un paramÃ¨tre en tableau de valeurs.
      *
-     * Le paramètre en cours est transformé en tableau si ce n'en est pas
-     * déjà un.
+     * Le paramÃ¨tre en cours est transformÃ© en tableau si ce n'en est pas
+     * dÃ©jÃ  un.
      *
-     * A l'issue du test, la valeur du paramètre en cours de validation est
+     * A l'issue du test, la valeur du paramÃ¨tre en cours de validation est
      * toujours un tableau.
      *
      * Exemples d'utilisation :
@@ -960,7 +960,7 @@ class Parameters
      *
      * @param string|null $key
      * @return Parameters $this pour permettre le chainage des appels de
-     * méthodes.
+     * mÃ©thodes.
      */
     public function asArray($key=null)
     {
@@ -970,24 +970,24 @@ class Parameters
 
 
     /**
-     * Validation : transforme un paramètre en tableau et vérifie le nombre
-     * d'éléments qu'il possède.
+     * Validation : transforme un paramÃ¨tre en tableau et vÃ©rifie le nombre
+     * d'Ã©lÃ©ments qu'il possÃ¨de.
      *
-     * Si <code>$min</code> et <code>$max</code> ont été indiqués, le test
-     * réussit si le nombre d'éléments du tableau est compris entre les deux
+     * Si <code>$min</code> et <code>$max</code> ont Ã©tÃ© indiquÃ©s, le test
+     * rÃ©ussit si le nombre d'Ã©lÃ©ments du tableau est compris entre les deux
      *  (bornes incluses).
      *
-     * Si seul <code>$min</code> est indiqué, le test réussit si le tableau a
-     * exactement <code>$min</code> éléments.
+     * Si seul <code>$min</code> est indiquÃ©, le test rÃ©ussit si le tableau a
+     * exactement <code>$min</code> Ã©lÃ©ments.
      *
-     * A l'issue du test, la valeur du paramètre en cours de validation est
+     * A l'issue du test, la valeur du paramÃ¨tre en cours de validation est
      * toujours un tableau.
      *
      * Exemples d'utilisation :
      *
      * <code>
-     * $parameters->count('refs',2)->ok(); // ok si exactement 2 éléments
-     * $parameters->required('refs')->count(2,3)->ok(); // ok si 2 ou 3 éléments
+     * $parameters->count('refs',2)->ok(); // ok si exactement 2 Ã©lÃ©ments
+     * $parameters->required('refs')->count(2,3)->ok(); // ok si 2 ou 3 Ã©lÃ©ments
      * </code>
      *
      * @param string|null $key
@@ -995,9 +995,9 @@ class Parameters
      * @param int $max
      *
      * @return Parameters $this pour permettre le chainage des appels de
-     * méthodes.
+     * mÃ©thodes.
      *
-     * @throws ParametersParameterCountException si le test échoue
+     * @throws ParametersParameterCountException si le test Ã©choue
      */
     public function count($key, $min=null, $max=null)
     {
@@ -1035,7 +1035,7 @@ class Parameters
 
 
     /**
-     * Validation : termine la validation d'un paramètre et retourne sa valeur
+     * Validation : termine la validation d'un paramÃ¨tre et retourne sa valeur
      * finale.
      *
      * Exemple d'utilisation :
@@ -1054,7 +1054,7 @@ class Parameters
     }
 
     /**
-     * Retourne les paramètres en cours sous la forme d'une query string.
+     * Retourne les paramÃ¨tres en cours sous la forme d'une query string.
      *
      * @return string
      */
@@ -1064,11 +1064,11 @@ class Parameters
     }
 
     /**
-     * Alias de {@link asQueryString()} : retourne la requête en cours sous forme
+     * Alias de {@link asQueryString()} : retourne la requÃªte en cours sous forme
      * d'url.
      *
-     * __toString est une méthode magique de php qui est appellée lorsque PHP
-     * a besoin de convertir un objet en chaine de caractères.
+     * __toString est une mÃ©thode magique de php qui est appellÃ©e lorsque PHP
+     * a besoin de convertir un objet en chaine de caractÃ¨res.
      *
      * @return string
      */
@@ -1079,8 +1079,8 @@ class Parameters
 }
 
 /**
- * Classe de base des exceptions générées par les fonctions de validation
- * de paramètres de {@link Parameters}
+ * Classe de base des exceptions gÃ©nÃ©rÃ©es par les fonctions de validation
+ * de paramÃ¨tres de {@link Parameters}
  *
  * @package     fab
  * @subpackage  core
@@ -1095,7 +1095,7 @@ class ParametersParameterException extends Exception
 
 
 /**
- * Exception générée par {@link Parameters::required()} lorsqu'un paramètre
+ * Exception gÃ©nÃ©rÃ©e par {@link Parameters::required()} lorsqu'un paramÃ¨tre
  * est absent
  *
  * @package     fab
@@ -1105,14 +1105,14 @@ class ParametersParameterRequired extends ParametersParameterException
 {
     public function __construct($param)
     {
-        parent::__construct(sprintf('paramètre %s requis', $param));
+        parent::__construct(sprintf('paramÃ¨tre %s requis', $param));
     }
 };
 
 
 /**
- * Exception générée par {@link Parameters::oneof()} lorsqu'un paramètre
- * contient une valeur non autorisée.
+ * Exception gÃ©nÃ©rÃ©e par {@link Parameters::oneof()} lorsqu'un paramÃ¨tre
+ * contient une valeur non autorisÃ©e.
  *
  * @package     fab
  * @subpackage  core
@@ -1127,8 +1127,8 @@ class ParametersParameterBadValue extends ParametersParameterException
 
 
 /**
- * Exception générée par {@link Parameters::unique()} lorsqu'un paramètre
- * est multivalué.
+ * Exception gÃ©nÃ©rÃ©e par {@link Parameters::unique()} lorsqu'un paramÃ¨tre
+ * est multivaluÃ©.
  *
  * @package     fab
  * @subpackage  core
@@ -1143,8 +1143,8 @@ class ParametersParameterUniqueValueExpected extends ParametersParameterBadValue
 
 
 /**
- * Exception générée par {@link Parameters::bool()} lorsqu'un paramètre
- * n'est pas un booléen
+ * Exception gÃ©nÃ©rÃ©e par {@link Parameters::bool()} lorsqu'un paramÃ¨tre
+ * n'est pas un boolÃ©en
  *
  * @package     fab
  * @subpackage  core
@@ -1153,13 +1153,13 @@ class ParametersParameterBoolExpected extends ParametersParameterBadValue
 {
     public function __construct($param, $value)
     {
-        parent::__construct($param, $value, 'booléen attendu');
+        parent::__construct($param, $value, 'boolÃ©en attendu');
     }
 };
 
 
 /**
- * Exception générée par {@link Parameters::int()} lorsqu'un paramètre
+ * Exception gÃ©nÃ©rÃ©e par {@link Parameters::int()} lorsqu'un paramÃ¨tre
  * n'est pas un entier.
  *
  * @package     fab
@@ -1175,8 +1175,8 @@ class ParametersParameterIntExpected extends ParametersParameterBadValue
 
 
 /**
- * Exception générée par {@link Parameters::min()} lorsqu'un paramètre
- * est inférieur au minimum autorisé.
+ * Exception gÃ©nÃ©rÃ©e par {@link Parameters::min()} lorsqu'un paramÃ¨tre
+ * est infÃ©rieur au minimum autorisÃ©.
  *
  * @package     fab
  * @subpackage  core
@@ -1191,8 +1191,8 @@ class ParametersParameterMinExpected extends ParametersParameterBadValue
 
 
 /**
- * Exception générée par {@link Parameters::max()} lorsqu'un paramètre
- * dépasse le maximum autorisé.
+ * Exception gÃ©nÃ©rÃ©e par {@link Parameters::max()} lorsqu'un paramÃ¨tre
+ * dÃ©passe le maximum autorisÃ©.
  *
  * @package     fab
  * @subpackage  core
@@ -1207,7 +1207,7 @@ class ParametersParameterMaxExpected extends ParametersParameterBadValue
 
 
 /**
- * Exception générée par {@link Parameters::count()} lorsqu'un paramètre
+ * Exception gÃ©nÃ©rÃ©e par {@link Parameters::count()} lorsqu'un paramÃ¨tre
  * n'a pas le nombre correct de valeurs attendues.
  *
  * @package     fab
@@ -1220,6 +1220,6 @@ class ParametersParameterCountException extends ParametersParameterBadValue
         if (is_null($max))
             parent::__construct($param, $value, sprintf('%s valeurs attendues', $min));
         else
-            parent::__construct($param, $value, sprintf('de %s à %s valeurs attendues', $min, $max));
+            parent::__construct($param, $value, sprintf('de %s Ã  %s valeurs attendues', $min, $max));
     }
 };

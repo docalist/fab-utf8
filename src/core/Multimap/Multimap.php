@@ -2,44 +2,44 @@
 /**
  * @package     fab
  * @subpackage  core
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id$
  */
 
 /**
- * Classe représentant une collection dans laquelle chaque clé est associée à une
+ * Classe reprÃ©sentant une collection dans laquelle chaque clÃ© est associÃ©e Ã  une
  * ou plusieurs valeurs.
  *
- * Les clés du Multimap peuvent être des entiers ou des chaines. Elles doivent être
- * uniques et sont stockées dans l'ordre dans lequel elles sont insérées dans la
+ * Les clÃ©s du Multimap peuvent Ãªtre des entiers ou des chaines. Elles doivent Ãªtre
+ * uniques et sont stockÃ©es dans l'ordre dans lequel elles sont insÃ©rÃ©es dans la
  * collection.
  *
- * Les données associées aux clés peuvent être de n'importe quel type. Lorsque
- * plusieurs données sont associées à une même clé, celles-ci sont stockées et
- * retournées à l'utilisateur sous la forme d'un tableau php.
+ * Les donnÃ©es associÃ©es aux clÃ©s peuvent Ãªtre de n'importe quel type. Lorsque
+ * plusieurs donnÃ©es sont associÃ©es Ã  une mÃªme clÃ©, celles-ci sont stockÃ©es et
+ * retournÃ©es Ã  l'utilisateur sous la forme d'un tableau php.
  *
  *
  * <h2>Vue d'ensemble :</h2>
  *
- * La classe Multimap contient des méthodes permettant :
- * - de créer et de dupliquer une collection : {@link __construct()}, {@link create()},
+ * La classe Multimap contient des mÃ©thodes permettant :
+ * - de crÃ©er et de dupliquer une collection : {@link __construct()}, {@link create()},
  *   {@link copy()} ;
- * - de définir les options de la collection : {@link compareMode()},
+ * - de dÃ©finir les options de la collection : {@link compareMode()},
  *   {@link keyDelimiter()} ;
- * - d'ajouter des données dans la collection : {@link add()}, {@link addMany()} ;
- * - de récupérer les données associées à une clé : {@link get()} ;
- * - de modifier les données d'une clé : {@link set()} ;
- * - de supprimer une valeur, une clé ou la totalité de la collection : {@link clear()} ;
+ * - d'ajouter des donnÃ©es dans la collection : {@link add()}, {@link addMany()} ;
+ * - de rÃ©cupÃ©rer les donnÃ©es associÃ©es Ã  une clÃ© : {@link get()} ;
+ * - de modifier les donnÃ©es d'une clÃ© : {@link set()} ;
+ * - de supprimer une valeur, une clÃ© ou la totalitÃ© de la collection : {@link clear()} ;
  * - d'obtenir des informations sur une collection : {@link count()}, {@link isEmpty()},
  *   {@link emptyValue()}, {@link has()} ;
- * - de filtrer les données d'une collection : {@link keepOnly()}, {@link filter()} ;
- * - de parcourir ou de modifier les données en utilisant un callback : {@link apply()},
+ * - de filtrer les donnÃ©es d'une collection : {@link keepOnly()}, {@link filter()} ;
+ * - de parcourir ou de modifier les donnÃ©es en utilisant un callback : {@link apply()},
  *   {@link run()} ;
- * - d'obtenir une représentation de la collection : {@link __toString()},
+ * - d'obtenir une reprÃ©sentation de la collection : {@link __toString()},
  *   {@link toArray()}, {@link __toJson()}.
  *
- * La plupart des méthodes retournent <code>$this</code> ce qui permet d'enchainer
- * plusieurs appels de méthode en une seule étape :
+ * La plupart des mÃ©thodes retournent <code>$this</code> ce qui permet d'enchainer
+ * plusieurs appels de mÃ©thode en une seule Ã©tape :
  *
  * <code>
  * $map->add('query', 'health')->set('max', 10)->clear('format');
@@ -47,72 +47,72 @@
  *
  *
  * <h2>Traitement des valeurs vides : </h2>
- * La classe Multimap supprime automatiquement les valeurs vides. Lorsqu'une donnée
- * vide est ajoutée ou lorsqu'une donnée existante est {@link apply() transformée}
- * en une donnée vide, celle-ci est automatiquement supprimée. C'est la méthode
- * {@link emptyValue()} qui définit ce qu'est une valeur vide. Par défaut les
+ * La classe Multimap supprime automatiquement les valeurs vides. Lorsqu'une donnÃ©e
+ * vide est ajoutÃ©e ou lorsqu'une donnÃ©e existante est {@link apply() transformÃ©e}
+ * en une donnÃ©e vide, celle-ci est automatiquement supprimÃ©e. C'est la mÃ©thode
+ * {@link emptyValue()} qui dÃ©finit ce qu'est une valeur vide. Par dÃ©faut les
  * valeurs <code>null</code>, <code>''</code> (chaine vide) et <code>array()</code>
- * (tableau ne contenant aucun élément) sont considérées comme des données vides,
- * mais les classes descendantes peuvent surcharger cette méthode si nécessaire.
+ * (tableau ne contenant aucun Ã©lÃ©ment) sont considÃ©rÃ©es comme des donnÃ©es vides,
+ * mais les classes descendantes peuvent surcharger cette mÃ©thode si nÃ©cessaire.
  *
  * Exemple :
  * <code>
  * $map->add('item', ''); // ne fait rien
- * $map->add('item', 'aaa')->apply('trim', 'item', 'a'); // la clé item est supprimée après apply
+ * $map->add('item', 'aaa')->apply('trim', 'item', 'a'); // la clÃ© item est supprimÃ©e aprÃ¨s apply
  * </code>
  *
- * Aucun dédoublonnage n'est effectué sur les données associées à une clé :
+ * Aucun dÃ©doublonnage n'est effectuÃ© sur les donnÃ©es associÃ©es Ã  une clÃ© :
  * <code>
  * $map->add('item', 'data')->add('item', 'data')->get('item'); // array('data','data')
  * </code>
  *
- * <h2>Désignation des clés : </h2>
- * Plusieurs méthodes acceptent en paramètre un argument <code>$key</code> qui permet
- * d'indiquer la ou les clés de la collection auxquelles le traitement s'applique.
+ * <h2>DÃ©signation des clÃ©s : </h2>
+ * Plusieurs mÃ©thodes acceptent en paramÃ¨tre un argument <code>$key</code> qui permet
+ * d'indiquer la ou les clÃ©s de la collection auxquelles le traitement s'applique.
  *
  * A chaque fois, vous pouvez indiquer, au choix :
- * - le nom d'une clé unique,
- * - un tableau contenant les noms des clés,
- * - plusieurs clés séparées par le {@link keyDelimiter() délimiteur de clé} définit
- *   pour la collection (par défaut il s'agit de la virgule),
- * - la chaine <code>'*'</code> pour désigner la totalité des clés existantes.
+ * - le nom d'une clÃ© unique,
+ * - un tableau contenant les noms des clÃ©s,
+ * - plusieurs clÃ©s sÃ©parÃ©es par le {@link keyDelimiter() dÃ©limiteur de clÃ©} dÃ©finit
+ *   pour la collection (par dÃ©faut il s'agit de la virgule),
+ * - la chaine <code>'*'</code> pour dÃ©signer la totalitÃ© des clÃ©s existantes.
  *
  * Exemples d'utilisation :
  *
  * <code>
- * $map->add('key1,key2', 'data'); // ajoute la donnée 'data' dans les clés 'key1' et 'key2'
+ * $map->add('key1,key2', 'data'); // ajoute la donnÃ©e 'data' dans les clÃ©s 'key1' et 'key2'
  * $map->add(array('key1','key2'), 'data'); // idem
- * $map->clear('key1,key2'); // supprime les clés 'key1' et 'key2'
- * $map->get('key1,key2'); // retourne la première des clés qui existent
+ * $map->clear('key1,key2'); // supprime les clÃ©s 'key1' et 'key2'
+ * $map->get('key1,key2'); // retourne la premiÃ¨re des clÃ©s qui existent
  * $map->keepOnly('key1,key2'); // supprime tout sauf 'key1' et 'key2'
- * $map->apply('trim', 'key1,key2'); // applique la fonction trim() au données des clés 'key1' et 'key2'
- * $map->apply('trim', '*'); // applique la fonction trim() à toutes les données
- * $map->has('*', 'N/A'); // la donnée 'N/A' est-elle présente dans l'une des clés ?
+ * $map->apply('trim', 'key1,key2'); // applique la fonction trim() au donnÃ©es des clÃ©s 'key1' et 'key2'
+ * $map->apply('trim', '*'); // applique la fonction trim() Ã  toutes les donnÃ©es
+ * $map->has('*', 'N/A'); // la donnÃ©e 'N/A' est-elle prÃ©sente dans l'une des clÃ©s ?
  * </code>
  *
- * <h2>Comparaison des données :</h2>
+ * <h2>Comparaison des donnÃ©es :</h2>
  *
- * Les méthodes {@link has()} et {@link clear()} permettent de tester l'existence ou
- * de supprimer certaines données. Pour fonctionner, elles utilisent une fonction de
- * comparaison qui testent si l'argument passé à la fonction est égal à la donnée
- * testée.
+ * Les mÃ©thodes {@link has()} et {@link clear()} permettent de tester l'existence ou
+ * de supprimer certaines donnÃ©es. Pour fonctionner, elles utilisent une fonction de
+ * comparaison qui testent si l'argument passÃ© Ã  la fonction est Ã©gal Ã  la donnÃ©e
+ * testÃ©e.
  *
- * Par défaut, la collection utilise la méthode de comparaison {@link CMP_EQUAL} qui
- * effectue une comparaison siple, non typée, de ses arguments (<code>==</code>).
+ * Par dÃ©faut, la collection utilise la mÃ©thode de comparaison {@link CMP_EQUAL} qui
+ * effectue une comparaison siple, non typÃ©e, de ses arguments (<code>==</code>).
  *
- * Vous pouvez changer la méthode de comparaison utilisée avec la méthode
- * {@link compareMode()} en lui passant en paramètre l'une des constantes
+ * Vous pouvez changer la mÃ©thode de comparaison utilisÃ©e avec la mÃ©thode
+ * {@link compareMode()} en lui passant en paramÃ¨tre l'une des constantes
  * {@link CMP_EQUAL CMP_*} ou le nom de votre propre fonction de comparaison.
  *
- * {@link has()} et {@link clear()} acceptent également un paramètre
- * <code>$compareMode</code> qui permet d'utiliser ponctuellement une autre méthode de
- * comparaison que celle définie par défaut pour la collection.
+ * {@link has()} et {@link clear()} acceptent Ã©galement un paramÃ¨tre
+ * <code>$compareMode</code> qui permet d'utiliser ponctuellement une autre mÃ©thode de
+ * comparaison que celle dÃ©finie par dÃ©faut pour la collection.
  *
  * <h2>Utilisation d'un multimap comme un objet :</h2>
  *
- * Multimap définit les méthodes magiques __get(), __set(), __isset() et __unset() qui vous
- * permettent de l'utiliser comme un objet et de manipuler les clés comme s'il s'agissait de
- * propriétés :
+ * Multimap dÃ©finit les mÃ©thodes magiques __get(), __set(), __isset() et __unset() qui vous
+ * permettent de l'utiliser comme un objet et de manipuler les clÃ©s comme s'il s'agissait de
+ * propriÃ©tÃ©s :
  *
  * <code>
  * $map = new Multimap();
@@ -124,7 +124,7 @@
  *
  * <h2>Utilisation comme un tableau :</h2>
  *
- * Multimap implémente les interfaces ArrayObject, IteratorAggregate et Countable, qui vous
+ * Multimap implÃ©mente les interfaces ArrayObject, IteratorAggregate et Countable, qui vous
  * permettent de l'utiliser comme un tableau php standard :
  *
  * <code>
@@ -138,10 +138,10 @@
  *    echo "$key=$value\n";
  * </code>
  *
- * Le délimiteur de clé est pris en compte lorsque vous utilisez la syntaxe tableau :
+ * Le dÃ©limiteur de clÃ© est pris en compte lorsque vous utilisez la syntaxe tableau :
  * <code>
  * $map['a,b,c'] = 'item'; // 'a' = 'b' = 'c' = 'item'
- * echo $map['e,f,a']; // retourne la première clé renseignée : 'a' => 'item'
+ * echo $map['e,f,a']; // retourne la premiÃ¨re clÃ© renseignÃ©e : 'a' => 'item'
  * </code>
  *
  * @package     fab
@@ -151,11 +151,11 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 {
 
     // --------------------------------------------------------------------------------
-    // Propriétés
+    // PropriÃ©tÃ©s
     // --------------------------------------------------------------------------------
 
     /**
-     * Les données présentes dans la collection.
+     * Les donnÃ©es prÃ©sentes dans la collection.
      *
      * @var array
      */
@@ -163,7 +163,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Caractère utilisé comme délimiteur pour séparer les noms de clés.
+     * CaractÃ¨re utilisÃ© comme dÃ©limiteur pour sÃ©parer les noms de clÃ©s.
      *
      * @var string
      */
@@ -176,7 +176,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * {@link compareMode() CompareMode} : teste si les valeurs sont égales (==).
+     * {@link compareMode() CompareMode} : teste si les valeurs sont Ã©gales (==).
      *
      * @var int
      */
@@ -191,7 +191,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
     /**
      * {@link compareMode() CompareMode} : convertit les valeurs en chaines puis
-     * teste si elles sont égales en ignorant la casse des caractères.
+     * teste si elles sont Ã©gales en ignorant la casse des caractÃ¨res.
      * strcasecmp().
      *
      * @var int
@@ -200,7 +200,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
     /**
      * {@link compareMode() CompareMode} : convertit les valeurs en chaines, applique
-     * trim() et teste si elles sont égales.
+     * trim() et teste si elles sont Ã©gales.
      *
      * @var int
      */
@@ -208,7 +208,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
     /**
      * {@link compareMode() CompareMode} : convertit les valeurs en chaines, applique
-     * tokenize() et teste si elles sont égales
+     * tokenize() et teste si elles sont Ã©gales
      *
      * @var int
      */
@@ -232,21 +232,21 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     // --------------------------------------------------------------------------------
-    // Création, construction, clonage
+    // CrÃ©ation, construction, clonage
     // --------------------------------------------------------------------------------
 
     /**
-     * Méthode statique permettant de créer une nouvelle collection.
+     * MÃ©thode statique permettant de crÃ©er une nouvelle collection.
      *
-     * Php ne permet pas de chainer des méthodes après un appel à new :
-     * <code>$map = new Multimap()->add('max', 10);</code> génère une erreur.
+     * Php ne permet pas de chainer des mÃ©thodes aprÃ¨s un appel Ã  new :
+     * <code>$map = new Multimap()->add('max', 10);</code> gÃ©nÃ¨re une erreur.
      *
-     * La méthode create permet de contourner le problème en écrivant :
+     * La mÃ©thode create permet de contourner le problÃ¨me en Ã©crivant :
      * <code>$map = Multimap::create($_GET, $_POST)->add('max', 10);</code>
      *
-     * @param mixed $data ... optionnel, un ou plusieurs tableaux (ou objets itérables)
-     * représentant les données initiales de la collection. Chaque paramètre est ajouté
-     * au multimap en utilisant la méthode {@link add()}.
+     * @param mixed $data ... optionnel, un ou plusieurs tableaux (ou objets itÃ©rables)
+     * reprÃ©sentant les donnÃ©es initiales de la collection. Chaque paramÃ¨tre est ajoutÃ©
+     * au multimap en utilisant la mÃ©thode {@link add()}.
      *
      * @return $this
      */
@@ -263,11 +263,11 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Crée un multimap.
+     * CrÃ©e un multimap.
      *
-     * @param mixed $data ... optionnel, un ou plusieurs tableaux (ou objets itérables)
-     * représentant les données initiales de la collection. Chaque paramètre est ajouté
-     * au multimap en utilisant la méthode {@link addMany()}.
+     * @param mixed $data ... optionnel, un ou plusieurs tableaux (ou objets itÃ©rables)
+     * reprÃ©sentant les donnÃ©es initiales de la collection. Chaque paramÃ¨tre est ajoutÃ©
+     * au multimap en utilisant la mÃ©thode {@link addMany()}.
      */
     public function __construct($data = null)
     {
@@ -295,11 +295,11 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Retourne ou modifie le mode de comparaison par défaut utilisé pour tester si deux
-     * valeurs sont égales.
+     * Retourne ou modifie le mode de comparaison par dÃ©faut utilisÃ© pour tester si deux
+     * valeurs sont Ã©gales.
      *
-     * Le mode de comparaison est utilisé par la méthode {@link has()} et {@link clear()}pour
-     * tester si une clé contient une valeur donnée.
+     * Le mode de comparaison est utilisÃ© par la mÃ©thode {@link has()} et {@link clear()}pour
+     * tester si une clÃ© contient une valeur donnÃ©e.
      *
      * @param null|int|callback $mode
      * @return int|callback|$this retourne le mode de comparaison en cours si $mode vaut null,
@@ -344,16 +344,16 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Compare deux valeurs et retourne vrai si elles sont égales.
+     * Compare deux valeurs et retourne vrai si elles sont Ã©gales.
      *
-     * @param mixed $a première valeur à comparer.
-     * @param mixed $b seconde valeur à comparer
+     * @param mixed $a premiÃ¨re valeur Ã  comparer.
+     * @param mixed $b seconde valeur Ã  comparer
      *
-     * @param int|callback $compareMode mode de comparaison à utiliser. Lorsque $compareMode
-     * vaut <code>null</code>, le {@link compareMode() mode de comparaison par défaut}
-     * définit pour la collection est utilisé.
+     * @param int|callback $compareMode mode de comparaison Ã  utiliser. Lorsque $compareMode
+     * vaut <code>null</code>, le {@link compareMode() mode de comparaison par dÃ©faut}
+     * dÃ©finit pour la collection est utilisÃ©.
      *
-     * @return bool <code>true</code> si les deux valeurs sont égales, <code>false</code>
+     * @return bool <code>true</code> si les deux valeurs sont Ã©gales, <code>false</code>
      * sinon.
      */
     protected function compare($a, $b, $compareMode = null)
@@ -370,42 +370,42 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Chaine source utilisée par {@link tokenize()} et par {@link cmpIgnoreCase()}.
+     * Chaine source utilisÃ©e par {@link tokenize()} et par {@link cmpIgnoreCase()}.
      *
      * @var string
      */
-    private static $charFroms = '\'-ABCDEFGHIJKLMNOPQRSTUVWXYZŒœÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖØÙÚÛÜİŞßàáâãäåæçèéêëìíîïğñòóôõöùúûüışÿ';
+    private static $charFroms = '\'-ABCDEFGHIJKLMNOPQRSTUVWXYZÅ’Å“Ã€ÃÃ‚ÃƒÃ„Ã…Ã†Ã‡ÃˆÃ‰ÃŠÃ‹ÃŒÃÃÃÃÃ‘Ã’Ã“Ã”Ã•Ã–Ã˜Ã™ÃšÃ›ÃœÃÃÃŸÃ Ã¡Ã¢Ã£Ã¤Ã¥Ã¦Ã§Ã¨Ã©ÃªÃ«Ã¬Ã­Ã®Ã¯Ã°Ã±Ã²Ã³Ã´ÃµÃ¶Ã¹ÃºÃ»Ã¼Ã½Ã¾Ã¿';
 
 
     /**
-     * Chaine résultat utilisée par {@link tokenize()} et par {@link cmpIgnoreCase()}.
+     * Chaine rÃ©sultat utilisÃ©e par {@link tokenize()} et par {@link cmpIgnoreCase()}.
      *
      * @var string
      */
-    private static $charTo    =  '  abcdefghijklmnopqrstuvwxyzœœaaaaaaæceeeeiiiidnoooooœuuuuytsaaaaaaæceeeeiiiidnooooouuuuyty';
+    private static $charTo    =  '  abcdefghijklmnopqrstuvwxyzÅ“Å“aaaaaaÃ¦ceeeeiiiidnoooooÅ“uuuuytsaaaaaaÃ¦ceeeeiiiidnooooouuuuyty';
 
 
     /**
-     * Retourne la version tokenisée du texte passé en paramètre.
+     * Retourne la version tokenisÃ©e du texte passÃ© en paramÃ¨tre.
      *
      * @param string $text
      * @return string
      */
     protected static function tokenize($text)
     {
-        // Convertit les caractères
+        // Convertit les caractÃ¨res
         $text = strtr($text, self::$charFroms, self::$charTo);
 
-        // Gère les lettres doubles
-        $text = strtr($text, array('æ'=>'ae', 'œ'=>'oe'));
+        // GÃ¨re les lettres doubles
+        $text = strtr($text, array('Ã¦'=>'ae', 'Å“'=>'oe'));
 
-        // Retourne un tableau contenant tous les mots présents
+        // Retourne un tableau contenant tous les mots prÃ©sents
         return implode(' ', str_word_count($text, 1, '0123456789@_'));
     }
 
 
     /**
-     * Callback utilisé pour {@link CMP_EQUAL}.
+     * Callback utilisÃ© pour {@link CMP_EQUAL}.
      *
      * @param mixed $a
      * @param mixed $b
@@ -418,7 +418,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Callback utilisé pour {@link CMP_IDENTICAL}.
+     * Callback utilisÃ© pour {@link CMP_IDENTICAL}.
      *
      * @param mixed $a
      * @param mixed $b
@@ -431,7 +431,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Callback utilisé pour {@link CMP_TRIM}.
+     * Callback utilisÃ© pour {@link CMP_TRIM}.
      *
      * @param mixed $a
      * @param mixed $b
@@ -444,7 +444,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Callback utilisé pour {@link CMP_IGNORE_CASE}.
+     * Callback utilisÃ© pour {@link CMP_IGNORE_CASE}.
      *
      * @param mixed $a
      * @param mixed $b
@@ -460,7 +460,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Callback utilisé pour {@link CMP_TOKENIZE}.
+     * Callback utilisÃ© pour {@link CMP_TOKENIZE}.
      *
      * @param mixed $a
      * @param mixed $b
@@ -473,28 +473,28 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     // --------------------------------------------------------------------------------
-    // Délimiteur de clé
+    // DÃ©limiteur de clÃ©
     // --------------------------------------------------------------------------------
 
 
     /**
-     * Retourne ou modifie le délimiteur utilisé pour séparer les noms de clés.
+     * Retourne ou modifie le dÃ©limiteur utilisÃ© pour sÃ©parer les noms de clÃ©s.
      *
-     * Par défaut, le délimiteur utilisé est la virgule.
-     * Toutes les méthodes qui acceptent une clé en paramètre utilisent ce délimiteur.
+     * Par dÃ©faut, le dÃ©limiteur utilisÃ© est la virgule.
+     * Toutes les mÃ©thodes qui acceptent une clÃ© en paramÃ¨tre utilisent ce dÃ©limiteur.
      *
      * Exemple :
      * <code>
      * // La ligne :
-     * $map->add('clé1,clé2', 'value');
+     * $map->add('clÃ©1,clÃ©2', 'value');
      *
-     * // Est équivalente à :
-     * $map->add('clé1', 'value')->add('clé2', 'value');
+     * // Est Ã©quivalente Ã  :
+     * $map->add('clÃ©1', 'value')->add('clÃ©2', 'value');
      * </code>
      *
-     * @param null|string $delimiter le nouveau délimiteur à utiliser
+     * @param null|string $delimiter le nouveau dÃ©limiteur Ã  utiliser
      *
-     * @return string|$this retourne le délimiteur en cours si <code>$delimiter</code>
+     * @return string|$this retourne le dÃ©limiteur en cours si <code>$delimiter</code>
      * vaut null, <code>$this</code> sinon.
      */
     public function keyDelimiter($delimiter = null)
@@ -511,18 +511,18 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Indique si la valeur passée en paramêtre est considérée comme vide par le multimap.
+     * Indique si la valeur passÃ©e en paramÃªtre est considÃ©rÃ©e comme vide par le multimap.
      *
-     * Les valeurs vides sont automatiquement supprimées de la liste des valeurs associées
-     * à une clé.
+     * Les valeurs vides sont automatiquement supprimÃ©es de la liste des valeurs associÃ©es
+     * Ã  une clÃ©.
      *
-     * Par défaut, la méthode retourne <code>true</code> pour les valeurs null,
+     * Par dÃ©faut, la mÃ©thode retourne <code>true</code> pour les valeurs null,
      * '' (chaine vide), array() et <code>false</code> pour toutes les autres.
      *
-     * Les classes descendantes peuvent surcharger cette méthode pour changer la sémantique
+     * Les classes descendantes peuvent surcharger cette mÃ©thode pour changer la sÃ©mantique
      * du mot "vide".
      *
-     * @param mixed $value la valeur à tester.
+     * @param mixed $value la valeur Ã  tester.
      *
      * @return bool true si la valeur est vide.
      */
@@ -533,16 +533,16 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     // --------------------------------------------------------------------------------
-    // Ajout, modification, récupération, suppression de données
+    // Ajout, modification, rÃ©cupÃ©ration, suppression de donnÃ©es
     // --------------------------------------------------------------------------------
 
 
     /**
-     * Analyse le paramètre <code>$key</code> passé à une méthode et retourne un
-     * tableau contenant les noms rééls des clés à utiliser.
+     * Analyse le paramÃ¨tre <code>$key</code> passÃ© Ã  une mÃ©thode et retourne un
+     * tableau contenant les noms rÃ©Ã©ls des clÃ©s Ã  utiliser.
      *
-     * @param mixed $key la chaine ou le tableau à analyser.
-     * @return array un tableau contenant les noms des clés.
+     * @param mixed $key la chaine ou le tableau Ã  analyser.
+     * @return array un tableau contenant les noms des clÃ©s.
      */
     protected function parseKey($key)
     {
@@ -558,22 +558,22 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Ajoute une valeur unique à une clé de la collection.
+     * Ajoute une valeur unique Ã  une clÃ© de la collection.
      *
-     * La méthode add() ajoute une nouvelle valeur dans les données associées aux
-     * clés indiquées. Pour remplacer complètement les données associées aux clés,
-     * utilisez la méthode {@link set()}.
+     * La mÃ©thode add() ajoute une nouvelle valeur dans les donnÃ©es associÃ©es aux
+     * clÃ©s indiquÃ©es. Pour remplacer complÃ¨tement les donnÃ©es associÃ©es aux clÃ©s,
+     * utilisez la mÃ©thode {@link set()}.
      *
-     * Les données {@link emptyValue() vides} sont ignorées.
+     * Les donnÃ©es {@link emptyValue() vides} sont ignorÃ©es.
      *
-     * @param scalar $key les clés auxquelles ajouter la valeur.
-     * @param mixed $value la valeur à ajouter.
+     * @param scalar $key les clÃ©s auxquelles ajouter la valeur.
+     * @param mixed $value la valeur Ã  ajouter.
      * @return $this
      */
     public function add($key, $value = null)
     {
         if (! (is_string($key) || is_int($key)))
-            throw new Exception('Clé incorrecte');
+            throw new Exception('ClÃ© incorrecte');
 
         if ($this->emptyValue($value)) return $this;
 
@@ -591,55 +591,55 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Ajoute plusieurs clés à la collection ou plusieurs valeurs à une clé.
+     * Ajoute plusieurs clÃ©s Ã  la collection ou plusieurs valeurs Ã  une clÃ©.
      *
      *
-     * La méthode <code>addMany()</code> peut être appellée avec un ou plusieurs
-     * paramètres.
+     * La mÃ©thode <code>addMany()</code> peut Ãªtre appellÃ©e avec un ou plusieurs
+     * paramÃ¨tres.
      *
-     * Lorsqu'elle est appellée avec un seul paramètre, celui-ci doit être tableau
-     * ou un objet itérable contenant des clés et des valeurs qui seront ajoutées
-     * à la collection.
-     *
-     * Exemples :
-     *
-     * - add($array) : ajoute les données du tableau passé en paramètre
-     *   Equivalent à : foreach(array as key=>value) add(key, value)
-     *
-     * - add($multimap) : ajoute les données de la collection passée en paramètre
-     *   Equivalent à : foreach(Multimap->toArray() as key=>value) add(key, value)
-     *
-     * - add($object) : ajoute les propriétés de l'objet passé en paramètre
-     *   Equivalent à : foreach((array)$object as key=>value) add(key, value)
-     *
-     * Lorsque <code>addMany()</code> est appellée avec plusieurs paramètres, le
-     * premier paramètre désigne la ou les clés auxquelles il faut ajouter des
-     * valeurs et les autres paramètres doivent être des tableaux ou des objets
-     * itérables contenant des données qui seront ajoutées aux clés spécifiées.
+     * Lorsqu'elle est appellÃ©e avec un seul paramÃ¨tre, celui-ci doit Ãªtre tableau
+     * ou un objet itÃ©rable contenant des clÃ©s et des valeurs qui seront ajoutÃ©es
+     * Ã  la collection.
      *
      * Exemples :
      *
-     * - add(key, array) : ajoute toutes les données présentes de array à la clé key.
+     * - add($array) : ajoute les donnÃ©es du tableau passÃ© en paramÃ¨tre
+     *   Equivalent Ã  : foreach(array as key=>value) add(key, value)
+     *
+     * - add($multimap) : ajoute les donnÃ©es de la collection passÃ©e en paramÃ¨tre
+     *   Equivalent Ã  : foreach(Multimap->toArray() as key=>value) add(key, value)
+     *
+     * - add($object) : ajoute les propriÃ©tÃ©s de l'objet passÃ© en paramÃ¨tre
+     *   Equivalent Ã  : foreach((array)$object as key=>value) add(key, value)
+     *
+     * Lorsque <code>addMany()</code> est appellÃ©e avec plusieurs paramÃ¨tres, le
+     * premier paramÃ¨tre dÃ©signe la ou les clÃ©s auxquelles il faut ajouter des
+     * valeurs et les autres paramÃ¨tres doivent Ãªtre des tableaux ou des objets
+     * itÃ©rables contenant des donnÃ©es qui seront ajoutÃ©es aux clÃ©s spÃ©cifiÃ©es.
+     *
+     * Exemples :
+     *
+     * - add(key, array) : ajoute toutes les donnÃ©es prÃ©sentes de array Ã  la clÃ© key.
      *   Equivalent de : foreach(array as value) add(key, value)
-     *   Les clés de array sont ignorées.
+     *   Les clÃ©s de array sont ignorÃ©es.
      *
-     * - add(key, multimap) : ajoute toutes les valeurs présentes dans le multimap comme valeurs
-     *   associées à la clé key.
+     * - add(key, multimap) : ajoute toutes les valeurs prÃ©sentes dans le multimap comme valeurs
+     *   associÃ©es Ã  la clÃ© key.
      *   Equivalent de : foreach(Multimap->toArray() as value) add(key, value)
-     *   Les clés existantes du multimap sont ignorées.
+     *   Les clÃ©s existantes du multimap sont ignorÃ©es.
      *
-     * - Tout autre type de valeur génère une exception. Une exception est également générée si
-     *   la clé passée en paramêtre n'est pas un scalaire.
+     * - Tout autre type de valeur gÃ©nÃ¨re une exception. Une exception est Ã©galement gÃ©nÃ©rÃ©e si
+     *   la clÃ© passÃ©e en paramÃªtre n'est pas un scalaire.
      *
-     * @param mixed $key (optionnel) la ou les clés à modifier.
-     * @param array|object|Traversable $data un ou plusieurs tableaux contenant les données ou les
-     * clés à ajouter.
+     * @param mixed $key (optionnel) la ou les clÃ©s Ã  modifier.
+     * @param array|object|Traversable $data un ou plusieurs tableaux contenant les donnÃ©es ou les
+     * clÃ©s Ã  ajouter.
      *
      * @return this
      */
     public function addMany($key, $data=null)
     {
-        // Premier cas : une clé a été indiquée
+        // Premier cas : une clÃ© a Ã©tÃ© indiquÃ©e
         if (is_string($key) || is_int($key))
         {
             $args = func_get_args();
@@ -647,7 +647,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
             foreach($args as $data)
             {
                 if (! (is_array($data) || $data instanceof Traversable || is_object($data)))
-                    throw new BadMethodCallException('Tableau ou objet itérable attendu.');
+                    throw new BadMethodCallException('Tableau ou objet itÃ©rable attendu.');
 
                 if ($data instanceof Multimap)
                     $data = $data->toArray();
@@ -657,14 +657,14 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
             }
         }
 
-        // Second cas : pas de clé, que des tableaux
+        // Second cas : pas de clÃ©, que des tableaux
         else
         {
             $args = func_get_args();
             foreach($args as $data)
             {
                 if (! (is_array($data) || $data instanceof Traversable || is_object($data)))
-                    throw new BadMethodCallException('Tableau ou objet itérable attendu.');
+                    throw new BadMethodCallException('Tableau ou objet itÃ©rable attendu.');
 
                 if ($data instanceof Multimap)
                 {
@@ -687,18 +687,18 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Retourne les données associées à la clé indiquée ou la valeur par défaut
-     * si la clé demandée ne figure pas dans la collection.
+     * Retourne les donnÃ©es associÃ©es Ã  la clÃ© indiquÃ©e ou la valeur par dÃ©faut
+     * si la clÃ© demandÃ©e ne figure pas dans la collection.
      *
      * Exemples :
      * <code>
-     * $map->get('key'); // retourne la donnée associée à 'key' ou null si elle n'existe pas
-     * $map->get('key', 'n/a'); // retourne la donnée associée à 'key' ou 'n/a' si elle n'existe pas
-     * $map->get('key1,key2'); // retourne le contenu de la première clé non-vide ou null
+     * $map->get('key'); // retourne la donnÃ©e associÃ©e Ã  'key' ou null si elle n'existe pas
+     * $map->get('key', 'n/a'); // retourne la donnÃ©e associÃ©e Ã  'key' ou 'n/a' si elle n'existe pas
+     * $map->get('key1,key2'); // retourne le contenu de la premiÃ¨re clÃ© non-vide ou null
      * </code>
      *
-     * get est similaire à {@link __get()} mais permet d'indiquer une valeur par
-     * défaut (par exemple <code>$map->get('item', 'abc')</code>)
+     * get est similaire Ã  {@link __get()} mais permet d'indiquer une valeur par
+     * dÃ©faut (par exemple <code>$map->get('item', 'abc')</code>)
      *
      * @param string $key
      * @param mixed $default
@@ -715,16 +715,16 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Remplace les données associées à une clé.
+     * Remplace les donnÃ©es associÃ©es Ã  une clÃ©.
      *
-     * Si la valeur indiquée est {@link emptyValue() vide}, la clé est supprimée.
+     * Si la valeur indiquÃ©e est {@link emptyValue() vide}, la clÃ© est supprimÃ©e.
      *
      * Exemples :
      * <code>
      * $map->set('item', 12); // remplace le contenu existant de 'item' par la valeur 12
-     * $map->set('item'); // Equivalent à $map->clear('item')
+     * $map->set('item'); // Equivalent Ã  $map->clear('item')
      * $map->set('item', array(1,2)); // remplace le contenu existant de 'item' par la valeur array(1,2)
-     * $map->set('key1,key2', 12); // Initialise les clés key1 et key2 à 12
+     * $map->set('key1,key2', 12); // Initialise les clÃ©s key1 et key2 Ã  12
      * </code>
      *
      * @param string $key
@@ -744,32 +744,32 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Supprime des clés ou des données de la collection.
+     * Supprime des clÃ©s ou des donnÃ©es de la collection.
      *
-     * La méthode <code>clear()</code> permet de supprimer :
-     * - toutes les clés qui figure dans la collection : <code>$map->clear();</code>
-     * - une clé unique : <code>$map->clear('max');</code>
-     * - plusieurs clés : <code>$map->clear('start,max,format');</code>
-     * - une donnée particulière associée à une ou plusieurs clés :
+     * La mÃ©thode <code>clear()</code> permet de supprimer :
+     * - toutes les clÃ©s qui figure dans la collection : <code>$map->clear();</code>
+     * - une clÃ© unique : <code>$map->clear('max');</code>
+     * - plusieurs clÃ©s : <code>$map->clear('start,max,format');</code>
+     * - une donnÃ©e particuliÃ¨re associÃ©e Ã  une ou plusieurs clÃ©s :
      * <code>$map->clear('TypDoc,TypDocB', 'Article');</code>
      *
-     * @param mixed $key le ou les clés à supprimer.
-     * @param mixed $value la valeur à supprimer
-     * @param mixed $compareMode méthode de comparaison à utiliser pour comparer $value aux
-     * données de la clé.
+     * @param mixed $key le ou les clÃ©s Ã  supprimer.
+     * @param mixed $value la valeur Ã  supprimer
+     * @param mixed $compareMode mÃ©thode de comparaison Ã  utiliser pour comparer $value aux
+     * donnÃ©es de la clÃ©.
      *
      * @return $this
      */
     public function clear($key=null, $value=null, $compareMode = null)
     {
-        // Aucune clé indiquée, on vide toute la collection
+        // Aucune clÃ© indiquÃ©e, on vide toute la collection
         if (is_null($key))
         {
             $this->data = array();
             return $this;
         }
 
-        // Aucune valeur indiquée : supprime toutes les clés indiquées
+        // Aucune valeur indiquÃ©e : supprime toutes les clÃ©s indiquÃ©es
         if (is_null($value))
         {
             foreach($this->parseKey($key) as $key)
@@ -778,7 +778,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
             return $this;
         }
 
-        // Supprime les valeurs indiquées dans les clés indiquées
+        // Supprime les valeurs indiquÃ©es dans les clÃ©s indiquÃ©es
         foreach($this->parseKey($key) as $key)
         {
             if (! array_key_exists($key, $this->data)) continue;
@@ -797,49 +797,49 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Transfère le contenu d'une ou plusieurs clés vers d'autres clés.
+     * TransfÃ¨re le contenu d'une ou plusieurs clÃ©s vers d'autres clÃ©s.
      *
-     * La méthode <code>move()</code> permet de déplacer, de concaténer ou de dupliquer des champs.
-     * Le contenu existant des clés destination est écrasé.
+     * La mÃ©thode <code>move()</code> permet de dÃ©placer, de concatÃ©ner ou de dupliquer des champs.
+     * Le contenu existant des clÃ©s destination est Ã©crasÃ©.
      *
      * Exemples :
      * <code>
-     * // Transfère TITFRAN Dans TitOrigA
+     * // TransfÃ¨re TITFRAN Dans TitOrigA
      * $map->move('TITFRAN', 'TitOrigA');
      *
-     * // Transfère tous les champ mots-clés dans le champ MotsCles
+     * // TransfÃ¨re tous les champ mots-clÃ©s dans le champ MotsCles
      * $map->move('MOTSCLE1,MOTSCLE2,MOTSCLE3,MOTSCLE4,PERIODE', 'MotsCles');
      *
      * // Recopie MotsCles dans NouvDesc
      * $map->move('MotsCles', 'MotsCles,NouvDesc');
      *
-     * // Ajoute NouvDesc à MotsCles
+     * // Ajoute NouvDesc Ã  MotsCles
      * $map->move('MotsCles,NouvDesc', 'MotsCles');
      * </code>
      *
-     * @param string $from une ou plusieurs clés sources.
-     * @param string $to une ou plusieurs clés destination.
+     * @param string $from une ou plusieurs clÃ©s sources.
+     * @param string $to une ou plusieurs clÃ©s destination.
      * @return $this
      */
     public function move($from, $to)
     {
-        // Récupère toutes les données
+        // RÃ©cupÃ¨re toutes les donnÃ©es
         $data = $this->getAll($from);
 
-        // Vide les clés de $from qui ne figurent pas dans $to
+        // Vide les clÃ©s de $from qui ne figurent pas dans $to
         // On pourrait faire directement clear($from) mais dans ce cas, cela changerait l'ordre
-        //  des clés pour un appel comme move('a,b', 'a')
+        //  des clÃ©s pour un appel comme move('a,b', 'a')
         $from = $this->parseKey($from);
         $to = $this->parseKey($to);
 
         $diff = array_diff($from, $to);
         if ($diff) $this->clear($diff);
 
-        // Aucune donnée : supprime les clés destination
+        // Aucune donnÃ©e : supprime les clÃ©s destination
         if (count($data)===0)
             return $this->clear($to);
 
-        // Stocke les données dans les clés destination
+        // Stocke les donnÃ©es dans les clÃ©s destination
         foreach($to as $to)
             $this->data[$to] = $data;
 
@@ -867,15 +867,15 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
     }
 
     /**
-     * Supprime toutes les clés sauf celles indiquées.
+     * Supprime toutes les clÃ©s sauf celles indiquÃ©es.
      *
      * Exemple :
      * <code>
      * $map->keepOnly('start,max', 'format'); // supprime tous sauf start, max et format
      * </code>
      *
-     * @param mixed $key un ou plusieurs paramètres indiquant le ou les noms des clés
-     * à conserver.
+     * @param mixed $key un ou plusieurs paramÃ¨tres indiquant le ou les noms des clÃ©s
+     * Ã  conserver.
      *
      * @return $this
      */
@@ -896,27 +896,27 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
     // --------------------------------------------------------------------------------
 
     /**
-     * Indique si la collection ou la clé indiquée est vide.
+     * Indique si la collection ou la clÃ© indiquÃ©e est vide.
      *
-     * Lorsque isEmpty() est appellée sans paramètres, la méthode retourne true si la
+     * Lorsque isEmpty() est appellÃ©e sans paramÃ¨tres, la mÃ©thode retourne true si la
      * collection est vide.
      *
-     * Si $key est indiquée, la méthode retourne true si aucune des clés indiquées
+     * Si $key est indiquÃ©e, la mÃ©thode retourne true si aucune des clÃ©s indiquÃ©es
      * n'existe.
      *
      * Exemples :
      * <code>
-     * Multimap::create()->isEmpty(); // aucun élément dans la collection retourne true
+     * Multimap::create()->isEmpty(); // aucun Ã©lÃ©ment dans la collection retourne true
      *
      * $map = Multimap::create(array('a'=>1, 'z'=>26));
      * $map->isEmpty('a'); // false
      * $map->isEmpty('b'); // true
      * $map->isEmpty('p,z'); // false
      * $map->isEmpty('p,q,r,s'); // true
-     * $map->isEmpty('*'); // identique à $map->isEmpty() : false
+     * $map->isEmpty('*'); // identique Ã  $map->isEmpty() : false
      * </code>
      *
-     * @param mixed $key la ou les clés à tester.
+     * @param mixed $key la ou les clÃ©s Ã  tester.
      *
      * @return bool
      */
@@ -933,13 +933,13 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Détermine si la collection contient la clé ou la valeur indiquées.
+     * DÃ©termine si la collection contient la clÃ© ou la valeur indiquÃ©es.
      *
-     * Lorsque has() est appellée avec un seul paramètre, la méthode retourne true
-     * si la collection contient au moins l'une des clés indiquées.
+     * Lorsque has() est appellÃ©e avec un seul paramÃ¨tre, la mÃ©thode retourne true
+     * si la collection contient au moins l'une des clÃ©s indiquÃ©es.
      *
-     * Lorsque has() est appellée avec une clé et une valeur, la méthode retourne
-     * true si au moins l'un des clés indiquées contient la valeur indiquée.
+     * Lorsque has() est appellÃ©e avec une clÃ© et une valeur, la mÃ©thode retourne
+     * true si au moins l'un des clÃ©s indiquÃ©es contient la valeur indiquÃ©e.
      *
      * Exemples :
      * <code>
@@ -950,10 +950,10 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
      * $map->has('b', 'BD'); // false
      * </code>
      *
-     * @param mixed $key la ou les clés recherchées.
-     * @param mixed $value optionnel, la ou les valeurs à tester.
-     * @param mixed $compareMode méthode de comparaison à utiliser pour comparer $value aux
-     * données de la clé.
+     * @param mixed $key la ou les clÃ©s recherchÃ©es.
+     * @param mixed $value optionnel, la ou les valeurs Ã  tester.
+     * @param mixed $compareMode mÃ©thode de comparaison Ã  utiliser pour comparer $value aux
+     * donnÃ©es de la clÃ©.
      *
      * @return bool
      */
@@ -977,13 +977,13 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Retourne une représentation textuelle de la collection.
+     * Retourne une reprÃ©sentation textuelle de la collection.
      *
-     * __toString est une méthode magique de php qui est appellée lorsque PHP
-     * a besoin de convertir un objet en chaine de caractères.
+     * __toString est une mÃ©thode magique de php qui est appellÃ©e lorsque PHP
+     * a besoin de convertir un objet en chaine de caractÃ¨res.
      *
-     * @return string La méthode retourne une chaine qui contient le nom de la classe,
-     * le nombre d'éléments dans la collection et un var_export() des données.
+     * @return string La mÃ©thode retourne une chaine qui contient le nom de la classe,
+     * le nombre d'Ã©lÃ©ments dans la collection et un var_export() des donnÃ©es.
      */
     public function __toString()
     {
@@ -1021,7 +1021,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Retourne un tableau contenant les données présentes dans la collection.
+     * Retourne un tableau contenant les donnÃ©es prÃ©sentes dans la collection.
      *
      * @return array
      */
@@ -1036,7 +1036,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Retourne une représentation JSON des données de la collection.
+     * Retourne une reprÃ©sentation JSON des donnÃ©es de la collection.
      *
      * @return string
      */
@@ -1051,10 +1051,10 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
     // --------------------------------------------------------------------------------
 
     /**
-     * Applique un callback aux données qui figurent dans une ou plusieurs clés.
+     * Applique un callback aux donnÃ©es qui figurent dans une ou plusieurs clÃ©s.
      *
-     * La méthode apply() permet d'appliquer un callback (fonction, méthode, closure...) à toutes
-     * les données associées à une ou plusieurs des clés de la collection.
+     * La mÃ©thode apply() permet d'appliquer un callback (fonction, mÃ©thode, closure...) Ã  toutes
+     * les donnÃ©es associÃ©es Ã  une ou plusieurs des clÃ©s de la collection.
      *
      * Exemples d'utilisation :
      * <code>
@@ -1064,16 +1064,16 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
      * // Transformer des dates en format "aaa-mm-jj" en format Bdsp
      * $map->apply('strtr', 'DatEdit,DatOrig', '-', '/'); // 2011-02-02 -> 2011/02/02
      *
-     * // Supprimer la mention "pp." qui figure au début d'une pagination
+     * // Supprimer la mention "pp." qui figure au dÃ©but d'une pagination
      * $map->apply('pregReplace', 'PageColl', '~p+\.?\s*(\d+)-(\d+)~', '$1-$2')
      * </code>
      *
-     * @param callback $callback le nom du callback à appeller pour chacune des valeurs associées
-     * aux clés indiquées dans $key. Il peut s'agir du nom d'une méthode de la classe en cours,
+     * @param callback $callback le nom du callback Ã  appeller pour chacune des valeurs associÃ©es
+     * aux clÃ©s indiquÃ©es dans $key. Il peut s'agir du nom d'une mÃ©thode de la classe en cours,
      * du nom d'une fonction globale, d'un tableau ou d'une closure.
      *
-     * Le callback recevra en paramètres la valeur à transformer et les éventuels arguments
-     * supplémentaires passés à apply(). Il doit retourner la valeur modifiée.
+     * Le callback recevra en paramÃ¨tres la valeur Ã  transformer et les Ã©ventuels arguments
+     * supplÃ©mentaires passÃ©s Ã  apply(). Il doit retourner la valeur modifiÃ©e.
      *
      * Le callback doit avoir la signature suivante :
      * <code>protected function callback(mixed $value) returns string</code>
@@ -1081,22 +1081,22 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
      * ou, si vous utilisez les arguments optionnels :
      * <code>protected function callback(mixed $value, $arg1, ...) returns string</code>
      *
-     * @param mixed $key la ou les clés pour lesquelles le callback sera appellé.
+     * @param mixed $key la ou les clÃ©s pour lesquelles le callback sera appellÃ©.
      *
-     * @param mixed $args ... optionnel, des argument supplémentaires à passer au callback.
+     * @param mixed $args ... optionnel, des argument supplÃ©mentaires Ã  passer au callback.
      *
      * @return $this
      */
     public function apply($callback, $key=null, $args=null)
     {
-        // Détermine si le callback est une méthode de la classe ou une fonction globale
+        // DÃ©termine si le callback est une mÃ©thode de la classe ou une fonction globale
         if (is_string($callback) && method_exists($this, $callback))
             $callback = array($this, $callback);
 
         if (! is_callable($callback))
-            throw new Exception('Callback non trouvé : ' . var_export($callback, true));
+            throw new Exception('Callback non trouvÃ© : ' . var_export($callback, true));
 
-        // Détermine les arguments à passer au callback
+        // DÃ©termine les arguments Ã  passer au callback
         $args = func_get_args();
         $args = array_slice($args, 1);
 
@@ -1119,10 +1119,10 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Exécute un callback sur les données qui figurent dans une ou plusieurs clés.
+     * ExÃ©cute un callback sur les donnÃ©es qui figurent dans une ou plusieurs clÃ©s.
      *
-     * La méthode run() permet d'exécuter un callback (fonction, méthode, closure...)
-     * pour toutes les données associées à une ou plusieurs des clés de la collection.
+     * La mÃ©thode run() permet d'exÃ©cuter un callback (fonction, mÃ©thode, closure...)
+     * pour toutes les donnÃ©es associÃ©es Ã  une ou plusieurs des clÃ©s de la collection.
      *
      * Exemple d'utilisation :
      * <code>
@@ -1134,14 +1134,14 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
      * }
      * </code>
      *
-     * @param callback $callback le nom du callback à appeller pour chacune des valeurs
-     * associées aux clés indiquées dans $key. Il peut s'agir du nom d'une méthode de la
+     * @param callback $callback le nom du callback Ã  appeller pour chacune des valeurs
+     * associÃ©es aux clÃ©s indiquÃ©es dans $key. Il peut s'agir du nom d'une mÃ©thode de la
      * classe en cours, du nom d'une fonction globale, d'un tableau ou d'une closure.
      *
-     * Le callback recevra en paramètres :
-     * - la clé en cours,
+     * Le callback recevra en paramÃ¨tres :
+     * - la clÃ© en cours,
      * - la valeur,
-     * - les éventuels arguments supplémentaires passés run().
+     * - les Ã©ventuels arguments supplÃ©mentaires passÃ©s run().
      *
      * Le callback doit avoir la signature suivante :
      * protected function callback(scalar $key, mixed $value) returns boolean
@@ -1149,27 +1149,27 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
      * ou, si vous utilisez les arguments optionnels :
      * protected function callback(scalar $key, mixed $value, ...) returns boolean
      *
-     * Si le callback retourne false, le parcourt des clés est interrompu.
+     * Si le callback retourne false, le parcourt des clÃ©s est interrompu.
      *
-     * @param mixed $key la ou les clés pour lesquelles le callback sera appellé.
+     * @param mixed $key la ou les clÃ©s pour lesquelles le callback sera appellÃ©.
      *
-     * @param mixed $args ... optionnel, des argument supplémentaires à passer au callback.
+     * @param mixed $args ... optionnel, des argument supplÃ©mentaires Ã  passer au callback.
      *
      * @return $this
      */
     public function run($callback, $key=null, $args=null)
     {
-        // Détermine si le callback est une méthode de la classe ou une fonction globale
+        // DÃ©termine si le callback est une mÃ©thode de la classe ou une fonction globale
         if (is_string($callback) && method_exists($this, $callback))
             $callback = array($this, $callback);
 
         if (! is_callable($callback))
-            throw new Exception('Callback non trouvé : ' . var_export($callback, true));
+            throw new Exception('Callback non trouvÃ© : ' . var_export($callback, true));
 
-        // Détermine les arguments à passer au callback
+        // DÃ©termine les arguments Ã  passer au callback
         $args = func_get_args();
 
-        // Parcourt toutes les clés
+        // Parcourt toutes les clÃ©s
         foreach($this->parseKey($key) as $key)
         {
             if (! isset($this->data[$key])) continue;
@@ -1187,30 +1187,30 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Filtre les données et ne conserve qui celles qui passent le filtre indiqué.
+     * Filtre les donnÃ©es et ne conserve qui celles qui passent le filtre indiquÃ©.
      *
-     * La méthode filter() permet d'exécuter un callback (fonction, méthode, closure...)
-     * pour toutes les données associées à une ou plusieurs des clés de la collection.
+     * La mÃ©thode filter() permet d'exÃ©cuter un callback (fonction, mÃ©thode, closure...)
+     * pour toutes les donnÃ©es associÃ©es Ã  une ou plusieurs des clÃ©s de la collection.
      *
-     * Seules les données pour lesquelles le filtre retourne <code>true</code> sont
-     * conservées dans la collection et la méthode retourne un tableau contenant les
-     * données supprimées.
+     * Seules les donnÃ©es pour lesquelles le filtre retourne <code>true</code> sont
+     * conservÃ©es dans la collection et la mÃ©thode retourne un tableau contenant les
+     * donnÃ©es supprimÃ©es.
      *
      * Exemple d'utilisation :
      * <code>
-     * // ne conserve que les entiers et retourne un tableau avec toutes les clés qui contenaient
+     * // ne conserve que les entiers et retourne un tableau avec toutes les clÃ©s qui contenaient
      * // autre chose qu'un entier.
      * $bad = $map->filter('is_int');
      * </code>
      *
-     * @param callback $callback le nom du callback à appeller pour chacune des valeurs
-     * associées aux clés indiquées dans $key. Il peut s'agir du nom d'une méthode de la
+     * @param callback $callback le nom du callback Ã  appeller pour chacune des valeurs
+     * associÃ©es aux clÃ©s indiquÃ©es dans $key. Il peut s'agir du nom d'une mÃ©thode de la
      * classe en cours, du nom d'une fonction globale, d'un tableau ou d'une closure.
      *
-     * Le callback recevra en paramètres :
+     * Le callback recevra en paramÃ¨tres :
      * - la valeur,
-     * - la clé en cours,
-     * - les éventuels arguments supplémentaires passés à filter().
+     * - la clÃ© en cours,
+     * - les Ã©ventuels arguments supplÃ©mentaires passÃ©s Ã  filter().
      *
      * Le callback doit avoir la signature suivante :
      * protected function callback(mixed $value, scalar $key) returns boolean
@@ -1218,25 +1218,25 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
      * ou, si vous utilisez les arguments optionnels :
      * protected function callback(mixed $value, scalar $key, ...) returns boolean
      *
-     * @param mixed $key la ou les clés pour lesquelles le callback sera appellé.
+     * @param mixed $key la ou les clÃ©s pour lesquelles le callback sera appellÃ©.
      *
-     * @param mixed $args ... optionnel, des argument supplémentaires à passer au filtre.
+     * @param mixed $args ... optionnel, des argument supplÃ©mentaires Ã  passer au filtre.
      *
      * @return array
      */
     public function filter($callback, $key=null, $args=null)
     {
-        // Détermine si le callback est une méthode de la classe ou une fonction globale
+        // DÃ©termine si le callback est une mÃ©thode de la classe ou une fonction globale
         if (is_string($callback) && method_exists($this, $callback))
             $callback = array($this, $callback);
 
         if (! is_callable($callback))
-            throw new Exception('Callback non trouvé : ' . var_export($callback, true));
+            throw new Exception('Callback non trouvÃ© : ' . var_export($callback, true));
 
-        // Détermine les arguments à passer au callback
+        // DÃ©termine les arguments Ã  passer au callback
         $args = func_get_args();
 
-        // Parcourt toutes les clés
+        // Parcourt toutes les clÃ©s
         $result = array();
         foreach($this->parseKey($key) as $key)
         {
@@ -1256,27 +1256,27 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
                 unset($this->data[$key]);
         }
 
-        // Retourne un tableau (éventuellement vide) contenant les valeurs filtrées
+        // Retourne un tableau (Ã©ventuellement vide) contenant les valeurs filtrÃ©es
         return $result;
     }
 
 
     // --------------------------------------------------------------------------------
-    // Méthodes magiques de php, traitement des clés comme des propriétés de l'objet
+    // MÃ©thodes magiques de php, traitement des clÃ©s comme des propriÃ©tÃ©s de l'objet
     // --------------------------------------------------------------------------------
 
 
     /**
-     * Détermine si la clé indiquée existe.
+     * DÃ©termine si la clÃ© indiquÃ©e existe.
      *
-     * __isset() est une méthode magique de php qui permet de tester l'existence
-     * d'une clé comme s'il s'agissait d'une propriété de l'objet Multimap.
+     * __isset() est une mÃ©thode magique de php qui permet de tester l'existence
+     * d'une clÃ© comme s'il s'agissait d'une propriÃ©tÃ© de l'objet Multimap.
      *
      * Exemple :
      * <code>$map = new Multimap('item'); echo isset($map->key); // true </code>
      *
-     * La fonction {@link has()} peut faire la même chose mais prend le nom de
-     * l'argument en paramètre.
+     * La fonction {@link has()} peut faire la mÃªme chose mais prend le nom de
+     * l'argument en paramÃ¨tre.
      *
      * @param string $key
      * @return bool
@@ -1288,15 +1288,15 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Retourne les données associées à la clé indiquée ou null
-     * si la clé demandée ne figure pas dans la collection.
+     * Retourne les donnÃ©es associÃ©es Ã  la clÃ© indiquÃ©e ou null
+     * si la clÃ© demandÃ©e ne figure pas dans la collection.
      *
-     * __get est une méthode magique de php qui permet d'accéder aux paramètres
-     * de la collection comme s'il s'agissait de propriétés de l'objet
+     * __get est une mÃ©thode magique de php qui permet d'accÃ©der aux paramÃ¨tres
+     * de la collection comme s'il s'agissait de propriÃ©tÃ©s de l'objet
      * Multimap (par exemple <code>$map->max</code>)
      *
-     * La méthode {@link get()} est similaire mais permet d'indiquer une valeur
-     * par défaut.
+     * La mÃ©thode {@link get()} est similaire mais permet d'indiquer une valeur
+     * par dÃ©faut.
      *
      * @param string $key
      * @return mixed
@@ -1308,14 +1308,14 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Modifie les données associées à une clé.
+     * Modifie les donnÃ©es associÃ©es Ã  une clÃ©.
      *
-     * __set est une méthode magique de php qui permet de modifier une
-     * clé comme s'il s'agissait d'une propriété de l'objet Multimap
+     * __set est une mÃ©thode magique de php qui permet de modifier une
+     * clÃ© comme s'il s'agissait d'une propriÃ©tÃ© de l'objet Multimap
      * (par exemple <code>$map->max = 10</code>)
      *
-     * Set remplace complètement les données associées à la clé. Pour ajouter une valeur
-     * à une clé existant, utilisez {@link add()}
+     * Set remplace complÃ¨tement les donnÃ©es associÃ©es Ã  la clÃ©. Pour ajouter une valeur
+     * Ã  une clÃ© existant, utilisez {@link add()}
      *
      * @param string $key
      * @param mixed $value
@@ -1327,10 +1327,10 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Supprime la clé indiquée.
+     * Supprime la clÃ© indiquÃ©e.
      *
-     * __unset est une méthode magique de php qui permet de supprimer une
-     * clé de la collection comme s'il s'agissait d'une propriété de l'objet Multimap
+     * __unset est une mÃ©thode magique de php qui permet de supprimer une
+     * clÃ© de la collection comme s'il s'agissait d'une propriÃ©tÃ© de l'objet Multimap
      * (par exemple <code>unset($map->max)</code>)
      *
      * @param string $key
@@ -1347,12 +1347,12 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Retourne le nombre de clés présentes dans la collection ou le nombre de données
-     * associées à la clé ou aux clés indiquées.
+     * Retourne le nombre de clÃ©s prÃ©sentes dans la collection ou le nombre de donnÃ©es
+     * associÃ©es Ã  la clÃ© ou aux clÃ©s indiquÃ©es.
      *
      * @implements Countable
      *
-     * @param mixed $key la ou les clés à compter.
+     * @param mixed $key la ou les clÃ©s Ã  compter.
      *
      * @return int
      */
@@ -1373,7 +1373,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
     // --------------------------------------------------------------------------------
 
     /**
-     * Indique si la clé indiquée existe.
+     * Indique si la clÃ© indiquÃ©e existe.
      *
      * @implements ArrayAccess
      *
@@ -1387,7 +1387,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Retourne les données associées à la clé indiquée.
+     * Retourne les donnÃ©es associÃ©es Ã  la clÃ© indiquÃ©e.
      *
      * @implements ArrayAccess
      *
@@ -1401,7 +1401,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Modifie les données associées à la clé indiquée.
+     * Modifie les donnÃ©es associÃ©es Ã  la clÃ© indiquÃ©e.
      *
      * @implements ArrayAccess
      *
@@ -1416,7 +1416,7 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Supprime les données associées à la clé indiquée.
+     * Supprime les donnÃ©es associÃ©es Ã  la clÃ© indiquÃ©e.
      *
      * @implements ArrayAccess
      *
@@ -1435,12 +1435,12 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
 
 
     /**
-     * Retourne un itérateur permettant d'utiliser un multimap dans une boucle foreach.
+     * Retourne un itÃ©rateur permettant d'utiliser un multimap dans une boucle foreach.
      *
      *
      * @implements IteratorAggregate
      *
-     * @return object L'itérateur obtenu n'est utilisable qu'en lecture. Une boucle de la forme
+     * @return object L'itÃ©rateur obtenu n'est utilisable qu'en lecture. Une boucle de la forme
      * <code>foreach($map as & $value)</code> provoquera une erreur.
      */
     public function getIterator()
@@ -1449,12 +1449,12 @@ class Multimap implements Countable, ArrayAccess, IteratorAggregate
     }
 
     // todo
-    // has() retourne true si on a l'une des clés/valeurs indiquées (OU).
+    // has() retourne true si on a l'une des clÃ©s/valeurs indiquÃ©es (OU).
     // has All retournerait true si on les a toutes (ET).
     //
-    // hasAll($key) : retourne true si la collection contient toutes les clés indiquées
-    // hasAll($key, $value) : retourne true si toutes les clés existent et qu'elles contiennent toutes value
-    // si value est un tableau : retourne true si toutes les clés existent et qu'elles contiennent toutes les value indiquées
+    // hasAll($key) : retourne true si la collection contient toutes les clÃ©s indiquÃ©es
+    // hasAll($key, $value) : retourne true si toutes les clÃ©s existent et qu'elles contiennent toutes value
+    // si value est un tableau : retourne true si toutes les clÃ©s existent et qu'elles contiennent toutes les value indiquÃ©es
     /*
     public function hasAll($key)
     {

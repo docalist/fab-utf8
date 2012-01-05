@@ -2,7 +2,7 @@
 /**
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  * @version     SVN: $Id$
  */
 
@@ -10,113 +10,113 @@
  * Classe de base abstraite pour toutes les classes <code>Record</code> de
  * la chaine de traitement.
  *
- * Un objet <code>Record</code> représente un enregistrement dans un format
- * donné. C'est essentiellement une {@link Multimap collection de champs}
+ * Un objet <code>Record</code> reprÃ©sente un enregistrement dans un format
+ * donnÃ©. C'est essentiellement une {@link Multimap collection de champs}
  * contenant une valeur ou un tableau d'articles.
  *
- * Chaque objet <code>Record</code> définit un {@link $format format} qui
+ * Chaque objet <code>Record</code> dÃ©finit un {@link $format format} qui
  * indique les noms des champs existants dans le format d'origine et,
- * éventuellement, le ou les champs correspondants en format
+ * Ã©ventuellement, le ou les champs correspondants en format
  * {@link BdspRecord BDSP}.
  *
- * La méthode {@link isField()} permet de savoir si une chaine donnée
- * représente un nom de champ existant.
+ * La mÃ©thode {@link isField()} permet de savoir si une chaine donnÃ©e
+ * reprÃ©sente un nom de champ existant.
  *
  * Bien que le format indique la liste "officielle" des champs sources,
- * rien n'empêche de créer dans l'enregistrement des champs qui ne
+ * rien n'empÃªche de crÃ©er dans l'enregistrement des champs qui ne
  * figurent pas dans cette liste. En fait, lors de l'ajout d'un champ,
- * aucun test n'est fait pour savoir si le champ indiqué est défini ou
+ * aucun test n'est fait pour savoir si le champ indiquÃ© est dÃ©fini ou
  * non dans le format. C'est pratique, notamment lors de la conversion,
- * pour créer des champs temporaires qui seront ensuite supprimés ou
- * renommés.
+ * pour crÃ©er des champs temporaires qui seront ensuite supprimÃ©s ou
+ * renommÃ©s.
  *
- * Les objets <code>Record</code> peuvent être créés de manière indépendante,
- * mais en général, ils sont créés par un objet {@link RecordReader} associé
- * qui se charge de décrypter le fichier et de créer les enregistrements en
- * appellant la méthode {@link store()} au fur et à mesure de la lecture.
+ * Les objets <code>Record</code> peuvent Ãªtre crÃ©Ã©s de maniÃ¨re indÃ©pendante,
+ * mais en gÃ©nÃ©ral, ils sont crÃ©Ã©s par un objet {@link RecordReader} associÃ©
+ * qui se charge de dÃ©crypter le fichier et de crÃ©er les enregistrements en
+ * appellant la mÃ©thode {@link store()} au fur et Ã  mesure de la lecture.
  *
- * La classe <code>Record</code> possède une méthode importante,
+ * La classe <code>Record</code> possÃ¨de une mÃ©thode importante,
  * {@link isAcceptable()} qui permet de savoir si un enregistrement est
  * acceptable.
  *
- * La méthode par défaut rejette les enregistrements complètement vides, mais
- * les classes descendantes peuvent ajouter des conditions supplémentaires
+ * La mÃ©thode par dÃ©faut rejette les enregistrements complÃ¨tement vides, mais
+ * les classes descendantes peuvent ajouter des conditions supplÃ©mentaires
  * (rejet des notices confidentielles, rejet des doublons, rejet des notices
- * qui contiennent trop d'erreurs, etc.) en surchargeant la méthode
+ * qui contiennent trop d'erreurs, etc.) en surchargeant la mÃ©thode
  * {@link isAcceptable()}.
  *
- * L'une des finalités des enregistrements est d'être convertis au format
- * {@link BdspRecord BDSP}. Pour cela, la classe <code>Record</code> définit
- * la méthode {@link toBdsp()} qui permet de
+ * L'une des finalitÃ©s des enregistrements est d'Ãªtre convertis au format
+ * {@link BdspRecord BDSP}. Pour cela, la classe <code>Record</code> dÃ©finit
+ * la mÃ©thode {@link toBdsp()} qui permet de
  * {@link convertToBdsp() convertir l'enregistrement} au format
  * {@link BdspRecord BDSP}.
  *
- * La classe <code>Record</code> dispose également de plusieurs méthodes
- * utilitaires qui enrichissent les méthodes héritées de {@link Multimap}
+ * La classe <code>Record</code> dispose Ã©galement de plusieurs mÃ©thodes
+ * utilitaires qui enrichissent les mÃ©thodes hÃ©ritÃ©es de {@link Multimap}
  * et simplifient la manipulation des enregistrements : {@link prefix()},
  * {@link suffix()}, {@link explode()}, {@link implode()}.
  *
- * Enfin, elle fournit également des callbacks utilisables avec la
- * méthode {@link Multimap::apply() apply()} pour plusieurs fonctions
- * standard de php pour lesquelles l'ordre de passage des paramètres
- * n'est pas celui attendu par la méthode <code>apply()</code> :
+ * Enfin, elle fournit Ã©galement des callbacks utilisables avec la
+ * mÃ©thode {@link Multimap::apply() apply()} pour plusieurs fonctions
+ * standard de php pour lesquelles l'ordre de passage des paramÃ¨tres
+ * n'est pas celui attendu par la mÃ©thode <code>apply()</code> :
  * {@link str_replace()} et {@link preg_replace()}.
  *
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  */
 abstract class AbstractRecord extends Multimap
 {
 
     /**
-     * Format de l'enregistrement : liste des champs présents dans le format
-     * d'origine et correspondance éventuelle avec le ou les champs BDSP.
+     * Format de l'enregistrement : liste des champs prÃ©sents dans le format
+     * d'origine et correspondance Ã©ventuelle avec le ou les champs BDSP.
      *
-     * Cette propriété est destinée à être surchargée par les classes descendantes.
+     * Cette propriÃ©tÃ© est destinÃ©e Ã  Ãªtre surchargÃ©e par les classes descendantes.
      *
-     * Vous pouvez aussi surcharger la méthode {@link loadFormat()} pour que
+     * Vous pouvez aussi surcharger la mÃ©thode {@link loadFormat()} pour que
      * celle-ci initialise <code>$format</code>.
      *
-     * Initialement, <code>$format</code> est définit comme un simple tableau
-     * php puis est converti en objet {@link Multimap} par la méthode
+     * Initialement, <code>$format</code> est dÃ©finit comme un simple tableau
+     * php puis est converti en objet {@link Multimap} par la mÃ©thode
      * {@link loadFormat()}.
      *
-     * Les clés du tableau désignent les noms des champs dans le format source.
-     * Les valeurs désignent les noms des champs dans le format destination
+     * Les clÃ©s du tableau dÃ©signent les noms des champs dans le format source.
+     * Les valeurs dÃ©signent les noms des champs dans le format destination
      * (le format {@link BdspRecord BDSP} normallement).
      *
-     * Si seule la valeur est indiquée, le même nom de champ est utilisé comme
+     * Si seule la valeur est indiquÃ©e, le mÃªme nom de champ est utilisÃ© comme
      * champ source et comme champ destination.
      *
      * Vous pouvez indiquer qu'un champ source n'a pas de correspondance dans
      * le format destination en indiquant la valeur <code>false</code> comme
      * valeur. Lors de la {@link toBdsp() conversion au format Bdsp}, le champ
-     * sera ignoré.
+     * sera ignorÃ©.
      *
-     * Utilisez une étoile à la fin des noms de champ pour indiquer les champs
-     * articles et pour que les contenus associés soient automatiquement convertis
+     * Utilisez une Ã©toile Ã  la fin des noms de champ pour indiquer les champs
+     * articles et pour que les contenus associÃ©s soient automatiquement convertis
      * en tableaux.
      *
      * L'ordre dans lequel vous indiquez les champs est important : si plusieurs
-     * champs source ont le même champ destination, lors de la conversion, les
-     * articles provenant des champs sources seront stockés dans l'ordre dans
+     * champs source ont le mÃªme champ destination, lors de la conversion, les
+     * articles provenant des champs sources seront stockÃ©s dans l'ordre dans
      * lequel les champs sources apparaissent dans le format.
      *
-     * @var array|Multimap Initialement définit comme tableau, le format est
-     * convertit en {@link Multimap} dès que l'objet <code>Record</code> est créé.
+     * @var array|Multimap Initialement dÃ©finit comme tableau, le format est
+     * convertit en {@link Multimap} dÃ¨s que l'objet <code>Record</code> est crÃ©Ã©.
      */
     protected $format = array();
 
 
     /**
-     * Pour les champs articles (marqués avec une étoile dans {@link $format}),
-     * séparateur utilisé pour séparer les articles.
+     * Pour les champs articles (marquÃ©s avec une Ã©toile dans {@link $format}),
+     * sÃ©parateur utilisÃ© pour sÃ©parer les articles.
      *
-     * Un <code>trim()</code> est systématiquement appliqué au séparateur lors
-     * du découpage d'une chaine en articles.
+     * Un <code>trim()</code> est systÃ©matiquement appliquÃ© au sÃ©parateur lors
+     * du dÃ©coupage d'une chaine en articles.
      *
-     * Le séparateur indiqué est également utilisé par la méthode
+     * Le sÃ©parateur indiquÃ© est Ã©galement utilisÃ© par la mÃ©thode
      * {@link __toString()} pour afficher les articles.
      *
      * @var string
@@ -128,9 +128,9 @@ abstract class AbstractRecord extends Multimap
      * Tableau listant les champs articles.
      *
      * Le tableau est de la forme "nom de champ" => true. Il permet de savoir
-     * rapidement si un champ donné est un champ article ou un champ texte.
+     * rapidement si un champ donnÃ© est un champ article ou un champ texte.
      *
-     * Il est initialisé à partir du format par la méthode {@link loadFormat()}.
+     * Il est initialisÃ© Ã  partir du format par la mÃ©thode {@link loadFormat()}.
      *
      * @var array
      */
@@ -139,11 +139,11 @@ abstract class AbstractRecord extends Multimap
 
 
     /**
-     * Crée un nouvel enregistrement, ajoute les éventuelles données transmises
+     * CrÃ©e un nouvel enregistrement, ajoute les Ã©ventuelles donnÃ©es transmises
      * au constructeur puis {@link loadFormat()} charge le format.
      *
-     * @param mixed $data ... optionnel, un ou plusieurs tableaux (ou objets itérables)
-     * représentant les données initiales de l'enregistrement.
+     * @param mixed $data ... optionnel, un ou plusieurs tableaux (ou objets itÃ©rables)
+     * reprÃ©sentant les donnÃ©es initiales de l'enregistrement.
      */
     public function __construct($data = null)
     {
@@ -154,11 +154,11 @@ abstract class AbstractRecord extends Multimap
 
 
     /**
-     * Charge le {@link $format format} de l'enregistrement, le vérifie et le
+     * Charge le {@link $format format} de l'enregistrement, le vÃ©rifie et le
      * transforme en objet {@link Multimap} pour faciliter sa manipulation.
      *
-     * Le tableau {@link $multiple()} qui référence les champs articles est
-     * également initialisé.
+     * Le tableau {@link $multiple()} qui rÃ©fÃ©rence les champs articles est
+     * Ã©galement initialisÃ©.
      */
     protected function loadFormat()
     {
@@ -178,26 +178,26 @@ abstract class AbstractRecord extends Multimap
             }
 
             if ($result->has($source))
-                throw new Exception(__CLASS__ . " : Champ $source dupliqué dans le format");
+                throw new Exception(__CLASS__ . " : Champ $source dupliquÃ© dans le format");
 
             $result->set($source, $destination);
         }
 
         if ($result->isEmpty())
-            throw new Exception(__CLASS__ . ' : Aucun format défini');
+            throw new Exception(__CLASS__ . ' : Aucun format dÃ©fini');
 
         $this->format = $result;
     }
 
 
     /**
-     * Indique si le nom passé en paramètre est un nom de champ défini dans
+     * Indique si le nom passÃ© en paramÃ¨tre est un nom de champ dÃ©fini dans
      * le format de l'enregistrement.
      *
-     * @param string $field le nom de champ à tester
+     * @param string $field le nom de champ Ã  tester
      *
      * @return bool <code>true</true> si <code>$field</code> existe dans la liste
-     * des champs sources indiqués dans le {@link $format format}.
+     * des champs sources indiquÃ©s dans le {@link $format format}.
      */
     public function isField($field)
     {
@@ -208,17 +208,17 @@ abstract class AbstractRecord extends Multimap
     /**
      * Convertit l'enregistrement au format BDSP.
      *
-     * La méthode <code>toBdsp()</code> lance le processus de conversion au format
-     * BDSP de l'enregistrement en cours et retourne le résultat sous la forme
+     * La mÃ©thode <code>toBdsp()</code> lance le processus de conversion au format
+     * BDSP de l'enregistrement en cours et retourne le rÃ©sultat sous la forme
      * d'un nouvel objet {@link BdspRecord}.
      *
-     * Cette méthode n'est pas destinée à être surchargée. Les classes descendantes
-     * doivent enrichir la méthode {@link convertToBdsp()} en ajoutant les traitements
-     * nécessaires à la conversion.
+     * Cette mÃ©thode n'est pas destinÃ©e Ã  Ãªtre surchargÃ©e. Les classes descendantes
+     * doivent enrichir la mÃ©thode {@link convertToBdsp()} en ajoutant les traitements
+     * nÃ©cessaires Ã  la conversion.
      *
      * La conversion s'effectue "sur place" : <code>toBdsp()</code> commence par
-     * faire une copie de l'enregistrement source, lance la conversion, crée un objet
-     * BdspRecord avec le résultat obtenu puis restaure la copie réalisée au début.
+     * faire une copie de l'enregistrement source, lance la conversion, crÃ©e un objet
+     * BdspRecord avec le rÃ©sultat obtenu puis restaure la copie rÃ©alisÃ©e au dÃ©but.
      *
      * @return BdspRecord un enregistrement au format BDSP
      */
@@ -230,17 +230,17 @@ abstract class AbstractRecord extends Multimap
         // Lance la conversion
         $this->convertToBdsp();
 
-        // Crée l'enregistrement BDSP
+        // CrÃ©e l'enregistrement BDSP
         $bdsp = new BdspRecord($this);
 
-        // Restore la copie et retourne le résultat
+        // Restore la copie et retourne le rÃ©sultat
         $this->clear()->addMany($sav);
         return $bdsp;
     }
 
 
     /**
-     * Fonction de débogage : génère un var_export() des données internes de
+     * Fonction de dÃ©bogage : gÃ©nÃ¨re un var_export() des donnÃ©es internes de
      * l'enregistrement.
      */
     public function dump()
@@ -253,10 +253,10 @@ abstract class AbstractRecord extends Multimap
     /**
      * Effectue la conversion sur place de l'enregistrement source en format BDSP.
      *
-     * La méthode par défaut utilise les informations présentes dans le
+     * La mÃ©thode par dÃ©faut utilise les informations prÃ©sentes dans le
      * {@link format $format} pour convertir les champs.
      *
-     * Les classes descendantes doivent surcharger cette méthode en ajoutant leurs
+     * Les classes descendantes doivent surcharger cette mÃ©thode en ajoutant leurs
      * propres traitements.
      *
      * Exemple :
@@ -271,7 +271,7 @@ abstract class AbstractRecord extends Multimap
      */
     protected function convertToBdsp()
     {
-        // Transfère les champs du format source dans les champs du format destination
+        // TransfÃ¨re les champs du format source dans les champs du format destination
         foreach($this->format as $from => $to)
         {
             if ($from === $to || ! $this->$from) continue;
@@ -286,10 +286,10 @@ abstract class AbstractRecord extends Multimap
 
 
     /**
-     * Retourne une représentation au format AJP de l'enregistrement.
+     * Retourne une reprÃ©sentation au format AJP de l'enregistrement.
      *
-     * Les articles sont affichés en utilisant le
-     * {@link $sep séparateur d'articles} défini.
+     * Les articles sont affichÃ©s en utilisant le
+     * {@link $sep sÃ©parateur d'articles} dÃ©fini.
      *
      * @return string
      */
@@ -315,12 +315,12 @@ abstract class AbstractRecord extends Multimap
 
 
     /**
-     * Indique si l'enregistrement, dans son état actuel, est acceptable ou non.
+     * Indique si l'enregistrement, dans son Ã©tat actuel, est acceptable ou non.
      *
-     * La méthode par défaut rejette les enregistrements complètement vides.
+     * La mÃ©thode par dÃ©faut rejette les enregistrements complÃ¨tement vides.
      *
-     * Les classes descendantes peuvent surcharger cette méthode et ajouter des
-     * conditions supplémentaires : rejet des notices confidentielles,
+     * Les classes descendantes peuvent surcharger cette mÃ©thode et ajouter des
+     * conditions supplÃ©mentaires : rejet des notices confidentielles,
      * rejet des doublons, rejet des notices qui contiennent trop d'erreurs, etc.
      *
      * @return bool <code>true</code>> si l'enregistrement est acceptable,
@@ -335,16 +335,16 @@ abstract class AbstractRecord extends Multimap
     /**
      * Stocke un contenu pour un champ.
      *
-     * Cette méthode est appellé par les objets {@link Reader} au fur et à mesure
+     * Cette mÃ©thode est appellÃ© par les objets {@link Reader} au fur et Ã  mesure
      * qu'ils lisent le fichier.
      *
-     * Si le champ indiqué est un {@link $multiple champ articles}, la valeur
-     * est convertie en tableau d'articles en utilisant le {@link $sep séparateur}
-     * défini dans la classe et un <code>trim</code> est appliqué à chacun des
+     * Si le champ indiquÃ© est un {@link $multiple champ articles}, la valeur
+     * est convertie en tableau d'articles en utilisant le {@link $sep sÃ©parateur}
+     * dÃ©fini dans la classe et un <code>trim</code> est appliquÃ© Ã  chacun des
      * articles.
      *
      * @param string $field nom du champ.
-     * @param string $content contenu à ajouter au champ
+     * @param string $content contenu Ã  ajouter au champ
      *
      * @return $this
      */
@@ -359,15 +359,15 @@ abstract class AbstractRecord extends Multimap
 
 
     // ---------------------------------------------------------------------------------------------
-    // Méthodes utilitaires
+    // MÃ©thodes utilitaires
     // ---------------------------------------------------------------------------------------------
 
 
     /**
-     * Filtre sur expression régulière utilisable avec la méthode {@link filter()}.
+     * Filtre sur expression rÃ©guliÃ¨re utilisable avec la mÃ©thode {@link filter()}.
      *
      * Le filtre fonctionne comme la fonction php {@link http://php.net/preg_match preg_match()},
-     * si ce n'est que les paramètres ont été adaptés à {@link filter()}.
+     * si ce n'est que les paramÃ¨tres ont Ã©tÃ© adaptÃ©s Ã  {@link filter()}.
      *
      * @param string $value
      * @param string $key
@@ -385,19 +385,19 @@ abstract class AbstractRecord extends Multimap
 
 
     /**
-     * Helper permettant de faire un lookup sur une {@link ReferenceTable table de référence}.
+     * Helper permettant de faire un lookup sur une {@link ReferenceTable table de rÃ©fÃ©rence}.
      *
-     * Cette méthode peut être utilisée directement ou comme callback passé à {@link apply()} :
+     * Cette mÃ©thode peut Ãªtre utilisÃ©e directement ou comme callback passÃ© Ã  {@link apply()} :
      *
      * <code>
      * $this->lookup('FRE', 'Tables/Langue.txt', 'Code', 'Label');
      * $this->apply('lookup', 'Tables/Langue.txt', 'Code', 'Label');
      * </code>
      *
-     * @param string $value la valeur recherchée
-     * @param string|ReferenceTable $table la table à utiliser.
+     * @param string $value la valeur recherchÃ©e
+     * @param string|ReferenceTable $table la table Ã  utiliser.
      * @param string $field le champ sur lequel porte la recherche.
-     * @param string $return le champ à retourner.
+     * @param string $return le champ Ã  retourner.
      * @param bool $clearIfNotFound retourne une chaine vide si la valeur n'existe pas.
      */
     protected function lookup($value, $table, $field, $return = null, $clearIfNotFound = false)
@@ -410,15 +410,15 @@ abstract class AbstractRecord extends Multimap
 
 
     /**
-     * Version modifiée de la fonction php {@link http://php.net/preg_replace preg_replace()}
-     * utilisable comme callback lors d'un appel à {@link apply()}.
+     * Version modifiÃ©e de la fonction php {@link http://php.net/preg_replace preg_replace()}
+     * utilisable comme callback lors d'un appel Ã  {@link apply()}.
      *
-     * La méthode <code>apply()</code> appelle le callback en lui passant comme premier
-     * argument la valeur à modifier mais la fonction <code>preg_replace()</code> de php
-     * attend en premier paramètre l'expression régulière à utiliser, la valeur à
-     * modifier étant en seconde position.
+     * La mÃ©thode <code>apply()</code> appelle le callback en lui passant comme premier
+     * argument la valeur Ã  modifier mais la fonction <code>preg_replace()</code> de php
+     * attend en premier paramÃ¨tre l'expression rÃ©guliÃ¨re Ã  utiliser, la valeur Ã 
+     * modifier Ã©tant en seconde position.
      *
-     * Ce callback se contente de changer l'ordre des paramètres.
+     * Ce callback se contente de changer l'ordre des paramÃ¨tres.
      *
      * @param string $subject
      * @param string $pattern
@@ -435,14 +435,14 @@ abstract class AbstractRecord extends Multimap
 
 
     /**
-     * Version modifiée de la fonction php {@link http://php.net/str_replace str_replace()}
-     * utilisable comme callback lors d'un appel à {@link apply()}.
+     * Version modifiÃ©e de la fonction php {@link http://php.net/str_replace str_replace()}
+     * utilisable comme callback lors d'un appel Ã  {@link apply()}.
      *
-     * La méthode <code>apply()</code> appelle le callback en lui passant comme premier
-     * argument la valeur à modifier, ce qui n'est pas l'ordre attendu par
+     * La mÃ©thode <code>apply()</code> appelle le callback en lui passant comme premier
+     * argument la valeur Ã  modifier, ce qui n'est pas l'ordre attendu par
      * <code>str_replace()</code>.
      *
-     * Ce callback se contente de changer l'ordre des paramètres.
+     * Ce callback se contente de changer l'ordre des paramÃ¨tres.
      *
      * @param string $subject
      * @param string|array $search
@@ -458,15 +458,15 @@ abstract class AbstractRecord extends Multimap
 
 
     /**
-     * Ajoute un préfixe à tous les articles présents dans le ou les champs indiqués.
+     * Ajoute un prÃ©fixe Ã  tous les articles prÃ©sents dans le ou les champs indiquÃ©s.
      *
      * Exemple :
      * <code>
      * $record->prefix('Ident', 'AED-BDSP : ');
      * </code>
      *
-     * @param mixed $fields le ou les champs auxquels le préfixe sera ajouté.
-     * @param string $prefix le préfixe à ajouter.
+     * @param mixed $fields le ou les champs auxquels le prÃ©fixe sera ajoutÃ©.
+     * @param string $prefix le prÃ©fixe Ã  ajouter.
      *
      * @return $this
      */
@@ -477,10 +477,10 @@ abstract class AbstractRecord extends Multimap
 
 
     /**
-     * Callback utilisé par {@link prefix()}.
+     * Callback utilisÃ© par {@link prefix()}.
      *
      * @param string $value la valeur du champ.
-     * @param string $prefix le préfixe à ajouter.
+     * @param string $prefix le prÃ©fixe Ã  ajouter.
      * @return string
      */
     protected function addPrefix($value, $prefix)
@@ -490,15 +490,15 @@ abstract class AbstractRecord extends Multimap
 
 
     /**
-     * Ajoute un suffixe à tous les articles présents dans le ou les champs indiqués.
+     * Ajoute un suffixe Ã  tous les articles prÃ©sents dans le ou les champs indiquÃ©s.
      *
      * Exemple :
      * <code>
      * $record->suffix('ORGCOM1', '/ com.');
      * </code>
      *
-     * @param mixed $fields le ou les champs auxquels le suffixe sera ajouté.
-     * @param string $suffix le suffixe à ajouter.
+     * @param mixed $fields le ou les champs auxquels le suffixe sera ajoutÃ©.
+     * @param string $suffix le suffixe Ã  ajouter.
      *
      * @return $this
      */
@@ -509,10 +509,10 @@ abstract class AbstractRecord extends Multimap
 
 
     /**
-     * Callback utilisé par {@link suffix()}.
+     * Callback utilisÃ© par {@link suffix()}.
      *
      * @param string $value la valeur du champ.
-     * @param string $prefix le préfixe à ajouter.
+     * @param string $prefix le prÃ©fixe Ã  ajouter.
      *
      * @return string
      */
@@ -523,10 +523,10 @@ abstract class AbstractRecord extends Multimap
 
 
     /**
-     * Concatène les données présentes dans une ou plusieurs clés avec le séparateur indiqué.
+     * ConcatÃ¨ne les donnÃ©es prÃ©sentes dans une ou plusieurs clÃ©s avec le sÃ©parateur indiquÃ©.
      *
-     * @param string $sep le séparateur à utiliser.
-     * @param mixed $key la ou les clés pour lesquelles il faut concaténer les valeurs.
+     * @param string $sep le sÃ©parateur Ã  utiliser.
+     * @param mixed $key la ou les clÃ©s pour lesquelles il faut concatÃ©ner les valeurs.
      *
      * @return $this
      */
@@ -541,15 +541,15 @@ abstract class AbstractRecord extends Multimap
 
 
     /**
-     * Découpe un champ en articles.
+     * DÃ©coupe un champ en articles.
      *
-     * la méthode <code>explode</code> permet de convertir en articles le contenu du ou
-     * des champs indiqués en utilisant le délimiteur <code>$sep</code> comme séparateur.
+     * la mÃ©thode <code>explode</code> permet de convertir en articles le contenu du ou
+     * des champs indiquÃ©s en utilisant le dÃ©limiteur <code>$sep</code> comme sÃ©parateur.
      *
-     * Si le champ indiqué contenait plusieurs valeurs, celles-ci sont tout d'abord réunies
-     * (implode) puis découpées (explode).
+     * Si le champ indiquÃ© contenait plusieurs valeurs, celles-ci sont tout d'abord rÃ©unies
+     * (implode) puis dÃ©coupÃ©es (explode).
      *
-     * Si <code>$key</code> désigne plusieurs champs, chaque champ est traité séparément.
+     * Si <code>$key</code> dÃ©signe plusieurs champs, chaque champ est traitÃ© sÃ©parÃ©ment.
      *
      * Exemples :
      * <code>
@@ -557,8 +557,8 @@ abstract class AbstractRecord extends Multimap
      * $map->set('item', array('A,B', 'C,D')->explode(',', 'item'); // array('a','b','c', 'd');
      * </code>
      *
-     * @param string $sep le délimiteur à utiliser.
-     * @param mixed $key la ou les clés à découper.
+     * @param string $sep le dÃ©limiteur Ã  utiliser.
+     * @param mixed $key la ou les clÃ©s Ã  dÃ©couper.
      *
      * @return $this
      */
