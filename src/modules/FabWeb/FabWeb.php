@@ -1,13 +1,13 @@
 <?php
 /**
  * Module FabWeb - permet de rendre accessible sur le web les
- * fichiers présents dans le répertoire web du framework
+ * fichiers prÃ©sents dans le rÃ©pertoire web du framework
  */
 class FabWeb extends Module
 {
     public function preExecute()
     {
-        // types mimes autorisés pour le site fab
+        // types mimes autorisÃ©s pour le site fab
         $mimes=array
         (
             '.htm'  => 'text/html',
@@ -22,16 +22,16 @@ class FabWeb extends Module
             '.js'   =>  'application/x-javascript'    
         );
         
-        // Vérifie que le fichier existe
+        // VÃ©rifie que le fichier existe
         $path=Runtime::$fabRoot . 'web' . DIRECTORY_SEPARATOR . strtr($this->action, '/', DIRECTORY_SEPARATOR);
         if (! is_file($path)) Routing::notFound();
         
-        // Détermine le type mime du fichier
+        // DÃ©termine le type mime du fichier
         if (! $mime=Utils::get($mimes[Utils::getExtension($path)]))
-            throw new Exception('Type mime non autorisé');
+            throw new Exception('Type mime non autorisÃ©');
             
         
-        // la suite est inspirée de : http://fr2.php.net/header
+        // la suite est inspirÃ©e de : http://fr2.php.net/header
         // commentaire de pechkin at zeos dot net, 05-May-2006 03:00
         $size = filesize($path);
         $fileDate=filemtime($path);
@@ -73,7 +73,7 @@ class FabWeb extends Module
            }
            else
            {
-               header("HTTP/1.1 500 Internal Server Error");// TODO: plutôt 'invalid request'
+               header("HTTP/1.1 500 Internal Server Error");// TODO: plutÃ´t 'invalid request'
                exit;
            }
         }
@@ -96,7 +96,7 @@ class FabWeb extends Module
             }        
         }                
         Config::set('showdebug', false);
-        return true; // indique à fab qu'on a fini, ne pas exécuter d'action
+        return true; // indique Ã  fab qu'on a fini, ne pas exÃ©cuter d'action
 
     }
 }
