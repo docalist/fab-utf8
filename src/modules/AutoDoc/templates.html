@@ -47,10 +47,10 @@
 <template match="//caution"><div class="caution">{select('node()|@*')}</div></template>
 <template match="//caution/title"><div class="title">{select('node()|@*')}</div></template>
 
-/* Tables (à mettre plus haut ?) */
+/* Tables (Ã  mettre plus haut ?) */
 <template match="//table[child::table]"><div class="table">{select('node()|@*')}</div></template>
 <template match="//table/title"><div class="title">{select('node()|@*')}</div></template>
-<template match="//table/tgroup"><table>{select('node()')}</table></template>/* Inutile de récupérer les attributs */
+<template match="//table/tgroup"><table>{select('node()')}</table></template>/* Inutile de rÃ©cupÃ©rer les attributs */
 <template match="//table/tgroup/thead/row"><tr>{select('node()|@*')}</tr></template>
 <template match="//table/tgroup/thead/row/entry"><th>{select('node()|@*')}</th></template>
 <template match="//table/tgroup/tbody/row"><tr>{select('node()|@*')}</tr></template>
@@ -68,7 +68,7 @@
 <template match="//orderedlist"><ol>{select('node()|@*')}</ol></template>
 <template match="//listitem"><li>{select('node()|@*')}</li></template>
 
-/* Liens (texte = contenu du noeud si présent, url sinon) */
+/* Liens (texte = contenu du noeud si prÃ©sent, url sinon) */
 <template match="//ulink" url=""><a href="$url" class="external">{select('count(node())') ? select('node()') : $url}</a></template>
  
 /* Inline divers */
@@ -79,7 +79,7 @@
  
 <template match="//code[not(@class='escaped')]"><code class="escaped">{htmlspecialchars(select('string(node())'))}{select('@*')}</code></template>
 
-/* TOC - Construction de la table des matières */
+/* TOC - Construction de la table des matiÃ¨res */
 <template match="//toc">
     <div class="tableofcontents">
         <div class="title">Sommaire</div>

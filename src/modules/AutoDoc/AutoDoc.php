@@ -10,21 +10,21 @@ class AutoDoc extends Module
 
 
     /**
-     * Retourne le path exact du fichier docbook dont le nom ets passé en
-     * paramètre.
+     * Retourne le path exact du fichier docbook dont le nom est passÃ© en
+     * paramÃ¨tre.
      *
-     * La méthode teste s'il existe un fichier docbook portant le nom
-     * indiqué dans le répertoire <code>/doc</code> de l'application ou de fab
-     * (elle ajoute l'extension .xml si nécessaire).
+     * La mÃ©thode teste s'il existe un fichier docbook portant le nom
+     * indiquÃ© dans le rÃ©pertoire <code>/doc</code> de l'application ou de fab
+     * (elle ajoute l'extension .xml si nÃ©cessaire).
      *
-     * Si c'est le cas, elle retourne le path exact du fichier docbook trouvé,
-     * sinon, elle génère une exception.
+     * Si c'est le cas, elle retourne le path exact du fichier docbook trouvÃ©,
+     * sinon, elle gÃ©nÃ¨re une exception.
      *
-     * @param string $name le nom à tester.
+     * @param string $name le nom Ã  tester.
      *
-     * @returns path le path exact du fichier docbook trouvé.
+     * @returns path le path exact du fichier docbook trouvÃ©.
      *
-     * @throws Exception si le fichier indiqué n'existe pas.
+     * @throws Exception si le fichier indiquÃ© n'existe pas.
      */
     public function getDocbookPath($name)
     {
@@ -42,10 +42,10 @@ class AutoDoc extends Module
 
 
     /**
-     * Retourne le titre du fichier docbook dont le nom est passé en paramètre.
+     * Retourne le titre du fichier docbook dont le nom est passÃ© en paramÃ¨tre.
      *
-     * La méthode retourne le contenu de la première balise
-     * <code>title</code> trouvée dans les 1024 premiers caractères du
+     * La mÃ©thode retourne le contenu de la premiÃ¨re balise
+     * <code>title</code> trouvÃ©e dans les 1024 premiers caractÃ¨res du
      * fichier.
      *
      * @param string $name le nom du fichier docbook.
@@ -59,15 +59,15 @@ class AutoDoc extends Module
         if ($data===false) return '';
 
         if (0===$result=preg_match( "~<title>(.*?)</title>~s", $data, $match )) return '';
-        return trim(strip_tags(utf8_decode($match[1])));
+        return trim(strip_tags($match[1]));
     }
 
 
     /**
-     * Retourne la description courte de la classe dont le nom est passé
-     * en paramètre.
+     * Retourne la description courte de la classe dont le nom est passÃ©
+     * en paramÃ¨tre.
      *
-     * @param string $name le nom de la classe recherchée.
+     * @param string $name le nom de la classe recherchÃ©e.
      * @return string le description courte de la classe.
      */
     public function getClassSummary($name)
@@ -83,25 +83,25 @@ class AutoDoc extends Module
     }
 
     /**
-     * Retourne un objet ReflectionClass pour la classe dont le nom est passé
-     * en paramètre.
+     * Retourne un objet ReflectionClass pour la classe dont le nom est passÃ©
+     * en paramÃ¨tre.
      *
-     * Si la classe indiquée est un module, crée une instance de ce module et
-     * le retourne dans le paramètre optionnel <code>$module</code>.
+     * Si la classe indiquÃ©e est un module, crÃ©e une instance de ce module et
+     * le retourne dans le paramÃ¨tre optionnel <code>$module</code>.
      *
-     * @param string $name le nom de la classe recherchée.
-     * @param Module $module le module chargé ou null si $class ne désigne pas
+     * @param string $name le nom de la classe recherchÃ©e.
+     * @param Module $module le module chargÃ© ou null si $class ne dÃ©signe pas
      * un module.
      *
      * @return ReflectionClass le description courte de la classe.
      *
-     * @throws Exception si la classe demandée ne peut pas être chargée.
+     * @throws Exception si la classe demandÃ©e ne peut pas Ãªtre chargÃ©e.
      */
     public function getReflectionClass($name, & $module=null)
     {
         $module=null;
 
-        // Vérifie que la classe demandée existe
+        // VÃ©rifie que la classe demandÃ©e existe
         if (!class_exists($name, true))
         {
             // Essaie de charger la classe comme module
@@ -136,7 +136,7 @@ class AutoDoc extends Module
                     $parents[$parent]=Module::loadModule($parent);
             }
 
-            // Détermine la liste des pseudo actions de ce module
+            // DÃ©termine la liste des pseudo actions de ce module
             foreach($module->config as $pseudo=>$config)
             {
 
@@ -155,12 +155,12 @@ class AutoDoc extends Module
                     //echo 'Recherche dans ', $name, '<br />';
                     if ($inheritedFrom==='' && $name !== $class && isset($parent->config[$pseudo]))
                     {
-                        //echo 'héritée de ', $name, '<br />';
+                        //echo 'hÃ©ritÃ©e de ', $name, '<br />';
                         if (Config::get('show.inherited'))
                             $inheritedFrom=$name;
                         else
                         {
-                            //echo 'héritées non affichées, pseudo suivante<br />';
+                            //echo 'hÃ©ritÃ©es non affichÃ©es, pseudo suivante<br />';
                             continue 2;
                         }
                     }
@@ -170,11 +170,11 @@ class AutoDoc extends Module
                     {
                         $r=$r->getMethod($method)->getDeclaringClass();
                         $name=$r->getName();
-                        //echo 'la classe ', $name, ' contient la méthode ', $method, ', création de $doc<br />';
+                        //echo 'la classe ', $name, ' contient la mÃ©thode ', $method, ', crÃ©ation de $doc<br />';
                         $doc=new MethodDoc($pseudo, $r->getMethod($method));
                         if ($overwrites==='')
                         {
-                            //echo '1. surcharge la méthode ', $name, '::', $method, '()<br />';
+                            //echo '1. surcharge la mÃ©thode ', $name, '::', $method, '()<br />';
                             $overwrites=$name;
                         }
                     }
@@ -186,22 +186,22 @@ class AutoDoc extends Module
                             $overwrites=$name;
                         }
                         $method=$parent->config[$method]['action'];
-                        //echo 'nouvelle méthode recherchée : ', $method, '<br />';
+                        //echo 'nouvelle mÃ©thode recherchÃ©e : ', $method, '<br />';
                         if ($r->hasMethod($method))
                         {
                             if ($overwrites==='')
                             {
-                                //echo '2. surcharge la méthode ', $name, '::', $method, '()<br />';
+                                //echo '2. surcharge la mÃ©thode ', $name, '::', $method, '()<br />';
                                 $overwrites=$name;
                             }
-                            //echo 'la classe ', $name, ' contient la méthode ', $method, ', création de $doc<br />';
+                            //echo 'la classe ', $name, ' contient la mÃ©thode ', $method, ', crÃ©ation de $doc<br />';
                             $doc=new MethodDoc($pseudo, $r->getMethod($method)->getDeclaringClass()->getMethod($method));
                         }
                     }
                 }
                 //$doc->name=$pseudo;
                 $doc->signature=str_replace($method, $pseudo, $doc->signature);
-                $doc->summary="<p>Pseudo action basée sur l'action ".self::link($overwrites, $method, $method);
+                $doc->summary="<p>Pseudo action basÃ©e sur l'action ".self::link($overwrites, $method, $method);
                 if ($overwrites !== $class) $doc->summary.= " du module $overwrites";
                 $doc->summary.= '.</p>';
 
@@ -223,33 +223,33 @@ class AutoDoc extends Module
     /**
      * Affiche la documentation interne d'une classe ou d'un module
      *
-     * Les flags passés en paramètre permettent de choisir ce qui sera affiché.
+     * Les flags passÃ©s en paramÃ¨tre permettent de choisir ce qui sera affichÃ©.
      *
      * @param string $class le nom de la classe pour laquelle il faut afficher
      * la documentation
      *
-     * @param string $filename le nom du fichier docBook à afficher
+     * @param string $filename le nom du fichier docBook Ã  afficher
      *
-     * @param bool $inherited <code>true</code> pour afficher les propriétés
-     * et les méthodes héritées, <code>false</code> sinon
+     * @param bool $inherited <code>true</code> pour afficher les propriÃ©tÃ©s
+     * et les mÃ©thodes hÃ©ritÃ©es, <code>false</code> sinon
      *
-     * @param bool $private  <code>true</code> pour afficher les propriétés et
-     * les méthodes privées, <code>false</code> sinon
+     * @param bool $private  <code>true</code> pour afficher les propriÃ©tÃ©s et
+     * les mÃ©thodes privÃ©es, <code>false</code> sinon
      *
-     * @param bool $protected <code>true</code> pour afficher les propriétés et
-     * les méthodes protégées, <code>false</code> sinon
+     * @param bool $protected <code>true</code> pour afficher les propriÃ©tÃ©s et
+     * les mÃ©thodes protÃ©gÃ©es, <code>false</code> sinon
      *
-     * @param bool $public <code>true</code> pour afficher les propriétés et
-     * les méthodes publiques, <code>false</code> sinon.
+     * @param bool $public <code>true</code> pour afficher les propriÃ©tÃ©s et
+     * les mÃ©thodes publiques, <code>false</code> sinon.
      *
      * Remarques :
      *
-     * - La documentation des actions est affichée même si
-     *   <code>$public=false</code>, bien qu'il s'agisse de méthodes publiques.
-     *   Cela permet, en mettant tous les flags à false, de n'afficher que la
+     * - La documentation des actions est affichÃ©e mÃªme si
+     *   <code>$public=false</code>, bien qu'il s'agisse de mÃ©thodes publiques.
+     *   Cela permet, en mettant tous les flags Ã  false, de n'afficher que la
      *   documentation des actions.
-     * - Normallement, uniquement l'un des deux paramètres <code>$class</code>
-     *   ou <code>filename</code> doit être indiqué. Si vous indiquez les deux,
+     * - Normallement, uniquement l'un des deux paramÃ¨tres <code>$class</code>
+     *   ou <code>filename</code> doit Ãªtre indiquÃ©. Si vous indiquez les deux,
      *   <code>$class</code> est prioritaire.
      *
      * @see Template
@@ -262,7 +262,7 @@ class AutoDoc extends Module
      */
     public function actionIndex($class='', $filename='', $inherited=true, $private=true, $protected=true, $public=true)
     {
-        // Stocke dans la config les flags de visibilité passés en paramètre
+        // Stocke dans la config les flags de visibilitÃ© passÃ©s en paramÃ¨tre
         foreach(self::$flags as $flag=>$default)
             Config::set('show.'.$flag, $this->request->bool($flag)->defaults($default)->ok());
 
@@ -271,7 +271,7 @@ class AutoDoc extends Module
         $this->docBook('index'); // ni filename ni classe affiche le fichier index.xml (soit de l'application, soit de fab)
         return;
 
-        // expérimental, essaie de dresser la liste de toutes les classes existantes
+        // expÃ©rimental, essaie de dresser la liste de toutes les classes existantes
         $this->includeClasses(Runtime::$fabRoot.'core');
         $this->includeClasses(Runtime::$fabRoot.'modules');
         $this->includeClasses(Runtime::$root.'modules');
@@ -297,17 +297,17 @@ class AutoDoc extends Module
 
     public function actionApi()
     {
-        // Détermine le template à utiliser
+        // DÃ©termine le template Ã  utiliser
         $template=Config::get('template');
 
-        // En mode debug, ré-exécute systématiquement le template
+        // En mode debug, rÃ©-exÃ©cute systÃ©matiquement le template
         if (debug)
         {
             Template::run($template);
             return;
         }
 
-        // En mode normal, stocke dans le cache la sortie générée par le template
+        // En mode normal, stocke dans le cache la sortie gÃ©nÃ©rÃ©e par le template
         $path=dirname(__FILE__) . DIRECTORY_SEPARATOR . 'result of ' . $template;
 
         // Si on a une copie fraiche en cache, on l'envoie direct
@@ -317,7 +317,7 @@ class AutoDoc extends Module
             return;
         }
 
-        // Sinon on exécute le template et on stocke la sortie générée
+        // Sinon on exÃ©cute le template et on stocke la sortie gÃ©nÃ©rÃ©e
         ob_start();
         Template::run($template);
         Cache::set($path, ob_get_flush());
@@ -336,7 +336,7 @@ class AutoDoc extends Module
             // ignore '.', '..', '.svn/', '.settings', etc.
             if (substr($name,0,1)==='.') continue;
 
-            // ignore les sous-répertoires 'tests/'
+            // ignore les sous-rÃ©pertoires 'tests/'
             if ($name=='tests') continue;
 
             if($item->isDir())
@@ -345,7 +345,7 @@ class AutoDoc extends Module
             }
             elseif(Utils::getExtension($name)==='.php')
             {
-                echo 'Fichier à inclure : ', $item->getPathName(), '<br />';
+                echo 'Fichier Ã  inclure : ', $item->getPathName(), '<br />';
                 @require_once($item->getPathName());
             }
         }
@@ -355,7 +355,7 @@ class AutoDoc extends Module
     /**
      * Affiche un fichier docbook en format xml
      *
-     * @param string $filename le nom du fichier à afficher
+     * @param string $filename le nom du fichier Ã  afficher
      */
     private function docbook($filename)
     {
@@ -377,17 +377,15 @@ class AutoDoc extends Module
 
         $source=file_get_contents($path);
 
-        $source=utf8_decode($source);
-
         if (false === $start=strpos($source, '<sect1'))
             die('Impossible de trouver &lt;sect1 dans le fichier docbook');
 
         $source=substr($source, $start);
         //$source=str_replace('$', '\$', $source);
 
-        // on définit içi les templates match utilisés pour convertir le docbook
-        // plutôt que dans la config car on ne veut pas les avoir pour les autres
-        // templates susceptibles d'être exécutés par l'action index (classdoc.html, etc.)
+        // on dÃ©finit iÃ§i les templates match utilisÃ©s pour convertir le docbook
+        // plutÃ´t que dans la config car on ne veut pas les avoir pour les autres
+        // templates susceptibles d'Ãªtre exÃ©cutÃ©s par l'action index (classdoc.html, etc.)
         Config::set('templates.autoinclude.docbook_to_html', 'templates.html');
         Config::set('templates.autoinclude.docbook_toc', 'toc.html');
         Template::runSource($path, $source);
@@ -401,9 +399,9 @@ class AutoDoc extends Module
      *
      * Remarque :
      *
-     * La documentation des actions est affichée même si
-     * <code>$public=false</code>, bien qu'il s'agisse de méthodes publiques.
-     * Cela permet, en mettant tous les flags à false, de n'afficher que la
+     * La documentation des actions est affichÃ©e mÃªme si
+     * <code>$public=false</code>, bien qu'il s'agisse de mÃ©thodes publiques.
+     * Cela permet, en mettant tous les flags Ã  false, de n'afficher que la
      * documentation des actions.
      */
     private function phpDoc($class)
@@ -424,11 +422,11 @@ class AutoDoc extends Module
         return self::$flags;
     }
     /**
-     * Crée un lien vers une autre classe en propageant les options de
-     * visibilité en cours
+     * CrÃ©e un lien vers une autre classe en propageant les options de
+     * visibilitÃ© en cours
      *
      * @param string $class la classe dont on veut afficher la doc
-     * @param string $anchor une ancre optionnelle (nom de méthode ou de propriété)
+     * @param string $anchor une ancre optionnelle (nom de mÃ©thode ou de propriÃ©tÃ©)
      * @return string
      */
     public static function link($class, $anchor='', $label='', $cssClass='')
@@ -550,12 +548,12 @@ class ElementDoc
                 $typeinfo=$types[$type];
                 if(isset($typeinfo['use'])) // alias. exemple : bool/boolean
                 {
-                    $this->docError(sprintf('utiliser "%s" plutôt que "%s" pour %s', $typeinfo['use'], $type, $arg), $method);
+                    $this->docError(sprintf('utiliser "%s" plutÃ´t que "%s" pour %s', $typeinfo['use'], $type, $arg), $method);
                     $type=$typeinfo['use'];
                 }
                 else
                 {
-                    if(isset($typeinfo['label'])) // label à utiliser pour ce type
+                    if(isset($typeinfo['label'])) // label Ã  utiliser pour ce type
                     {
                         $type=$typeinfo['label'];
                     }
@@ -594,7 +592,7 @@ class ClassDoc extends ElementDoc
         $doc=new DocBlock($doc);
         parent::_construct($class->getName(), $doc);
 
-        // Ancêtres
+        // AncÃªtres
         $parent=$class->getParentClass();
         while ($parent)
         {
@@ -605,10 +603,10 @@ class ClassDoc extends ElementDoc
         }
 
         // Constantes
-        foreach($class->getConstants() as $name=>$value) // pas de réflection pour les constantes de classes
+        foreach($class->getConstants() as $name=>$value) // pas de rÃ©flection pour les constantes de classes
             $this->constants[$name]=new ConstantDoc($name, $value);
 
-        // Propriétés
+        // PropriÃ©tÃ©s
         foreach($class->getProperties() as $property)
         {
             $group=$this->getGroup($property, $class);
@@ -627,7 +625,7 @@ class ClassDoc extends ElementDoc
             }
         }
 
-        // Méthodes
+        // MÃ©thodes
         foreach($class->getMethods() as $method)
         {
             $group=$this->getGroup($method, $class);
@@ -635,7 +633,7 @@ class ClassDoc extends ElementDoc
                 $this->methods[$group][$method->getName()]=new MethodDoc($class->getName(), $method);
         }
 
-        // Pseudo méthodes
+        // Pseudo mÃ©thodes
         if ($pseudoMethods)
         {
             foreach ($pseudoMethods as $name=>$doc)
@@ -655,7 +653,7 @@ class ClassDoc extends ElementDoc
             }
         }
 
-        // si la classe est créée via eval (cf Module::loadModule), le nom du fichier n'est pas valide
+        // si la classe est crÃ©Ã©e via eval (cf Module::loadModule), le nom du fichier n'est pas valide
         if (file_exists($class->getFileName()))
             $this->lastModified=filemtime($class->getFileName());
         else
@@ -677,7 +675,7 @@ class ConstantDoc extends ElementDoc
     {
 //        $doc=$property->getDocComment();
 //        if ($doc===false)
-//            $this->docError('aucune documentation pour la propriété', $property->getName());
+//            $this->docError('aucune documentation pour la propriÃ©tÃ©', $property->getName());
 
         $this->type=$this->checkType($this->getType($value), 'constante', $name);
         $this->value=Utils::varExport($value,true);
@@ -708,7 +706,7 @@ class PropertyDoc extends ElementDoc
     {
         $doc=$property->getDocComment();
         if ($doc===false)
-            $this->docError('aucune documentation pour la propriété', $property->getName());
+            $this->docError('aucune documentation pour la propriÃ©tÃ©', $property->getName());
 
         $doc=new DocBlock($property->getDocComment());
         parent::_construct($property->getName(), $doc);
@@ -728,16 +726,16 @@ class MethodDoc extends ElementDoc
         AutoDoc::$reflectionMethod=$method;
         $doc=$method->getDocComment();
         if ($doc===false)
-            $this->docError('aucune documentation pour la méthode', $method->getName());
+            $this->docError('aucune documentation pour la mÃ©thode', $method->getName());
 
         $doc=new DocBlock($method->getDocComment());
         parent::_construct($method->getName(), $doc);
 
-        // Supprime les annotations qu'on gère, laisse celles qu'on ne connaît pas
+        // Supprime les annotations qu'on gÃ¨re, laisse celles qu'on ne connaÃ®t pas
         unset($this->annotations['param']);
         unset($this->annotations['return']);
 
-        // Paramètres
+        // ParamÃ¨tres
         if (isset($doc->annotations['param']))
             $t=$doc->annotations['param'];
         else
@@ -760,7 +758,7 @@ class MethodDoc extends ElementDoc
         }
         foreach($t as $parameter)
         {
-            $this->docError(sprintf('@param pour un paramètre inexistant : %s', $parameter->name), $this->name);
+            $this->docError(sprintf('@param pour un paramÃ¨tre inexistant : %s', $parameter->name), $this->name);
         }
 
         // Valeur de retour
@@ -770,7 +768,7 @@ class MethodDoc extends ElementDoc
         }
         else
         {
-            // on n'a pas de @return dans la doc. Génère une erreur si on aurait dû en avoir un
+            // on n'a pas de @return dans la doc. GÃ©nÃ¨re une erreur si on aurait dÃ» en avoir un
             $source=implode
             (
                 '',
@@ -840,7 +838,7 @@ class MethodDoc extends ElementDoc
         //$this->signature=Utils::highlight($h);
         $this->signature=$h;
 
-        // Méthode héritée ou non
+        // MÃ©thode hÃ©ritÃ©e ou non
         $c=$method->getDeclaringClass();
         $h=$c->getName();
         if ($h != $class)
@@ -849,8 +847,8 @@ class MethodDoc extends ElementDoc
         }
         else
         {
-            // c'est soit une méthode déclarée dans cette classe
-            // soit une méthode héritée d'une classe ancêtre qu'on surcharge
+            // c'est soit une mÃ©thode dÃ©clarÃ©e dans cette classe
+            // soit une mÃ©thode hÃ©ritÃ©e d'une classe ancÃªtre qu'on surcharge
             //$this->inheritedFrom='';
             $ancestor=$c->getParentClass();
             if (false !==$ancestor && $ancestor->hasMethod($method->getName()))
@@ -870,15 +868,15 @@ class ParameterDoc extends ElementDoc
     {
         parent::_construct('$'.$parameter->getName(), $doc);
 
-        // Type du paramètre
+        // Type du paramÃ¨tre
 
-        // Si on a de la doc pour ce paramètre, on prend le type indiqué par la doc
+        // Si on a de la doc pour ce paramÃ¨tre, on prend le type indiquÃ© par la doc
         if (!is_null($doc))
         {
             $this->type=$doc->type;
         }
 
-        // Sinon, on utilise le type réel du paramètre
+        // Sinon, on utilise le type rÃ©el du paramÃ¨tre
         else
         {
             if ($parameter->isArray())
@@ -896,7 +894,7 @@ class ParameterDoc extends ElementDoc
         }
         $this->type=$this->checkType($this->type, $method, $this->name);
 
-        // Valeur par défaut
+        // Valeur par dÃ©faut
         if ($parameter->isDefaultValueAvailable())
             $this->default=$parameter->getDefaultValue();
         else
@@ -988,7 +986,7 @@ class DocBlock extends DocItem
                     break;
             }
 
-            $tagDoc->shortDescription=strtok('¤'); // tout ce qui reste
+            $tagDoc->shortDescription=strtok('Â¤'); // tout ce qui reste
 
             for( ; $i<count($lines); $i++)
             {
@@ -1009,10 +1007,10 @@ class DocBlock extends DocItem
         // Eclate la documentation en lignes
         $lines=explode("\n", $doc);
 
-        // Ignore la première ('/**') et la dernière ('*/') ligne
+        // Ignore la premiÃ¨re ('/**') et la derniÃ¨re ('*/') ligne
         $lines=array_slice($lines, 1, count($lines)-2);
 
-        // Ajoute une ligne vide à la fin
+        // Ajoute une ligne vide Ã  la fin
         $lines[]='';
 
 //        echo'<pre>', htmlentities(print_r($lines,true)), '</pre>';
@@ -1021,10 +1019,10 @@ class DocBlock extends DocItem
 
         foreach($lines as & $line)
         {
-            // Supprime les espaces de début jusqu'à la première étoile et tous les espaces de fin
+            // Supprime les espaces de dÃ©but jusqu'Ã  la premiÃ¨re Ã©toile et tous les espaces de fin
             $line=trim($line," \t\r\n");
 
-            // Supprime l'étoile de début
+            // Supprime l'Ã©toile de dÃ©but
             $line=ltrim($line, '*');
 
             // Supprime l'espace qui suit
@@ -1137,7 +1135,7 @@ class DocBlock extends DocItem
 //        echo'<pre>', htmlentities(print_r($result,true)), '</pre>';
 //        die();
 
-        // Restaure les blocs qui ont été protégés
+        // Restaure les blocs qui ont Ã©tÃ© protÃ©gÃ©s
         $result=str_replace(array_keys($this->replacement),array_values($this->replacement), $result);
 
         return $result;
@@ -1228,7 +1226,7 @@ class DocBlock extends DocItem
         // Supprime les lignes vides et les blancs de fin
         $code=rtrim($code);
 
-        // Réindente les lignes en supprimant de chaque ligne l'indentation de la première
+        // RÃ©indente les lignes en supprimant de chaque ligne l'indentation de la premiÃ¨re
         $lines=explode("\n", $code);
         $len=strspn($lines[0], " \t");
         $indent=substr($lines[0], 0, $len);
@@ -1246,7 +1244,7 @@ class DocBlock extends DocItem
 
         if($sameindent)
             $code=implode("\n", $lines);
-        // else l'indentation n'est pas homogène, on garde le code existant tel quel
+        // else l'indentation n'est pas homogÃ¨ne, on garde le code existant tel quel
 
         //$code=Utils::highlight($code);
 
@@ -1261,7 +1259,7 @@ class DocBlock extends DocItem
     {
         $doc=preg_replace_callback('~\{@([a-z]+)(?:\s(.*?))?}~', array($this, 'parseInlineTag'), $doc);
 
-        // le replace ci-dessus peut générer des <p><p>...</p></p> pour le tag
+        // le replace ci-dessus peut gÃ©nÃ©rer des <p><p>...</p></p> pour le tag
         // @inheritoc. On les vire ici.
         $doc=preg_replace('~<p>\s<p>~i', '<p>', $doc);
         $doc=preg_replace('~</p>\s</p>~i', '<p>', $doc);
@@ -1274,7 +1272,7 @@ class DocBlock extends DocItem
 //        $doc=str_replace(array_keys($this->replacement),array_values($this->replacement), $doc);
     }
 
-    // fixme : fusionner ce link là avec AutoDoc::link
+    // fixme : fusionner ce link lÃ  avec AutoDoc::link
     private function link($link, $text)
     {
         // Url absolue (http:, ftp:, etc.)
@@ -1289,7 +1287,7 @@ class DocBlock extends DocItem
         if (preg_match('~[a-z0-9_]+(?:\.[a-z0-9_]+)*\.xml~i', $link))
             return '<a href="?filename='.$link.'">'.$text.'</a>';
 
-        // Pour un lien de la forme class::xxx, sépare le nom de la classe du reste
+        // Pour un lien de la forme class::xxx, sÃ©pare le nom de la classe du reste
         $class='';
         if (strpos($link,'::')!==false)
             list($class,$link)=explode('::',$link,2);
@@ -1325,13 +1323,13 @@ class DocBlock extends DocItem
         }
 
         // Pas de nom classe, juste un true de la forme xxx
-        // ça peut être une autre classe ou une constante de la classe en cours... ou une erreur (pas $ devant var, pas de () après fonction...)
+        // Ã§a peut Ãªtre une autre classe ou une constante de la classe en cours... ou une erreur (pas $ devant var, pas de () aprÃ¨s fonction...)
         // On opte pour une autre classe
         return AutoDoc::link($link, '', $text, 'otherclass');
 
-        // todo: pour tous les liens créés, vérifier que c'est un lien valide
-        // ie tester que c'est bien une propriété/méthode/constante de la classe
-        // en cours ou indiquée.
+        // todo: pour tous les liens crÃ©Ã©s, vÃ©rifier que c'est un lien valide
+        // ie tester que c'est bien une propriÃ©tÃ©/mÃ©thode/constante de la classe
+        // en cours ou indiquÃ©e.
     }
 
     private function parseInlineTag($match)
@@ -1344,25 +1342,25 @@ class DocBlock extends DocItem
         switch($tag)
         {
             case 'link':
-                // Sépare le nom de l'item du texte optionnel du lien
+                // SÃ©pare le nom de l'item du texte optionnel du lien
                 $link=strtok($text, " \t\n");
-                $text=strtok('¤'); // tout le reste
+                $text=strtok('Â¤'); // tout le reste
 
                 // Si on n'a pas de texte, prend le lien
                 if ($text===false || trim($text)==='') $text=$link;
 
-                // Transforme l'url et crée le lien
+                // Transforme l'url et crÃ©e le lien
                 return $this->link($link,$text);
 
             case 'tutorial':
-                // Sépare le nom de l'item du texte optionnel du lien
+                // SÃ©pare le nom de l'item du texte optionnel du lien
                 $link=strtok($text, " \t\n");
-                $text=strtok('¤'); // tout le reste
+                $text=strtok('Â¤'); // tout le reste
 
                 // Si on n'a pas de texte, prend le lien
                 if ($text===false || trim($text)==='') $text=$link;
 
-                // Transforme l'url et crée le lien
+                // Transforme l'url et crÃ©e le lien
                 return $this->link($link,$text);
 
             case 'inheritdoc':

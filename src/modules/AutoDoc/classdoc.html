@@ -1,8 +1,8 @@
-<template match="//groupname" group="" prefix="Méthodes">
+<template match="//groupname" group="" prefix="MÃ©thodes">
     <switch test="$group">
         <case test="action">Actions de ce module</case>
-        <case test="private">$prefix privées</case>
-        <case test="protected">$prefix protégées</case>
+        <case test="private">$prefix privÃ©es</case>
+        <case test="protected">$prefix protÃ©gÃ©es</case>
         <case test="public">$prefix publiques</case>
         <default>$group ???</default>
     </switch>
@@ -12,7 +12,7 @@
         <loop on="$a" as="$tag,$item">
             <switch test="{strtolower($tag)}">
                 <case test="throws">
-                    <h4>{str_replace('(s)', count($item)==1 ? '' : 's', 'Exception(s) générée(s) :')}</h4>
+                    <h4>{str_replace('(s)', count($item)==1 ? '' : 's', 'Exception(s) gÃ©nÃ©rÃ©e(s) :')}</h4>
                     <ul>
                         <loop on="$item" as="$doc">
                             <li><p><span class="type">{AutoDoc::link($doc->name)}</span> {$doc->shortDescription}</p>{$doc->longDescription}</li>
@@ -49,7 +49,7 @@
                 
                 <case test="todo">
                     <div class="warning">
-                    <div class="title">Evolution prévue</div>
+                    <div class="title">Evolution prÃ©vue</div>
                         <loop on="$item" as="$doc">
                             <p>{$doc->name} {$doc->shortDescription}</p>{$doc->longDescription}
                         </loop>
@@ -76,7 +76,7 @@
         <loop on="{$this->getFlags()}" as="$flag,$defaultValue">
             <checkbox name="$flag" value="true" label="$flag" checked="{Config::get('show.'.$flag) ? 'checked' : ''}"/><br />
         </loop>
-        <submit label="»»»" />
+        <submit label="Â»Â»Â»" />
     </div>
 </form>
 
@@ -90,7 +90,7 @@
     <annotations a="{$class->annotations}" />
     
     <if test="{$class->ancestors}">
-        <h4>Diagramme d'héritage de cette classe</h4>
+        <h4>Diagramme d'hÃ©ritage de cette classe</h4>
         <div class="hierarchy">
             <def name="fontsize" value="100" />
             <loop on="{array_reverse($class->ancestors)}" as="$ancestor">
@@ -105,7 +105,7 @@
     </if>
 
     <div class="sect2" test="{$class->constants}">
-        <h2>Constantes définies par la classe</h2>
+        <h2>Constantes dÃ©finies par la classe</h2>
         <dl>
             <loop on="{$class->constants}" as="$constant">
                 <dt id="{$constant->name}">
@@ -122,10 +122,10 @@
     </div>
     
     <div class="sect2" test="{$class->properties}">
-        <h2>Propriétés</h2>
+        <h2>PropriÃ©tÃ©s</h2>
         <loop on="{$class->properties}" as="$group,$properties">
             <div class="sect3">
-                <h3><groupname group="$group" prefix="Propriétés" /></h3>
+                <h3><groupname group="$group" prefix="PropriÃ©tÃ©s" /></h3>
                 <dl>
                     <loop on="{$properties}" as="$property">
                         <dt>
@@ -141,7 +141,7 @@
     </div>
     
     <div class="sect2" test="{$class->methods}">
-        <h2>Méthodes</h2>
+        <h2>MÃ©thodes</h2>
         <loop on="{$class->methods}" as="$group,$methods">
             <div class="sect3">
                 <h3><groupname group="$group" /></h3>
@@ -162,7 +162,7 @@
     <if test="{$class->properties}">
         <loop on="{$class->properties}" as="$group,$properties">
             <hr />
-            <groupname group="$group" prefix="Détail des propriétés" />
+            <groupname group="$group" prefix="DÃ©tail des propriÃ©tÃ©s" />
             <hr />
             <loop on="{$properties}" as="$property">
                 <div class="sect2">
@@ -177,13 +177,13 @@
     <if test="{$class->methods}">
         <loop on="{$class->methods}" as="$group,$methods">
             <hr />
-            <groupname group="$group" prefix="Détail des méthodes" />
+            <groupname group="$group" prefix="DÃ©tail des mÃ©thodes" />
             <hr />
             <loop on="{$methods}" as="$name,$method">
                 <div class="sect2">
                     <span style="float: right">
                         <if test="{$method->inheritedFrom}">
-                            Héritée de {AutoDoc::link($method->inheritedFrom, $method->name)}
+                            HÃ©ritÃ©e de {AutoDoc::link($method->inheritedFrom, $method->name)}
                         </if>
                         <if test="{$method->overwrites}">
                             Surcharge {AutoDoc::link($method->overwrites, $method->name, $method->overwrites.'::'.$method->name.'()')}
@@ -196,7 +196,7 @@
                     {$method->description}
                     
                     <if test="{$method->parameters}">
-                        <h4>Paramètre{count($method->parameters)==1 ? '' : 's'} : </h4>
+                        <h4>ParamÃ¨tre{count($method->parameters)==1 ? '' : 's'} : </h4>
                         <ul>
                             <loop on="{$method->parameters}" as="$parameter">
                                 <li>
@@ -232,7 +232,7 @@
 </div>
 
 <div test="{$errors and Config::get('show.errors')}" style="color: red; border: 1px solid red; background: yellow;">
-    <h2>Erreurs rencontrées lors de la génération de cette documentation : </h2>
+    <h2>Erreurs rencontrÃ©es lors de la gÃ©nÃ©ration de cette documentation : </h2>
     <ul>
         <loop on="$errors" as="$error">
             <li>$error</li>
@@ -241,6 +241,6 @@
 </div>
 
 <p style="text-align: center; color: #888; border-top: 1px solid #888; font-size: 0.8em;">
-    Documentation générée le {date('d/m/Y à H:i:s')}.
-    Dernière modification le {date('d/m/Y à H:i:s', $class->lastModified)}.
+    Documentation gÃ©nÃ©rÃ©e le {date('d/m/Y Ã  H:i:s')}.
+    DerniÃ¨re modification le {date('d/m/Y Ã  H:i:s', $class->lastModified)}.
 </p>
