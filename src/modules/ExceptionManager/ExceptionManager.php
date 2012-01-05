@@ -2,7 +2,7 @@
 /**
  * @package     fab
  * @subpackage  module
- * @author 		Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author 		Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: ExceptionManager.php 904 2008-11-26 10:16:07Z daniel.menard.bdsp $
  */
 
@@ -22,13 +22,13 @@ class ExceptionManager extends Module
     }
     
     /**
-     * Affiche l'exception passée en paramètre.
-     * Cette méthode n'est pas destinée à être appellée directement : elle sera
-     * automatiquement exécutée si une erreur survient dans le programme.
+     * Affiche l'exception passÃ©e en paramÃ¨tre.
+     * Cette mÃ©thode n'est pas destinÃ©e Ã  Ãªtre appellÃ©e directement : elle sera
+     * automatiquement exÃ©cutÃ©e si une erreur survient dans le programme.
      * 
-     * @param Exception $exception l'exception à afficher
+     * @param Exception $exception l'exception Ã  afficher
      * @param boolean $addCaller flag indiquant si la fonction appelante doit
-     * être ou non affichée dans la pile des appels.
+     * Ãªtre ou non affichÃ©e dans la pile des appels.
      */
     public function handleException(Exception $exception, $addCaller=true)
     {
@@ -82,7 +82,7 @@ class ExceptionManager extends Module
             }
 
             
-            // Détermine l'action et le template à utiliser en fonction de la config
+            // DÃ©termine l'action et le template Ã  utiliser en fonction de la config
             $template=$action=null;
             $classes=array(get_class($exception)=>get_class($exception)) + class_parents($exception);
             $exceptions=$this->config['exceptions'];
@@ -104,13 +104,13 @@ class ExceptionManager extends Module
                 }
             }
             
-            // Fait en sorte que les templates soient recherchés par rapport à notre searchpath
-            // et non pas par rapport au searchpath du module qui a généré l'exception
-            // Inutile de sauvegarder le précédent : l'exécution va se terminer juste après
+            // Fait en sorte que les templates soient recherchÃ©s par rapport Ã  notre searchpath
+            // et non pas par rapport au searchpath du module qui a gÃ©nÃ©rÃ© l'exception
+            // Inutile de sauvegarder le prÃ©cÃ©dent : l'exÃ©cution va se terminer juste aprÃ¨s
             foreach($this->searchPath as $path)
                 Utils::addSearchPath($path);
                 
-            // Recherche le path exact du template par rapport à notre searchPath
+            // Recherche le path exact du template par rapport Ã  notre searchPath
             if (false === $path=Utils::searchFile($template)) $path=$template;
             
             Template::run
@@ -125,13 +125,13 @@ class ExceptionManager extends Module
                 )
             );
             
-            // Exécute l'action demandée
+            // ExÃ©cute l'action demandÃ©e
             if (!is_null($action) && $action !=='' && $action !=='none')
             {
                 if ( method_exists($this, $action))
                     $this->$action($exception);
                 else
-                    echo "<hr />Warning : impossible d'exécuter l'action $action pour cette exception, cette méthode n'existe pas dans le module ", get_class($this), '.<br />';
+                    echo "<hr />Warning : impossible d'exÃ©cuter l'action $action pour cette exception, cette mÃ©thode n'existe pas dans le module ", get_class($this), '.<br />';
             }
                         
         }
@@ -143,8 +143,8 @@ class ExceptionManager extends Module
             echo '<p>Pile des appels : </p>';
             echo '<pre>' . $exception->getTraceAsString() . '</pre>';
             
-            echo "<p>Remarque : une erreur interne s'est également produite dans le gestionnaire d'exceptions, "
-                . "ce qui explique pourquoi l'erreur ci-dessus est affichée en format 'brut' :</p>";
+            echo "<p>Remarque : une erreur interne s'est Ã©galement produite dans le gestionnaire d'exceptions, "
+                . "ce qui explique pourquoi l'erreur ci-dessus est affichÃ©e en format 'brut' :</p>";
             echo '<h2>Message : ' . $e->getMessage() . ' (code : ' . $e->getCode() . ')<h2>';
             echo '<p>Fichier : ' . $e->getFile() . ', ligne ' . $e->getLine() . '</p>';
             echo '<p>Pile des appels : </p>';
@@ -157,8 +157,8 @@ class ExceptionManager extends Module
     /**
      * Formatte les arguments d'un appel de fonction dans le backstrace d'une
      * exception.
-     * Appellé uniquement par {@link handleException}
-     * @param array $args les arguments à formatter
+     * AppellÃ© uniquement par {@link handleException}
+     * @param array $args les arguments Ã  formatter
      * @return string
      * @access private
      */
@@ -187,16 +187,16 @@ class ExceptionManager extends Module
 
     /**
      * Extrait le code source du fichier contenant l'erreur.
-     * Appellé uniquement
+     * AppellÃ© uniquement
      * par {@link handleException}
      * @param array $file le fichier contenant le code source
-     * @param interger le numéro de la ligne où s'est produite l'erreur
+     * @param interger le numÃ©ro de la ligne oÃ¹ s'est produite l'erreur
      * @return string
      * @access private
      */
     private static function getSource($file, $line)
     {
-        $nb=10; // nombre de ligne à afficher avant et après la ligne en erreur 
+        $nb=10; // nombre de ligne Ã  afficher avant et aprÃ¨s la ligne en erreur 
         
         if (is_readable($file))
         {
@@ -221,7 +221,7 @@ class ExceptionManager extends Module
 
     /**
      * Gestionnaire d'erreurs. Transforme les erreurs "classiques" de php et les
-     * transforme en exceptions pour qu'elles soient gérées par le
+     * transforme en exceptions pour qu'elles soient gÃ©rÃ©es par le
      * gestionnaire d'exception.
      */
     public function handleError($code, $message, $file, $line)
@@ -233,10 +233,10 @@ class ExceptionManager extends Module
     
     protected function mail(Exception $exception)
     {
-        // Crée une nouvelle connexion Swift
-        $swift = new Swift(new Swift_Connection_SMTP(ini_get('SMTP'))); // TODO: mettre dans la config de fab pour ne pas être obligé de changer php.ini
+        // CrÃ©e une nouvelle connexion Swift
+        $swift = new Swift(new Swift_Connection_SMTP(ini_get('SMTP'))); // TODO: mettre dans la config de fab pour ne pas Ãªtre obligÃ© de changer php.ini
         
-        // Crée le message
+        // CrÃ©e le message
         $email = new Swift_Message('Exception sur '.Utils::getHost().rtrim(Runtime::$home,'/'));
         
         
@@ -259,10 +259,10 @@ class ExceptionManager extends Module
         $body=ob_get_clean();
         $email->attach(new Swift_Message_Part($body, 'text/html'));
         
-        // Détermine l'émetteur
+        // DÃ©termine l'Ã©metteur
         $from=$to=new Swift_Address(Config::get('admin.email'), Config::get('admin.name'));
         
-        // Détermine les destinataires
+        // DÃ©termine les destinataires
         if (isset($this->config['mail']['recipients']))
         {
             $to=new Swift_RecipientList();
