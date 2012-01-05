@@ -4,7 +4,7 @@ class DatabaseInspector extends DatabaseModule
     public function preExecute()
     {
         if (! $database=Utils::get($_REQUEST['database']))
-            throw new Exception('Pour utiliser '.__CLASS__.' la base de données à utiliser doit être indiquée en paramètre');
+            throw new Exception('Pour utiliser '.__CLASS__.' la base de donnÃ©es Ã  utiliser doit Ãªtre indiquÃ©e en paramÃ¨tre');
         Config::set('database', $database);
     }
 

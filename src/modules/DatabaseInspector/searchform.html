@@ -30,7 +30,7 @@
                 <label for="{$alias->name}">
                     {$alias->name}
                     <opt> ({Utils::lcfirst($alias->label)})</opt>
-                    <span test="$lookup" class="lookupsymbol" title="Table de lookup associée : $lookup">[=]</span>
+                    <span test="$lookup" class="lookupsymbol" title="Table de lookup associÃ©e : $lookup">[=]</span>
                     :
                 </label>
                 <br />
@@ -57,7 +57,7 @@
                 <label for="{$index->name}">
                     {$index->name}
                     <opt> ({Utils::lcfirst($index->label)})</opt>
-                   <span test="$lookup" class="lookupsymbol" title="Table de lookup associée : $lookup">[=]</span>
+                   <span test="$lookup" class="lookupsymbol" title="Table de lookup associÃ©e : $lookup">[=]</span>
                     :
                 </label>
                 <br />
@@ -67,7 +67,7 @@
                 <div id="help{$index->name}" class="tooltip">
                     <p>{$index->name} est un index.</p>
                     <opt><p>Description : {$index->description}</p></opt>
-                    <p>Champ(s) interrogé(s) : {implode(', ', array_keys($index->fields))}</p>
+                    <p>Champ(s) interrogÃ©(s) : {implode(', ', array_keys($index->fields))}</p>
                 </div>
             </div>
         </loop>
