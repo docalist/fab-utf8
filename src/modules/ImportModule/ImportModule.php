@@ -3,8 +3,8 @@
 /**
  * @package     fab
  * @subpackage  modules
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
- * @author      Séverine Ferron <Severine.Ferron@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
+ * @author      SÃ©verine Ferron <Severine.Ferron@bdsp.tm.fr>
  * @version     SVN: $Id: ImportModule.php 1200 2010-09-07 13:11:53Z daniel.menard.bdsp $
  */
 
@@ -19,79 +19,79 @@ class ImportModule extends DatabaseModule
 {
     public function preExecute()
     {
-        // Filtre sur les fichiers qui n'ont pas encore été importés
+        // Filtre sur les fichiers qui n'ont pas encore Ã©tÃ© importÃ©s
         if (!$this->request->bool('done')->defaults(false)->ok())
             $this->request->add('_filter', 'NOT status:(import_*)');
     }
 
     public function actionDelete($confirm=0)
     {
-        // todo: not dry, copier/coller intégral de ce qu'on a dans DatabaseModule
-        // si on avait les événements dans fab, on pourrait juste avoir un event "onBeforeDelete, unlink($record[path])"
+        // todo: not dry, copier/coller intÃ©gral de ce qu'on a dans DatabaseModule
+        // si on avait les Ã©vÃ©nements dans fab, on pourrait juste avoir un event "onBeforeDelete, unlink($record[path])"
 
-        // Ouvre la base de données
+        // Ouvre la base de donnÃ©es
         $this->openDatabase(false);
 
-        // Récupère l'équation de recherche qui donne les enregistrements à supprimer
+        // RÃ©cupÃ¨re l'Ã©quation de recherche qui donne les enregistrements Ã  supprimer
         $this->equation=$this->getEquation();
 
-        // Paramètre equation manquant
+        // ParamÃ¨tre equation manquant
         if (is_null($this->equation))
-            return $this->showError('Le ou les numéros des notices à supprimer n\'ont pas été indiqués.');
+            return $this->showError('Le ou les numÃ©ros des notices Ã  supprimer n\'ont pas Ã©tÃ© indiquÃ©s.');
 
-        // Aucune réponse
+        // Aucune rÃ©ponse
         if (! $this->select($this->equation, -1) )
-            return $this->showError("Aucune réponse. Equation : $this->equation");
+            return $this->showError("Aucune rÃ©ponse. Equation : $this->equation");
 
-        // TODO: déléguer au TaskManager
+        // TODO: dÃ©lÃ©guer au TaskManager
 
-        // Supprime toutes les notices de la sélection
+        // Supprime toutes les notices de la sÃ©lection
         foreach($this->selection as $record)
         {
             $path=$this->selection['Path'];
             if ($path !=='' && !is_null($path))
             {
                 echo 'suppression de ', $this->selection['Path'], '<br />';
-                if (!@unlink($this->selection['Path']))   // seule différence par rapport au actionDelete de DatabaseModule
+                if (!@unlink($this->selection['Path']))   // seule diffÃ©rence par rapport au actionDelete de DatabaseModule
                     echo 'erreur durant la suppression du fichier tmp';
             }
             $this->selection->deleteRecord();
         }
 
-        // Détermine le template à utiliser
+        // DÃ©termine le template Ã  utiliser
         if (! $template=$this->getTemplate())
         {
-            echo '<p>Notice supprimée.</p>';
+            echo '<p>Notice supprimÃ©e.</p>';
             return;
         }
 
-        // Détermine le callback à utiliser
+        // DÃ©termine le callback Ã  utiliser
         $callback=$this->getCallback();
 
-        // Exécute le template
+        // ExÃ©cute le template
         Template::run
         (
             $template,
             array($this, $callback),
-            $this->selection->record  //fixme : pas de sens : on passe un record supprimé + il peut y en avoir plusieurs
+            $this->selection->record  //fixme : pas de sens : on passe un record supprimÃ© + il peut y en avoir plusieurs
         );
     }
 
     /**
-     * Crée une nouvelle tâche dans le gestionnaire de tâches pour importer les
-     * fichiers dont les numéros de REF sont passés en paramètre
+     * CrÃ©e une nouvelle tÃ¢che dans le gestionnaire de tÃ¢ches pour importer les
+     * fichiers dont les numÃ©ros de REF sont passÃ©s en paramÃ¨tre
      *
-     * @param array $REF les numéros de REF des fichiers à importer. Seuls les
-     * fichiers en statut 'upload_ok' seront acceptés (une exception sera
-     * générée dans le cas contraire).
+     * @param array $REF les numÃ©ros de REF des fichiers Ã  importer. Seuls les
+     * fichiers en statut 'upload_ok' seront acceptÃ©s (une exception sera
+     * gÃ©nÃ©rÃ©e dans le cas contraire).
      */
     public function actionNewImport(array $REF, $now, $date, $time)
     {
-        // Vérifie les paramètres
+        // VÃ©rifie les paramÃ¨tres
         $now=$this->request->bool('now')->defaults(false)->ok();
-        // todo: vérifier les autres, vérifier le format de date et time
+        // todo: vÃ©rifier les autres, vÃ©rifier le format de date et time
 
-        // Détermine l'heure d'exécution
+        // DÃ©termine l'heure d'exÃ©cution
         if ($now)
         {
             $time=0;
@@ -105,55 +105,55 @@ class ImportModule extends DatabaseModule
             );
             if ($time < time())
             {
-                echo "<p>Erreur : l'heure indiquée est déjà dépassée.</p>";
+                echo "<p>Erreur : l'heure indiquÃ©e est dÃ©jÃ  dÃ©passÃ©e.</p>";
                 return;
             }
         }
         // echo strftime('%d/%m/%Y %H:%M:%S', $time);
 
-        // Ouvre la base de données en écriture
+        // Ouvre la base de donnÃ©es en Ã©criture
         $this->openDatabase(false);
-//        echo 'Base ouverte en écriture<br />';
+//        echo 'Base ouverte en Ã©criture<br />';
 
-        // Crée une équation à partir des numéros de REF indiqués
-        $equation='Status:upload_ok AND REF:(' . implode(' ', $REF) . ')'; // équation du style REF:(5 8 12)
+        // CrÃ©e une Ã©quation Ã  partir des numÃ©ros de REF indiquÃ©s
+        $equation='Status:upload_ok AND REF:(' . implode(' ', $REF) . ')'; // Ã©quation du style REF:(5 8 12)
 //        echo 'Equation de recherche : <code>', $equation, '</code><br />';
 
-        // Recherche les Refs indiquées (max=toutes, ordre des enregs dans la base)
+        // Recherche les Refs indiquÃ©es (max=toutes, ordre des enregs dans la base)
         $this->selection->search($equation, array('max'=>-1, 'sort'=>'+'));
-//        echo 'Nombre de réponses : ', $this->selection->count(), '<br />';
+//        echo 'Nombre de rÃ©ponses : ', $this->selection->count(), '<br />';
 
-        // Si on a moins de réponses que de REF, c'est qu'au moins une des REF n'était pas valide
+        // Si on a moins de rÃ©ponses que de REF, c'est qu'au moins une des REF n'Ã©tait pas valide
         if ($this->selection->count() !== count($REF))
-            throw new Exception('Certains des numéros indiqués ne sont pas valides');
+            throw new Exception('Certains des numÃ©ros indiquÃ©s ne sont pas valides');
 
-//        echo 'Numéros de REF OK, création de la tâche<br />';
+//        echo 'NumÃ©ros de REF OK, crÃ©ation de la tÃ¢che<br />';
 
         if ((count($REF)===1))
             $title='Import d\'un fichier dans la base';
         else
             $title='Import de '.count($REF).' fichiers dans la base';
 
-        // Crée la tâche maintenant pour récupérer son ID
+        // CrÃ©e la tÃ¢che maintenant pour rÃ©cupÃ©rer son ID
         $task=new Task();
         $taskId=$task->save()->getId();
 
 //        echo 'taskId : ', $taskId, '<br />';
 
-        // Pour chaque enreg, stocke le numéro de tâche et met à jour le statut
-//        echo 'Mise à jour du statut des enregs<br />';
+        // Pour chaque enreg, stocke le numÃ©ro de tÃ¢che et met Ã  jour le statut
+//        echo 'Mise Ã  jour du statut des enregs<br />';
         foreach($this->selection as $record)
         {
             $this->selection->editRecord();
             $record['Status']='task';
             $record['TaskId']=$taskId;
             $this->selection->saveRecord();
-            echo 'Enreg REF=', $record['REF'], ' modifié<br />';
+            echo 'Enreg REF=', $record['REF'], ' modifiÃ©<br />';
         }
 
-        if ($time!==0 && $time<time()) $time=time(); // au cas où la mise à jour de la base ait pris beaucoup de temps
+        if ($time!==0 && $time<time()) $time=time(); // au cas oÃ¹ la mise Ã  jour de la base ait pris beaucoup de temps
 
-        // Initialise les paramètres de la tâche
+        // Initialise les paramÃ¨tres de la tÃ¢che
         $task
             ->setRequest($this->request->setAction('Import')->keepOnly('REF'))
             ->setTime($time)
@@ -169,16 +169,16 @@ class ImportModule extends DatabaseModule
     }
 
     /**
-     * Réalise l'import des fichiers dont les numéros de REF sont passés en
-     * paramètres.
+     * RÃ©alise l'import des fichiers dont les numÃ©ros de REF sont passÃ©s en
+     * paramÃ¨tres.
      *
-     * Appellé par le TaskManager lorsque la tâche est lancée.
+     * AppellÃ© par le TaskManager lorsque la tÃ¢che est lancÃ©e.
      *
-     * @param array $REF numéros de référence des fichiers à importer
+     * @param array $REF numÃ©ros de rÃ©fÃ©rence des fichiers Ã  importer
      */
     public function actionImport(array $REF)
     {
-        // Ouvre la base de données en écriture
+        // Ouvre la base de donnÃ©es en Ã©criture
         $this->openDatabase(false);
 
         // Affiche le titre
@@ -188,101 +188,101 @@ class ImportModule extends DatabaseModule
         else
             echo '<h2>Import de ', $nbFiles, ' fichiers dans la base</h2>';
 
-        // Initialise les numéros de première et dernière notice
+        // Initialise les numÃ©ros de premiÃ¨re et derniÃ¨re notice
         $firstRef=$lastRef=0;
 
         foreach($REF as $i=>$REF)
         {
             if ($nbFiles>1)
-                echo '<h3>Fichier n°', $i+1, ' (ref ', $REF, ')</h3>';
+                echo '<h3>Fichier nÂ°', $i+1, ' (ref ', $REF, ')</h3>';
 
-            // Crée l'équation de recherche
-            // On filtre sur les fichiers autorisés à être importés
+            // CrÃ©e l'Ã©quation de recherche
+            // On filtre sur les fichiers autorisÃ©s Ã  Ãªtre importÃ©s
             $equation='Status:task AND REF:'.$REF;
 
-            // Ouvre la base de données en écriture
+            // Ouvre la base de donnÃ©es en Ã©criture
 //            $this->openDatabase(false);
-//            echo '1ère ouverture de la base en écriture<br />';
+//            echo '1Ã¨re ouverture de la base en Ã©criture<br />';
 
-            // Recherche la fiche du fichier à importer
+            // Recherche la fiche du fichier Ã  importer
             if (! $this->selection->search($equation, array('max'=>-1, 'sort'=>'+')))
             {
-                echo "<p style='color:red; font-weight: bold;'>Numéro de référence invalide : $REF (le fichier correspondant n'existe pas)</p>";
+                echo "<p style='color:red; font-weight: bold;'>NumÃ©ro de rÃ©fÃ©rence invalide : $REF (le fichier correspondant n'existe pas)</p>";
                 //unset($this->selection);
                 continue;
             }
 
-            // Récupère le path et le nom du fichier à importer
+            // RÃ©cupÃ¨re le path et le nom du fichier Ã  importer
             $path=$this->selection['Path'];
             $fileName=$this->selection['FileName'];
 
-            echo '<p>Début de l\'import du fichier ', $fileName, ' le ', strftime('%d/%m/%Y à %H:%M:%S'), '</p>';
+            echo '<p>DÃ©but de l\'import du fichier ', $fileName, ' le ', strftime('%d/%m/%Y Ã  %H:%M:%S'), '</p>';
 
-            // Met à jour le statut du fichier
+            // Met Ã  jour le statut du fichier
             $this->selection->editRecord();
             $this->selection['Status']='import_running';
             $this->selection->saveRecord();
 
             // Ferme la base
 //            unset($this->selection);
-//            echo '1ère fermeture de la base<br />';
+//            echo '1Ã¨re fermeture de la base<br />';
 
-            // Détermine le callback à utiliser pour l'import des fichiers
+            // DÃ©termine le callback Ã  utiliser pour l'import des fichiers
             $callback=$this->callback(Config::get('importcallback'));
 
             // Aucun callback, l'import ne peut pas se faire
             if (is_null($callback))
             {
                 $ok=false;
-                $msg='Import du fichier impossible : Erreur interne : le callback d\'import n\'a pas été défini en configuration';
+                $msg='Import du fichier impossible : Erreur interne : le callback d\'import n\'a pas Ã©tÃ© dÃ©fini en configuration';
                 echo '<p>', $msg, '</p>';
             }
 
             // Import du fichier
             else
             {
-                // Détermine le path du fichier dans lequel seront stockées les notices erronées
-                // Ces fichiers sont stockés dans le même répertoire que les fichiers à importer,
-                // en étant préfixés par 'err'
+                // DÃ©termine le path du fichier dans lequel seront stockÃ©es les notices erronÃ©es
+                // Ces fichiers sont stockÃ©s dans le mÃªme rÃ©pertoire que les fichiers Ã  importer,
+                // en Ã©tant prÃ©fixÃ©s par 'err'
                 $errorFile=tempnam(Utils::makePath($this->selection->getPath(), 'files'),'err');
 
-                // todo : revoir le paramètre $path quand selection['Path']
+                // todo : revoir le paramÃ¨tre $path quand selection['Path']
                 // contiendra un path relatif
                 list($ok,$msg,$first,$last)=call_user_func($callback,$path,$errorFile);
             }
 
-            // on lui passe en paramètres :
-            // - $selection['Path'] : le path du fichier à importer
+            // on lui passe en paramÃ¨tres :
+            // - $selection['Path'] : le path du fichier Ã  importer
             // - $errorFile : le path d'un fichier dans lequel il peut
-            //   stocker les notices erronnées (tmp_name('db/files', 'err'))
+            //   stocker les notices erronnÃ©es (tmp_name('db/files', 'err'))
             // le callback retourne :
             // - le statut
             // - le contenu du champ Notes
 
-            // - true ou null : ok, tout a bien marché (unlink $errorFile)
-            // - false : ? ça n'a pas marché, mais on ne sait pas pourquoi
-            // - string (ou array de string ?) : liste des erreurs rencontrées
+            // - true ou null : ok, tout a bien marchÃ© (unlink $errorFile)
+            // - false : ? Ã§a n'a pas marchÃ©, mais on ne sait pas pourquoi
+            // - string (ou array de string ?) : liste des erreurs rencontrÃ©es
 
-            // stocker dans Notes le message d'erreur + mention générée par nous
-            // (heure de début et de fin, durée...)
+            // stocker dans Notes le message d'erreur + mention gÃ©nÃ©rÃ©e par nous
+            // (heure de dÃ©but et de fin, durÃ©e...)
             // status=import_ok, import_warning ou import_error
 
-            // Ouvre de nouveau la base de données en écriture
+            // Ouvre de nouveau la base de donnÃ©es en Ã©criture
 //            $this->openDatabase(false);
-//            echo '2e ouverture de la base en écriture<br />';
+//            echo '2e ouverture de la base en Ã©criture<br />';
 
-            // L'import s'est bien passé
+            // L'import s'est bien passÃ©
             if ($ok)
             {
-                // Supprime le fichier des notices erronées si toutes les notices ont été importées
+                // Supprime le fichier des notices erronÃ©es si toutes les notices ont Ã©tÃ© importÃ©es
                 unlink($errorFile);
 
-                // Récupère les numéros de la première et dernière notice
+                // RÃ©cupÃ¨re les numÃ©ros de la premiÃ¨re et derniÃ¨re notice
                 $firstRef=$firstRef===0 ? $first : min($firstRef,$first);
                 $lastRef=max($lastRef,$last);
             }
 
-            // Met à jour le statut du fichier et renseigne le champ Notes
+            // Met Ã  jour le statut du fichier et renseigne le champ Notes
             if ($this->selection->search("REF=$REF", array('max'=>1)))
             {
                 $this->selection->editRecord();
@@ -295,27 +295,27 @@ class ImportModule extends DatabaseModule
 //            unset($this->selection);
 //            echo '2e fermeture de la base<br />';
 
-            $time=strftime('%d/%m/%Y à %H:%M:%S');
+            $time=strftime('%d/%m/%Y Ã  %H:%M:%S');
             echo '<p>Fin de l\'import le ', $time, '</p>';
         }
 
-        // TODO : Créer une clé de config 'dedouble' (true, false) pour dire si on
-        // doit lancer le dédoublonnage automatiquement après l'import
+        // TODO : CrÃ©er une clÃ© de config 'dedouble' (true, false) pour dire si on
+        // doit lancer le dÃ©doublonnage automatiquement aprÃ¨s l'import
 
-        // Dédoublonnage sur les notices importées
+        // DÃ©doublonnage sur les notices importÃ©es
         if (! is_null($firstRef) && ! is_null($lastRef))
         {
-            // Crée la requête
+            // CrÃ©e la requÃªte
             $equation="REF:$firstRef";
             $equation.=$lastRef!==0 ? "..$lastRef" : '';
             $request=Request::create()->setModule('DedupModule')->setAction('Dedup')->set('_equation',$equation);
 
-            // Titre de la tâche
-            $label='Dédoublonnage ';
-            $label.=$nbFiles===1 ? 'du fichier intégré' : "des $nbFiles fichiers intégrés";
+            // Titre de la tÃ¢che
+            $label='DÃ©doublonnage ';
+            $label.=$nbFiles===1 ? 'du fichier intÃ©grÃ©' : "des $nbFiles fichiers intÃ©grÃ©s";
             $label.=' dans la base '.Config::get('database').' le '.$time;
 
-            // Crée une tâche au sein du gestionnaire de tâches
+            // CrÃ©e une tÃ¢che au sein du gestionnaire de tÃ¢ches
             $id=Task::create()
                 ->setRequest($request)
                 ->setTime(0)
@@ -324,39 +324,39 @@ class ImportModule extends DatabaseModule
                 ->save()
                 ->getId();
 
-            // Propose un lien vers le résultat du dédoublonnage
-            echo '<p><a href="', Routing::linkFor('/TaskManager/TaskStatus?id='.$id),'">Voir le résultat du dédoublonnage réalisé sur les notices importées</a></p>';
+            // Propose un lien vers le rÃ©sultat du dÃ©doublonnage
+            echo '<p><a href="', Routing::linkFor('/TaskManager/TaskStatus?id='.$id),'">Voir le rÃ©sultat du dÃ©doublonnage rÃ©alisÃ© sur les notices importÃ©es</a></p>';
         }
     }
 
     public function actionUpload()
     {
-        // Ouvre la base de données en écriture
+        // Ouvre la base de donnÃ©es en Ã©criture
         $this->openDatabase(false);
 
-        // Détermine le callback à utiliser pour la validation du fichier
+        // DÃ©termine le callback Ã  utiliser pour la validation du fichier
         $callback=$this->callback(Config::userGet('validcallback'));
 
-        // Répertoire dans lequel vont être stockés les fichiers uploadés
+        // RÃ©pertoire dans lequel vont Ãªtre stockÃ©s les fichiers uploadÃ©s
         $dir=Utils::makePath($this->selection->getPath(), 'files');
 
-        foreach($_FILES as $file) // todo: on ne devrait pas utiliser $_FILES, request devrait avoir les méthodes pour gérer les fichiers
+        foreach($_FILES as $file) // todo: on ne devrait pas utiliser $_FILES, request devrait avoir les mÃ©thodes pour gÃ©rer les fichiers
         {
-            // Détermine un nom pour le fichier uploadé
-            // todo : $path doit être un chemin relatif par rapport au répertoire de la base : files/ficXXX.tmp
+            // DÃ©termine un nom pour le fichier uploadÃ©
+            // todo : $path doit Ãªtre un chemin relatif par rapport au rÃ©pertoire de la base : files/ficXXX.tmp
             $path=tempnam($dir, 'fic');
 
-            // Vérifie que le fichier temporaire a été créé dans le bon répertoire
-            // Permet de vérifier que $dir existe, qu'on peut écrire dedans, etc.
+            // VÃ©rifie que le fichier temporaire a Ã©tÃ© crÃ©Ã© dans le bon rÃ©pertoire
+            // Permet de vÃ©rifier que $dir existe, qu'on peut Ã©crire dedans, etc.
             if (strpos($path,$dir)!==0)
-                throw new Exception(sprintf('Impossible de créer un fichier dans le répertoire %s (erreur de configuration du serveur : vérifiez l\'existence et les droits de ce répertoire)', $dir));
+                throw new Exception(sprintf('Impossible de crÃ©er un fichier dans le rÃ©pertoire %s (erreur de configuration du serveur : vÃ©rifiez l\'existence et les droits de ce rÃ©pertoire)', $dir));
 
-            // Vérifie et copie le fichier uploadé
+            // VÃ©rifie et copie le fichier uploadÃ©
             $result=Utils::uploadFile($file, $path, $callback);
 
             switch(true)
             {
-                case $result===true: // ok, on crée un enreg
+                case $result===true: // ok, on crÃ©e un enreg
                     $this->selection->addRecord();
 
                     $this->selection['Path']=$path;
@@ -383,7 +383,7 @@ class ImportModule extends DatabaseModule
 
                     // todo : no dry
 
-                  //$this->selection['Path']=null; // le fichier *n'a pas* été stocké puisqu'on a eu une erreur
+                  //$this->selection['Path']=null; // le fichier *n'a pas* Ã©tÃ© stockÃ© puisqu'on a eu une erreur
                     $this->selection['FileName']=$file['name'];
                     $this->selection['Size']=$file['size'];
                     $this->selection['Status']='upload_error';
@@ -396,92 +396,92 @@ class ImportModule extends DatabaseModule
             }
         }
 
-        Runtime::redirect('/'.$this->request->getModule().'/'); // todo: +anchor du premier ajouté
+        Runtime::redirect('/'.$this->request->getModule().'/'); // todo: +anchor du premier ajoutÃ©
 //        echo 'upload done';
     }
 
 
     /**
-     * Génère un tableau d'horaires
+     * GÃ©nÃ¨re un tableau d'horaires
      *
-     * La fonction timeSteps génère un tableau contenant tous les horaires
-     * possibles entre l'heure de début et l'heure de fin indiquées en avançant
-     * de $step minutes à chaque fois.
+     * La fonction timeSteps gÃ©nÃ¨re un tableau contenant tous les horaires
+     * possibles entre l'heure de dÃ©but et l'heure de fin indiquÃ©es en avanÃ§ant
+     * de $step minutes Ã  chaque fois.
      *
      * Exemples :
      * <code>
-     * timeSteps(23, 1, 30) // de 23h00 à 01h00 du matin par tranches de 30 minutes
+     * timeSteps(23, 1, 30) // de 23h00 Ã  01h00 du matin par tranches de 30 minutes
      * -> '23:00', '23:30', '00:00', '00:30', '01:00'
      *
-     * timeSteps(12, 13, 15) // de midi à treize heures par tranches d'un quart d'heure
+     * timeSteps(12, 13, 15) // de midi Ã  treize heures par tranches d'un quart d'heure
      * -> '12:00', '12:15', '12:30', '12:45', '13:00'
      * </code>
      *
      * Remarques :
-     * - si les paramètres indiqués sont en dehors de l'intervalle autorisé, ils
-     *   seront ajustés (par exemple si vous indiquez 25 comme heure de début,
-     *   les horaires générés commenceront à 01h00 du matin).
-     * - les horaires générés contiennent toujours les heures de début et de fin.
-     * - si step vaut 0, seul l'horaire de début est généré :
+     * - si les paramÃ¨tres indiquÃ©s sont en dehors de l'intervalle autorisÃ©, ils
+     *   seront ajustÃ©s (par exemple si vous indiquez 25 comme heure de dÃ©but,
+     *   les horaires gÃ©nÃ©rÃ©s commenceront Ã  01h00 du matin).
+     * - les horaires gÃ©nÃ©rÃ©s contiennent toujours les heures de dÃ©but et de fin.
+     * - si step vaut 0, seul l'horaire de dÃ©but est gÃ©nÃ©rÃ© :
      * <code>
      *     timeSteps(12, 12, 0) -> '12:00'
      * </code>
-     * - si les horaires de début et de fin sont identiques, tous les horaires
-     *   possibles sur 24 heures sont générés :
+     * - si les horaires de dÃ©but et de fin sont identiques, tous les horaires
+     *   possibles sur 24 heures sont gÃ©nÃ©rÃ©s :
      * <code>
-     *     timeSteps(12, 12, 60) // de midi à midi d'heure en heure
+     *     timeSteps(12, 12, 60) // de midi Ã  midi d'heure en heure
      *     -> '12:00', '13:00', '14:00' ... '09:00', '10:00', '11:00'
      * </code>
      *
-     * @param int $start l'heure de début (de 0 à 23)
-     * @param int $end l'heure de début (de 0 à 23)
-     * @param int $step le "pas" à appliquer, en minutes (de 0 à 60)
-     * @param string $format le format à utiliser pour générer les valeurs du
-     * tableau retourné, tel que reconnu par la fonction
+     * @param int $start l'heure de dÃ©but (de 0 Ã  23)
+     * @param int $end l'heure de dÃ©but (de 0 Ã  23)
+     * @param int $step le "pas" Ã  appliquer, en minutes (de 0 Ã  60)
+     * @param string $format le format Ã  utiliser pour gÃ©nÃ©rer les valeurs du
+     * tableau retournÃ©, tel que reconnu par la fonction
      * {@link http://php.net/strftime strftime()} de php.
      *
-     * @return array un tableau de chaines contenant les différents horaires
-     * générés.
+     * @return array un tableau de chaines contenant les diffÃ©rents horaires
+     * gÃ©nÃ©rÃ©s.
      *
-     * Les clés du tableau contiennent toujours l'horaire sous la forme
+     * Les clÃ©s du tableau contiennent toujours l'horaire sous la forme
      * 'hhmmss' (i.e. heures minutes secondes sur deux chiffres) et les
-     * valeurs associées contiennent le même horaire mais sous la forme indiquée
+     * valeurs associÃ©es contiennent le mÃªme horaire mais sous la forme indiquÃ©e
      * par $format.
      *
-     * Par défaut, $format stocke les valeurs avec le même format
-     * que les clés, mais vous pouvez indiquer un format différent si vous
-     * souhaitez présenter les horaires autrement à l'utilisateur :
+     * Par dÃ©faut, $format stocke les valeurs avec le mÃªme format
+     * que les clÃ©s, mais vous pouvez indiquer un format diffÃ©rent si vous
+     * souhaitez prÃ©senter les horaires autrement Ã  l'utilisateur :
      *
      * Exemples :
      * <code>
-     * // Format par défaut : clés et valeurs sont identiques
+     * // Format par dÃ©faut : clÃ©s et valeurs sont identiques
      * timeSteps(22, 23, 30)
      * -> array('22:00'=>'22:00', '22:30'=>'22:30', '23:00'=>'23:00')
      *
-     * // Utilise le format préféré de représentation de l'heure (%X) :
+     * // Utilise le format prÃ©fÃ©rÃ© de reprÃ©sentation de l'heure (%X) :
      * timeSteps(22, 23, 30, '%X')
      * -> array('22:00'=>'22:00:00', '22:30'=>'22:30:00', '23:00'=>'23:00:00')
      *
-     * // N'affiche que l'heure et un libellé
+     * // N'affiche que l'heure et un libellÃ©
      * timeSteps(22, 23, 60, '%H heures')
      * -> array('22:00'=>'22 heures', '23:00'=>'23 heures')
      * </code>
      */
     public function timeSteps($start, $end, $step, $format='%H:%M')
     {
-        // Si step vaut zéro, on ne génère que l'heure de début
+        // Si step vaut zÃ©ro, on ne gÃ©nÃ¨re que l'heure de dÃ©but
         if ($step==0)
             return array(sprintf('%02d0000', $start)=>strftime($format, mktime($start, 0, 0)));
 
-        // Ajuste start et end dans l'intervalle autorisé
+        // Ajuste start et end dans l'intervalle autorisÃ©
         $start=$start % 24;
         if ($end<$start) $end+=24;
 
-        // Calcule le nombre d'horaires à généré (zéro = journée complète)
+        // Calcule le nombre d'horaires Ã  gÃ©nÃ©rÃ© (zÃ©ro = journÃ©e complÃ¨te)
         $nb=($end-$start)%24;
         if ($nb==0) $nb=24;
 
-        // Génère tous les horaires
+        // GÃ©nÃ¨re tous les horaires
         $t=array();
         for($i=0;$i<$nb;$i++)
         {
@@ -494,42 +494,42 @@ class ImportModule extends DatabaseModule
             if ($start>=24) $start-=24;
         }
 
-        // Ajoute l'horaire de fin (sauf si on génère une journée complète)
+        // Ajoute l'horaire de fin (sauf si on gÃ©nÃ¨re une journÃ©e complÃ¨te)
         if ($nb!= 24)
             $t[sprintf('%02d%02d00', $start, 0)]=strftime($format, mktime($start, 0, 0));
 
-        // Terminé
+        // TerminÃ©
         return $t;
     }
 
     /**
-     * Vérifie et charge un callback.
+     * VÃ©rifie et charge un callback.
      *
-     * @param callback $callback le callback à vérifier et à initialiser.
+     * @param callback $callback le callback Ã  vÃ©rifier et Ã  initialiser.
      * Il peut s'agir :
-     * - d'une chaine de caractères simple : dans ce cas, le callback doit être
-     *   une fonction globale définie par php ou par l'application.
-     * - une chaine de caractères de la forme 'class::méthode'
-     * - une chaine de caractères de la forme 'class->méthode'
-     * - une chaine de caractères de la forme 'self::méthode'
-     * - une chaine de caractères de la forme 'this->méthode'
+     * - d'une chaine de caractÃ¨res simple : dans ce cas, le callback doit Ãªtre
+     *   une fonction globale dÃ©finie par php ou par l'application.
+     * - une chaine de caractÃ¨res de la forme 'class::mÃ©thode'
+     * - une chaine de caractÃ¨res de la forme 'class->mÃ©thode'
+     * - une chaine de caractÃ¨res de la forme 'self::mÃ©thode'
+     * - une chaine de caractÃ¨res de la forme 'this->mÃ©thode'
      *
-     * un tableau de deux éléments contenant :
-     * - (chaine,chaine) idem 'class::méthode'
-     * - ('self',chaine) 'self::méthode'
-     * - ('this',chaine) 'this->méthode'
-     * - (objet,chaine)  'class->méthode'
+     * un tableau de deux Ã©lÃ©ments contenant :
+     * - (chaine,chaine) idem 'class::mÃ©thode'
+     * - ('self',chaine) 'self::mÃ©thode'
+     * - ('this',chaine) 'this->mÃ©thode'
+     * - (objet,chaine)  'class->mÃ©thode'
      *
      * @throws BadCallbackException si le callback n'est pas valide
      *
-     * @return callback le callback vérifié et modifié
+     * @return callback le callback vÃ©rifiÃ© et modifiÃ©
      */
     public final function callback($callback)
     {
         // Si on nous passe null, retourne null
         if (is_null($callback)) return null;
 
-        // Si c'est une chaine, analyse et transforme éventuellement en tableau
+        // Si c'est une chaine, analyse et transforme Ã©ventuellement en tableau
         if (is_string($callback))
         {
             if ($callback==='') return null;
@@ -551,7 +551,7 @@ class ImportModule extends DatabaseModule
             }
         }
 
-        // Tableau : vérifie qu'on a deux éléments numérotés 0 et 1
+        // Tableau : vÃ©rifie qu'on a deux Ã©lÃ©ments numÃ©rotÃ©s 0 et 1
         elseif (is_array($callback))
         {
             if ( count($callback)!==2 || !isset($callback[0]) || !isset($callback[1]) )
@@ -571,7 +571,7 @@ class ImportModule extends DatabaseModule
             throw new BadCallbackException($callback);
         }
 
-        // arrivé là on a forcément un tableau de la forme ('self'|'this'|'classe'|objet ; 'méthode')
+        // arrivÃ© lÃ  on a forcÃ©ment un tableau de la forme ('self'|'this'|'classe'|objet ; 'mÃ©thode')
         if (is_string($class=$callback[0]))
         {
             if ($class==='self')
@@ -586,12 +586,12 @@ class ImportModule extends DatabaseModule
             {
                 if (class_exists($class, true))
                 {
-                    if (! $static) // classe existe, appel dynamique, crée une instance du module
+                    if (! $static) // classe existe, appel dynamique, crÃ©e une instance du module
                     {
                         if (is_subclass_of($class, 'Module'))
                         {
                             $callback[0]=Module::loadModule($class);
-                            Config::addArray($callback[0]->config);    // fixme: objectif : uniquement $this->config mais pb pour la config transversale (autoincludes...) en attendant : on recopie dans config générale
+                            Config::addArray($callback[0]->config);    // fixme: objectif : uniquement $this->config mais pb pour la config transversale (autoincludes...) en attendant : on recopie dans config gÃ©nÃ©rale
                         }
                         else
                             $callback[0]=new $class();
@@ -611,7 +611,7 @@ class ImportModule extends DatabaseModule
                         else
                         {
                             $callback[0]=$object;
-                            Config::addArray($callback[0]->config);    // fixme: objectif : uniquement $this->config mais pb pour la config transversale (autoincludes...) en attendant : on recopie dans config générale
+                            Config::addArray($callback[0]->config);    // fixme: objectif : uniquement $this->config mais pb pour la config transversale (autoincludes...) en attendant : on recopie dans config gÃ©nÃ©rale
                         }
 
                     }
@@ -627,7 +627,7 @@ class ImportModule extends DatabaseModule
             }
         }
 
-        // Vérifie et retourne le callback obtenu
+        // VÃ©rifie et retourne le callback obtenu
         if (is_callable($callback)) return $callback;
         throw new BadCallbackException($callback);
 
