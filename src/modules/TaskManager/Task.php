@@ -2,30 +2,30 @@
 /**
  * @package     fab
  * @subpackage  TaskManager
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: Task.php 825 2008-06-26 16:09:02Z daniel.menard.bdsp $
  */
 
 /**
- * Représente une tâche qui sera exécutée ultérieurement par le 
- * {@link TaskManager gestionnaire de tâches}.
+ * ReprÃ©sente une tÃ¢che qui sera exÃ©cutÃ©e ultÃ©rieurement par le 
+ * {@link TaskManager gestionnaire de tÃ¢ches}.
  * 
- * Une tâche est principalement constituée {@link setRequest() d'une requête} 
- * qui sera exécutée à une {@link setTime() heure donnée} et qui 
- * éventuellement {@link setRepat() se répète}.
+ * Une tÃ¢che est principalement constituÃ©e {@link setRequest() d'une requÃªte} 
+ * qui sera exÃ©cutÃ©e Ã  une {@link setTime() heure donnÃ©e} et qui 
+ * Ã©ventuellement {@link setRepat() se rÃ©pÃ¨te}.
  * 
- * Elle comporte également différents attributs ({@link setLabel() un titre}, 
- * {@link setStatus() un état}, ...) et différentes informations de gestion
- * ({@link getId() identifiant unique}, {@link getCreation() date de création},
- * date de {@link getNext() prochaine} et de {@link getLast() dernière} 
- * exécution, {@link getOutput() sortie générée} lors de la dernière exécution, 
+ * Elle comporte Ã©galement diffÃ©rents attributs ({@link setLabel() un titre}, 
+ * {@link setStatus() un Ã©tat}, ...) et diffÃ©rentes informations de gestion
+ * ({@link getId() identifiant unique}, {@link getCreation() date de crÃ©ation},
+ * date de {@link getNext() prochaine} et de {@link getLast() derniÃ¨re} 
+ * exÃ©cution, {@link getOutput() sortie gÃ©nÃ©rÃ©e} lors de la derniÃ¨re exÃ©cution, 
  * etc.)
  * 
- * La classe Task est une interface agile permettant de créer et de modifier des 
- * tâches.
+ * La classe Task est une interface agile permettant de crÃ©er et de modifier des 
+ * tÃ¢ches.
  * 
- * La majorité des méthodes retourne la tâche en cours ce qui permet de 
- * chainer les méthodes.
+ * La majoritÃ© des mÃ©thodes retourne la tÃ¢che en cours ce qui permet de 
+ * chainer les mÃ©thodes.
  * 
  * Exemple :
  * <code>
@@ -33,26 +33,26 @@
  * 
  *     $task
  *         ->setRequest($this->request->setAction('doBackup'))  // Lancer une sauvegarde
- *         ->setTime(0)                                         // Exécuter "dès que possible"
+ *         ->setTime(0)                                         // ExÃ©cuter "dÃ¨s que possible"
  *         ->setRepeat('1 j./lun-ven')                          // Puis tous les jours du lundi au vendredi 
- *         ->setLabel('Sauvegarde de la base')                  // Le titre de la tâche 
+ *         ->setLabel('Sauvegarde de la base')                  // Le titre de la tÃ¢che 
  *         ->save();
  *     
- *     echo 'La tâche ', $task->getId(), ' a été créée.'; 
+ *     echo 'La tÃ¢che ', $task->getId(), ' a Ã©tÃ© crÃ©Ã©e.'; 
  * </code> 
  * 
- * Assez souvent, la requête correspondant à la tâche à créer est similaire
- * (voire identique) à la requête appellée pour créer la tâche (par exemple
- * on appelle une action 'backup' qui va vérifier tous les paramètres fournis 
- * puis qui va créer une tâche 'doBackup' en lui passant tous ces les paramètres).
+ * Assez souvent, la requÃªte correspondant Ã  la tÃ¢che Ã  crÃ©er est similaire
+ * (voire identique) Ã  la requÃªte appellÃ©e pour crÃ©er la tÃ¢che (par exemple
+ * on appelle une action 'backup' qui va vÃ©rifier tous les paramÃ¨tres fournis 
+ * puis qui va crÃ©er une tÃ¢che 'doBackup' en lui passant tous ces les paramÃ¨tres).
  * 
- * Néanmoins, vous pouvez modifier comme vous le souhaitez la requête en cours
- * (comme dans l'exemple ci-dessus ou on a simplement changé l'action à exécuter)
- * ou créer un nouvel {@link Request objet Request} de toute pièce.
+ * NÃ©anmoins, vous pouvez modifier comme vous le souhaitez la requÃªte en cours
+ * (comme dans l'exemple ci-dessus ou on a simplement changÃ© l'action Ã  exÃ©cuter)
+ * ou crÃ©er un nouvel {@link Request objet Request} de toute piÃ¨ce.
  * 
  * Exemple :
  * <code>
- *     // Crée d'abord la requête  
+ *     // CrÃ©e d'abord la requÃªte  
  *     $request=new Request();
  *     $request
  *         ->setModule('Backup')
@@ -61,7 +61,7 @@
  *         ->set('format', 'xml');
  *         ->set('filename', 'backup.xml');
  *
- *     // Puis planifie la tâche 
+ *     // Puis planifie la tÃ¢che 
  *     $task=new Task();
  *     $task
  *         ->setRequest($request)   // Lancer une sauvegarde
@@ -75,116 +75,116 @@
 class Task
 {
     /**
-     * Constantes représentant le statut des tâches (cf {@link getStatus()})
+     * Constantes reprÃ©sentant le statut des tÃ¢ches (cf {@link getStatus()})
      */
-    const Disabled='disabled';  // tâche désactivée
-    const Waiting='waiting';    // tâche en attente (ce n'est pas encore l'heure de l'exécuter)
-    const Starting='starting';  // tâche en train de démarrer (lancée par le TaskManager)
-    const Running='running';    // tâche en cours d'exécution
-    const Done='done';          // tâche terminée
-    const Error='error';        // tâche en erreur (lancement impossible, erreur durant l'exécution...)
-    const Expired='expired';    // heure d'exécution prévue dépassée
+    const Disabled='disabled';  // tÃ¢che dÃ©sactivÃ©e
+    const Waiting='waiting';    // tÃ¢che en attente (ce n'est pas encore l'heure de l'exÃ©cuter)
+    const Starting='starting';  // tÃ¢che en train de dÃ©marrer (lancÃ©e par le TaskManager)
+    const Running='running';    // tÃ¢che en cours d'exÃ©cution
+    const Done='done';          // tÃ¢che terminÃ©e
+    const Error='error';        // tÃ¢che en erreur (lancement impossible, erreur durant l'exÃ©cution...)
+    const Expired='expired';    // heure d'exÃ©cution prÃ©vue dÃ©passÃ©e
     
     /**
-     * Numéro unique identifiant la tâche
-     * L'id n'existe que pour une tâche qui a été {@link save() enregistrée}
+     * NumÃ©ro unique identifiant la tÃ¢che
+     * L'id n'existe que pour une tÃ¢che qui a Ã©tÃ© {@link save() enregistrÃ©e}
      * 
      * @var null|int
      */
     private $id=null;
 
     /**
-     * Libellé de la tâche
+     * LibellÃ© de la tÃ¢che
      * 
      * @var string
      */
     private $label='';
     
     /**
-     * Statut de la tâche
+     * Statut de la tÃ¢che
      * 
      * @var string
      */
     private $status=self::Waiting;
     
     /**
-     * Path complet du répertoire racine de l'application propriétaire de la 
-     * tâche.
+     * Path complet du rÃ©pertoire racine de l'application propriÃ©taire de la 
+     * tÃ¢che.
      * 
-     * Correspond à la valeur de {@link Runtime::$root} au moment où la tâche 
-     * est créée.
+     * Correspond Ã  la valeur de {@link Runtime::$root} au moment oÃ¹ la tÃ¢che 
+     * est crÃ©Ã©e.
      * 
      * @var path
      */
     private $applicationRoot='';
     
     /**
-     * Url complète du front controler utilisé pour créer la tâche
+     * Url complÃ¨te du front controler utilisÃ© pour crÃ©er la tÃ¢che
      *
      * @var string
      */
     private $url='';
     
     /**
-     * Date/heure à laquelle la tâche a été créée
+     * Date/heure Ã  laquelle la tÃ¢che a Ã©tÃ© crÃ©Ã©e
      * 
      * @var timestamp
      */
     private $creation=null;
     
     /**
-     * Date/heure à laquelle la tâche est planifiée
-     * (null = jamais, 0=dès que possible)
+     * Date/heure Ã  laquelle la tÃ¢che est planifiÃ©e
+     * (null = jamais, 0=dÃ¨s que possible)
      * 
      * @var null|0|timestamp
      */
     private $time=null;
     
     /**
-     * Information de répétition de la tâche
-     * (null = ne pas répéter)
+     * Information de rÃ©pÃ©tition de la tÃ¢che
+     * (null = ne pas rÃ©pÃ©ter)
      * 
      * @var string
      */
     private $repeat=null;
 
     /**
-     * Module à charger pour exécuter la tâche
+     * Module Ã  charger pour exÃ©cuter la tÃ¢che
      * 
      * @var string
      */
     private $module=null;
     
     /**
-     * Action à appeler pour exécuter la tâche
+     * Action Ã  appeler pour exÃ©cuter la tÃ¢che
      * 
      * @var string
      */
     private $action=null;
     
     /**
-     * Paramètres à passer à l'action pour exécuter la tâche
+     * ParamÃ¨tres Ã  passer Ã  l'action pour exÃ©cuter la tÃ¢che
      * 
      * @var string
      */
     private $parameters=null;
     
     /**
-     * Date/heure de la prochaine exécution de la tâche
+     * Date/heure de la prochaine exÃ©cution de la tÃ¢che
      * 
      * @var null|0|timestamp
      */
     private $next=null;
 
     /**
-     * Date/heure de la dernière exécution de la tâche
+     * Date/heure de la derniÃ¨re exÃ©cution de la tÃ¢che
      * 
      * @var null|timestamp
      */
     private $last=null;
     
     /**
-     * Path du fichier contenant la sortie générée par la tâche
+     * Path du fichier contenant la sortie gÃ©nÃ©rÃ©e par la tÃ¢che
      * 
      * @var path
      */
@@ -192,29 +192,29 @@ class Task
     
     
     /**
-     * Crée une nouvelle tâche ou charge une tâche existante.
+     * CrÃ©e une nouvelle tÃ¢che ou charge une tÃ¢che existante.
      * 
-     * Si aucun ID de tâche n'est indiqué, une nouvelle tâche est créée. Dans 
-     * le cas contraire l'ID indiqué et recherché dans la base et la tâche 
-     * correspondante est chargée.
+     * Si aucun ID de tÃ¢che n'est indiquÃ©, une nouvelle tÃ¢che est crÃ©Ã©e. Dans 
+     * le cas contraire l'ID indiquÃ© et recherchÃ© dans la base et la tÃ¢che 
+     * correspondante est chargÃ©e.
      * 
-     * La tâche est créée/chargée uniquement en mémoire : les modifications 
-     * apportées ne seront enregistrées dans la base de données que lorsque 
-     * {@link save()} sera appelée.
+     * La tÃ¢che est crÃ©Ã©e/chargÃ©e uniquement en mÃ©moire : les modifications 
+     * apportÃ©es ne seront enregistrÃ©es dans la base de donnÃ©es que lorsque 
+     * {@link save()} sera appelÃ©e.
      * 
-     * En interne, il est également possible de créer une tâche en passant en
-     * paramètre un objet {@link Database} ouvert sur l'enregistrement de tâche 
-     * à charger.
+     * En interne, il est Ã©galement possible de crÃ©er une tÃ¢che en passant en
+     * paramÃ¨tre un objet {@link Database} ouvert sur l'enregistrement de tÃ¢che 
+     * Ã  charger.
      * 
-     * @param null|int|Database $id l'identifiant de la tâche à charger ou null 
-     * pour créer une nouvelle tâche ou une sélection pour créer une tâche à 
+     * @param null|int|Database $id l'identifiant de la tÃ¢che Ã  charger ou null 
+     * pour crÃ©er une nouvelle tÃ¢che ou une sÃ©lection pour crÃ©er une tÃ¢che Ã  
      * partir de l'enregistrement en cours.
      * 
-     * @throws Exception si l'identifiant indiqué n'est pas correct 
+     * @throws Exception si l'identifiant indiquÃ© n'est pas correct 
      */
     public function __construct($id=null)
     {
-        // Crée une nouvelle tâche (em mémoire, sera réellement créée si save est appelée)
+        // CrÃ©e une nouvelle tÃ¢che (em mÃ©moire, sera rÃ©ellement crÃ©Ã©e si save est appelÃ©e)
         if (is_null($id))
         {
             $this->creation=self::timestampToString(time());
@@ -223,7 +223,7 @@ class Task
             $this->url=Utils::getHost() . Runtime::$realHome . Runtime::$fcName;
         }
         
-        // Charge la tâche indiquée
+        // Charge la tÃ¢che indiquÃ©e
         else
         {
             if ($id instanceof Database)
@@ -232,16 +232,16 @@ class Task
             }
             else
             {
-                // Ouvre la base de données (readonly)
+                // Ouvre la base de donnÃ©es (readonly)
                 $database=TaskManager::getDatabasePath();
                 $tasks=Database::open($database, true, 'xapian');
                 
-                // Recherche la tâche indiquée
+                // Recherche la tÃ¢che indiquÃ©e
                 if( !$tasks->search('ID='.$id))
-                    throw new Exception(sprintf('La tâche %s n\'existe pas',$id));
+                    throw new Exception(sprintf('La tÃ¢che %s n\'existe pas',$id));
             }
             
-            // Charge toutes les propriétés
+            // Charge toutes les propriÃ©tÃ©s
             foreach($this as $property=>&$value)
                 $value=$tasks[$property];
             
@@ -251,18 +251,18 @@ class Task
     }
 
     /**
-     * Méthode statique permettant de créer une nouvelle tâche ou de charger 
-     * une tâche existante.
+     * MÃ©thode statique permettant de crÃ©er une nouvelle tÃ¢che ou de charger 
+     * une tÃ¢che existante.
      * 
-     * Php ne permet pas d'appeller une méthode sur un objet juste créé avec
-     * l'opérateur new (<code>new Task()->save()</code>). Cette méthode 
-     * contourne en permettant d'écrire <code>Task::create()->save()</code>.
+     * Php ne permet pas d'appeller une mÃ©thode sur un objet juste crÃ©Ã© avec
+     * l'opÃ©rateur new (<code>new Task()->save()</code>). Cette mÃ©thode 
+     * contourne en permettant d'Ã©crire <code>Task::create()->save()</code>.
      *
-     * @param null|int|Database $id l'identifiant de la tâche à charger ou null 
-     * pour créer une nouvelle tâche ou une sélection pour créer une tâche à 
+     * @param null|int|Database $id l'identifiant de la tÃ¢che Ã  charger ou null 
+     * pour crÃ©er une nouvelle tÃ¢che ou une sÃ©lection pour crÃ©er une tÃ¢che Ã  
      * partir de l'enregistrement en cours.
      * 
-     * @throws Exception si l'identifiant indiqué n'est pas correct
+     * @throws Exception si l'identifiant indiquÃ© n'est pas correct
      *  
      * @return Task
      */
@@ -272,55 +272,55 @@ class Task
     }
     
     /**
-     * Enregistre la tâche.
+     * Enregistre la tÃ¢che.
      *
-     * S'il s'agit d'une nouvelle tâche, un nouvel enregistrement est créé
-     * dans la base de données et un {@link getId() identifiant unique} est 
-     * attribué à la tâche, sinon les modifications apportées à la tâche sont
-     * enregistrées.
+     * S'il s'agit d'une nouvelle tÃ¢che, un nouvel enregistrement est crÃ©Ã©
+     * dans la base de donnÃ©es et un {@link getId() identifiant unique} est 
+     * attribuÃ© Ã  la tÃ¢che, sinon les modifications apportÃ©es Ã  la tÃ¢che sont
+     * enregistrÃ©es.
      * 
      * Lors de l'enregistrement, la {@link getNext() date/heure de prochaine 
-     * exécution} de la tâche est mise à jour.
+     * exÃ©cution} de la tÃ¢che est mise Ã  jour.
      * 
-     * Si celle-ci est correcte, un signal est envoyé au {@link TaskManager
-     * gestionnaire de tâches} pour qu'il tienne compte des modifications 
-     * apportées à la tâche.
+     * Si celle-ci est correcte, un signal est envoyÃ© au {@link TaskManager
+     * gestionnaire de tÃ¢ches} pour qu'il tienne compte des modifications 
+     * apportÃ©es Ã  la tÃ¢che.
      * 
      * Remarque :
-     * Si vous avez besoin très tôt de l'identifiant de la tâche (par exemple
-     * pour indiquer dans des fichiers l'id de la tâche associée) vous pouvez
-     * appeler {@link save()} juste après avoir créé une tâche.
+     * Si vous avez besoin trÃ¨s tÃ´t de l'identifiant de la tÃ¢che (par exemple
+     * pour indiquer dans des fichiers l'id de la tÃ¢che associÃ©e) vous pouvez
+     * appeler {@link save()} juste aprÃ¨s avoir crÃ©Ã© une tÃ¢che.
      * 
      * Exemple :
      * <code>
-     *     // On crée la tâche
+     *     // On crÃ©e la tÃ¢che
      *     $task=new Task();
      * 
-     *     // Et on l'enregistre aussitôt pour qu'un ID soit alloué
+     *     // Et on l'enregistre aussitÃ´t pour qu'un ID soit allouÃ©
      *     $task->save(); 
      * 
-     *     // On récupère l'ID obtenu et on fait quelque chose avec
+     *     // On rÃ©cupÃ¨re l'ID obtenu et on fait quelque chose avec
      *     $id=$task->getId();
      *     // ...
      * 
-     *     // On termine le paramétrage de la tâche et l'enregistre à nouveau
+     *     // On termine le paramÃ©trage de la tÃ¢che et l'enregistre Ã  nouveau
      *     $task->setRequest($request)->setTime(0)->save();
      * </code>
      * 
-     * @return Task $this pour permettre le chainage des appels de méthodes
+     * @return Task $this pour permettre le chainage des appels de mÃ©thodes
      * 
-     * @throws Exception Si la tâche en cours n'existe pas (c'est un cas rare
-     * qui peut subvenir si la tâche est supprimée via l'interface du 
-     * TaskManager entre le moment où la tâche est chargée et le moment ou elle 
-     * est enregistrée).
+     * @throws Exception Si la tÃ¢che en cours n'existe pas (c'est un cas rare
+     * qui peut subvenir si la tÃ¢che est supprimÃ©e via l'interface du 
+     * TaskManager entre le moment oÃ¹ la tÃ¢che est chargÃ©e et le moment ou elle 
+     * est enregistrÃ©e).
      */
     public function save()
     {
-        // Ouvre la base de données (read/write)
+        // Ouvre la base de donnÃ©es (read/write)
         $database=TaskManager::getDatabasePath();
         $tasks=Database::open($database, false, 'xapian');
         
-        // Nouvelle tâche jamais enregistrée (ie n'a pas d'ID) : addRecord
+        // Nouvelle tÃ¢che jamais enregistrÃ©e (ie n'a pas d'ID) : addRecord
         if (is_null($this->id))
         {
             $tasks->addRecord();
@@ -330,7 +330,7 @@ class Task
         else
         {
             if( !$tasks->search('ID='.$this->id))
-                throw new Exception(sprintf('Erreur interne : la tâche %s n\'existe pas', $this->id));
+                throw new Exception(sprintf('Erreur interne : la tÃ¢che %s n\'existe pas', $this->id));
             $tasks->editRecord();
         }
         
@@ -339,14 +339,14 @@ class Task
         //$signal=(($this->status===Task::Waiting) && ($this->next !== $tasks['next']));
         $signal=($this->status===Task::Waiting);
         
-        // Copie toutes nos propriétés dans l'enreg
+        // Copie toutes nos propriÃ©tÃ©s dans l'enreg
         foreach($this as $property=>$value)
             $tasks[$property]=$value;
         
-        // Enregistre la tâche
+        // Enregistre la tÃ¢che
         $tasks->saveRecord();
         
-        // Recopie dans l'autre sens (ie : récupère l'ID, lastUpdate éventuel...)
+        // Recopie dans l'autre sens (ie : rÃ©cupÃ¨re l'ID, lastUpdate Ã©ventuel...)
         foreach($this as $property=>&$value)
             $value=$tasks[$property];
             
@@ -361,10 +361,10 @@ class Task
     }
     
     /**
-     * Retourne le path du répertoire racine de l'application qui a créé cette 
-     * tâche.
+     * Retourne le path du rÃ©pertoire racine de l'application qui a crÃ©Ã© cette 
+     * tÃ¢che.
      * 
-     * i.e. à quel site appartient cette tâche
+     * i.e. Ã  quel site appartient cette tÃ¢che
      *
      * @return path
      */
@@ -374,8 +374,8 @@ class Task
     }
 
     /**
-     * Retourne l'url de la page d'accueil de l'application qui a créé cette 
-     * tâche.
+     * Retourne l'url de la page d'accueil de l'application qui a crÃ©Ã© cette 
+     * tÃ¢che.
      *
      * @return path
      */
@@ -385,11 +385,11 @@ class Task
     }
     
     /**
-     * Définit la requête à exécuter pour lancer cette tâche
+     * DÃ©finit la requÃªte Ã  exÃ©cuter pour lancer cette tÃ¢che
      *
      * @param Request $request
      * 
-     * @return Task $this pour permettre le chainage des appels de méthodes
+     * @return Task $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function setRequest(Request $request)
     {
@@ -400,7 +400,7 @@ class Task
     }
     
     /**
-     * Retourne la requête qui sera exécutée lorsque la tâche sera lancée
+     * Retourne la requÃªte qui sera exÃ©cutÃ©e lorsque la tÃ¢che sera lancÃ©e
      *
      * @return Request
      */
@@ -458,10 +458,10 @@ A REMPLACER PAR :
     }
 */    
     /**
-     * Retourne l'identifiant unique de la tâche
+     * Retourne l'identifiant unique de la tÃ¢che
      *
-     * @param bool $crypted par défaut, la fonction retourne un ID crypté,
-     * indiquer false pour avoir l'ID réel.
+     * @param bool $crypted par dÃ©faut, la fonction retourne un ID cryptÃ©,
+     * indiquer false pour avoir l'ID rÃ©el.
      * 
      * todo: voir si on garde, expliquer le but
      * 
@@ -469,17 +469,17 @@ A REMPLACER PAR :
      */
     public function getId($crypted=true)
     {
-        if ($crypted) return $this->id; // todo: cryptage/décryptage
+        if ($crypted) return $this->id; // todo: cryptage/dÃ©cryptage
         return $this->id;
     }
     
     /**
-     * Retourne la date/heure à laquelle l'exécution de la tâche est prévue.
+     * Retourne la date/heure Ã  laquelle l'exÃ©cution de la tÃ¢che est prÃ©vue.
      * 
-     * @return false|null|0|timestamp l'heure d'exécution prévue pour la tâche :
-     * - null : tâche non planifiée, ne sera jamais exécutée
-     * - 0 : exécuter la tâche dès que possible
-     * - timestamp : un entier indiquant l'heure d'exécution prévue
+     * @return false|null|0|timestamp l'heure d'exÃ©cution prÃ©vue pour la tÃ¢che :
+     * - null : tÃ¢che non planifiÃ©e, ne sera jamais exÃ©cutÃ©e
+     * - 0 : exÃ©cuter la tÃ¢che dÃ¨s que possible
+     * - timestamp : un entier indiquant l'heure d'exÃ©cution prÃ©vue
      */
     public function getTime()
     {
@@ -488,16 +488,16 @@ A REMPLACER PAR :
 
     
     /**
-     * Modifie la date/heure à laquelle l'exécution de la tâche est prévue.
+     * Modifie la date/heure Ã  laquelle l'exÃ©cution de la tÃ¢che est prÃ©vue.
      * 
-     * @param null|0|timestamp $time l'heure d'exécution prévue pour la tâche.
+     * @param null|0|timestamp $time l'heure d'exÃ©cution prÃ©vue pour la tÃ¢che.
      * 
-     * Les valeurs autorisées sont :
-     * - null : tâche non planifiée, ne sera jamais exécutée
-     * - 0 : exécuter la tâche dès que possible
-     * - timestamp : un entier indiquant l'heure d'exécution prévue
+     * Les valeurs autorisÃ©es sont :
+     * - null : tÃ¢che non planifiÃ©e, ne sera jamais exÃ©cutÃ©e
+     * - 0 : exÃ©cuter la tÃ¢che dÃ¨s que possible
+     * - timestamp : un entier indiquant l'heure d'exÃ©cution prÃ©vue
      * 
-     * @return Task $this pour permettre le chainage des appels de méthodes
+     * @return Task $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function setTime($time)
     {
@@ -506,15 +506,15 @@ A REMPLACER PAR :
     }
     
     /**
-     * Indique si la tâche est récurrente ou non et, si elle l'est, la manière
-     * dont elle sera répétée. 
+     * Indique si la tÃ¢che est rÃ©currente ou non et, si elle l'est, la maniÃ¨re
+     * dont elle sera rÃ©pÃ©tÃ©e. 
      *
-     * @return null|string la fonction retourne null si la tâche n'est pas 
-     * récurrente ou une chaine de caractères indiquant les informations de 
-     * répétition sinon.
+     * @return null|string la fonction retourne null si la tÃ¢che n'est pas 
+     * rÃ©currente ou une chaine de caractÃ¨res indiquant les informations de 
+     * rÃ©pÃ©tition sinon.
      * 
      * Voir la fonction {@link setRepeat()} pour le format de la chaine 
-     * retournée.
+     * retournÃ©e.
      */
     public function getRepeat()
     {
@@ -522,61 +522,61 @@ A REMPLACER PAR :
     }
     
     /**
-     * Définit la manière dont une tâche récurrente sera répétée.
+     * DÃ©finit la maniÃ¨re dont une tÃ¢che rÃ©currente sera rÃ©pÃ©tÃ©e.
      * 
-     * Par défaut, une tâche nouvellement créée ne s'exécutera qu'une seule fois
-     * mais il est possible de définir une tâche récurrente (faire une 
+     * Par dÃ©faut, une tÃ¢che nouvellement crÃ©Ã©e ne s'exÃ©cutera qu'une seule fois
+     * mais il est possible de dÃ©finir une tÃ¢che rÃ©currente (faire une 
      * sauvegarde toutes les nuits, nettoyer les fichiers temporaires toutes les
      * 12 heures...) en appelant setRepeat() avec une chaine indiquant comment
-     * la tâche doit se répéter.
+     * la tÃ¢che doit se rÃ©pÃ©ter.
      * 
      * La chaine se compose de deux parties :
-     * - un nombre indiquant la fréquence à laquelle la tâche sera répétée
+     * - un nombre indiquant la frÃ©quence Ã  laquelle la tÃ¢che sera rÃ©pÃ©tÃ©e
      * (toutes les heures, tous les 2 jours, tous les mois...)
-     * - un filtre optionnel indiquant des restrictions sur les dates autorisées
+     * - un filtre optionnel indiquant des restrictions sur les dates autorisÃ©es
      * (seulement la nuit, uniquement en semaine...)
      * 
-     * La fréquence de répétition doit être exprimée sous la forme d'un entier 
-     * (positif et non nul) suivi d'une unité de temps (par exemple '10 min.'
-     * pour une tâche à exécuter toutes les dix minutes).
+     * La frÃ©quence de rÃ©pÃ©tition doit Ãªtre exprimÃ©e sous la forme d'un entier 
+     * (positif et non nul) suivi d'une unitÃ© de temps (par exemple '10 min.'
+     * pour une tÃ¢che Ã  exÃ©cuter toutes les dix minutes).
      * 
-     * Les unités de temps acceptées sont :
+     * Les unitÃ©s de temps acceptÃ©es sont :
      * - secondes : 's', 'sec', 'second', 'seconde' 
      * - minutes : 'mn', 'min', 'minute' 
      * - heures : 'h', 'hour', 'heure'
      * - jours : 'd', 'j', 'day', 'jour'
      * - mois : 'mon', 'month', 'monthe', 'moi'
      *
-     * L'unité peut être ou non suivie d'un point ou d'un 's' final
+     * L'unitÃ© peut Ãªtre ou non suivie d'un point ou d'un 's' final
      * ('10 min' == '10 min.', '10 minutes' == '10 minutes').
      * 
      * Remarque :
-     * Il n'existe pas d'unités pour indiquer 'une année' ou 'un trimestre' : 
-     * vous devez indiquer la durée en mois.
+     * Il n'existe pas d'unitÃ©s pour indiquer 'une annÃ©e' ou 'un trimestre' : 
+     * vous devez indiquer la durÃ©e en mois.
      * 
-     * Le filtre, s'il est présent, doit être constitué d'une suite d'éléments
-     * exprimés dans l'unité de temps indiquée avant. Chaque élément peut être
-     * un élément unique ou une période indiquée par deux éléments séparés par
+     * Le filtre, s'il est prÃ©sent, doit Ãªtre constituÃ© d'une suite d'Ã©lÃ©ments
+     * exprimÃ©s dans l'unitÃ© de temps indiquÃ©e avant. Chaque Ã©lÃ©ment peut Ãªtre
+     * un Ã©lÃ©ment unique ou une pÃ©riode indiquÃ©e par deux Ã©lÃ©ments sÃ©parÃ©s par
      * un tiret.
      * 
      * Exemples :
-     * - "1 mois" : tâche exécutée tous les mois.
-     * - "1 h./8-12,14-18" : toutes les heures, mais seulement de 8h à 12h et de
-     *   14h à 18h
+     * - "1 mois" : tÃ¢che exÃ©cutÃ©e tous les mois.
+     * - "1 h./8-12,14-18" : toutes les heures, mais seulement de 8h Ã  12h et de
+     *   14h Ã  18h
      * - "1 jour/lun-mar" : tous les jours, mais seulement les jours en semaine
-     * - "2 jours/1-15,lun-mar,ven" : tous les deux jours, mais seulement si ça
+     * - "2 jours/1-15,lun-mar,ven" : tous les deux jours, mais seulement si Ã§a
      * tombe sur un jour compris entre le 1er et le 15 du mois ou alors si le
      * jour obtenu est un lundi, un mardi ou un vendredi
      * - "1 jour/sam" : tous les samedis
      * 
-     * Remarques : les espaces sont autorisés un peu partout (entre le nombre
-     * et l'unité, entre les éléments des filtres, etc.)
+     * Remarques : les espaces sont autorisÃ©s un peu partout (entre le nombre
+     * et l'unitÃ©, entre les Ã©lÃ©ments des filtres, etc.)
      * 
-     * @param null|string $repeat soit une chaine indiquant la manière dont la 
-     * tâche doit être répétée, soit null pour indiquer que la tâche n'est pas 
-     * récurrente.
+     * @param null|string $repeat soit une chaine indiquant la maniÃ¨re dont la 
+     * tÃ¢che doit Ãªtre rÃ©pÃ©tÃ©e, soit null pour indiquer que la tÃ¢che n'est pas 
+     * rÃ©currente.
      * 
-     * @return Task $this pour permettre le chainage des appels de méthodes
+     * @return Task $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function setRepeat($repeat=null)
     {
@@ -586,11 +586,11 @@ A REMPLACER PAR :
     }
 
     /**
-     * Retourne la date de dernière exécution de la tâche ou null si la tâche 
-     * n'a pas encore été lancée.
+     * Retourne la date de derniÃ¨re exÃ©cution de la tÃ¢che ou null si la tÃ¢che 
+     * n'a pas encore Ã©tÃ© lancÃ©e.
      * 
-     * @return timestamp|null un entier représentant la date/heure de dernière
-     * exécution de la tâche ou null
+     * @return timestamp|null un entier reprÃ©sentant la date/heure de derniÃ¨re
+     * exÃ©cution de la tÃ¢che ou null
      */
     public function getLast()
     {
@@ -598,13 +598,13 @@ A REMPLACER PAR :
     }
     
     /**
-     * Modifie la date de dernière exécution de la tâche.
+     * Modifie la date de derniÃ¨re exÃ©cution de la tÃ¢che.
      *
-     * @param timestamp|null $last un entier représentant la date/heure de
-     * dernière exécution ou null si la tâche pour indiquer que la tâche n'a 
-     * pas encore été lancée.
+     * @param timestamp|null $last un entier reprÃ©sentant la date/heure de
+     * derniÃ¨re exÃ©cution ou null si la tÃ¢che pour indiquer que la tÃ¢che n'a 
+     * pas encore Ã©tÃ© lancÃ©e.
      * 
-     * @return Task $this pour permettre le chainage des appels de méthodes
+     * @return Task $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function setLast($last)
     {
@@ -613,10 +613,10 @@ A REMPLACER PAR :
     }
     
     /**
-     * Retourne la date à laquelle la tâche a été créée.
+     * Retourne la date Ã  laquelle la tÃ¢che a Ã©tÃ© crÃ©Ã©e.
      *
-     * @return timestamp un entier représentant la date/heure à laquelle la 
-     * tâche a été créée.
+     * @return timestamp un entier reprÃ©sentant la date/heure Ã  laquelle la 
+     * tÃ¢che a Ã©tÃ© crÃ©Ã©e.
      */
     public function getCreation()
     {
@@ -624,15 +624,15 @@ A REMPLACER PAR :
     }
 
     /**
-     * Retourne la date de prochaine exécution prévue pour la tâche.
+     * Retourne la date de prochaine exÃ©cution prÃ©vue pour la tÃ¢che.
      * 
-     * todo: pas clair, expliquer la différence entre {@link getTime} et getNext() 
+     * todo: pas clair, expliquer la diffÃ©rence entre {@link getTime} et getNext() 
      * 
-     * @return null|0|timestamp un entier représentant l'heure d'exécution 
-     * prévue pour la tâche :
-     * - null : tâche non planifiée, ne sera jamais exécutée
-     * - 0 : exécuter la tâche dès que possible
-     * - timestamp : un entier indiquant l'heure d'exécution prévue
+     * @return null|0|timestamp un entier reprÃ©sentant l'heure d'exÃ©cution 
+     * prÃ©vue pour la tÃ¢che :
+     * - null : tÃ¢che non planifiÃ©e, ne sera jamais exÃ©cutÃ©e
+     * - 0 : exÃ©cuter la tÃ¢che dÃ¨s que possible
+     * - timestamp : un entier indiquant l'heure d'exÃ©cution prÃ©vue
      * 
      */
     public function getNext()
@@ -641,9 +641,9 @@ A REMPLACER PAR :
     }
 
     /**
-     * Retourne le statut actuel de la tâche
+     * Retourne le statut actuel de la tÃ¢che
      *
-     * @return string l'une des constantes de statut définies dans la 
+     * @return string l'une des constantes de statut dÃ©finies dans la 
      * classe Task :
      * {@link Waiting}, {@link Starting}, {@link Running}, {@link Done},
      * {@link Error}, {@link Disabled} et {@link Expired}
@@ -654,16 +654,16 @@ A REMPLACER PAR :
     }
     
     /**
-     * Modifie le statut de la tâche
+     * Modifie le statut de la tÃ¢che
      *
-     * @param string $status l'une des constantes de statut définies dans la 
+     * @param string $status l'une des constantes de statut dÃ©finies dans la 
      * classe Task :
      * {@link Waiting}, {@link Starting}, {@link Running}, {@link Done},
      * {@link Error}, {@link Disabled} et {@link Expired}
      *   
-     * @return Task $this pour permettre le chainage des appels de méthodes
+     * @return Task $this pour permettre le chainage des appels de mÃ©thodes
      * 
-     * @throws OutOfRangeException si le statut indiqué n'est pas valide 
+     * @throws OutOfRangeException si le statut indiquÃ© n'est pas valide 
      */
     public function setStatus($status)
     {
@@ -681,14 +681,14 @@ A REMPLACER PAR :
             default:
                 throw new OutOfRangeException
                 (
-                    sprintf('Statut de tâche invalide : %s', $status)
+                    sprintf('Statut de tÃ¢che invalide : %s', $status)
                 );
         }
         return $this;
     }
     
     /**
-     * Retourne le libellé (le titre) de la tâche
+     * Retourne le libellÃ© (le titre) de la tÃ¢che
      *
      * @return string
      */
@@ -698,10 +698,10 @@ A REMPLACER PAR :
     }
     
     /**
-     * Modifie le libellé (le titre) d'une tâche
+     * Modifie le libellÃ© (le titre) d'une tÃ¢che
      *
      * @param string $label
-     * @return Task $this pour permettre le chainage des appels de méthodes
+     * @return Task $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function setLabel($label)
     {
@@ -710,9 +710,9 @@ A REMPLACER PAR :
     }
 
     /**
-     * Retourne le path du fichier qui contient la sortie générée lors de la
-     * dernière exécution de la tâche ou null si aucun nom de fichier de sortie
-     * n'a été définit.
+     * Retourne le path du fichier qui contient la sortie gÃ©nÃ©rÃ©e lors de la
+     * derniÃ¨re exÃ©cution de la tÃ¢che ou null si aucun nom de fichier de sortie
+     * n'a Ã©tÃ© dÃ©finit.
      *
      * @return path|null
      */
@@ -722,11 +722,11 @@ A REMPLACER PAR :
     }
     
     /**
-     * Modifie le path du fichier qui contient la sortie générée par la tâche
+     * Modifie le path du fichier qui contient la sortie gÃ©nÃ©rÃ©e par la tÃ¢che
      *
      * @param path $output
      * 
-     * @return Task $this pour permettre le chainage des appels de méthodes
+     * @return Task $this pour permettre le chainage des appels de mÃ©thodes
      */
     public function setOutput($output)
     {
@@ -735,22 +735,22 @@ A REMPLACER PAR :
     }
     
     /**
-     * Convertit un nom (jour, lundi, mars) ou une abréviation (j., lun,
-     * mar) utilisée dans la date de programmation d'une tâche et retourne
-     * le numéro interne correspondant.
+     * Convertit un nom (jour, lundi, mars) ou une abrÃ©viation (j., lun,
+     * mar) utilisÃ©e dans la date de programmation d'une tÃ¢che et retourne
+     * le numÃ©ro interne correspondant.
      * 
-     * Si l'argument passé est déjà sous la forme d'un numéro, retourne ce
-     * numéro.
+     * Si l'argument passÃ© est dÃ©jÃ  sous la forme d'un numÃ©ro, retourne ce
+     * numÃ©ro.
      * 
      * 
-     * @param mixed $value un entier ou une chaine à convertir.
-     * @param string $what le type d'abréviation recherché. Doit être une des
-     * valeurs suivantes : 'units' (unités de temps telles que jours, mois...),
+     * @param mixed $value un entier ou une chaine Ã  convertir.
+     * @param string $what le type d'abrÃ©viation recherchÃ©. Doit Ãªtre une des
+     * valeurs suivantes : 'units' (unitÃ©s de temps telles que jours, mois...),
      * 'minutes', 'hours', 'mday' (noms de jours) ou 'mon' (noms de mois).
      * 
      * @return int
      * 
-     * @throws Exception si l'abréviation utilisée n'est pas reconnue.
+     * @throws Exception si l'abrÃ©viation utilisÃ©e n'est pas reconnue.
      */
     private function convertAbbreviation($value, $what='units')
     {
@@ -762,12 +762,12 @@ A REMPLACER PAR :
                 'mn'=>'minutes', 'min'=>'minutes', 'minute'=>'minutes',
                 'h'=>'hours', 'hour'=>'hours', 'heure'=>'hours',
                 'd'=>'mday', 'j'=>'mday', 'day'=>'mday', 'jour'=>'mday',
-                'mon'=>'mon', 'month'=>'mon', 'monthe'=>'mon', 'moi'=>'mon', // comme le s est enlevé mois->moi
+                'mon'=>'mon', 'month'=>'mon', 'monthe'=>'mon', 'moi'=>'mon', // comme le s est enlevÃ© mois->moi
             ),
             'seconds'=>array(),
             'minutes'=>array(),
             'hours'=>array(),
-            'mday'=>array   // jours = numéro wday retourné par getdate + 1000
+            'mday'=>array   // jours = numÃ©ro wday retournÃ© par getdate + 1000
             (
                 'dimanche'=>1000, 'lundi'=>1001, 'mardi'=>1002, 'mercredi'=>1003, 'jeudi'=>1004, 'vendredi'=>1005, 'samedi'=>1006,
                 'dim'=>1000, 'lun'=>1001, 'mar'=>1002, 'mer'=>1003, 'jeu'=>1004, 'ven'=>1005, 'sam'=>1006,
@@ -776,14 +776,14 @@ A REMPLACER PAR :
             ),
             'mon'=>array
             (
-                'janvier'=>1, 'février'=>2, 'fevrier'=>2, 'mars'=>3, 'avril'=>4, 'mai'=>5, 'juin'=>6,
-                'juillet'=>7, 'août'=>8, 'aout'=>8, 'septembre'=>9, 'octobre'=>10, 'novembre'=>11, 'décembre'=>12, 'decembre'=>12,
+                'janvier'=>1, 'fÃ©vrier'=>2, 'fevrier'=>2, 'mars'=>3, 'avril'=>4, 'mai'=>5, 'juin'=>6,
+                'juillet'=>7, 'aoÃ»t'=>8, 'aout'=>8, 'septembre'=>9, 'octobre'=>10, 'novembre'=>11, 'dÃ©cembre'=>12, 'decembre'=>12,
         
                 'january'=>1, 'february'=>2, 'march'=>3, 'april'=>4, 'may'=>5, 'june'=>6,
                 'july'=>7, 'august'=>8, 'september'=>9, 'october'=>10, 'november'=>11, 'december'=>12,
         
-                'jan'=>1, 'fév'=>2, 'fev'=>2, 'feb'=>2, 'mar'=>3, 'avr'=>4, 'apr'=>4, 'mai'=>5, 'may'=>5,
-                'juil'=>7, 'jul'=>7, 'aug'=>7, 'sep'=>9, 'oct'=>10, 'nov'=>11, 'déc'=>12, 'dec'=>12,
+                'jan'=>1, 'fÃ©v'=>2, 'fev'=>2, 'feb'=>2, 'mar'=>3, 'avr'=>4, 'apr'=>4, 'mai'=>5, 'may'=>5,
+                'juil'=>7, 'jul'=>7, 'aug'=>7, 'sep'=>9, 'oct'=>10, 'nov'=>11, 'dÃ©c'=>12, 'dec'=>12,
             )
         );
     
@@ -800,45 +800,45 @@ A REMPLACER PAR :
         if (!isset($convert[$what][$value]))
             switch($what)
             {
-                case 'units':   throw new Exception($value . ' n\'est pas une unité de temps valide');
-                case 'seconds': throw new Exception($value . ' ne correspond pas à des seconds');
-                case 'minutes': throw new Exception($value . ' ne correspond pas à des minutes');
-                case 'hours':   throw new Exception($value . ' ne correspond pas à des heures');
+                case 'units':   throw new Exception($value . ' n\'est pas une unitÃ© de temps valide');
+                case 'seconds': throw new Exception($value . ' ne correspond pas Ã  des seconds');
+                case 'minutes': throw new Exception($value . ' ne correspond pas Ã  des minutes');
+                case 'hours':   throw new Exception($value . ' ne correspond pas Ã  des heures');
                 case 'mday':    throw new Exception($value . ' n\'est pas un nom de jour valide');
                 case 'mon':     throw new Exception($value . ' n\'est pas un nom de mois valide');
-                default:        throw new Exception($value . ' n\'est pas une unité ' . $what . ' valide');
+                default:        throw new Exception($value . ' n\'est pas une unitÃ© ' . $what . ' valide');
             } 
         return $convert[$what][$value];     
     }
 
     /**
-     * Calcule la date et l'heure de prochaine exécution d'une tâche.
+     * Calcule la date et l'heure de prochaine exÃ©cution d'une tÃ¢che.
      * 
-     * Par défaut, la fonction retourne la date de prochaine exécution de la 
-     * tâche (ie la prochaine date/heure qui soit supérieure à l'heure actuelle)
-     * mais vous pouvez passer un timestamp en paramètre pour obtenir la 
-     * date/heure qui suit immédiatement ce timestamp.
+     * Par dÃ©faut, la fonction retourne la date de prochaine exÃ©cution de la 
+     * tÃ¢che (ie la prochaine date/heure qui soit supÃ©rieure Ã  l'heure actuelle)
+     * mais vous pouvez passer un timestamp en paramÃ¨tre pour obtenir la 
+     * date/heure qui suit immÃ©diatement ce timestamp.
      * 
-     * Cela permet par exemple de calculer des dates dans le passé ou bien
-     * les dates suivantes d'exécution.
+     * Cela permet par exemple de calculer des dates dans le passÃ© ou bien
+     * les dates suivantes d'exÃ©cution.
      * 
      * La fonction fait de son mieux pour conserver la date et l'heure 
-     * d'exécution initialement prévues pour la tâche (par exemple si une tâche 
-     * a été initialement programmée à 12h 53min 25sec et qu'elle se répête 
-     * toutes les heures, les minutes et les secondes seront à chaque fois 
-     * conservées).
+     * d'exÃ©cution initialement prÃ©vues pour la tÃ¢che (par exemple si une tÃ¢che 
+     * a Ã©tÃ© initialement programmÃ©e Ã  12h 53min 25sec et qu'elle se rÃ©pÃªte 
+     * toutes les heures, les minutes et les secondes seront Ã  chaque fois 
+     * conservÃ©es).
      * 
-     * Cependant ce n'est pas toujours possible : si une tâche est programmée 
-     * le 31 janvier avec l'option "répéter tous les mois", la fonction ne pourra
-     * pas retourner "31 février" et ajustera la date en conséquence (2 ou 3
-     * mars selon que l'année est bissextile ou non).
+     * Cependant ce n'est pas toujours possible : si une tÃ¢che est programmÃ©e 
+     * le 31 janvier avec l'option "rÃ©pÃ©ter tous les mois", la fonction ne pourra
+     * pas retourner "31 fÃ©vrier" et ajustera la date en consÃ©quence (2 ou 3
+     * mars selon que l'annÃ©e est bissextile ou non).
      *
      * @param timestamp $now
      * @return null|timestamp
      */
     public function computeNext($now=null)
     {
-        // Récupère l'heure actuelle
+        // RÃ©cupÃ¨re l'heure actuelle
         if (is_null($now)) $now=time();
 
         $next=$this->getNext();
@@ -848,57 +848,57 @@ A REMPLACER PAR :
         if (! is_null($next) && ($next>=$now)) return $next;
         
 
-        // Si la tâche n'est pas planifiée, prochaine exécution=jamais
+        // Si la tÃ¢che n'est pas planifiÃ©e, prochaine exÃ©cution=jamais
         if ($time===null) return null;
         
-        // Si la tâche a déjà été exécutée et qu'elle n'est pas répétitive, prochaine exécution=jamais
+        // Si la tÃ¢che a dÃ©jÃ  Ã©tÃ© exÃ©cutÃ©e et qu'elle n'est pas rÃ©pÃ©titive, prochaine exÃ©cution=jamais
         if (!is_null($last) && is_null($this->repeat)) return null;
             
-        // Si la tâche est planifiée "dès que possible" et n'a pas encore été exécutée, prochaine exécution=dès que possible
+        // Si la tÃ¢che est planifiÃ©e "dÃ¨s que possible" et n'a pas encore Ã©tÃ© exÃ©cutÃ©e, prochaine exÃ©cution=dÃ¨s que possible
         if ($time===0 && is_null($last)) return 0;
         
-        // Si la tâche est planifiée pour plus tard, prochaine exécution=date indiquée
+        // Si la tÃ¢che est planifiÃ©e pour plus tard, prochaine exÃ©cution=date indiquÃ©e
         if ($time > $now) return $time;
         
-        // Si la tâche était planifiée mais n'a pas été exécutée à l'heure souhaitée, prochaine exécution=heure prévue (+erreur tâche dépassée)
+        // Si la tÃ¢che Ã©tait planifiÃ©e mais n'a pas Ã©tÃ© exÃ©cutÃ©e Ã  l'heure souhaitÃ©e, prochaine exÃ©cution=heure prÃ©vue (+erreur tÃ¢che dÃ©passÃ©e)
         if ($time<=$now && is_null($last)) return $time; // $now;
         
-        // La tâche n'est pas répétitive, prochaine exécution : jamais
+        // La tÃ¢che n'est pas rÃ©pÃ©titive, prochaine exÃ©cution : jamais
         if (is_null($this->repeat)) return null;
         
-        // On a un repeat qu'il faut analyser pour déterminer la prochaine date
+        // On a un repeat qu'il faut analyser pour dÃ©terminer la prochaine date
         
-        // Pour chaque unité valide, $minmax donne le minimum et le maximum autorisés
+        // Pour chaque unitÃ© valide, $minmax donne le minimum et le maximum autorisÃ©s
         static $minmax=array
         (
             'seconds'=>array(0,59), 'minutes'=>array(0,59), 'hours'=>array(0,23),
             'mday'=>array(1,31), 'mon'=>array(1,12), 'wday'=>array(1000,1006)
         );
     
-        // Durée en secondes de chacune des périodes autorisées
+        // DurÃ©e en secondes de chacune des pÃ©riodes autorisÃ©es
         static $duration=array
         (
             'seconds'=>1, 'minutes'=>60, 'hours'=>3600, 'mday'=>86400,
         );
 
-        // Analyse repeat pour extraire le nombre, l'unité et le filtre 
+        // Analyse repeat pour extraire le nombre, l'unitÃ© et le filtre 
         $nb=$unit=$sep=$filterString=null;
         sscanf($this->repeat, '%d%[^/,]%[/,]%s', $nb, $unit, $sep, $filterString);
         if ($nb<=0)
-            throw new Exception('nombre d\'unités invalide : ' . $this->repeat);
+            throw new Exception('nombre d\'unitÃ©s invalide : ' . $this->repeat);
         
-        // Convertit l'unité indiquée en unité php telle que retournée par getdate()
+        // Convertit l'unitÃ© indiquÃ©e en unitÃ© php telle que retournÃ©e par getdate()
         $unit=self::convertAbbreviation(trim($unit), 'units');
         
-        // Heure de début des calculs : l'heure d'exécution prévue (si <> asap), heure de création sinon
+        // Heure de dÃ©but des calculs : l'heure d'exÃ©cution prÃ©vue (si <> asap), heure de crÃ©ation sinon
         $next=$time; // et si 0 ?
         if ($next===0) $next=$this->getCreation();
         
-        // Essaie de déterminer l'heure de prochaine exécution (début + n fois la période indiquée)
-        if ($unit!='mon')// non utilisable pour les mois car ils ont des durées variables
+        // Essaie de dÃ©terminer l'heure de prochaine exÃ©cution (dÃ©but + n fois la pÃ©riode indiquÃ©e)
+        if ($unit!='mon')// non utilisable pour les mois car ils ont des durÃ©es variables
             $next+= ($nb * $duration[$unit]) * (floor(($now-$next)/($nb * $duration[$unit]))+1);
 
-        // Incrémente avec la période demandée juqu'à ce qu'on trouve une date dans le futur
+        // IncrÃ©mente avec la pÃ©riode demandÃ©e juqu'Ã  ce qu'on trouve une date dans le futur
         $t=getdate($next);
         $k=0;
         while ($next<=$now)
@@ -909,11 +909,11 @@ A REMPLACER PAR :
             if ($k > 100) die('INFINITE LOOP here');
         } 
                 
-        // Si on n'a aucun filtre, terminé
+        // Si on n'a aucun filtre, terminÃ©
         if (is_null($filterString))
             return $next;
         
-        // Si on a un filtre, crée un tableau contenant toutes les valeurs autorisées
+        // Si on a un filtre, crÃ©e un tableau contenant toutes les valeurs autorisÃ©es
         $filter=array();
         $min=$max=null;
         foreach (explode(',', $filterString) as $range)
@@ -934,12 +934,12 @@ A REMPLACER PAR :
                 // Convertit max si ce n'est pas un entier
                 $max=self::convertAbbreviation($max,$unit);
                 if ($max>1000 && $tag!='wday')
-                    throw new Exception('Intervalle invalide : '.$max.' n\'est pas du même type que l\'élément de début de période');
+                    throw new Exception('Intervalle invalide : '.$max.' n\'est pas du mÃªme type que l\'Ã©lÃ©ment de dÃ©but de pÃ©riode');
                 if ($max<$minmax[$tag][0] or $max>$minmax[$tag][1]) 
                     throw new Exception('Filtre invalide, '.$max.' n\'est pas une valeur de type '.$tag.' correcte');                
             }                
     
-            // Génère toutes les valeurs entre $min et $max
+            // GÃ©nÃ¨re toutes les valeurs entre $min et $max
             $k=0;
             for ($i=$min;;)
             {
@@ -949,14 +949,14 @@ A REMPLACER PAR :
                 if ($i>$minmax[$tag][1]) $i=$minmax[$tag][0];
                 if(++$k>60) 
                 {
-                    echo 'intervalle de ',$min, ' à ', $max, ', tag=', $tag, ', min=', $minmax[$tag][0], ', max=', $minmax[$tag][1], '<br />';
-                    throw new Exception('Filtre invalide, vérifiez que l\'unité correspond au filtre'); 
+                    echo 'intervalle de ',$min, ' Ã  ', $max, ', tag=', $tag, ', min=', $minmax[$tag][0], ', max=', $minmax[$tag][1], '<br />';
+                    throw new Exception('Filtre invalide, vÃ©rifiez que l\'unitÃ© correspond au filtre'); 
                 }
             }
         }
-//        echo "Filtre des valeurs autorisées : ", var_export($filter, true), "\n";
+//        echo "Filtre des valeurs autorisÃ©es : ", var_export($filter, true), "\n";
         
-        // Regarde si le filtre accepte la date obtenue, sinon incréemente la date de nb unités et recommence
+        // Regarde si le filtre accepte la date obtenue, sinon incrÃ©emente la date de nb unitÃ©s et recommence
         for(;;)
         {
             // Teste si la date en cours passe le filtre
@@ -974,19 +974,19 @@ A REMPLACER PAR :
                     break;
             }
     
-            // Passe à la date suivante et recommence 
+            // Passe Ã  la date suivante et recommence 
             $t[$unit]+=$nb;
             $next=mktime($t['hours'],$t['minutes'],$t['seconds'],$t['mon'],$t['mday'],$t['year']);
         }
         
-        // Stocke et retourne le résultat
+        // Stocke et retourne le rÃ©sultat
         return $next;
     }
     
     
     /**
      * Convertit un timestamp en chaine utilisable pour le tri xapian
-     * (en attendant qu'on crée des clés de tri correct pour les entiers)
+     * (en attendant qu'on crÃ©e des clÃ©s de tri correct pour les entiers)
      *
      * Attention : fonction temporaire, ne pas utiliser.
      * 
@@ -1023,7 +1023,7 @@ A REMPLACER PAR :
             (int)substr($string, 12, 2), // secondes
             (int)substr($string,  4, 2), // mois
             (int)substr($string,  6, 2), // jour
-            (int)substr($string,  0, 4)  // année
+            (int)substr($string,  0, 4)  // annÃ©e
         );
     }
 }
@@ -1092,8 +1092,8 @@ $MonTexte = 20;
 $TexteCrypte = Crypte($MonTexte,$Cle);
 $TexteClair = Decrypte($TexteCrypte,$Cle);
 echo "Texte original : $MonTexte <Br>";
-echo "Texte crypté : $TexteCrypte <Br>";
-echo "Texte décrypté : $TexteClair <Br>";
+echo "Texte cryptÃ© : $TexteCrypte <Br>";
+echo "Texte dÃ©cryptÃ© : $TexteClair <Br>";
 die();
 */
 ?>
