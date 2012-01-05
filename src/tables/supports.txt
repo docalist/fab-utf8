@@ -1,4 +1,0 @@
-code	label
-Papier	Papier
-Internet	Site web ou ftp
-Cédérom	Cd ou DVD

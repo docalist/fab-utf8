@@ -1,3 +1,0 @@
-typediff	value
-Occasion	Occasion
-Electronique	Electronique

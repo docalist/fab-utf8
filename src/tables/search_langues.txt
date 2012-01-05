@@ -1,4 +1,0 @@
-code	label
-FRE	Français
-ENG	Anglais
-* SAUF FRA SAUF ENG	Autres langues

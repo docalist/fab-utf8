@@ -1,3 +1,0 @@
-code	label
--1	de la plus récente à la plus ancienne
-1	de la plus ancienne à la plus récente

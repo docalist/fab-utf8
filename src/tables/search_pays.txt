@@ -1,3 +1,0 @@
-code	label
-FRA	France
-* SAUF FRA	Autres pays
