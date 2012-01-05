@@ -1,35 +1,35 @@
 <h1>Panier</h1>
-/* Suppression de plusieurs éléments en une seule fois */
+/* Suppression de plusieurs Ã©lÃ©ments en une seule fois */
 <if test="{count($item)>1}">
-	<p>Les éléments suivants ont été supprimés du panier :</p>
+	<p>Les Ã©lÃ©ments suivants ont Ã©tÃ© supprimÃ©s du panier :</p>
 	<loop on="{$item}" as="$key, $value">
 		<ul>
 			<li>
 				<opt>
 					<if test="{is_array($category)}">
-						Catégorie : {$category[$key]} ; 
+						CatÃ©gorie : {$category[$key]} ; 
 					</if>
 					<else>
-						Catégorie : $category ; 
+						CatÃ©gorie : $category ; 
 					</else>
 				</opt>
-				Elément : $value
+				ElÃ©ment : $value
 				<if test="{is_array($quantity)}">
-					; Quantité : {$quantity[$key]}
+					; QuantitÃ© : {$quantity[$key]}
 				</if>
 				<else>
-					; Quantité : $quantity
+					; QuantitÃ© : $quantity
 				</else>
 			</li>
 		</ul>
 	</loop>
 </if>
-/* Suppression d'un seul élément */
+/* Suppression d'un seul Ã©lÃ©ment */
 <else>
-	<p>L'élément suivant a été supprimé<opt> de la catégorie $category</opt> :</p>
+	<p>L'Ã©lÃ©ment suivant a Ã©tÃ© supprimÃ©<opt> de la catÃ©gorie $category</opt> :</p>
 	<ul>
-		<li>Elément : {$item[0]}</li>
-		<li>Quantité : $quantity</li>
+		<li>ElÃ©ment : {$item[0]}</li>
+		<li>QuantitÃ© : $quantity</li>
 	</ul>	
 </else>
 

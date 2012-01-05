@@ -2,30 +2,30 @@
     <h1>Votre panier est vide</h1>
 </if>
 <else>
-    /* S'il s'agit d'un panier ayant des catégories, on affiche la liste, puis les items */
+    /* S'il s'agit d'un panier ayant des catÃ©gories, on affiche la liste, puis les items */
     <if test="{$this->hasCategory}">
     
-        /* Aucune catégorie indiquée : affiche la liste des catégories sous forme de lien */
+        /* Aucune catÃ©gorie indiquÃ©e : affiche la liste des catÃ©gories sous forme de lien */
         <if test="{is_null($category)}">
-            <h1>Catégories présentes dans votre panier</h1>
+            <h1>CatÃ©gories prÃ©sentes dans votre panier</h1>
             <ul>
                 <loop on="{$this->cart}" as="$category,$items">
                     <li><a href="show?category=$category">$category</a> : {count($items)} item(s), {array_sum($items)} article(s)</li>
                 </loop>
             </ul>
-            <a href="clear">Vider le panier (supprime toutes les catégories et tous les éléments qu'elles contiennent)</a>
+            <a href="clear">Vider le panier (supprime toutes les catÃ©gories et tous les Ã©lÃ©ments qu'elles contiennent)</a>
         </if>
         
-        /* sinon : affiche les items de la catégorie demandée */
+        /* sinon : affiche les items de la catÃ©gorie demandÃ©e */
         <else>
-            <h1>Eléments présents dans la catégorie <strong>$category</strong> de votre panier</h1>
+            <h1>ElÃ©ments prÃ©sents dans la catÃ©gorie <strong>$category</strong> de votre panier</h1>
             <ul>
                 <loop on="{$this->cart[$category]}" as="$item,$quantity">
                     <li>$item ($quantity) <a href="remove?category=$category&amp;item=$item">supprimer</a></li>
                 </loop>
             </ul>
-            <a href="show">Retour à la liste des catégories</a>
-            <a href="clear?category=$category">Vider cette partie du panier (tous les éléments de cette catégorie et la catégorie elle-même)</a>
+            <a href="show">Retour Ã  la liste des catÃ©gories</a>
+            <a href="clear?category=$category">Vider cette partie du panier (tous les Ã©lÃ©ments de cette catÃ©gorie et la catÃ©gorie elle-mÃªme)</a>
         </else>
     </if>
     

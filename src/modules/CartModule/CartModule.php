@@ -2,7 +2,7 @@
 /**
  * @package     fab
  * @subpackage  module
- * @author 		Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author 		Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  */
 
 /**
@@ -13,39 +13,39 @@
  */
 class CartModule extends Module
 {
-	// TODO : Besoin de quantité ou non à mettre dans config
-	// TODO : Panier à catégorie ou non : à mettre dans config
+	// TODO : Besoin de quantitÃ© ou non Ã  mettre dans config
+	// TODO : Panier Ã  catÃ©gorie ou non : Ã  mettre dans config
 	
 	public $cart=array();
     
     /**
-     * @var boolean Indique si le panier accepte ou non les catégories
+     * @var boolean Indique si le panier accepte ou non les catÃ©gories
      */
     public $hasCategory=null;
     
     /**
-     * @var boolean Indique si le panier a besoin ou non des quantités
+     * @var boolean Indique si le panier a besoin ou non des quantitÃ©s
      */
     public $hasQuantity=null;
     
     /**
-     * Crée, ou charge s'il existe déjà, le panier indiqué dans la configuration.
+     * CrÃ©e, ou charge s'il existe dÃ©jÃ , le panier indiquÃ© dans la configuration.
      * Si aucun nom, le panier s'appelle cart.
-     * Le panier sera automatiquement enregistré à la fin de la requête en cours.
+     * Le panier sera automatiquement enregistrÃ© Ã  la fin de la requÃªte en cours.
      */
 	public function preExecute()
     {
         //parent::preExecute();
-        // Récupère le nom du panier
+        // RÃ©cupÃ¨re le nom du panier
         $name=Config::get('name');
         
-        // Fab ouvre la session juste avant d'appeller l'action et donc à ce
-        // stade (preExecute), la session n'a pas encore été chargée. Comme
-        // On utilise des alias pour gérer le panier, il faut absolument qu'elle
-        // soit chargée, donc on le fait maintenant. 
+        // Fab ouvre la session juste avant d'appeller l'action et donc Ã  ce
+        // stade (preExecute), la session n'a pas encore Ã©tÃ© chargÃ©e. Comme
+        // On utilise des alias pour gÃ©rer le panier, il faut absolument qu'elle
+        // soit chargÃ©e, donc on le fait maintenant. 
         Runtime::startSession();
         
-        // Crée le panier s'il n'existe pas déjà dans la session
+        // CrÃ©e le panier s'il n'existe pas dÃ©jÃ  dans la session
         if (!isset($_SESSION[$name])) 
         {
             $_SESSION[$name]=array();
@@ -53,9 +53,9 @@ class CartModule extends Module
             $_SESSION[$name.'hasquantity']=Config::get('quantity',false);
         }
         
-        // Crée une référence entre notre tableau cart et le tableau stocké 
-        // en session pour que le tableau de la session soit automatiquement modifié
-        // et enregistré 
+        // CrÃ©e une rÃ©fÃ©rence entre notre tableau cart et le tableau stockÃ© 
+        // en session pour que le tableau de la session soit automatiquement modifiÃ©
+        // et enregistrÃ© 
         $this->cart =& $_SESSION[$name];        
         $this->hasCategory=& $_SESSION[$name.'hascategory'];
         $this->hasQuantity=& $_SESSION[$name.'hasquantity'];
@@ -71,92 +71,92 @@ class CartModule extends Module
 	}
 
     /**
-     * Ajoute un ou plusieurs éléments dans le panier, en précisant la quantité.
-     * Si une catégorie est précisée, l'élément sera ajouté à cette catégorie.
+     * Ajoute un ou plusieurs Ã©lÃ©ments dans le panier, en prÃ©cisant la quantitÃ©.
+     * Si une catÃ©gorie est prÃ©cisÃ©e, l'Ã©lÃ©ment sera ajoutÃ© Ã  cette catÃ©gorie.
      * 
-     * L'action affiche ensuite le template indiqué dans la clé <code><template></code>
-     * du fichier de configuration, en utilisant le callback indiqué dans la clé
+     * L'action affiche ensuite le template indiquÃ© dans la clÃ© <code><template></code>
+     * du fichier de configuration, en utilisant le callback indiquÃ© dans la clÃ©
      * <code><callback></code> du fichier de configuration.
      * 
-     * Pour l'ajout de plusieurs éléments :
-     * - On suppose que les navigateurs respectent l'ordre dans lequel les paramètres 
-     * sont passés. On obtient ainsi 3 tableaux (item, category, quantity).
-     * item[X] est à ajouter à la catégorie category[X], en quantité quantity[X].
-     * - Si une seule catégorie et/ou une seule quantité, alors la catégorie et/ou la 
-     * quantité s'appliquent à chaque élément à ajouter.
+     * Pour l'ajout de plusieurs Ã©lÃ©ments :
+     * - On suppose que les navigateurs respectent l'ordre dans lequel les paramÃ¨tres 
+     * sont passÃ©s. On obtient ainsi 3 tableaux (item, category, quantity).
+     * item[X] est Ã  ajouter Ã  la catÃ©gorie category[X], en quantitÃ© quantity[X].
+     * - Si une seule catÃ©gorie et/ou une seule quantitÃ©, alors la catÃ©gorie et/ou la 
+     * quantitÃ© s'appliquent Ã  chaque Ã©lÃ©ment Ã  ajouter.
      *
-     * @param array $item l'(les) élément(s) à ajouter
-     * @param int|array $quantity la quantité de chaque élément à ajouter
-     * @param string|array $category la catégorie de chaque élément à ajouter
+     * @param array $item l'(les) Ã©lÃ©ment(s) Ã  ajouter
+     * @param int|array $quantity la quantitÃ© de chaque Ã©lÃ©ment Ã  ajouter
+     * @param string|array $category la catÃ©gorie de chaque Ã©lÃ©ment Ã  ajouter
      */
 	public function actionAdd(array $item, $quantity=1, $category=null)
     {
         /*
          * Notes DM 13/12/07
          * 
-         * Avec le nouveau ModuleLoader, les arguments de la requête sont
-         * passés directement en paramètre de l'action.
+         * Avec le nouveau ModuleLoader, les arguments de la requÃªte sont
+         * passÃ©s directement en paramÃ¨tre de l'action.
          * 
-         * Du coup, on n'a plus besoin de les récupérer manuellement 
+         * Du coup, on n'a plus besoin de les rÃ©cupÃ©rer manuellement 
          * (le code Utils::get($_REQUEST['xxx']) qui existait avant).
          * 
-         * Par ailleurs, le type des paramètres peut être forcé. Par exemple,
-         * ici, item a été déclaré comme étant un tableau. Le ModuleLoader se
-         * charge de veiller à ce que les paramètres sient du bon type et en 
-         * l'occurence il nous passera toujours un tableau, même si l'utilisateur
-         * n'a indiqué qu'un seul item.
+         * Par ailleurs, le type des paramÃ¨tres peut Ãªtre forcÃ©. Par exemple,
+         * ici, item a Ã©tÃ© dÃ©clarÃ© comme Ã©tant un tableau. Le ModuleLoader se
+         * charge de veiller Ã  ce que les paramÃ¨tres sient du bon type et en 
+         * l'occurence il nous passera toujours un tableau, mÃªme si l'utilisateur
+         * n'a indiquÃ© qu'un seul item.
          * 
-         * Cela simplifie le code parce que du coup on n'a plus à tester les deux
+         * Cela simplifie le code parce que du coup on n'a plus Ã  tester les deux
          * cas (un item seul / un tableau d'items) : on a toujours un tableau,
-         * contenant éventuellement un seul élément.
+         * contenant Ã©ventuellement un seul Ã©lÃ©ment.
          * 
-         * Le nouvel objet Request permet également de vérifier facilement le
-         * type des aguments. Par exemple, avant, on ne vérifiait pas que le(s)
-         * quantity(s) passé(s) en paramêtre étai(en)t un(des) entier(s).
+         * Le nouvel objet Request permet Ã©galement de vÃ©rifier facilement le
+         * type des aguments. Par exemple, avant, on ne vÃ©rifiait pas que le(s)
+         * quantity(s) passÃ©(s) en paramÃªtre Ã©tai(en)t un(des) entier(s).
          * Que se passait-il si on appellait add?item=&quantity=abcd ?
-         * Maintenant, item est obligatoire (parce qu'il est déclaré sans valeur
-         * par défaut dans les paramètres de l'action) et quantity est testé 
+         * Maintenant, item est obligatoire (parce qu'il est dÃ©clarÃ© sans valeur
+         * par dÃ©faut dans les paramÃ¨tres de l'action) et quantity est testÃ© 
          * (0 < entier < 100)
          *  
-         * Pour le moment, j'ai uniquement mis le code obsolète en commentaires, 
-         * le temps de valider tout ça. 
+         * Pour le moment, j'ai uniquement mis le code obsolÃ¨te en commentaires, 
+         * le temps de valider tout Ã§a. 
          * 
          * SF : 
-         * - faire le ménage une fois qu'on sera sur que tout fonctionne bien.
-         * - faire la même chose pour les autres actions de CartModule
+         * - faire le mÃ©nage une fois qu'on sera sur que tout fonctionne bien.
+         * - faire la mÃªme chose pour les autres actions de CartModule
          * 
          * Remarque : les templates teste explicitement 'if(is_array(item))'. 
-         * Ils doivent être adaptés pour tester à la place 'if(count(item)>1)'
+         * Ils doivent Ãªtre adaptÃ©s pour tester Ã  la place 'if(count(item)>1)'
          */
 	    
-        // Fait des vérifications sur la quantité
+        // Fait des vÃ©rifications sur la quantitÃ©
         $this->request->int('quantity')->min(1)->max(100)->ok();
         
-		// Plusieurs éléments à ajouter
+		// Plusieurs Ã©lÃ©ments Ã  ajouter
 		$nb=0;
 //		if (is_array($item))
 //		{
 			if (isset($category) && is_array($category) && (count($category)!= count($item)))
-				throw new Exception('Erreur : il doit y avoir autant de catégories que d\'éléments à ajouter.');
+				throw new Exception('Erreur : il doit y avoir autant de catÃ©gories que d\'Ã©lÃ©ments Ã  ajouter.');
 			
 			if (isset($quantity) && is_array($quantity) && (count($quantity)!= count($item)))
-				throw new Exception('Une quantité doit être précisée pour chaque élément à ajouter.');
+				throw new Exception('Une quantitÃ© doit Ãªtre prÃ©cisÃ©e pour chaque Ã©lÃ©ment Ã  ajouter.');
 		
 			foreach($item as $key=>$value)
 			{
-				// Si on a une catégorie pour chaque élément
+				// Si on a une catÃ©gorie pour chaque Ã©lÃ©ment
 				(is_array($category)) ? $cat=$category[$key] : $cat=$category;
 				
-				// Si une quantité pour chaque élément
+				// Si une quantitÃ© pour chaque Ã©lÃ©ment
 				(is_array($quantity)) ? $quant=$quantity[$key] : $quant=$quantity;
 				
-				// Ajoute l'élément au panier
+				// Ajoute l'Ã©lÃ©ment au panier
 				$this->add($value, $quant, $cat);
 				++$nb;
 			}
 //		}
 		
-		// Un seul élément à ajouter
+		// Un seul Ã©lÃ©ment Ã  ajouter
 //		else
 //		{
 //			// Ajoute l'item au panier
@@ -167,18 +167,18 @@ class CartModule extends Module
 		if (Utils::isAjax())
         {
         	if ($nb===1)
-                echo $nb . ' notice ajoutée au panier';
+                echo $nb . ' notice ajoutÃ©e au panier';
             else
-                echo $nb . ' notices ajoutées au panier';
+                echo $nb . ' notices ajoutÃ©es au panier';
             
             return;
         }
         
-		// Détermine le callback à utiliser
-		// TODO : Vérifier que le callback existe
+		// DÃ©termine le callback Ã  utiliser
+		// TODO : VÃ©rifier que le callback existe
 		$callback=Config::get('callback');
 		
-		// Exécute le template, s'il a été indiqué
+		// ExÃ©cute le template, s'il a Ã©tÃ© indiquÃ©
 		if ($template=Config::get('template'))
 			Template::run
 			(
@@ -189,62 +189,62 @@ class CartModule extends Module
 	}
 	
 	/**
-	 * Supprime un ou plusieurs éléments du panier, en précisant la quantité.
-	 * Si une catégorie a été précisée, supprime l'élément, de cette catégorie.
+	 * Supprime un ou plusieurs Ã©lÃ©ments du panier, en prÃ©cisant la quantitÃ©.
+	 * Si une catÃ©gorie a Ã©tÃ© prÃ©cisÃ©e, supprime l'Ã©lÃ©ment, de cette catÃ©gorie.
 	 * 
-     * L'action affiche ensuite le template indiqué dans la clé <code><template></code>
-     * du fichier de configuration, en utilisant le callback indiqué dans la clé
+     * L'action affiche ensuite le template indiquÃ© dans la clÃ© <code><template></code>
+     * du fichier de configuration, en utilisant le callback indiquÃ© dans la clÃ©
      * <code><callback></code> du fichier de configuration.
      * 
-	 * Pour la suppression de plusieurs éléments :
-	 * - On suppose que les navigateurs respectent l'ordre dans lequel les paramètres 
-	 * sont passés. On obtient ainsi 3 tableaux (item, category, quantity).
-	 * item[X] est à supprimer de la catégorie category[X], en quantité quantity[X].
-	 * - Si une seule catégorie et/ou une seule quantité, alors la catégorie et/ou la 
-	 * quantité s'appliquent à chaque élément à supprimer.
+	 * Pour la suppression de plusieurs Ã©lÃ©ments :
+	 * - On suppose que les navigateurs respectent l'ordre dans lequel les paramÃ¨tres 
+	 * sont passÃ©s. On obtient ainsi 3 tableaux (item, category, quantity).
+	 * item[X] est Ã  supprimer de la catÃ©gorie category[X], en quantitÃ© quantity[X].
+	 * - Si une seule catÃ©gorie et/ou une seule quantitÃ©, alors la catÃ©gorie et/ou la 
+	 * quantitÃ© s'appliquent Ã  chaque Ã©lÃ©ment Ã  supprimer.
      *
-     * @param array $item l'(les) élément(s) à supprimer
-     * @param int|array $quantity la quantité de chaque élément à supprimer
-     * @param string|array $category la catégorie de chaque élément à supprimer
+     * @param array $item l'(les) Ã©lÃ©ment(s) Ã  supprimer
+     * @param int|array $quantity la quantitÃ© de chaque Ã©lÃ©ment Ã  supprimer
+     * @param string|array $category la catÃ©gorie de chaque Ã©lÃ©ment Ã  supprimer
 	 */
 	public function actionRemove(array $item, $quantity=1, $category=null)
 	{
-	    // Fait des vérifications sur la quantité
+	    // Fait des vÃ©rifications sur la quantitÃ©
 	    $this->request->int('quantity')->min(1)->max(100)->ok();
 	    
-		// Plusieurs éléments à supprimer
+		// Plusieurs Ã©lÃ©ments Ã  supprimer
 //		if (is_array($item))
 //		{
 			if (isset($category) && is_array($category) && (count($category)!= count($item)))
-				throw new Exception('Erreur : il doit y avoir autant de catégories que d\'éléments à supprimer.');
+				throw new Exception('Erreur : il doit y avoir autant de catÃ©gories que d\'Ã©lÃ©ments Ã  supprimer.');
 			
 			if (isset($quantity) && is_array($quantity) && (count($quantity)!= count($item)))
-				throw new Exception('Une quantité doit être précisée pour chaque élément à supprimer.');
+				throw new Exception('Une quantitÃ© doit Ãªtre prÃ©cisÃ©e pour chaque Ã©lÃ©ment Ã  supprimer.');
 		
 			foreach($item as $key=>$value)
 			{
-				// Si on a une catégorie pour chaque élément
+				// Si on a une catÃ©gorie pour chaque Ã©lÃ©ment
 				(is_array($category)) ? $cat=$category[$key] : $cat=$category;
 				
-				// Si une quantité pour chaque élément
+				// Si une quantitÃ© pour chaque Ã©lÃ©ment
 				(is_array($quantity)) ? $quant=$quantity[$key] : $quant=$quantity;
 				
-				// Supprime l'élément du panier
+				// Supprime l'Ã©lÃ©ment du panier
 				$this->remove($value, $quant, $cat);
 			}
 //		}
 //		
-//		// Un seul élément à supprimer
+//		// Un seul Ã©lÃ©ment Ã  supprimer
 //		else
 //		{
 //			$this->remove($item, $quantity, $category);
 //		}
 
-		// Détermine le callback à utiliser
-		// TODO : Vérifier que le callback existe
+		// DÃ©termine le callback Ã  utiliser
+		// TODO : VÃ©rifier que le callback existe
 		$callback=Config::get('callback');
 		
-		// Exécute le template, s'il a été indiqué
+		// ExÃ©cute le template, s'il a Ã©tÃ© indiquÃ©
 		if ($template=Config::get('template'))
 			Template::run
 			(
@@ -255,26 +255,26 @@ class CartModule extends Module
 	}
 	
 	/**
-	 * Vide la totalité du panier ou supprime une catégorie d'éléments du panier.
+	 * Vide la totalitÃ© du panier ou supprime une catÃ©gorie d'Ã©lÃ©ments du panier.
 	 * 
-     * Après la suppression des éléments du panier, l'action affiche le template 
-     * indiqué dans la clé <code><template></code> du fichier de configuration, 
-     * en utilisant le callback indiqué dans la clé <code><callback></code> 
+     * AprÃ¨s la suppression des Ã©lÃ©ments du panier, l'action affiche le template 
+     * indiquÃ© dans la clÃ© <code><template></code> du fichier de configuration, 
+     * en utilisant le callback indiquÃ© dans la clÃ© <code><callback></code> 
      * du fichier de configuration.
      * 
-	 * @param string|null $category la catégorie d'éléments à supprimer ou null
-	 * pour vider la totalité du panier.
+	 * @param string|null $category la catÃ©gorie d'Ã©lÃ©ments Ã  supprimer ou null
+	 * pour vider la totalitÃ© du panier.
 	 */
 	public function actionClear($category=null)
 	{
-		// Vide la catégorie ou vide le panier si pas de catégorie
+		// Vide la catÃ©gorie ou vide le panier si pas de catÃ©gorie
 		$this->clear($category);
         
-		// Détermine le callback à utiliser
-		// TODO : Vérifier que le callback existe
+		// DÃ©termine le callback Ã  utiliser
+		// TODO : VÃ©rifier que le callback existe
 		$callback=Config::get('callback');
 
-		// Exécute le template, s'il a été indiqué
+		// ExÃ©cute le template, s'il a Ã©tÃ© indiquÃ©
 		if ($template=Config::get('template'))
 			Template::run
 			(
@@ -287,33 +287,33 @@ class CartModule extends Module
 	/**
 	 * Affiche le panier.
 	 *
-	 * Affiche le panier en utilisant le template indiqué dans la clé 
+	 * Affiche le panier en utilisant le template indiquÃ© dans la clÃ© 
 	 * <code><template></code> du fichier de configuration et le callback
-     * indiqué dans la clé <code><callback></code> du fichier de configuration.
+     * indiquÃ© dans la clÃ© <code><callback></code> du fichier de configuration.
 	 * 
-	 * @param string|null $category la catégorie des éléments à afficher ou null
+	 * @param string|null $category la catÃ©gorie des Ã©lÃ©ments Ã  afficher ou null
 	 * pour afficher tout le panier.
 	 */
 	public function actionShow($category=null)
 	{
-	    // Vérifie que la catégorie existe
+	    // VÃ©rifie que la catÃ©gorie existe
         if ($category)
         {
         	if ($this->hasCategory)
         	{
 	        	if (! isset($this->cart[$category]))
-	        		throw new Exception('La catégorie demandée n\'existe pas.');
+	        		throw new Exception('La catÃ©gorie demandÃ©e n\'existe pas.');
         	}
         }
         
-		// Détermine le template à utiliser
+		// DÃ©termine le template Ã  utiliser
 		if (! $template=Config::get('template'))
-			throw new Exception('Le template à utiliser n\'a pas été indiqué');
+			throw new Exception('Le template Ã  utiliser n\'a pas Ã©tÃ© indiquÃ©');
 			
-		// Détermine le callback à utiliser
+		// DÃ©termine le callback Ã  utiliser
 		$callback=Config::get('callback');
 		
-		// Exécute le template
+		// ExÃ©cute le template
 		Template::run
 		(
 			$template,
@@ -324,29 +324,29 @@ class CartModule extends Module
 	
     
     /**
-     * Ajoute un élément dans le panier.
+     * Ajoute un Ã©lÃ©ment dans le panier.
      * 
-     * @param mixed $item l'élément à ajouter
-     * @param int $quantity la quantité d'élément $item
-     * @param mixed $category optionnel la catégorie dans laquelle on veut ajouter
+     * @param mixed $item l'Ã©lÃ©ment Ã  ajouter
+     * @param int $quantity la quantitÃ© d'Ã©lÃ©ment $item
+     * @param mixed $category optionnel la catÃ©gorie dans laquelle on veut ajouter
      * l'item
      */
     private function add($item, $quantity=1, $category=null)
     {
         if ($quantity<0) return $this->remove($item, $quantity, $category);
         
-        // Le 1er ajout d'un item définit si le panier a des catégories ou pas
+        // Le 1er ajout d'un item dÃ©finit si le panier a des catÃ©gories ou pas
         if (is_null($this->hasCategory))
             $this->hasCategory=(!is_null($category));
         else
         {
             if ($this->hasCategory)
             {
-                if (is_null($category)) throw new Exception('Vous devez spécifier une catégorie');
+                if (is_null($category)) throw new Exception('Vous devez spÃ©cifier une catÃ©gorie');
             }
             else
             {
-                if (!is_null($category)) throw new Exception('Catégorie non autorisée');
+                if (!is_null($category)) throw new Exception('CatÃ©gorie non autorisÃ©e');
             }
         }
         
@@ -364,7 +364,7 @@ class CartModule extends Module
             }
             else
             {
-                // On met la quantité à 1 quand le panier n'a pas besoin de quantité
+                // On met la quantitÃ© Ã  1 quand le panier n'a pas besoin de quantitÃ©
                 $this->cart[$item]=1;
             }
         }
@@ -379,7 +379,7 @@ class CartModule extends Module
             }
             else
             {
-                // On met la quantité à 1 quand le panier n'a pas besoin de quantité
+                // On met la quantitÃ© Ã  1 quand le panier n'a pas besoin de quantitÃ©
                 $this->cart[$category][$item]=1;
             }
         }
@@ -387,15 +387,15 @@ class CartModule extends Module
     
      
     /**
-     * Supprime un élément du panier 
-     * Si une catégorie est précisée en paramètre, supprime l'item, de la catégorie.
-     * Supprime la catégorie, si elle ne contient plus d'élément.
-     * remarque : Aucune erreur n'est générée si l'item ne figure pas dans le
+     * Supprime un Ã©lÃ©ment du panier 
+     * Si une catÃ©gorie est prÃ©cisÃ©e en paramÃ¨tre, supprime l'item, de la catÃ©gorie.
+     * Supprime la catÃ©gorie, si elle ne contient plus d'Ã©lÃ©ment.
+     * remarque : Aucune erreur n'est gÃ©nÃ©rÃ©e si l'item ne figure pas dans le
      * panier
 	 *
-	 * @param mixed $item l'item à supprimer
-     * @param int $quantity la quantité d'item à supprimer
-     * @param mixed $category optionnel la catégorie dans laquelle on veut supprimer
+	 * @param mixed $item l'item Ã  supprimer
+     * @param int $quantity la quantitÃ© d'item Ã  supprimer
+     * @param mixed $category optionnel la catÃ©gorie dans laquelle on veut supprimer
      * l'item
      */
     private function remove($item, $quantity=1, $category=null)
@@ -406,15 +406,15 @@ class CartModule extends Module
         {
             if ($this->hasCategory)
             {
-                if (is_null($category)) throw new Exception('Vous devez spécifier une catégorie');
+                if (is_null($category)) throw new Exception('Vous devez spÃ©cifier une catÃ©gorie');
             }
             else
             {
-                if (!is_null($category)) throw new Exception('Catégorie non autorisée');
+                if (!is_null($category)) throw new Exception('CatÃ©gorie non autorisÃ©e');
             }
         }
                 
-        // Supprime l'élément du panier
+        // Supprime l'Ã©lÃ©ment du panier
         if (is_null($category))
         {
         	if (! isset($this->cart[$item])) return;
@@ -429,37 +429,37 @@ class CartModule extends Module
             $this->cart[$category][$item]-=$quantity;
             if ($this->cart[$category][$item]<=0) unset($this->cart[$category][$item]);
             
-	        // Si plus d'élément dans la catégorie, supprime la catégorie
+	        // Si plus d'Ã©lÃ©ment dans la catÃ©gorie, supprime la catÃ©gorie
 			if (count($this->cart[$category]) == 0)
 				unset($this->cart[$category]);        	
         }
 
-        // Si le panier est vide, réinitialise le flag hasCategory
+        // Si le panier est vide, rÃ©initialise le flag hasCategory
         if (count($this->cart) == 0) $this->hasCategory=null;
     }
     
 
     /**
-     * Vide la totalité du panier ou supprime une catégorie d'items du panier 
+     * Vide la totalitÃ© du panier ou supprime une catÃ©gorie d'items du panier 
      * 
-     * @param string|null $category la catégorie à supprimer
+     * @param string|null $category la catÃ©gorie Ã  supprimer
      */
     private function clear($category=null)
     {
         if (! $this->hasCategory)
         {
-            if (!is_null($category)) throw new Exception('Catégorie non autorisée');
+            if (!is_null($category)) throw new Exception('CatÃ©gorie non autorisÃ©e');
         }
 
-        // Si on n'a aucune catégorie, vide tout le panier
+        // Si on n'a aucune catÃ©gorie, vide tout le panier
         if (is_null($category))
         	$this->cart=array();
             
-        // Sinon, vide uniquement la catégorie indiquée
+        // Sinon, vide uniquement la catÃ©gorie indiquÃ©e
         else
         	unset($this->cart[$category]);
 
-        // Si le panier est complètement vide, réinitialise le flag hasCategory
+        // Si le panier est complÃ¨tement vide, rÃ©initialise le flag hasCategory
         if (count($this->cart) == 0) $this->hasCategory=null;
     }
 	
