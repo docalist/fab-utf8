@@ -1,54 +1,54 @@
-nouveau mode opératoire (il n'est plus nécessaire de recompiler php) :
+nouveau mode opÃ©ratoire (il n'est plus nÃ©cessaire de recompiler php) :
 
 PHP :
-- récupérer la version binaire pour windows de php 5.2.2, installer dans c:\php-5.2.2-win32\
-- récupérer le source de php 5.2.2, installer dans c:\php-5.2.2\
+- rÃ©cupÃ©rer la version binaire pour windows de php 5.2.2, installer dans c:\php-5.2.2-win32\
+- rÃ©cupÃ©rer le source de php 5.2.2, installer dans c:\php-5.2.2\
 
 XAPIAN :
-1. création du répertoire c:\work
-2. déchargement du dernier snapshot de xapian à partir de http://www.oligarchy.co.uk/xapian/trunk/
+1. crÃ©ation du rÃ©pertoire c:\work
+2. dÃ©chargement du dernier snapshot de xapian Ã  partir de http://www.oligarchy.co.uk/xapian/trunk/
     a. xapian-core-0.9.99_svn8553.tar.gz 
-       unzip dans c:\work\ pour obtenir le répertoire c:\work\xapian-core-0.9.99_svn8553
+       unzip dans c:\work\ pour obtenir le rÃ©pertoire c:\work\xapian-core-0.9.99_svn8553
     b. xapian-bindings-0.9.99_svn8553.tar.gz
-       unzip dans c:\work pour obtenir le répertoire c:\work\xapian-bindings-0.9.99_svn8553
-3. Récupérer les makefiles pour msvc, les installer dans le répertoire win32 de xapian-core
+       unzip dans c:\work pour obtenir le rÃ©pertoire c:\work\xapian-bindings-0.9.99_svn8553
+3. RÃ©cupÃ©rer les makefiles pour msvc, les installer dans le rÃ©pertoire win32 de xapian-core
 4. Editer le fichier config.mak et ajuster les path
 5. nmake /f win32.mak clean  (nmake clean plus tard)
-(à continuer).
+(Ã  continuer).
 
 ---
 ancienne version
 
 
-A. Créer un répertoire de travail qui contiendra tous les outils, fichiers
+A. CrÃ©er un rÃ©pertoire de travail qui contiendra tous les outils, fichiers
 includes, librairies, code sources, etc. dont on a besoin
 
 B. compilation de php
 
 1.
-Les instructions générales sont dans
+Les instructions gÃ©nÃ©rales sont dans
 http://www.php.net/manual/fr/install.windows.building.php
 
-Récupérer le code source de php à partir de php.net
-Pour récupérer la dernière version :
+RÃ©cupÃ©rer le code source de php Ã  partir de php.net
+Pour rÃ©cupÃ©rer la derniÃ¨re version :
 http://fr2.php.net/downloads.php
 
 Les archives se trouvent dans :
 http://www.php.net/releases/index.php
 
-Dézipper le fichier obtenu dans c:\work
-(pour avoir un répertoire C:\work\php-5.x.y)
+DÃ©zipper le fichier obtenu dans c:\work
+(pour avoir un rÃ©pertoire C:\work\php-5.x.y)
 
-Si on suit la doc de php, il faut récupérer win32build, resolv, etc.
-Alternative : récupérer un zip contenant tout ce dont on a besoin à partir de
+Si on suit la doc de php, il faut rÃ©cupÃ©rer win32build, resolv, etc.
+Alternative : rÃ©cupÃ©rer un zip contenant tout ce dont on a besoin Ã  partir de
 ftp://ftp.emini.dk/pub/php/win32/
-(télécharger le fichier zip.zip).
-Seul le sous-répertoire "php_build" de l'archive nous interesse, à mettre dans
+(tÃ©lÃ©charger le fichier zip.zip).
+Seul le sous-rÃ©pertoire "php_build" de l'archive nous interesse, Ã  mettre dans
 c:\work
-(en fait quand on compile php dans le répertoire xxx, il cherchera dans 
+(en fait quand on compile php dans le rÃ©pertoire xxx, il cherchera dans 
 xxx\..\php_build, donc c'est ce qu'on veut).
 
-A ce stade, on doit être en état de configurer php : ::
+A ce stade, on doit Ãªtre en Ã©tat de configurer php : ::
 
 	cd c:\work\php-5.2.0
 
@@ -143,34 +143,34 @@ Lancer la compilation de PHP : ::
 
 	C:\work\php-5.2.0>nmake
 
-La compilation (au moins la première fois) prends très longtemps.
+La compilation (au moins la premiÃ¨re fois) prends trÃ¨s longtemps.
 On obtient plusieurs warnings qu'on peut ignorer.
 
-Au final, fatal error : winres.h non trouvé .
+Au final, fatal error : winres.h non trouvÃ© .
 solution : 
 http://elizabethmariesmith.com/2006/11/15/how-to-compile-php52-and-php-gtk2-on-windows-using-visual-c-express/2/
 (dernier paragraphe de l'article).
-Le problème est dû au fait que MS et php ne sont pas d'accords sur le nom que
-doit avoir ce fichier... (bon en fait, je trouve plutôt que c'est php qui n'est 
+Le problÃ¨me est dÃ» au fait que MS et php ne sont pas d'accords sur le nom que
+doit avoir ce fichier... (bon en fait, je trouve plutÃ´t que c'est php qui n'est 
 pas fichu de donner le bon nom).
-Solution : copier le fichier WinResRc.h qui se trouve dans le répertoire include
+Solution : copier le fichier WinResRc.h qui se trouve dans le rÃ©pertoire include
 du platform SDK 
 (C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include)
-sous le nom WinRes.h (dans le même répertoire).
+sous le nom WinRes.h (dans le mÃªme rÃ©pertoire).
 
-Relancer la compilation de php en tapant à nouveau nmake.
+Relancer la compilation de php en tapant Ã  nouveau nmake.
 
 Cette fois-ci, il doit aller au bout.
 
-Les fichiers ont générés dans le sous-répertoire Release_TS de php
+Les fichiers ont gÃ©nÃ©rÃ©s dans le sous-rÃ©pertoire Release_TS de php
 (C:\work\php-5.2.0\Release_TS)
 
-Deux exe ont été générés : php.exe et php-cgi.exe
-On peut les tester en les lançant avec l'option -v, par exemple.
+Deux exe ont Ã©tÃ© gÃ©nÃ©rÃ©s : php.exe et php-cgi.exe
+On peut les tester en les lanÃ§ant avec l'option -v, par exemple.
 
-(la sapi apache n'a pas été générée parce qu'on ne l'a pas demandée).
+(la sapi apache n'a pas Ã©tÃ© gÃ©nÃ©rÃ©e parce qu'on ne l'a pas demandÃ©e).
 
-2. génération d'une version debug
+2. gÃ©nÃ©ration d'une version debug
 (en cas de besoin)
 
 Reconfigurer php en mode debug : ::
@@ -181,45 +181,45 @@ Lancer la compilation :
 
 	nmake
 
-Les fichiers sont générés dans le sous-répertoire Debug_TS de php
+Les fichiers sont gÃ©nÃ©rÃ©s dans le sous-rÃ©pertoire Debug_TS de php
 (C:\work\php-5.2.0\Debug_TS)
 Idem pour les tester.
 
 C. Compilation de xapian
-Suivre les instructions détaillées du readme. 
-Les étapes en bref :
-Créer dans c:\work un répertoire 'xapian' et dézipper dedans les fichiers
-xapian-core et xapian-bindings récupérés depuis
+Suivre les instructions dÃ©taillÃ©es du readme. 
+Les Ã©tapes en bref :
+CrÃ©er dans c:\work un rÃ©pertoire 'xapian' et dÃ©zipper dedans les fichiers
+xapian-core et xapian-bindings rÃ©cupÃ©rÃ©s depuis
 http://www.xapian.org/download.php
-(on n'a pas besoin de omega, mais en cas de besoin, même démarche).
+(on n'a pas besoin de omega, mais en cas de besoin, mÃªme dÃ©marche).
 
-Récupérer les makefiles de Charlie Hull et dézipper en créant le répertoire
+RÃ©cupÃ©rer les makefiles de Charlie Hull et dÃ©zipper en crÃ©ant le rÃ©pertoire
 win32 dans xapian-core.
 
 Editer le fichier C:\work\xapian\xapian-core-0.9.10\win32\config.mak
-Presque tout doit être bon. Ajuster la version de php (5.2.1 par défaut).
+Presque tout doit Ãªtre bon. Ajuster la version de php (5.2.1 par dÃ©faut).
 
 C1. Compilation de xapian-core
-aller dans xapian-core/win32 (!!! pas dans xapian core, dans le sous rép win32)
+aller dans xapian-core/win32 (!!! pas dans xapian core, dans le sous rÃ©p win32)
 
 nettoyer : ::
 	nmake /f win32.mak CLEAN
 
-(on obtient des erreurs si c'est la première fois, normal).
+(on obtient des erreurs si c'est la premiÃ¨re fois, normal).
 
 Compiler : ::
 	nmake /f win32.mak
 
-Les différentes makefile sont copiés, puis la compilation est lancée.
-Les fichiers sont générés dans 
+Les diffÃ©rentes makefile sont copiÃ©s, puis la compilation est lancÃ©e.
+Les fichiers sont gÃ©nÃ©rÃ©s dans 
 C:\work\xapian\xapian-core-0.9.10\win32\Release
 
-Plusieurs tests sont ensuite lancés automatiqueme pour vérifier que tout 
+Plusieurs tests sont ensuite lancÃ©s automatiqueme pour vÃ©rifier que tout 
 fonctionne. ::
 
 	All 30 tests passed, 15 skipped.
 
-Dans les exécutables générés, on trouve delve, simplesearch copydatabase, etc. 
+Dans les exÃ©cutables gÃ©nÃ©rÃ©s, on trouve delve, simplesearch copydatabase, etc. 
 que l'on peut tester si on a une base disponible.
 
 Exemples : ::
@@ -256,7 +256,7 @@ en ajoutant ::
 
 	require('xapian.php');
 
-au début.
+au dÃ©but.
 
 Modifier la cible DOTEST du fichier ::
 
@@ -265,12 +265,12 @@ Modifier la cible DOTEST du fichier ::
 et ajouter "extension_dir=. " dans la commande php
 $(PHP_EXE) -q -n -d safe_mode=off -d enable_dl=on -d extension_dir=. "smoketest$(PHP_MAJOR_VERSION).php"
 
-(mieux : le faire dans le fichier win32_bindings_php du répertoire
+(mieux : le faire dans le fichier win32_bindings_php du rÃ©pertoire
 C:\work\xapian\xapian-core-0.9.10\win32)
 
 Si on relance : ::
 	nmake /f win32.mak dotest	
-cette fois-ci ça doit fonctionner, mais on tombe sur le bug php (dr watson).
+cette fois-ci Ã§a doit fonctionner, mais on tombe sur le bug php (dr watson).
 
 D. Modification de PHP
 
@@ -286,6 +286,6 @@ Et mettre en commentaire la ligne tsrm_shutdown()
 
 Recompiler php
 
-ce coup là ça marche.
+ce coup lÃ  Ã§a marche.
 
-reste à régler : problème de dépendance msvcr80 (pour vc8) ou msvcr71.dll (vs net 2003)
+reste Ã  rÃ©gler : problÃ¨me de dÃ©pendance msvcr80 (pour vc8) ou msvcr71.dll (vs net 2003)
