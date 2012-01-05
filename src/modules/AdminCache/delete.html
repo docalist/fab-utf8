@@ -8,7 +8,7 @@
         Vous allez supprimer le $type <strong>$file</strong>.
     </p>
 
-    <okcancel ok="Supprimer définitivement" cancelurl="{$this->getBackUrl($file)}" />
+    <okcancel ok="Supprimer dÃ©finitivement" cancelurl="{$this->getBackUrl($file)}" />
 
     <hidden name="directory" value="{$this->request->get('directory')}" />
     <hidden name="file" value="$file" />
@@ -16,13 +16,13 @@
     
     <fieldset label="Remarque" style="margin-top: 2em;">
         <p>
-            Les fichiers et répertoires qui composent le cache sont
-            recréés en permanence dès que de nouvelles requêtes sont adressées
+            Les fichiers et rÃ©pertoires qui composent le cache sont
+            recrÃ©Ã©s en permanence dÃ¨s que de nouvelles requÃªtes sont adressÃ©es
             au serveur.
         </p>
         <p>
             Il se peut donc que vous supprimiez un fichier ou un dossier et que 
-            celui-ci soit immédiatement recréé par une autre requête adressée
+            celui-ci soit immÃ©diatement recrÃ©Ã© par une autre requÃªte adressÃ©e
             par vous ou par un autre utilisateur.
         </p>
         <p>

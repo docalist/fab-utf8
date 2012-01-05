@@ -1,4 +1,4 @@
-<!-- Path des images utilisées -->
+<!-- Path des images utilisÃ©es -->
 <def name="icons" value="/FabWeb/modules/AdminFiles/images" />
 <h1>{$this->getTitle()}</h1>
 <autopara>{$this->getDescription()}</autopara>
@@ -16,7 +16,7 @@
 <def name="files" value="{$this->getFiles()}" />
 
 <bigmenu>
-    /* <item label="Répertoire parent" img="" href="index?directory=$parent" /> */
+    /* <item label="RÃ©pertoire parent" img="" href="index?directory=$parent" /> */
 
     <loop on="$files" as="$path,$file">
         <def name="request" value="{$this->request->copy()->keepOnly('directory')->set('file', $file)}" />

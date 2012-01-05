@@ -2,7 +2,7 @@
 /**
  * @package     fab
  * @subpackage  Admin
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: AdminCache.php 792 2008-06-19 15:04:50Z daniel.menard.bdsp $
  */
 
@@ -13,9 +13,9 @@
  * {@link /AdminCache contenu du cache} et de supprimer tout ou partie des 
  * fichiers qu'il contient.
  * 
- * AdminCache hérite de {@link AdminFiles}. Aucune méthode n'est
- * introduite par ce module, seules quelques méthodes héritées et quelques
- * templates sont modifiés.
+ * AdminCache hÃ©rite de {@link AdminFiles}. Aucune mÃ©thode n'est
+ * introduite par ce module, seules quelques mÃ©thodes hÃ©ritÃ©es et quelques
+ * templates sont modifiÃ©s.
  * 
  * Consultez la {@link Cache documentation de la classe Cache} pour plus 
  * d'informations sur les fichiers que fab met en cache.
@@ -26,55 +26,55 @@
 class AdminCache extends AdminFiles
 {
     /**
-     * Retourne le path complet du répertoire de travail de AdminCache.
+     * Retourne le path complet du rÃ©pertoire de travail de AdminCache.
      * 
-     * Le path retourné est construit à partir des élements suivants :
-     * - le répertoire racine contenant le cache de l'application,
-     * - le répertoire éventuel indiqué dans le paramètre <code>directory</code>
-     *   indiqué en query string.
+     * Le path retournÃ© est construit Ã  partir des Ã©lements suivants :
+     * - le rÃ©pertoire racine contenant le cache de l'application,
+     * - le rÃ©pertoire Ã©ventuel indiquÃ© dans le paramÃ¨tre <code>directory</code>
+     *   indiquÃ© en query string.
      * 
-     * Une exception est générée si le répertoire obtenu n'existe pas ou ne
-     * désigne pas un répertoire.
+     * Une exception est gÃ©nÃ©rÃ©e si le rÃ©pertoire obtenu n'existe pas ou ne
+     * dÃ©signe pas un rÃ©pertoire.
      * 
-     * Le chemin retourné contient toujours un slash final.
+     * Le chemin retournÃ© contient toujours un slash final.
      *
-     * @throws Exception est générée si :
-     * - le répertoire obtenu contient des séquences de la forme 
+     * @throws Exception est gÃ©nÃ©rÃ©e si :
+     * - le rÃ©pertoire obtenu contient des sÃ©quences de la forme 
      *   <code>/../</code> ;
-     * - le répertoire obtenu n'existe pas ou désigne autre chose qu'un 
-     *   répertoire.
+     * - le rÃ©pertoire obtenu n'existe pas ou dÃ©signe autre chose qu'un 
+     *   rÃ©pertoire.
      *  
      * @return string le path obtenu.
      */
     public function getDirectory()
     {
-        // Détermine le path du cache
+        // DÃ©termine le path du cache
         $path=Utils::makePath
         (
             realpath(Cache::getPath(Runtime::$root).'../..'), // On ne travaille que dans le cache de cette application 
-            $this->request->get('directory'),   // Répertoire éventuel passé en paramètre
+            $this->request->get('directory'),   // RÃ©pertoire Ã©ventuel passÃ© en paramÃ¨tre
             DIRECTORY_SEPARATOR                 // Garantit qu'on a un slash final
         );
         
-        // Vérifie qu'on n'a pas de '..'
-        $this->checkPath($path, 'Répertoire de travail');
+        // VÃ©rifie qu'on n'a pas de '..'
+        $this->checkPath($path, 'RÃ©pertoire de travail');
         
-        // Vérifie que c'est un répertoire et que celui-ci existe
+        // VÃ©rifie que c'est un rÃ©pertoire et que celui-ci existe
         if (!is_dir($path))
-            throw new Exception("Le répertoire indiqué n'existe pas.");
+            throw new Exception("Le rÃ©pertoire indiquÃ© n'existe pas.");
             
-        // Retourne le résultat
+        // Retourne le rÃ©sultat
         return $path;
     }    
 
     
     /**
-     * Détermine l'icone à afficher pour représenter le type du fichier ou du
-     * dossier passé en paramètre.
+     * DÃ©termine l'icone Ã  afficher pour reprÃ©senter le type du fichier ou du
+     * dossier passÃ© en paramÃ¨tre.
      *  
-     * Cette méthode surcharge {@link AdminFiles::getFileIcon()} car les 
-     * fichiers présents dans le cache de l'application sont tous des fichiers
-     * php, même s'ils ont une extension différente.
+     * Cette mÃ©thode surcharge {@link AdminFiles::getFileIcon()} car les 
+     * fichiers prÃ©sents dans le cache de l'application sont tous des fichiers
+     * php, mÃªme s'ils ont une extension diffÃ©rente.
      *
      * @param string $path
      * @return string une url de la forme 
@@ -88,13 +88,13 @@ class AdminCache extends AdminFiles
     }
     
     /**
-     * Détermine le type de coloration syntaxique à appliquer aux fichier 
+     * DÃ©termine le type de coloration syntaxique Ã  appliquer aux fichier 
      * du cache.
      *
      * {@inheritdoc}
      * 
-     * Comme les fichiers présents dans le cache de l'application sont tous des 
-     * fichiers (même s'ils ont une extension différente), cette version de
+     * Comme les fichiers prÃ©sents dans le cache de l'application sont tous des 
+     * fichiers (mÃªme s'ils ont une extension diffÃ©rente), cette version de
      * <code>getEditorSyntax</code> retourne toujours la syntaxe 
      * <code>php</code>.
      *   
