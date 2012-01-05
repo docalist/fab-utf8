@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <rss  version="2.0"
       xmlns:atom="http://www.w3.org/2005/Atom"    
       xmlns:sy="http://purl.org/rss/1.0/modules/syndication/">
@@ -18,7 +18,7 @@
         
         <loop on="$this->selection" as="$record">
             <item>
-                <title>{Utils::xmlEncode($this->firstFilled($title, 'notice n°'.$REF))}</title>
+                <title>{Utils::xmlEncode($this->firstFilled($title, 'notice nÂ°'.$REF))}</title>
                 <guid>{Routing::linkFor('/'.$this->module.'/Show?REF='.$REF, true)}</guid>
                 <opt><description>{Utils::xmlEncode($this->firstFilled($description))}</description></opt>
                 <def name="pubDate" value="{$this->firstFilled($date)}" />

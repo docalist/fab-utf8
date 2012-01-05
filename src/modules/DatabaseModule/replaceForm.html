@@ -34,10 +34,10 @@ div.help dt
     <div class="help">{select('node()|@*')}</div>
 </template>
 <slot name="header">
-    <h1>Modification en série</h1>
+    <h1>Modification en sÃ©rie</h1>
     <a href="#" onclick="jQuery('.help').toggle('fast');return false;" style="float: right;">Afficher/masquer l'aide...</a>
     
-    <p><strong>{$this->selection->count('environ ')} notice(s)</strong> pour l'équation <code>{$this->equation}</code></p>
+    <p><strong>{$this->selection->count('environ ')} notice(s)</strong> pour l'Ã©quation <code>{$this->equation}</code></p>
 </slot>
 <form method="get" action="Replace" class="form">
     <slot name="formheader" />
@@ -48,11 +48,11 @@ div.help dt
         <textbox name="search" style="width: 100%;" /><br />
         <srhelp>
             <p>
-                Indiquez la chaîne à rechercher ou laissez cette zone vide pour 
-                sélectionner uniquement les champs qui sont vides.
+                Indiquez la chaÃ®ne Ã  rechercher ou laissez cette zone vide pour 
+                sÃ©lectionner uniquement les champs qui sont vides.
             </p>
             <p>
-                Pour une utilisation avancée, consultez les astuces qui figurent 
+                Pour une utilisation avancÃ©e, consultez les astuces qui figurent 
                 <a href="#tips">ci-dessous</a>.
             </p>
         </srhelp>
@@ -62,52 +62,52 @@ div.help dt
         <textbox name="replace" style="width: 100%;" /><br />
         <srhelp>
             <p>
-                Indiquez la chaîne qui viendra remplacer la chaîne recherchée ou 
-                laissez cette zone vide pour supprimer la valeur recherchée.
+                Indiquez la chaÃ®ne qui viendra remplacer la chaÃ®ne recherchÃ©e ou 
+                laissez cette zone vide pour supprimer la valeur recherchÃ©e.
             </p>
         </srhelp>
     </fieldset>
 
     <fieldset label="Options : ">
         <div>
-            <checkbox name="ignoreCase" label="Insensible à la casse" value="true" checked="checked" /><br />
+            <checkbox name="ignoreCase" label="Insensible Ã  la casse" value="true" checked="checked" /><br />
             <srhelp>
                 <p>
-                    Par défaut, la recherche tient compte de la casse des caractères, 
-                    c'est-à-dire que les majuscules et les minuscules sont considérées
-                    comme des caractères différents. Lorsque cette option est cochée,
-                    la chaîne recherchée sera trouvée quelle que soit la casse des 
-                    caractères.
+                    Par dÃ©faut, la recherche tient compte de la casse des caractÃ¨res, 
+                    c'est-Ã -dire que les majuscules et les minuscules sont considÃ©rÃ©es
+                    comme des caractÃ¨res diffÃ©rents. Lorsque cette option est cochÃ©e,
+                    la chaÃ®ne recherchÃ©e sera trouvÃ©e quelle que soit la casse des 
+                    caractÃ¨res.
                 </p>
                 <p>
-                    Remarque : les accents sont toujours considérés comme des caractères
-                    différents de la lettre non accentuée correspondante, que cette 
-                    option soit cochée ou non.
+                    Remarque : les accents sont toujours considÃ©rÃ©s comme des caractÃ¨res
+                    diffÃ©rents de la lettre non accentuÃ©e correspondante, que cette 
+                    option soit cochÃ©e ou non.
                 </p>
             </srhelp>
         </div>
         <div>
-            <checkbox name="regexp" label="Expression régulière" value="true" 
+            <checkbox name="regexp" label="Expression rÃ©guliÃ¨re" value="true" 
                 onclick="jQuery('#word').attr('disabled', this.checked ? 'disabled' : '')"
             /><br />
             <srhelp>
                 <p>
-                    Une expression régulière permet de définir un motif décrivant un
-                    ensemble de chaînes de caractères que l'on veut rechercher. Par 
+                    Une expression rÃ©guliÃ¨re permet de dÃ©finir un motif dÃ©crivant un
+                    ensemble de chaÃ®nes de caractÃ¨res que l'on veut rechercher. Par 
                     exemple, l'expression "cha(ton|taigne)" recherchera les
-                    chaînes "chaton" et "chataigne" en une seule étape.
+                    chaÃ®nes "chaton" et "chataigne" en une seule Ã©tape.
                 </p>
                 <p> 
-                    <a href="http://lumadis.be/regex/tuto_pcre.php">Tutoriel en français</a>
+                    <a href="http://lumadis.be/regex/tuto_pcre.php">Tutoriel en franÃ§ais</a>
                     -
-                    <a href="http://www.regular-expressions.info/">Site de référence</a>.
+                    <a href="http://www.regular-expressions.info/">Site de rÃ©fÃ©rence</a>.
                 </p>
             </srhelp>
         </div>
         <div>
             <checkbox name="word" label="Mot entier" value="true" /><br />
             <srhelp>
-                <p>Sans effet si l'option "Expression régulière" est sélectionnée.</p>
+                <p>Sans effet si l'option "Expression rÃ©guliÃ¨re" est sÃ©lectionnÃ©e.</p>
             </srhelp>
         </div>
     </fieldset>
@@ -117,16 +117,16 @@ div.help dt
         <srhelp>
             <p>
                 Choisissez le ou les champ(s) dans lesquels vous souhaitez effectuer
-                le remplacement. Vous pouvez également cliquer sur la case à cocher 
-                qui figure dans l'entête du tableau pour sélectionner tous les champs
+                le remplacement. Vous pouvez Ã©galement cliquer sur la case Ã  cocher 
+                qui figure dans l'entÃªte du tableau pour sÃ©lectionner tous les champs
                 de la base.
             </p>    
         </srhelp>
         
-        /* flag utilisé pour alternater la couleur des lignes de la table */
+        /* flag utilisÃ© pour alternater la couleur des lignes de la table */
         <def name="odd" value="{true}" />
 
-        /* Choisit si la liste des noms de champ est triée ou non */
+        /* Choisit si la liste des noms de champ est triÃ©e ou non */
         <if test="{Config::get('sortfields', true)}">
             <def name="fields" value="{Utils::ksort($this->selection->getSchema()->fields)}" />
         </if>
@@ -134,7 +134,7 @@ div.help dt
             <def name="fields" value="{$this->selection->getSchema()->fields}" />
         </else>
 
-        /* Supprime de la liste les champs à ignorer définis dans la config */
+        /* Supprime de la liste les champs Ã  ignorer dÃ©finis dans la config */
         <def name="fields" value="{array_diff_key($fields, array_flip(array_map('strtolower', (array) Config::get('ignore'))))}" />
 
         /* Liste des champs */
@@ -144,11 +144,11 @@ div.help dt
                     <th>
                         <input type="checkbox" id="checkall" 
                             onclick="jQuery('.fields').attr('checked', this.checked)"
-                            title="Sélectionner/désélectionner tout" 
+                            title="SÃ©lectionner/dÃ©sÃ©lectionner tout" 
                         />
                     </th>
                     <th>Champ</th>
-                    <th>Libellé</th>
+                    <th>LibellÃ©</th>
                 </tr>
             </thead>
             <tbody>
@@ -173,19 +173,19 @@ div.help dt
     <slot name="formfooter" />
 </form>
 <srhelp id="tips">
-    <h2>Astuces, utilisation avancée</h2>
+    <h2>Astuces, utilisation avancÃ©e</h2>
     <dl>
-        <dt>Limiter le nombre de notices impactées</dt>
+        <dt>Limiter le nombre de notices impactÃ©es</dt>
         <dd>
             <p>
-                Le temps d'exécution du chercher/remplacer dépend directement du
-                nombre de notices à étudier : plus il y a de notices à étudier, 
+                Le temps d'exÃ©cution du chercher/remplacer dÃ©pend directement du
+                nombre de notices Ã  Ã©tudier : plus il y a de notices Ã  Ã©tudier, 
                 plus cela va prendre longtemps et, inversement, plus votre 
-                équation de recherche sera précise, plus cela ira vite.
+                Ã©quation de recherche sera prÃ©cise, plus cela ira vite.
             </p>
             <p>
                 Prenez un peu de temps pour regarder si vous ne pouvez pas 
-                ajouter quelques critères supplémentaires à votre équation de 
+                ajouter quelques critÃ¨res supplÃ©mentaires Ã  votre Ã©quation de 
                 recherche...
             </p>
         </dd>
@@ -194,17 +194,17 @@ div.help dt
         <dd>
             <p>
                 Ne rien saisir dans la zone "rechercher", indiquer dans la zone
-                "Remplacer par" la valeur à injecter puis sélectionner les 
-                champs concernés.
+                "Remplacer par" la valeur Ã  injecter puis sÃ©lectionner les 
+                champs concernÃ©s.
             </p>
         </dd>
 
         <dt>Vider un champ</dt>
         <dd>
             <p>
-                Activer l'option "Expression régulière", saisir ".*" (sans les 
+                Activer l'option "Expression rÃ©guliÃ¨re", saisir ".*" (sans les 
                 guillemets) dans la zone "Rechercher", ne rien saisir dans la 
-                zone "Remplacer par" puis sélectionner les champs à vider.
+                zone "Remplacer par" puis sÃ©lectionner les champs Ã  vider.
             </p>
         </dd>
     </dl>

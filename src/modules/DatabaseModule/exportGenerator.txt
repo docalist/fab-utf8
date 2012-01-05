@@ -1,6 +1,6 @@
 /*
-    Appelle le générateur indiqué dans le format.
-    Je ne pensais pas que php accepterait la syntaxe utilisée pour faire l'appel de méthode, mais
-    apparemment, cela ne lui pose aucun problème.
+    Appelle le gÃ©nÃ©rateur indiquÃ© dans le format.
+    Je ne pensais pas que php accepterait la syntaxe utilisÃ©e pour faire l'appel de mÃ©thode, mais
+    apparemment, cela ne lui pose aucun problÃ¨me.
 
 */{$this->$fmt['generator']($fmt)}

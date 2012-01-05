@@ -11,18 +11,18 @@
         </ul>
     </div>
     /* 
-        Définit un slot qui pourra être utilisé par un module descendant pour
-        "injecter" d'autres paramètres dans le formulaire de recherche.
-        C'est par exemple le cas de DatabaseInspector qui ajoute un champ caché
-        indiquant le nom de la base utilisée.
+        DÃ©finit un slot qui pourra Ãªtre utilisÃ© par un module descendant pour
+        "injecter" d'autres paramÃ¨tres dans le formulaire de recherche.
+        C'est par exemple le cas de DatabaseInspector qui ajoute un champ cachÃ©
+        indiquant le nom de la base utilisÃ©e.
     */
     <slot name="otherparams" />
     
     /*
-        S'il n'y a qu'un seul format d'export disponible, inutile de demander à 
+        S'il n'y a qu'un seul format d'export disponible, inutile de demander Ã  
         l'utilisateur de choisir.
-        Si le nombre de réponses obtenues dépasse le max indiqué pour le format,
-        indique la limite à l'utilisateur.
+        Si le nombre de rÃ©ponses obtenues dÃ©passe le max indiquÃ© pour le format,
+        indique la limite Ã  l'utilisateur.
     */
     <if test="{count(Config::get('formats'))==1}">
         <loop on="{Config::get('formats')}" as="$name,$format">
@@ -41,10 +41,10 @@
 
     /*
         Sinon, affiche la liste des formats disponibles en indiquant la limite
-        éventuelle à chaque fois.
+        Ã©ventuelle Ã  chaque fois.
     */    
     <else>
-        <fieldset label="Choisissez le format du fichier à générer :">
+        <fieldset label="Choisissez le format du fichier Ã  gÃ©nÃ©rer :">
             <holder class="radiolist">
                 <fill values="$format">
                     <loop on="{Config::get('formats')}" as="$name,$format">
@@ -76,10 +76,10 @@
                 <checkbox test="{! Config::get('forcemail')}" name="_mail" value="1" label="Envoyer le fichier obtenu par messagerie" />
             </fill>
                     
-            /* Details de l'e-mail à envoyer */
+            /* Details de l'e-mail Ã  envoyer */
             <holder class="vertical" test="$allowmail" id="_maildetails" style="margin-left: 1.3em;">
                 <textbox name="_to" label="Destinataire(s) :" size="80" value="{htmlentities($to)}">
-                    <p class="hint">Vous pouvez indquer plusieurs adresses en les séparant par une virgule.</p>
+                    <p class="hint">Vous pouvez indquer plusieurs adresses en les sÃ©parant par une virgule.</p>
                 </textbox>
                 <br />
                 <textbox 
@@ -100,13 +100,13 @@
         /* Option "Archive ZIP" */
         <div test="$allowzip">
             <fill values="$zip">
-                <checkbox test="{! Config::get('forcezip')}" name="_zip" value="1" label="Compresser le fichier et créer une archive au format ZIP" />
+                <checkbox test="{! Config::get('forcezip')}" name="_zip" value="1" label="Compresser le fichier et crÃ©er une archive au format ZIP" />
             </fill>
         </div>
     </fieldset>
 
 
-    /* Champs cachés : équation, filename, sort, etc. */
+    /* Champs cachÃ©s : Ã©quation, filename, sort, etc. */
     <loop on="$equations" as="$equation">
         <hidden name="_equation" value="{htmlspecialchars($equation)}" />
     </loop>
