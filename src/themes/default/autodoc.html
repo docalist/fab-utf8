@@ -1,24 +1,27 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
-"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
+    <meta charset="UTF-8" />
     <title>{$this->getPageTitle()}</title>
-    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=iso-8859-1" />
-    <scripts />
+
     <css />
+    <scripts placement="top" />
+    <links />
 </head>
 <body>
 <div class="index">
     <slot name="api" action="/AutoDoc/Api" />
     <def name="current" value="{$this->request->get('class'):$this->request->get('filename'):'index.xml'}" />
     <script test="$current" type="text/javascript">
-        /* si un id a des '.' ou autres, il faut faire pr�c�der de deux \
+        /*
+           si un id comporte des '.' ou d'autres caractères spéciaux, il faut les faire précéder de deux antislashs.
            cf http://docs.jquery.com/Frequently_Asked_Questions#How_do_I_select_an_element_by_an_ID_that_has_characters_used_in_CSS_notation.3F
-         */
+        */
         jQuery("#{str_replace('.', '\\\\.', $current)}").addClass('selected');
     </script>
     
 </div>
 {$this->runAction()} 
+<scripts placement="bottom" />
 </body>
 </html>
