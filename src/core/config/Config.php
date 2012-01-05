@@ -2,19 +2,19 @@
 /**
  * @package     fab
  * @subpackage  config
- * @author 		Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author 		Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: Config.php 1253 2011-05-11 09:44:04Z daniel.menard.bdsp $
  */
 
 /**
- * Gère la configuration de l'application.
+ * GÃ¨re la configuration de l'application.
  *
- * <code>Config</code> est une classe classe statique qui offre des méthodes
- * permettant de gérer la configuration de l'application :
+ * <code>Config</code> est une classe classe statique qui offre des mÃ©thodes
+ * permettant de gÃ©rer la configuration de l'application :
  * - {@link load() chargement} des fichiers de configuration au format xml,
  * - compilation,
  * - {@link loadFile() stockage} en {@link Cache cache},
- * - {@link mergeConfig() héritage},
+ * - {@link mergeConfig() hÃ©ritage},
  * - {@link get() consultation} et {@link set() modification} des
  *   {@link getAll() options de configuration}.
  *
@@ -36,42 +36,42 @@ class Config
     /**
      * Charge un fichier de configuration XML.
      *
-     * <code>loadFile</code> charge le fichier indiqué, sans le fusionner avec
+     * <code>loadFile</code> charge le fichier indiquÃ©, sans le fusionner avec
      * la configuration en cours, et retourne le tableau obtenu.
      *
-     * Il est possible d'indiquer un callback chargé de valider ou de modifier
+     * Il est possible d'indiquer un callback chargÃ© de valider ou de modifier
      * le tableau.
      *
      * Si le cache est disponible, le tableau obtenu est mis en cache. Lors du
-     * prochain appel, le fichier de configuration sera chargé directement à
+     * prochain appel, le fichier de configuration sera chargÃ© directement Ã 
      * partir du cache.
      *
-     * Le tableau final est retourné.
+     * Le tableau final est retournÃ©.
      *
-     * @param string $configPath le path du fichier de configuration à charger
+     * @param string $configPath le path du fichier de configuration Ã  charger
      *
-     * @param callback $transformer une fonction callback optionnelle chargée
+     * @param callback $transformer une fonction callback optionnelle chargÃ©e
      * de valider ou de modifier le tableau de configuration.
      *
-     * Si vous indiquez un callback, celui-ci doit prendre en paramètre un
+     * Si vous indiquez un callback, celui-ci doit prendre en paramÃ¨tre un
      * tableau et retourner un tableau.
      *
      * @return array le tableau final
      */
     public static function loadFile($configPath, array $transformer=null)
     {
-        // Vérifie que le fichier demandé existe
+        // VÃ©rifie que le fichier demandÃ© existe
         if (false === $path=Utils::realpath($configPath))
             throw new Exception("Impossible de trouver le fichier de configuration '$configPath'");
 
-        // Retourne le fichier depuis le cache s'il existe et est à jour
+        // Retourne le fichier depuis le cache s'il existe et est Ã  jour
         $cache=Config::get('cache.enabled');
 
         $checkTime=Runtime::$initializing ? true : Config::get('config.checktime');
         if ( $cache && Cache::has($path, $checkTime ? filemtime($path) : 0) )
             return require(Cache::getPath($path));
 
-        // Sinon, charge le fichier réel, le transforme puis le stocke en cache
+        // Sinon, charge le fichier rÃ©el, le transforme puis le stocke en cache
         $data=self::loadXml(file_get_contents($path));
 
         // Applique le transformer
@@ -87,7 +87,7 @@ class Config
                 sprintf
                 (
                     "<?php\n".
-                    "// Fichier généré automatiquement à partir de '%s'\n".
+                    "// Fichier gÃ©nÃ©rÃ© automatiquement Ã  partir de '%s'\n".
                     "// Ne pas modifier.\n".
                     "//\n".
                     "// Date : %s\n\n".
@@ -105,20 +105,17 @@ class Config
     }
 
     /**
-     * Génère un source Xml à partir de la configuration en cours.
+     * GÃ©nÃ¨re un source Xml Ã  partir de la configuration en cours.
      *
-     * La fonction écrit directement sur la sortie standard (echo).
-     * Utilisé les fonctions de php pour capturer le source généré.
+     * La fonction Ã©crit directement sur la sortie standard (echo).
+     * UtilisÃ© les fonctions de php pour capturer le source gÃ©nÃ©rÃ©.
      *
      * @param string $name nom du tag en cours
-     * @param mixed $data données du tag en cours
+     * @param mixed $data donnÃ©es du tag en cours
      * @param string $indent indentation en cours
      */
     public static function toXml($name, $data, $indent='')
     {
-        // Encode la clé en UTF8 une bonne fois pour toute
-        $name=utf8_encode($name);
-
         if (is_null($data) || $data==='' || (is_array($data) && count($data)===0))
         {
             echo $indent, "<$name />\n";
@@ -129,7 +126,7 @@ class Config
         }
         elseif (is_string($data))
         {
-            echo $indent, "<$name>", utf8_encode(htmlspecialchars($data, ENT_NOQUOTES)), "</$name>\n";
+            echo $indent, "<$name>", htmlspecialchars($data, ENT_NOQUOTES), "</$name>\n";
         }
         elseif (is_scalar($data))
         {
@@ -137,7 +134,7 @@ class Config
         }
         elseif (is_array($data))
         {
-            // Tableau avec des clés numériques : on répête le tag
+            // Tableau avec des clÃ©s numÃ©riques : on rÃ©pÃªte le tag
             if (key($data)===0)
             {
                 echo $indent, "<$name>\n";
@@ -148,7 +145,7 @@ class Config
                 echo $indent, "</$name>\n";
             }
 
-            // Tableau avec des clés alpha : enumère les propriétés
+            // Tableau avec des clÃ©s alpha : enumÃ¨re les propriÃ©tÃ©s
             else
             {
                 echo $indent, "<$name>\n";
@@ -162,19 +159,19 @@ class Config
     }
 
     /**
-     * Charge un tableau de configuration à partir du source xml passé en
-     * paramètre.
+     * Charge un tableau de configuration Ã  partir du source xml passÃ© en
+     * paramÃ¨tre.
      *
      * @param string $source
      * @return array
      */
     public static function loadXml($source)
     {
-        // Crée un document XML
+        // CrÃ©e un document XML
         $xml=new domDocument();
         $xml->preserveWhiteSpace=false;
 
-        // gestion des erreurs : voir comment 1 à http://fr.php.net/manual/en/function.dom-domdocument-loadxml.php
+        // gestion des erreurs : voir comment 1 Ã  http://fr.php.net/manual/en/function.dom-domdocument-loadxml.php
         libxml_clear_errors(); // >PHP5.1
         libxml_use_internal_errors(true);// >PHP5.1
 
@@ -184,7 +181,7 @@ class Config
             $h="Fichier de configuration incorrect, ce n'est pas un fichier xml valide :<br />\n";
             foreach (libxml_get_errors() as $error)
                 $h.= "- ligne $error->line : $error->message<br />\n";
-            libxml_clear_errors(); // libère la mémoire utilisée par les erreurs
+            libxml_clear_errors(); // libÃ¨re la mÃ©moire utilisÃ©e par les erreurs
             throw new Exception($h);
         }
 
@@ -195,15 +192,15 @@ class Config
     }
 
     /**
-     * Fonction utilitaire récursive utilisée par {@link loadXml()} pour
+     * Fonction utilitaire rÃ©cursive utilisÃ©e par {@link loadXml()} pour
      * convertit un noeud XML en valeur.
      *
-     * @param DOMElement $node le noeud à convertir.
+     * @param DOMElement $node le noeud Ã  convertir.
      * @return mixed la valeur obtenue.
      */
     private static function fromXml(DOMElement $node)
     {
-        // Balaye les noeuds fils pour déterminer la valeur de la propriété
+        // Balaye les noeuds fils pour dÃ©terminer la valeur de la propriÃ©tÃ©
         $value=null;
         $arrayType=0;
         foreach($node->childNodes as $child)
@@ -213,46 +210,46 @@ class Config
                 // Texte ou section cdata
                 case XML_TEXT_NODE:
                 case XML_CDATA_SECTION_NODE:
-                    // Vérifie que la config ne mélange pas à la fois des noeuds et du texte
+                    // VÃ©rifie que la config ne mÃ©lange pas Ã  la fois des noeuds et du texte
                     if (is_array($value))
-                        throw new Exception('Le noeud '.$node->tagName.' contient à la fois des noeuds et du texte');
+                        throw new Exception('Le noeud '.$node->tagName.' contient Ã  la fois des noeuds et du texte');
 
-                    // Stocke la valeur de la clé
+                    // Stocke la valeur de la clÃ©
                     $value.=$child->data;
                     break;
 
                 // Un tag
                 case XML_ELEMENT_NODE:
-                    // Vérifie que la config ne mélange pas à la fois des noeuds et du texte
+                    // VÃ©rifie que la config ne mÃ©lange pas Ã  la fois des noeuds et du texte
                     if (is_string($value))
-                        throw new Exception('Le noeud '.$node->tagName.' contient à la fois du texte et des noeuds');
+                        throw new Exception('Le noeud '.$node->tagName.' contient Ã  la fois du texte et des noeuds');
 
-                    // Récupère la valeur de l'option
+                    // RÃ©cupÃ¨re la valeur de l'option
                     $item=self::fromXml($child);
 
-                    // Cas particulier : la valeur de la clé est un tableau d'items
+                    // Cas particulier : la valeur de la clÃ© est un tableau d'items
                     if ($child->tagName==='item')
                     {
-                        // Vérifie qu'on ne mélange pas options et items
+                        // VÃ©rifie qu'on ne mÃ©lange pas options et items
                         if ($arrayType===2)
-                            throw new Exception($node->tagName . ' contient à la fois des options et des items');
+                            throw new Exception($node->tagName . ' contient Ã  la fois des options et des items');
 
                         // Aucun attribut pour un item
                         if ($child->hasAttributes())
                             throw new Exception("Un item ne peut pas avoir d'attributs");
 
-                        $value[]=$item; // si value===null php crée un array
+                        $value[]=$item; // si value===null php crÃ©e un array
                         $arrayType=1;
                         break;
                     }
 
-                    // Vérifie qu'on ne mélange pas options et items
+                    // VÃ©rifie qu'on ne mÃ©lange pas options et items
                     if ($arrayType===1)
-                        throw new Exception($node->tagName . ' contient à la fois des options et des items');
+                        throw new Exception($node->tagName . ' contient Ã  la fois des options et des items');
                     $arrayType=2;
 
                     // Les attributs sont interdits dans un fichier de config (sauf inherit)
-                    $name=utf8_decode($child->tagName);
+                    $name=$child->tagName;
                     if ($child->hasAttributes())
                     {
                         foreach($child->attributes as $attribute)
@@ -271,27 +268,27 @@ class Config
                                 }
                             }
                             else
-                                throw new Exception("L'attribut '$attribute->nodeName' n'est pas autorisé pour l'option '$name'");
+                                throw new Exception("L'attribut '$attribute->nodeName' n'est pas autorisÃ© pour l'option '$name'");
                         }
                     }
 
-                    // Première fois qu'on rencontre cette clé
+                    // PremiÃ¨re fois qu'on rencontre cette clÃ©
                     if (! isset($value[$name]))
                     {
                         $value[$name]=$item;
                     }
 
-                    // Clé déjà rencontrée : transforme en tableau
+                    // ClÃ© dÃ©jÃ  rencontrÃ©e : transforme en tableau
                     else
                     {
                         if (!is_array($value[$name]))
-                            throw new Exception('Tag répété : '.$name);
+                            throw new Exception('Tag rÃ©pÃ©tÃ© : '.$name);
 
                         $value[$name][]=$item;
                     }
                     break;
 
-                // Types de noeud autorisés mais ignorés
+                // Types de noeud autorisÃ©s mais ignorÃ©s
                 case XML_COMMENT_NODE:
                     break;
 
@@ -301,7 +298,7 @@ class Config
             }
         }
 
-        // Convertit les chaines en entiers, booléens ; décode l'utf8
+        // Convertit les chaines en entiers, boolÃ©ens
         if (is_string($value))
         {
             $h=trim($value);
@@ -312,12 +309,9 @@ class Config
                 $value=true;
             elseif($h==='false')
                 $value= false;
-            else
-                $value=utf8_decode($value);
-
         }
 
-        // Retourne le résultat
+        // Retourne le rÃ©sultat
         return $value;
     }
 
@@ -326,9 +320,9 @@ class Config
      * Charge un fichier de configuration et le fusionne avec la configuration
      * en cours.
      *
-     * @param string $path le fichier de configuration à charger
-     * @param string $section la section dans laquelle le fichier sera chargé
-     * @param callback $transformer fonction de callback à appliquer au tableau
+     * @param string $path le fichier de configuration Ã  charger
+     * @param string $section la section dans laquelle le fichier sera chargÃ©
+     * @param callback $transformer fonction de callback Ã  appliquer au tableau
      * de configuration
      */
     public static function load($path, $section='', array $transformer=null)
@@ -338,11 +332,11 @@ class Config
 
 
     /**
-     * Fusionne la configuration en cours avec le tableau passé en paramètre.
+     * Fusionne la configuration en cours avec le tableau passÃ© en paramÃ¨tre.
      *
      * @param array $parameters un tableau associatif contenant les
-     * options à intégrer dans la configuration en cours.
-     * @param string $section la section dans laquelle le tableau sera chargé.
+     * options Ã  intÃ©grer dans la configuration en cours.
+     * @param string $section la section dans laquelle le tableau sera chargÃ©.
      */
     public static function addArray($parameters = array (), $section='')
     {
@@ -367,41 +361,41 @@ class Config
 
 
     /**
-     * Modifie le premier tableau passé en paramètre en ajoutant ou en modifiant
-     * les options qui figure dans le second tableau passé en paramètre.
+     * Modifie le premier tableau passÃ© en paramÃ¨tre en ajoutant ou en modifiant
+     * les options qui figure dans le second tableau passÃ© en paramÃ¨tre.
      *
-     * Par défaut, la modification apportée consiste à fusionner les valeurs du
-     * premier tableau avec celle du second. Mais si une clé commence par le
-     * caractère '!' (point d'exclamation), la fusion est désactivée et la valeur
-     * associée vient purement et simplement remplacer la valeur existante.
+     * Par dÃ©faut, la modification apportÃ©e consiste Ã  fusionner les valeurs du
+     * premier tableau avec celle du second. Mais si une clÃ© commence par le
+     * caractÃ¨re '!' (point d'exclamation), la fusion est dÃ©sactivÃ©e et la valeur
+     * associÃ©e vient purement et simplement remplacer la valeur existante.
      *
-     * @param array $t1 le tableau dans lequel la fusion va s'opérer.
-     * @param array $t2 le tableau contenant les options à fusionner.
+     * @param array $t1 le tableau dans lequel la fusion va s'opÃ©rer.
+     * @param array $t2 le tableau contenant les options Ã  fusionner.
      */
     public static function mergeConfig(&$t1,$t2)
     {
         /*
             Modifs DM 20/12/07, gestion de l'attribut inherit="false"
 
-            La gestion existante fonctionne lorsque deux tableaux sont fusionnés
-            Mais si le tableau obtenu est à nouveau fusionné avec un autre, on
-            n'a plus aucune info nous disant 'ne pas hériter'.
+            La gestion existante fonctionne lorsque deux tableaux sont fusionnÃ©s
+            Mais si le tableau obtenu est Ã  nouveau fusionnÃ© avec un autre, on
+            n'a plus aucune info nous disant 'ne pas hÃ©riter'.
 
-            J'ai modifié le code pour créer à chaque fois, dans le tableau
-            résultat, une clé '!inherit' contenant la liste des clés qui ne
-            doivent pas hériter de la config existante.
+            J'ai modifiÃ© le code pour crÃ©er Ã  chaque fois, dans le tableau
+            rÃ©sultat, une clÃ© '!inherit' contenant la liste des clÃ©s qui ne
+            doivent pas hÃ©riter de la config existante.
 
-            Cela fonctionne, mais il subsiste dans la config des clés précédées
-            d'un slash qui ne devrait pas apparaître (par exemple dans la config
+            Cela fonctionne, mais il subsiste dans la config des clÃ©s prÃ©cÃ©dÃ©es
+            d'un slash qui ne devrait pas apparaÃ®tre (par exemple dans la config
             de l'action EditSchema de DatabaseAdmin). Dans la pratique, ce
-            n'est pas forcément génant parce que la config finale de premier
-            niveau n'a pas de slash, donc ça marche.
+            n'est pas forcÃ©ment gÃ©nant parce que la config finale de premier
+            niveau n'a pas de slash, donc Ã§a marche.
 
-            Les slashs qui subsistent viennent du fait que si la clé n'existe
-            pas déjà dans le tableau t1, on recopie directement la valeur
-            provenant du tableau t2. Si cette valeur est elle même un tableau
-            contenant des clés précédées d'un slash, celles-ci ne seront jamais
-            supprimées (en fait il faudrait faire un merge).
+            Les slashs qui subsistent viennent du fait que si la clÃ© n'existe
+            pas dÃ©jÃ  dans le tableau t1, on recopie directement la valeur
+            provenant du tableau t2. Si cette valeur est elle mÃªme un tableau
+            contenant des clÃ©s prÃ©cÃ©dÃ©es d'un slash, celles-ci ne seront jamais
+            supprimÃ©es (en fait il faudrait faire un merge).
 
          */
         if (isset($t2['!inherit']))
@@ -465,11 +459,11 @@ class Config
      * Retourne la valeur d'une option de configuration.
      *
      * @param string $name le nom de l'option de configuration.
-     * @param mixed  $default la valeur à retourner si l'option demandée
+     * @param mixed  $default la valeur Ã  retourner si l'option demandÃ©e
      * n'existe pas
      *
      * @return mixed La valeur de l'option si elle existe ou la valeur par
-     * défaut passée en paramètre sinon.
+     * dÃ©faut passÃ©e en paramÃ¨tre sinon.
      */
     public static function & get($name, $default = null)
     {
@@ -486,12 +480,12 @@ class Config
     /**
      * Modifie une option de configuration.
      *
-     * Si l'option est déjà définie dans la configuration en cours, la valeur
-     * existante est écrasée, même s'il s'agit d'un tableau. Utiliser
+     * Si l'option est dÃ©jÃ  dÃ©finie dans la configuration en cours, la valeur
+     * existante est Ã©crasÃ©e, mÃªme s'il s'agit d'un tableau. Utiliser
      * {@link add} pour fusionner des valeurs.
      *
-     * @param string $name Le nom de l'option à changer.
-     * @param mixed  $value La valeur à définir.
+     * @param string $name Le nom de l'option Ã  changer.
+     * @param mixed  $value La valeur Ã  dÃ©finir.
      */
     public static function set($name, $value)
     {
@@ -506,10 +500,10 @@ class Config
 
 
     /**
-     * Ajoute un paramètre sans écraser la valeur éventuellement déjà
-     * présente.
+     * Ajoute un paramÃ¨tre sans Ã©craser la valeur Ã©ventuellement dÃ©jÃ 
+     * prÃ©sente.
      *
-     * @param string $name le nom de l'option à modifier
+     * @param string $name le nom de l'option Ã  modifier
      * @param mixed $value la valeur
      */
     public static function add($name, $value)
@@ -535,9 +529,9 @@ class Config
 
 
     /**
-     * Retourne la totalité de la configuration en cours.
+     * Retourne la totalitÃ© de la configuration en cours.
      *
-     * @return array un tableau associatif contenant les paramètres de
+     * @return array un tableau associatif contenant les paramÃ¨tres de
      * configuration
      */
     public static function getAll()
@@ -547,10 +541,10 @@ class Config
 
 
     /**
-     * Réinitialise la configuration.
+     * RÃ©initialise la configuration.
      *
-     * @param string $name le nom de la section à vider (si <code>$name</code>
-     * est absent ou vide, l'ensemble de la coniguration est réinitialisé).
+     * @param string $name le nom de la section Ã  vider (si <code>$name</code>
+     * est absent ou vide, l'ensemble de la coniguration est rÃ©initialisÃ©).
      */
     public static function clear($name='')
     {
@@ -561,7 +555,7 @@ class Config
             return;
         }
 
-        // vider une clé spécifique
+        // vider une clÃ© spÃ©cifique
         $code='unset(self::$config';
         foreach (explode('.', $name) as $name)
             $code.="['$name']";
@@ -569,10 +563,10 @@ class Config
 
         eval($code);
 
-        // c'est pas beau de faire du eval, mais je n'ai pas trouvé d'autre solution
-        // boucler sur le tableau en faisant des références comme dans ::set ne
-        // fonctionne pas : quand on fait unset d'un référence, on ne supprime que
-        // la référence, pas la variable référencée.
+        // c'est pas beau de faire du eval, mais je n'ai pas trouvÃ© d'autre solution
+        // boucler sur le tableau en faisant des rÃ©fÃ©rences comme dans ::set ne
+        // fonctionne pas : quand on fait unset d'un rÃ©fÃ©rence, on ne supprime que
+        // la rÃ©fÃ©rence, pas la variable rÃ©fÃ©rencÃ©e.
     }
 
 
@@ -581,27 +575,27 @@ class Config
      * droits de l'utilisateur en cours.
      *
      * Dans le fichier de configuration, il est possible d'indiquer, pour l'option
-     * de configuration <code>$key</code> passée en paramètre, soit une valeur
-     * scalaire, soit un tableau qui va permettre d'indiquer la valeur à utiliser
+     * de configuration <code>$key</code> passÃ©e en paramÃ¨tre, soit une valeur
+     * scalaire, soit un tableau qui va permettre d'indiquer la valeur Ã  utiliser
      * en fonction des droits de l'utilisateur en cours.
      *
-     * Dans ce cas, les clés du tableau indiquent le droit à avoir et la valeur
-     * à utiliser.
+     * Dans ce cas, les clÃ©s du tableau indiquent le droit Ã  avoir et la valeur
+     * Ã  utiliser.
      *
      * Remarque : Vous pouvez utiliser le pseudo droit <code><default></code> pour
-     * indiquer la valeur à utiliser lorsque l'utilisateur ne dispose d'aucun des
-     * droits indiqués.
+     * indiquer la valeur Ã  utiliser lorsque l'utilisateur ne dispose d'aucun des
+     * droits indiquÃ©s.
 
-     * Si aucun droit utilisateur n'est précisé pour l'option de configuration
-     * <code>$key</code> passée en paramètre, la méthode est équivalente à la
-     * méthode {@link Config::get get} de la classe {@link Config}.
+     * Si aucun droit utilisateur n'est prÃ©cisÃ© pour l'option de configuration
+     * <code>$key</code> passÃ©e en paramÃ¨tre, la mÃ©thode est Ã©quivalente Ã  la
+     * mÃ©thode {@link Config::get get} de la classe {@link Config}.
      *
      * @param string $key le nom de l'option de configuration.
-     * @param mixed $default la valeur à retourner si l'option demandée
+     * @param mixed $default la valeur Ã  retourner si l'option demandÃ©e
      * n'existe pas.
      *
      * @return mixed la valeur de l'option si elle existe ou la valeur par
-     * défaut passée en paramètre sinon.
+     * dÃ©faut passÃ©e en paramÃ¨tre sinon.
      */
     public static function userGet($key, $default=null)
     {
