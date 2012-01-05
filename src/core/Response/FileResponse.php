@@ -2,12 +2,12 @@
 /**
  * @package     fab
  * @subpackage  response
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>
  * @version     SVN: $Id$
  */
 
 /**
- * Représente une réponse dont le contenu provient d'un fichier existant.
+ * ReprÃ©sente une rÃ©ponse dont le contenu provient d'un fichier existant.
  *
  * @package     fab
  * @subpackage  response
@@ -24,11 +24,11 @@ class FileResponse extends Response
     protected $download = false;
 
     /**
-     * Génère une exception si vous essayez de définir un contenu pour une requête de ce type.
+     * GÃ©nÃ¨re une exception si vous essayez de dÃ©finir un contenu pour une requÃªte de ce type.
      *
-     * @param mixed $content ignoré
+     * @param mixed $content ignorÃ©
      *
-     * @throw Exception systématiquement.
+     * @throw Exception systÃ©matiquement.
      */
     public function setContent($content = null/* , $name=null, $download=false */)
     {
@@ -56,13 +56,13 @@ class FileResponse extends Response
             readfile($this->content);
         }
 
-        // Content contient un handle de fichier déjà ouvert (ou un stream)
+        // Content contient un handle de fichier dÃ©jÃ  ouvert (ou un stream)
         elseif(is_resource($this->content))
         {
             fpassthru($this->content);
         }
 
-        // Content contient une réponse
+        // Content contient une rÃ©ponse
         elseif($content instanceof Response)
         {
             $content->outputContent();
@@ -73,11 +73,11 @@ class FileResponse extends Response
     }
 
     /**
-     * Génère une exception si vous essayez de définir un contenu pour une requête de ce type.
+     * GÃ©nÃ¨re une exception si vous essayez de dÃ©finir un contenu pour une requÃªte de ce type.
      *
-     * @param mixed $content ignoré
+     * @param mixed $content ignorÃ©
      *
-     * @throw Exception systématiquement.
+     * @throw Exception systÃ©matiquement.
      */
     public function prependContent($content)
     {
@@ -86,11 +86,11 @@ class FileResponse extends Response
 
 
     /**
-     * Génère une exception si vous essayez de définir un contenu pour une requête de ce type.
+     * GÃ©nÃ¨re une exception si vous essayez de dÃ©finir un contenu pour une requÃªte de ce type.
      *
-     * @param mixed $content ignoré
+     * @param mixed $content ignorÃ©
      *
-     * @throw Exception systématiquement.
+     * @throw Exception systÃ©matiquement.
      */
     public function appendContent($content)
     {
@@ -98,13 +98,13 @@ class FileResponse extends Response
     }
 
     /**
-     * Génère une exception si vous essayez de définir un contenu pour une requête de ce type
+     * GÃ©nÃ¨re une exception si vous essayez de dÃ©finir un contenu pour une requÃªte de ce type
      *
-     * @param object $context ignoré
-     * @param string $path ignoré
-     * @param mixed $data ... ignoré
+     * @param object $context ignorÃ©
+     * @param string $path ignorÃ©
+     * @param mixed $data ... ignorÃ©
      *
-     * @throw Exception systématiquement.
+     * @throw Exception systÃ©matiquement.
      */
     public function setTemplate($context, $path, $data=null)
     {

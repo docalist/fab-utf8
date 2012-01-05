@@ -2,12 +2,12 @@
 /**
  * @package     fab
  * @subpackage  response
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>
  * @version     SVN: $Id$
  */
 
 /**
- * Représente une réponse Html.
+ * ReprÃ©sente une rÃ©ponse Html.
  *
  * @package     fab
  * @subpackage  response
@@ -22,6 +22,5 @@ class HtmlResponse extends LayoutResponse
     /**
      * @inheritdoc
      */
-    protected $charset = 'ISO-8859-1';
-
+    protected $charset = 'UTF-8';
 }

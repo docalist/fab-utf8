@@ -2,12 +2,12 @@
 /**
  * @package     fab
  * @subpackage  response
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>
  * @version     SVN: $Id$
  */
 
 /**
- * Représente une redirection temporaire ou permanente.
+ * ReprÃ©sente une redirection temporaire ou permanente.
  *
  * @package     fab
  * @subpackage  response
@@ -23,7 +23,7 @@ class RedirectResponse extends Response
     /**
      * @inheritdoc
      */
-    protected $charset = 'ISO-8859-1';
+    protected $charset = 'UTF-8';
 
 
     /**
@@ -33,7 +33,7 @@ class RedirectResponse extends Response
 
 
     /**
-     * Url vers laquelle cette réponse redirgera l'utilisateur.
+     * Url vers laquelle cette rÃ©ponse redirgera l'utilisateur.
      *
      * @var string
      */
@@ -43,42 +43,42 @@ class RedirectResponse extends Response
     /**
      * Construit la redirection.
      *
-     * @param string|Request|null $location l'adresse vers laquelle l'utilisateur sera redirigée.
+     * @param string|Request|null $location l'adresse vers laquelle l'utilisateur sera redirigÃ©e.
      * Il peut s'agir d'une url relative ou absolue, d'une fab-url ou d'un objet Request.
      * Si vous n'indiquez pas d'adresse, le contenu de la vairable d'environnement HTTP_REFERER
-     * est utilisée mais si celle-ci est vide, une exception est générée.
+     * est utilisÃ©e mais si celle-ci est vide, une exception est gÃ©nÃ©rÃ©e.
      *
-     * @param bool $permanent par défaut la requête génére une redirection temporaire (302). Si vous
-     * indiquez true pour ce paramètre, une redirection permanente (301) sera générée à la place.
+     * @param bool $permanent par dÃ©faut la requÃªte gÃ©nÃ©re une redirection temporaire (302). Si vous
+     * indiquez true pour ce paramÃ¨tre, une redirection permanente (301) sera gÃ©nÃ©rÃ©e Ã  la place.
      *
-     * @throw Exception si aucune url n'a été indiquée et que HTTP_REFERER est vide.
+     * @throw Exception si aucune url n'a Ã©tÃ© indiquÃ©e et que HTTP_REFERER est vide.
      */
     public function __construct($location = null, $permanent = false)
     {
-        // Laisse les ancêtres faire leur boulot
+        // Laisse les ancÃªtres faire leur boulot
         parent::__construct();
 
-        // Si aucune url n'a été indiquée, utilise le referrer
+        // Si aucune url n'a Ã©tÃ© indiquÃ©e, utilise le referrer
         if (! $location)
         {
             if (isset($_SERVER['HTTP_REFERER']))
                 $location = $_SERVER['HTTP_REFERER'];
             else
-                throw new Exception('Impossible de déterminer l\'url de redirection');
+                throw new Exception('Impossible de dÃ©terminer l\'url de redirection');
         }
 
         // Route l'adresse en url absolue
         else
             $location = Routing::linkFor($location, true);
 
-        // Change le statut par défaut si c'est une redirection permanente
+        // Change le statut par dÃ©faut si c'est une redirection permanente
         if ($permanent)
             $this->status = 301;
 
-        // Ajoute l'entête de redirection
+        // Ajoute l'entÃªte de redirection
         $this->setHeader('Location', $location);
 
-        // Définit le template qui sera utilisé pour générer la réponse
+        // DÃ©finit le template qui sera utilisÃ© pour gÃ©nÃ©rer la rÃ©ponse
         parent::setTemplate
         (
             $this,
@@ -94,11 +94,11 @@ class RedirectResponse extends Response
 
 
     /**
-     * Génère une exception si vous essayez de définir un contenu pour une requête de ce type.
+     * GÃ©nÃ¨re une exception si vous essayez de dÃ©finir un contenu pour une requÃªte de ce type.
      *
-     * @param mixed $content ignoré
+     * @param mixed $content ignorÃ©
      *
-     * @throw Exception systématiquement.
+     * @throw Exception systÃ©matiquement.
      */
     public function setContent($content = null)
     {
@@ -107,11 +107,11 @@ class RedirectResponse extends Response
 
 
     /**
-     * Génère une exception si vous essayez de définir un contenu pour une requête de ce type.
+     * GÃ©nÃ¨re une exception si vous essayez de dÃ©finir un contenu pour une requÃªte de ce type.
      *
-     * @param mixed $content ignoré
+     * @param mixed $content ignorÃ©
      *
-     * @throw Exception systématiquement.
+     * @throw Exception systÃ©matiquement.
      */
     public function prependContent($content)
     {
@@ -120,11 +120,11 @@ class RedirectResponse extends Response
 
 
     /**
-     * Génère une exception si vous essayez de définir un contenu pour une requête de ce type.
+     * GÃ©nÃ¨re une exception si vous essayez de dÃ©finir un contenu pour une requÃªte de ce type.
      *
-     * @param mixed $content ignoré
+     * @param mixed $content ignorÃ©
      *
-     * @throw Exception systématiquement.
+     * @throw Exception systÃ©matiquement.
      */
     public function appendContent($content)
     {
@@ -132,13 +132,13 @@ class RedirectResponse extends Response
     }
 
     /**
-     * Génère une exception si vous essayez de définir un contenu pour une requête de ce type
+     * GÃ©nÃ¨re une exception si vous essayez de dÃ©finir un contenu pour une requÃªte de ce type
      *
-     * @param object $context ignoré
-     * @param string $path ignoré
-     * @param mixed $data ... ignoré
+     * @param object $context ignorÃ©
+     * @param string $path ignorÃ©
+     * @param mixed $data ... ignorÃ©
      *
-     * @throw Exception systématiquement.
+     * @throw Exception systÃ©matiquement.
      */
     public function setTemplate($context, $path, $data=null)
     {

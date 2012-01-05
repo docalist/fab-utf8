@@ -2,12 +2,12 @@
 /**
  * @package     fab
  * @subpackage  response
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>
  * @version     SVN: $Id$
  */
 
 /**
- * Représente une réponse de type JSon.
+ * ReprÃ©sente une rÃ©ponse de type JSon.
  *
  * @package     fab
  * @subpackage  response
@@ -29,8 +29,8 @@ class JsonResponse extends TextResponse
     /**
      * Constructeur.
      *
-     * Construit la réponse JSON et ajoute automatiquement les entêtes http requis pour
-     * empêcher que les résultats de la requête ne soient mis en cache par IE.
+     * Construit la rÃ©ponse JSON et ajoute automatiquement les entÃªtes http requis pour
+     * empÃªcher que les rÃ©sultats de la requÃªte ne soient mis en cache par IE.
      */
     public function __construct()
     {
@@ -43,26 +43,26 @@ class JsonResponse extends TextResponse
 
 
     /**
-     * Définit la valeur qui sera générée dans la réponse Json.
+     * DÃ©finit la valeur qui sera gÃ©nÃ©rÃ©e dans la rÃ©ponse Json.
      *
-     * @param mixed $value la valeur à retourner dans la réponse
+     * @param mixed $value la valeur Ã  retourner dans la rÃ©ponse
      *
      * @return Response $this
      */
     public function setContent($value = null)
     {
-        $this->content = json_encode(Utils::utf8Encode($value));
+        $this->content = json_encode($value);
 
         return $this;
     }
 
 
     /**
-     * Génère une exception si vous essayez de modifier le content JSon de la réponse.
+     * GÃ©nÃ¨re une exception si vous essayez de modifier le content JSon de la rÃ©ponse.
      *
-     * @param mixed $content ignoré
+     * @param mixed $content ignorÃ©
      *
-     * @throw Exception systématiquement.
+     * @throw Exception systÃ©matiquement.
      */
     public function prependContent($content)
     {
@@ -71,11 +71,11 @@ class JsonResponse extends TextResponse
 
 
     /**
-     * Génère une exception si vous essayez de modifier le content JSon de la réponse.
+     * GÃ©nÃ¨re une exception si vous essayez de modifier le content JSon de la rÃ©ponse.
      *
-     * @param mixed $content ignoré
+     * @param mixed $content ignorÃ©
      *
-     * @throw Exception systématiquement.
+     * @throw Exception systÃ©matiquement.
      */
     public function appendContent($content)
     {

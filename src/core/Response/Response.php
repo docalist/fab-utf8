@@ -2,35 +2,35 @@
 /**
  * @package     fab
  * @subpackage  response
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>
  * @version     SVN: $Id$
  */
 
 /**
- * Représente la réponse générée par une action.
+ * ReprÃ©sente la rÃ©ponse gÃ©nÃ©rÃ©e par une action.
  *
- * Le résultat d'une action est toujours un objet <code>Response</code> : Fab appelle l'action
- * demandée en lui passant un objet {@link Request}, l'action s'exécute et collecte les données
- * requises puis prépare et retourne un objet de type <code>Response</code>.
+ * Le rÃ©sultat d'une action est toujours un objet <code>Response</code> : Fab appelle l'action
+ * demandÃ©e en lui passant un objet {@link Request}, l'action s'exÃ©cute et collecte les donnÃ©es
+ * requises puis prÃ©pare et retourne un objet de type <code>Response</code>.
  *
- * Fab se charge alors d'exécuter la réponse obtenue en appellant sa méthode {@link output()}.
+ * Fab se charge alors d'exÃ©cuter la rÃ©ponse obtenue en appellant sa mÃ©thode {@link output()}.
  *
- * Il existe plusieurs type de réponses, chaque type étant représenté par un objet spécifique
- * descendant de la classe générique <code>Response</code> ({@link HtmlResponse},
+ * Il existe plusieurs type de rÃ©ponses, chaque type Ã©tant reprÃ©sentÃ© par un objet spÃ©cifique
+ * descendant de la classe gÃ©nÃ©rique <code>Response</code> ({@link HtmlResponse},
  * {@link JsonResponse}, {@link RedirectResponse}, etc.)
  *
- * La classe <code>Response</code> permet de paramètrer complètement la sortie envoyée au client
- * (le navigateur en général) en définissant le {@link setStatus() code http}, les
- * {@link setHeader() entêtes http}, les {@link setCookie() cookies} et le contenu retourné.
+ * La classe <code>Response</code> permet de paramÃ¨trer complÃ¨tement la sortie envoyÃ©e au client
+ * (le navigateur en gÃ©nÃ©ral) en dÃ©finissant le {@link setStatus() code http}, les
+ * {@link setHeader() entÃªtes http}, les {@link setCookie() cookies} et le contenu retournÃ©.
  *
- * Le contenu de la réponse peut être {@link setContent() statique} ou
- * {@link setTemplate() dynamique} (c'est-à-dire définit en utilisant un {@link Template template}).
+ * Le contenu de la rÃ©ponse peut Ãªtre {@link setContent() statique} ou
+ * {@link setTemplate() dynamique} (c'est-Ã -dire dÃ©finit en utilisant un {@link Template template}).
  *
  * Remarque :
- * <code>Response</code> dispose d'une interface fluide : les méthodes qui ne retournent pas de
+ * <code>Response</code> dispose d'une interface fluide : les mÃ©thodes qui ne retournent pas de
  * valeur retournent <code>$this</code> pour permettre de chainer les appels. Pour simplifier
- * la création d'une requête, <code>Response</code> dispose d'une {@link create() méthode
- * statique de fabrication} permettant de créer une réponse d'un type donné.
+ * la crÃ©ation d'une requÃªte, <code>Response</code> dispose d'une {@link create() mÃ©thode
+ * statique de fabrication} permettant de crÃ©er une rÃ©ponse d'un type donnÃ©.
  *
  * Exemple :
  * <code>
@@ -43,7 +43,7 @@
 class Response
 {
     /**
-     * Version du protocole http utilisée pour la réponse (<code>'1.0'</code> ou <code>'1.1'</code>).
+     * Version du protocole http utilisÃ©e pour la rÃ©ponse (<code>'1.0'</code> ou <code>'1.1'</code>).
      *
      * @var string
      */
@@ -51,11 +51,11 @@ class Response
 
 
     /**
-     * Code http de la réponse tel que définit par {@link setStatus()}.
+     * Code http de la rÃ©ponse tel que dÃ©finit par {@link setStatus()}.
      *
-     * Par défaut, la propriété est à <code>null</code> ce qui signifie qu'on n'envoie rien
-     * nous-même et qu'on laisse l'action exécutée, php et/ou apache fournir (ou non) une valeur
-     * par défaut.
+     * Par dÃ©faut, la propriÃ©tÃ© est Ã  <code>null</code> ce qui signifie qu'on n'envoie rien
+     * nous-mÃªme et qu'on laisse l'action exÃ©cutÃ©e, php et/ou apache fournir (ou non) une valeur
+     * par dÃ©faut.
      *
      * @var int
      */
@@ -63,7 +63,7 @@ class Response
 
 
     /**
-     * Entêtes http générés par la réponse tels que définits par {@link setHeader()}.
+     * EntÃªtes http gÃ©nÃ©rÃ©s par la rÃ©ponse tels que dÃ©finits par {@link setHeader()}.
      *
      * @var array()
      */
@@ -71,13 +71,13 @@ class Response
 
 
     /**
-     * {@link http://fr.wikipedia.org/wiki/Type_MIME Type mime} de la requête. Cette propriété est
-     * destinée à être surchargée par les classes descendantes. Le constructeur ajoute
-     * automatiquement un entête http 'Content-Type' contenant le type mime indiqué.
+     * {@link http://fr.wikipedia.org/wiki/Type_MIME Type mime} de la requÃªte. Cette propriÃ©tÃ© est
+     * destinÃ©e Ã  Ãªtre surchargÃ©e par les classes descendantes. Le constructeur ajoute
+     * automatiquement un entÃªte http 'Content-Type' contenant le type mime indiquÃ©.
      *
-     * Par défaut, la propriété est à <code>null</code> ce qui signifie qu'on n'envoie rien
-     * nous-même et qu'on laisse l'action exécutée, php et/ou apache fournir (ou non) une valeur
-     * par défaut.
+     * Par dÃ©faut, la propriÃ©tÃ© est Ã  <code>null</code> ce qui signifie qu'on n'envoie rien
+     * nous-mÃªme et qu'on laisse l'action exÃ©cutÃ©e, php et/ou apache fournir (ou non) une valeur
+     * par dÃ©faut.
      *
      * @var string
      */
@@ -85,15 +85,15 @@ class Response
 
 
     /**
-     * Charset utilisé pour définir l'entête Content-Type.
+     * Charset utilisÃ© pour dÃ©finir l'entÃªte Content-Type.
      *
-     * Cette propriété est destinée à être surchargée par les classes descendantes. Son contenu
-     * est automatiquement ajouté au contenu de la propriété {@link $contentType} pour former
-     * l'entête http Content-Type.
+     * Cette propriÃ©tÃ© est destinÃ©e Ã  Ãªtre surchargÃ©e par les classes descendantes. Son contenu
+     * est automatiquement ajoutÃ© au contenu de la propriÃ©tÃ© {@link $contentType} pour former
+     * l'entÃªte http Content-Type.
      *
-     * Par défaut, la propriété est à <code>null</code> ce qui signifie qu'on n'envoie rien
-     * nous-même et qu'on laisse l'action exécutée, php et/ou apache fournir (ou non) une valeur
-     * par défaut.
+     * Par dÃ©faut, la propriÃ©tÃ© est Ã  <code>null</code> ce qui signifie qu'on n'envoie rien
+     * nous-mÃªme et qu'on laisse l'action exÃ©cutÃ©e, php et/ou apache fournir (ou non) une valeur
+     * par dÃ©faut.
      *
      * @var string
      */
@@ -101,10 +101,10 @@ class Response
 
 
     /**
-     * Cookies générés par la réponse (cf {@link cookie()}).
+     * Cookies gÃ©nÃ©rÃ©s par la rÃ©ponse (cf {@link cookie()}).
      *
-     * Chaque élément est un tableau contenant les arguments passés en paramètres lors de l'appel à
-     * la méthode {@link setCookie()}.
+     * Chaque Ã©lÃ©ment est un tableau contenant les arguments passÃ©s en paramÃ¨tres lors de l'appel Ã 
+     * la mÃ©thode {@link setCookie()}.
      *
      * @var array
      */
@@ -112,7 +112,7 @@ class Response
 
 
     /**
-     * Contenu statique de la réponse tel que définit par {@link setContent()}.
+     * Contenu statique de la rÃ©ponse tel que dÃ©finit par {@link setContent()}.
      *
      * @var mixed
      */
@@ -120,7 +120,7 @@ class Response
 
 
     /**
-     * Path du template à utiliser pour la réponse tel que définit par {@link setTemplate()}.
+     * Path du template Ã  utiliser pour la rÃ©ponse tel que dÃ©finit par {@link setTemplate()}.
      *
      * @var string
      */
@@ -128,7 +128,7 @@ class Response
 
 
     /**
-     * Données du template à utiliser pour la réponse telles que définies par {@link setTemplate()}.
+     * DonnÃ©es du template Ã  utiliser pour la rÃ©ponse telles que dÃ©finies par {@link setTemplate()}.
      *
      * @var string
      */
@@ -136,7 +136,7 @@ class Response
 
 
     /**
-     * Liste des codes de statut http valides et texte associé.
+     * Liste des codes de statut http valides et texte associÃ©.
      *
      * Source : {@link http://fr.wikipedia.org/wiki/Liste_des_codes_HTTP}.
      *
@@ -149,7 +149,7 @@ class Response
         101 => 'Switching Protocols',
         102 => 'Processing',          // WebDav
 
-        // 2xx : Succès
+        // 2xx : SuccÃ¨s
         200 => 'OK',
         201 => 'Created',
         202 => 'Accepted',
@@ -193,9 +193,9 @@ class Response
         423 => 'Locked',                  // WebDav
         424 => 'Method failure',          // WebDav
         425 => 'Unordered Collection',    // WebDav
-     // 426 => 'Upgrade required',        // Spécifique : TLS
-     // 449 => 'Retry with',              // Spécifique Microsoft
-     // 450 => 'Blocked by Windows',      // spécifique Windows : contrôle parental
+     // 426 => 'Upgrade required',        // SpÃ©cifique : TLS
+     // 449 => 'Retry with',              // SpÃ©cifique Microsoft
+     // 450 => 'Blocked by Windows',      // spÃ©cifique Windows : contrÃ´le parental
 
         // 5xx : Erreurs du serveur
         500 => 'Internal Server Error',
@@ -205,15 +205,15 @@ class Response
         504 => 'Gateway Time-out',
         505 => 'HTTP Version not supported',
         507 => 'Insufficient storage', // WebDav
-        509 => 'Bandwidth Limit Exceeded', // Non officiel : dépassement de quota
+        509 => 'Bandwidth Limit Exceeded', // Non officiel : dÃ©passement de quota
     );
 
 
     /**
-     * Crée un objet Response.
+     * CrÃ©e un objet Response.
      *
-     * Si un type mime {@link $contentType a été défini}, ajoute une entête http Content-Type à la
-     * réponse.
+     * Si un type mime {@link $contentType a Ã©tÃ© dÃ©fini}, ajoute une entÃªte http Content-Type Ã  la
+     * rÃ©ponse.
      */
     public function __construct()
     {
@@ -230,10 +230,10 @@ class Response
 
 
     /**
-     * Retourne le type de la réponse (Html, Text, Json, Redirect, etc.)
+     * Retourne le type de la rÃ©ponse (Html, Text, Json, Redirect, etc.)
      *
-     * Le type de la réponse est déterminé à partir du nom de la classe : par convention,
-     * c'est tout ce qui précède le mot 'Response' dans le nom de la classe.
+     * Le type de la rÃ©ponse est dÃ©terminÃ© Ã  partir du nom de la classe : par convention,
+     * c'est tout ce qui prÃ©cÃ¨de le mot 'Response' dans le nom de la classe.
      *
      * Exemple :
      * Pour un objet de type {@link JsonResponse}, <code>getType()</code>retourne
@@ -248,12 +248,12 @@ class Response
 
 
     /**
-     * Factory : crée un objet Response du type indiqué.
+     * Factory : crÃ©e un objet Response du type indiquÃ©.
      *
-     * @param string $type le type de réponse à créer (Html, Text, Json, Redirect, etc.)
-     * Si <code>$type</code> n'est pas indiqué, une réponse de type générique est retournée.
+     * @param string $type le type de rÃ©ponse Ã  crÃ©er (Html, Text, Json, Redirect, etc.)
+     * Si <code>$type</code> n'est pas indiquÃ©, une rÃ©ponse de type gÃ©nÃ©rique est retournÃ©e.
      *
-     * @param mixed $args ... les arguments à passer au constructeur de la réponse.
+     * @param mixed $args ... les arguments Ã  passer au constructeur de la rÃ©ponse.
      *
      * @return Response $this
      */
@@ -268,24 +268,24 @@ class Response
 
 
     /**
-     * Définit le template et les données à utiliser pour générer le contenu de la réponse.
+     * DÃ©finit le template et les donnÃ©es Ã  utiliser pour gÃ©nÃ©rer le contenu de la rÃ©ponse.
      *
-     * Si vous définissez à la fois un contenu statique (avec {@link setContent()}) et un contenu
-     * dynamique (avec <code>setTemplate()</code>) la réponse générée contiendra le contenu statique
+     * Si vous dÃ©finissez Ã  la fois un contenu statique (avec {@link setContent()}) et un contenu
+     * dynamique (avec <code>setTemplate()</code>) la rÃ©ponse gÃ©nÃ©rÃ©e contiendra le contenu statique
      * puis le contenu du template.
      *
-     * @param object $context le contexte dans lequel le template sera exécuté : lors de l'exécution
-     * du template, l'objet passé en paramètre sera accessible en utilisant <code>$this</code>.
+     * @param object $context le contexte dans lequel le template sera exÃ©cutÃ© : lors de l'exÃ©cution
+     * du template, l'objet passÃ© en paramÃ¨tre sera accessible en utilisant <code>$this</code>.
      *
-     * @param string $path le chemin (absolu ou relatif) du template à utiliser.
+     * @param string $path le chemin (absolu ou relatif) du template Ã  utiliser.
      *
-     * @param mixed $data ... une liste variable d'arguments représentant les données du template
+     * @param mixed $data ... une liste variable d'arguments reprÃ©sentant les donnÃ©es du template
      *
      * @return Response $this
      */
     public function setTemplate($context, $path, $data=null)
     {
-        // Vérifie $context
+        // VÃ©rifie $context
         if (! is_object($context))
             throw new InvalidArgumentException('Contexte invalide, objet attendu');
 
@@ -294,7 +294,7 @@ class Response
             throw new Exception("Impossible de trouver le template $sav.");
         $this->template = $path;
 
-        // Stocke les données du template
+        // Stocke les donnÃ©es du template
         $this->templateData = func_get_args();
         array_splice($this->templateData, 0, 2, array(array('this'=>$context)));
 
@@ -303,10 +303,10 @@ class Response
 
 
     /**
-     * Définit le contenu statique à utiliser pour générer la réponse.
+     * DÃ©finit le contenu statique Ã  utiliser pour gÃ©nÃ©rer la rÃ©ponse.
      *
-     * Si vous définissez à la fois un contenu statique (avec <code>setContent()</code>) et un
-     * contenu dynamique (avec {@link template()}) la réponse générée contiendra le contenu
+     * Si vous dÃ©finissez Ã  la fois un contenu statique (avec <code>setContent()</code>) et un
+     * contenu dynamique (avec {@link template()}) la rÃ©ponse gÃ©nÃ©rÃ©e contiendra le contenu
      * statique puis le contenu du template.
      *
      * @param mixed $content
@@ -335,7 +335,7 @@ class Response
 
 
     /**
-     * Ajoute un contenu après le contenu existant.
+     * Ajoute un contenu aprÃ¨s le contenu existant.
      *
      * @param mixed $content
      *
@@ -358,7 +358,7 @@ class Response
         ob_start();
 
         // Class type
-        printf("<pre>%s :\n{\n", get_class($this));
+        printf("<pre>%sÂ :\n{\n", get_class($this));
 
         // Statut http
         if ($this->status)
@@ -367,7 +367,7 @@ class Response
             printf("    HTTP/%s %s %s\n", $this->version, $this->status, self::$httpStatus[$this->status]);
         }
 
-        // Entêtes http
+        // EntÃªtes http
         foreach ($this->headers as $name => $value)
             foreach((array)$value as $item)
                 printf("    %s: %s\n", $name, $item);
@@ -400,13 +400,13 @@ class Response
 
 
     /**
-     * Définit le code http de la réponse.
+     * DÃ©finit le code http de la rÃ©ponse.
      *
      * @param int $status un {@link http://fr.wikipedia.org/wiki/Liste_des_codes_HTTP code http valide}.
      *
      * @return Response $this
      *
-     * @throw InvalidArgumentException si le code indiqué n'est pas valide.
+     * @throw InvalidArgumentException si le code indiquÃ© n'est pas valide.
      */
     public function setStatus($status)
     {
@@ -419,10 +419,10 @@ class Response
 
 
     /**
-     * Retourne le code http de la réponse.
+     * Retourne le code http de la rÃ©ponse.
      *
      * @return int le {@link http://fr.wikipedia.org/wiki/Liste_des_codes_HTTP code http}
-     * actuellement définit pour la réponse.
+     * actuellement dÃ©finit pour la rÃ©ponse.
      */
     public function getStatus()
     {
@@ -431,17 +431,17 @@ class Response
 
 
     /**
-     * Définit la version du protocole http utilisée pour la réponse.
+     * DÃ©finit la version du protocole http utilisÃ©e pour la rÃ©ponse.
      *
-     * @param null|string $version la version du protocole http à utiliser. Si vous indiquez une
-     * chaine de caractères, seules les valeurs '1.0' et '1.1' sont autorisées comme argument.
+     * @param null|string $version la version du protocole http Ã  utiliser. Si vous indiquez une
+     * chaine de caractÃ¨res, seules les valeurs '1.0' et '1.1' sont autorisÃ©es comme argument.
      *
      * Si vous n'indiquez aucun argument ou si $version vaut null, c'est la version actuellement
-     * définie dans $_SERVER['SERVER_PROTOCOL'] qui est utilisée.
+     * dÃ©finie dans $_SERVER['SERVER_PROTOCOL'] qui est utilisÃ©e.
      *
      * @return Response $this
      *
-     * @throw InvalidArgumentException si la version indiquée n'est pas valide.
+     * @throw InvalidArgumentException si la version indiquÃ©e n'est pas valide.
      */
     public function setVersion($version = null)
     {
@@ -461,9 +461,9 @@ class Response
 
 
     /**
-     * Retourne la version du protocole http qui sera utilisée pour générer la réponse.
+     * Retourne la version du protocole http qui sera utilisÃ©e pour gÃ©nÃ©rer la rÃ©ponse.
      *
-     * @return string la version du protocole http utilisée ('1.0' ou '1.1').
+     * @return string la version du protocole http utilisÃ©e ('1.0' ou '1.1').
      */
     public function getVersion()
     {
@@ -472,41 +472,41 @@ class Response
 
 
     /**
-     * Ajoute ou supprime un entête http de la réponse.
+     * Ajoute ou supprime un entÃªte http de la rÃ©ponse.
      *
-     * La méthode fonctionne comme la fonction {@link http://php.net/header header()} de php.
+     * La mÃ©thode fonctionne comme la fonction {@link http://php.net/header header()} de php.
      *
-     * @param string $name le nom de l'entête à ajouter.
+     * @param string $name le nom de l'entÃªte Ã  ajouter.
      *
-     * @param string|null $value la valeur de l'entête. Si $value vaut null, l'entête est supprimé
-     * de la réponse.
+     * @param string|null $value la valeur de l'entÃªte. Si $value vaut null, l'entÃªte est supprimÃ©
+     * de la rÃ©ponse.
      *
-     * @param bool $replace indique ce qu'il faut faire si l'entête à ajouter existe déjà dans la
-     * réponse. Si $replace vaut true, l'entête existant est ecrasé, sinon, la valeur indiquée est
-     * ajoutée à l'entête existant.
+     * @param bool $replace indique ce qu'il faut faire si l'entÃªte Ã  ajouter existe dÃ©jÃ  dans la
+     * rÃ©ponse. Si $replace vaut true, l'entÃªte existant est ecrasÃ©, sinon, la valeur indiquÃ©e est
+     * ajoutÃ©e Ã  l'entÃªte existant.
      *
      * @return Response $this
      */
     public function setHeader($name, $value = null, $replace = true)
     {
-        // Normalise le nom de l'entête
+        // Normalise le nom de l'entÃªte
         $name = $this->headerName($name);
 
-        // Supprime l'entête si $value est null
+        // Supprime l'entÃªte si $value est null
         if (is_null($value))
         {
             unset($this->headers[$name]);
             return $this;
         }
 
-        // Stocke l'entête si replace est à true ou si l'entête n'existe pas déjà
+        // Stocke l'entÃªte si replace est Ã  true ou si l'entÃªte n'existe pas dÃ©jÃ 
         if ($replace || ! isset($this->headers[$name]))
         {
             $this->headers[$name] = $value;
             return $this;
         }
 
-        // Ajout d'une nouvelle valeur à un entête déjà défini
+        // Ajout d'une nouvelle valeur Ã  un entÃªte dÃ©jÃ  dÃ©fini
         if (is_array($this->headers[$name]))
             $this->headers[$name][] = $value;
         else
@@ -517,8 +517,8 @@ class Response
 
 
     /**
-     * Retourne la valeur actuelle de l'entête http indiqué ou <code>false</code> si l'entête n'a
-     * pas été défini.
+     * Retourne la valeur actuelle de l'entÃªte http indiquÃ© ou <code>false</code> si l'entÃªte n'a
+     * pas Ã©tÃ© dÃ©fini.
      *
      * @param string $name
      * @return string|false
@@ -533,10 +533,10 @@ class Response
 
 
     /**
-     * Indique si la réponse contient l'entête http indiqué.
+     * Indique si la rÃ©ponse contient l'entÃªte http indiquÃ©.
      *
-     * @param string $name nom de l'entête http à tester.
-     * @return bool <code>true</code> si l'entête est définit dans la réponse avec une valeur
+     * @param string $name nom de l'entÃªte http Ã  tester.
+     * @return bool <code>true</code> si l'entÃªte est dÃ©finit dans la rÃ©ponse avec une valeur
      * non nulle, <code>false</code> sinon.
      */
     public function hasHeader($name)
@@ -546,13 +546,13 @@ class Response
 
 
     /**
-     * Retourne tous les entêtes http actuellement définits pour la réponse.
+     * Retourne tous les entÃªtes http actuellement dÃ©finits pour la rÃ©ponse.
      *
-     * @return array un tableau contenant tous les entêtes. Les clés du tableaux correspondent aux
-     * noms des entêtes ajoutés. Les valeurs correspondent aux valeurs passées en paramètre lors
-     * de l'appel à la méthode {@link header()}. Si un même entête a été définit plusieurs fois,
+     * @return array un tableau contenant tous les entÃªtes. Les clÃ©s du tableaux correspondent aux
+     * noms des entÃªtes ajoutÃ©s. Les valeurs correspondent aux valeurs passÃ©es en paramÃ¨tre lors
+     * de l'appel Ã  la mÃ©thode {@link header()}. Si un mÃªme entÃªte a Ã©tÃ© dÃ©finit plusieurs fois,
      * dans ce cas la valeur correspondante dans le tableau sera un tableau contenant les
-     * différentes valeurs.
+     * diffÃ©rentes valeurs.
      */
     public function getHeaders()
     {
@@ -561,7 +561,7 @@ class Response
 
 
     /**
-     * Efface tous les entêtes http actuellement définits pour la requête.
+     * Efface tous les entÃªtes http actuellement dÃ©finits pour la requÃªte.
      *
      * @return Response $this
      */
@@ -573,7 +573,7 @@ class Response
 
 
     /**
-     * Valide et redresse le nom d'un entête http (exemple : 'content type' -> 'Content-Type').
+     * Valide et redresse le nom d'un entÃªte http (exemple : 'content type' -> 'Content-Type').
      *
      * @param string $name
      * @return string
@@ -585,18 +585,18 @@ class Response
 
 
     /**
-     * Définit un cookie.
+     * DÃ©finit un cookie.
      *
-     * La méthode fonctionne comme la fonction {@link http://php.net/setrawcookie()} de php.
+     * La mÃ©thode fonctionne comme la fonction {@link http://php.net/setrawcookie()} de php.
      *
      * @param string $name Le nom du cookie.
      * @param string $value La valeur du cookie
-     * @param timestamp $expire La durée de vie du cookie (0 = à la fin de la session du navigateur)
+     * @param timestamp $expire La durÃ©e de vie du cookie (0 = Ã  la fin de la session du navigateur)
      * @param string $path Le chemin sur le serveur sur lequel le cookie sera disponible.
-     * @param string $domain Le domaine où le cookie est disponible
-     * @param bool $secure Lorsque $secure vaut <code>true</code>, le cookie n'est définit que
+     * @param string $domain Le domaine oÃ¹ le cookie est disponible
+     * @param bool $secure Lorsque $secure vaut <code>true</code>, le cookie n'est dÃ©finit que
      * pour les connexions https.
-     * @param bool $httpOnly Lorsque ce paramètre vaut <code>true</code>, le cookie ne sera
+     * @param bool $httpOnly Lorsque ce paramÃ¨tre vaut <code>true</code>, le cookie ne sera
      * accessible que par le protocole HTTP
      *
      * @return Response $this
@@ -609,26 +609,26 @@ class Response
 
 
     /**
-     * Retourne le cookie dont le nom est passé en paramètre ou <code>false</code> si le cookie
-     * indiqué n'existe pas.
+     * Retourne le cookie dont le nom est passÃ© en paramÃ¨tre ou <code>false</code> si le cookie
+     * indiquÃ© n'existe pas.
      *
-     * @param string $name le nom du cookie à retourner.
+     * @param string $name le nom du cookie Ã  retourner.
      *
-     * @return array|false un tableau contenant les paramètres du cookie ou <code>false</code> si
-     * le cookie demandé n'existe pas
+     * @return array|false un tableau contenant les paramÃ¨tres du cookie ou <code>false</code> si
+     * le cookie demandÃ© n'existe pas
      *
-     * Le tableau retourné peut avoir les clés suivantes :
+     * Le tableau retournÃ© peut avoir les clÃ©s suivantes :
      * - <code>name</code> : le nom du cookie.
      * - <code>value</code> : la valeur du cookie.
-     * - <code>expire</code> : la durée de vie du cookie.
+     * - <code>expire</code> : la durÃ©e de vie du cookie.
      * - <code>path</code> : le chemin du cookie.
      * - <code>domain</code> : le domaine du cookie.
      * - <code>secure</code> : flag indiquant un cookie https.
      * - <code>httpOnly</code> : flag indiquant un cookie accessible uniquement par HTTP.
      *
      * Important :
-     * Seuls les arguments effectivements passés en paramètre lors de l'appel à {@link setCookie()}
-     * figurent dans le tableau retourné.
+     * Seuls les arguments effectivements passÃ©s en paramÃ¨tre lors de l'appel Ã  {@link setCookie()}
+     * figurent dans le tableau retournÃ©.
      */
     public function getCookie($name)
     {
@@ -646,13 +646,13 @@ class Response
 
 
     /**
-     * Retourne tous les cookies actuellement définits dans la requête.
+     * Retourne tous les cookies actuellement dÃ©finits dans la requÃªte.
      *
-     * @return array retourne un tableau dont les clés correspondent au nom des cookies et dont
-     * la valeur est un tableau tel que retourné par {@link getCookie()}.
+     * @return array retourne un tableau dont les clÃ©s correspondent au nom des cookies et dont
+     * la valeur est un tableau tel que retournÃ© par {@link getCookie()}.
      *
      * Remarque :
-     * Si aucun cookie n'est définit dans la requête, la méthdoe retourne un tableau
+     * Si aucun cookie n'est dÃ©finit dans la requÃªte, la mÃ©thdoe retourne un tableau
      * vide.
      */
     public function getCookies()
@@ -665,7 +665,7 @@ class Response
 
 
     /**
-     * Efface tous les cookies actuellement définits pour la requête.
+     * Efface tous les cookies actuellement dÃ©finits pour la requÃªte.
      *
      * @return Response $this
      */
@@ -678,16 +678,16 @@ class Response
 
 
     /**
-     * Génère les entêtes http de la réponse.
+     * GÃ©nÃ¨re les entÃªtes http de la rÃ©ponse.
      *
-     * Si les entêtes ont déjà été envoyés ({@link http://php.net/headers_sent() headers_sent()}
-     * retourne true), la méthode ne fait rien et aucun warning n'est émis.
+     * Si les entÃªtes ont dÃ©jÃ  Ã©tÃ© envoyÃ©s ({@link http://php.net/headers_sent() headers_sent()}
+     * retourne true), la mÃ©thode ne fait rien et aucun warning n'est Ã©mis.
      *
      * @return Response $this
      */
     protected function outputHeaders()
     {
-        // Si les entêtes ont déjà été envoyés, on ne peut pas envoyer les notres
+        // Si les entÃªtes ont dÃ©jÃ  Ã©tÃ© envoyÃ©s, on ne peut pas envoyer les notres
         if (headers_sent()) return $this;
 
         // Statut http
@@ -697,7 +697,7 @@ class Response
             header(sprintf('HTTP/%s %s %s', $this->version, $this->status, self::$httpStatus[$this->status]));
         }
 
-        // Entêtes http
+        // EntÃªtes http
         foreach ($this->headers as $name => $value)
             foreach((array)$value as $item)
                 header("$name: $item");
@@ -711,7 +711,7 @@ class Response
 
 
     /**
-     * Génère le contenu de la réponse.
+     * GÃ©nÃ¨re le contenu de la rÃ©ponse.
      *
      * @return Response $this
      */
@@ -730,7 +730,7 @@ class Response
 
 
     /**
-     * Génère la répoonse complète ({@link outputHeaders() entêtes} et
+     * GÃ©nÃ¨re la rÃ©poonse complÃ¨te ({@link outputHeaders() entÃªtes} et
      * {@link outputContent() contenu}).
      *
      * @return Response $this
@@ -744,10 +744,10 @@ class Response
 
 
     /**
-     * Génère le contenu de la réponse et le retourne sous forme de chaine de caractères.
+     * GÃ©nÃ¨re le contenu de la rÃ©ponse et le retourne sous forme de chaine de caractÃ¨res.
      *
-     * Remarque : <code>render()</code> ne génère que la réponse. Les entêtes http, les cookies et
-     * le layout éventuel ne sont ni retournés, ni envoyés au navigateur.
+     * Remarque : <code>render()</code> ne gÃ©nÃ¨re que la rÃ©ponse. Les entÃªtes http, les cookies et
+     * le layout Ã©ventuel ne sont ni retournÃ©s, ni envoyÃ©s au navigateur.
      *
      * @return string
      */
@@ -760,9 +760,9 @@ class Response
 
 
     /**
-     * Indique si la réponse peut avoir un layout.
+     * Indique si la rÃ©ponse peut avoir un layout.
      *
-     * @return bool retourne <code>true</code> si la réponse en cours est une instance de
+     * @return bool retourne <code>true</code> si la rÃ©ponse en cours est une instance de
      * {@link LayoutResponse} ou de ses descendants, <code>false</code> sinon.
      */
     public function hasLayout()
@@ -772,14 +772,14 @@ class Response
 
 
     /**
-     * Méthode utilitaire permettant de générer une exception de type BadMethodCallException si
-     * l'appel d'une méthode n'est pas autorisé.
+     * MÃ©thode utilitaire permettant de gÃ©nÃ©rer une exception de type BadMethodCallException si
+     * l'appel d'une mÃ©thode n'est pas autorisÃ©.
      *
-     * @param string|null $message texte additionnel à ajouter au mesage de l'exception.
+     * @param string|null $message texte additionnel Ã  ajouter au mesage de l'exception.
      */
     protected function illegal($message=null)
     {
         if ($message) $message = ' : ' . $message;
-        throw new BadMethodCallException('Opération illégale pour une réponse de type '. get_class($this) . $message);
+        throw new BadMethodCallException('OpÃ©ration illÃ©gale pour une rÃ©ponse de type '. get_class($this) . $message);
     }
 }

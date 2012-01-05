@@ -2,12 +2,12 @@
 /**
  * @package     fab
  * @subpackage  response
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>
  * @version     SVN: $Id$
  */
 
 /**
- * Représente une réponse dotée d'un layout.
+ * ReprÃ©sente une rÃ©ponse dotÃ©e d'un layout.
  *
  * (patterns two step view, composite view, etc.)
  *
@@ -17,16 +17,16 @@
 class LayoutResponse extends Response
 {
     /**
-     * Retourne le path du layout utilisé pour cette réponse.
+     * Retourne le path du layout utilisÃ© pour cette rÃ©ponse.
      *
-     * Le layout utilisé est définit dans la config (clés theme et layout).
+     * Le layout utilisÃ© est dÃ©finit dans la config (clÃ©s theme et layout).
      *
-     * @return string le chemin complet du template à utiliser comme layout ou <code>false</code>
-     * si aucun layout n'a été définit dans la configuration.
+     * @return string le chemin complet du template Ã  utiliser comme layout ou <code>false</code>
+     * si aucun layout n'a Ã©tÃ© dÃ©finit dans la configuration.
      */
     protected function getLayout()
     {
-        // Détermine le thème et le layout à utiliser
+        // DÃ©termine le thÃ¨me et le layout Ã  utiliser
         $theme='themes' . DIRECTORY_SEPARATOR . Config::get('theme') . DIRECTORY_SEPARATOR;
         $defaultTheme='themes' . DIRECTORY_SEPARATOR . 'default' . DIRECTORY_SEPARATOR;
         $layout=Config::get('layout');
@@ -36,10 +36,10 @@ class LayoutResponse extends Response
         $path=Utils::searchFile
         (
             $layout,                                // On recherche le layout :
-            Runtime::$root.$theme,                  // Thème en cours, dans l'application
-            Runtime::$fabRoot.$theme,               // Thème en cours, dans le framework
-            Runtime::$root.$defaultTheme,           // Thème par défaut, dans l'application
-            Runtime::$fabRoot.$defaultTheme         // Thème par défaut, dans le framework
+            Runtime::$root.$theme,                  // ThÃ¨me en cours, dans l'application
+            Runtime::$fabRoot.$theme,               // ThÃ¨me en cours, dans le framework
+            Runtime::$root.$defaultTheme,           // ThÃ¨me par dÃ©faut, dans l'application
+            Runtime::$fabRoot.$defaultTheme         // ThÃ¨me par dÃ©faut, dans le framework
         );
 
         if (!$path)
@@ -50,17 +50,17 @@ class LayoutResponse extends Response
 
 
     /**
-     * Exécute le layout et envoie le résultat sur la sortie standard.
+     * ExÃ©cute le layout et envoie le rÃ©sultat sur la sortie standard.
      *
-     * Dans notre cas (LayoutResponse), la méthode travaille en collaboration avec la méthode
-     * runAction() de Module. La méthode outputLayout() se contente en fait d'envoyer le layout.
+     * Dans notre cas (LayoutResponse), la mÃ©thode travaille en collaboration avec la mÃ©thode
+     * runAction() de Module. La mÃ©thode outputLayout() se contente en fait d'envoyer le layout.
      *
-     * Celui-ci, lors de son exécution, va appeller Module::runAction() qui (c'est là qu'est la
-     * collaboration) va appeller la méthode outputContent() pour afficher le contenu utile de la
-     * réponse.
+     * Celui-ci, lors de son exÃ©cution, va appeller Module::runAction() qui (c'est lÃ  qu'est la
+     * collaboration) va appeller la mÃ©thode outputContent() pour afficher le contenu utile de la
+     * rÃ©ponse.
      *
-     * @param object $context le contexte d'exécution du template utilisé comme layout (typiquement
-     * le module qui a exécuté la requête).
+     * @param object $context le contexte d'exÃ©cution du template utilisÃ© comme layout (typiquement
+     * le module qui a exÃ©cutÃ© la requÃªte).
      *
      * @return LayoutResponse $this
      */
