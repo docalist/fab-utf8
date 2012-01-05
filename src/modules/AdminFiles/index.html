@@ -1,4 +1,4 @@
-<!-- Path des images utilisées -->
+<!-- Path des images utilisÃ©es -->
 <def name="icons" value="/FabWeb/modules/AdminFiles/images" />
 <h1>{$this->getTitle()}</h1>
 <autopara>{$this->getDescription()}</autopara>
@@ -24,12 +24,12 @@
 
 <if test="{count($files)===0}">
     <bigmenu>
-        <item label="Ce dossier est vide." img="$icons/information.png">Utilisez les boutons ci-dessus pour créer un nouveau fichier ou un nouveau dossier</item>
+        <item label="Ce dossier est vide." img="$icons/information.png">Utilisez les boutons ci-dessus pour crÃ©er un nouveau fichier ou un nouveau dossier</item>
     </bigmenu>
 </if>
 <else>
     <bigmenu>
-        /* <item label="Répertoire parent" img="" href="index?directory=$parent" /> */
+        /* <item label="RÃ©pertoire parent" img="" href="index?directory=$parent" /> */
     
         <loop on="$files" as="$path,$file">
             <def name="request" value="{$request->set('file', $file)}" />
@@ -58,7 +58,7 @@
                         <item href="{$request->setAction('Rename')}" img="$icons/textfield_rename.png">Renommer</item>
                         <item href="{$request->setAction('Delete')}" img="$icons/page_delete.png">Supprimer</item>
                         <separator />
-                        <item href="{$request->setAction('Download')}" img="$icons/page_save.png">Télécharger</item>
+                        <item href="{$request->setAction('Download')}" img="$icons/page_save.png">TÃ©lÃ©charger</item>
                     </toolbar>
                 </item>
             </else>
