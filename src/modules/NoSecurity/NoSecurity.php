@@ -1,24 +1,24 @@
 <?php
 
 /**
- * Cette classe implémente un modèle de (non-)sécurité trivial.
+ * Cette classe implÃ©mente un modÃ¨le de (non-)sÃ©curitÃ© trivial.
  *
  * L'utilisateur :
  *
  * - est toujours anonyme
  *
- * - est toujours connecté (isConnected retourne toujours true)
+ * - est toujours connectÃ© (isConnected retourne toujours true)
  *
  * - a tous les droits (hasRight retourne toujours true)
  */
 class NoSecurity extends BaseSecurity
 {
     /**
-     * Teste si l'utilisateur dispose du droit unique indiqué.
+     * Teste si l'utilisateur dispose du droit unique indiquÃ©.
      *
      * @return true Retourne toujours true.
      */
-    public function hasRight($right) // TODO: est-ce que ce code (ou une partie) ne devrait pas être plutôt dans User?
+    public function hasRight($right) // TODO: est-ce que ce code (ou une partie) ne devrait pas Ãªtre plutÃ´t dans User?
     {
         return true;
     }
