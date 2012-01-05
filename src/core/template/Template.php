@@ -2,14 +2,14 @@
 /**
  * @package     fab
  * @subpackage  template
- * @author 		Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author 		Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: Template.php 1160 2010-05-07 07:32:45Z daniel.menard.bdsp $
  */
 
 
 /*
  * TODO :
- * - FAIT, Youenn avoir l'équivalent des walktables
+ * - FAIT, Youenn avoir l'Ã©quivalent des walktables
  * - blocs <fill>/</fill>
  * - TableOfContents
  * - HandleLinks (conversion des liens en fonction des routes)
@@ -25,28 +25,28 @@
 class Template
 {
     /**
-     * options de configuration utilisées :
+     * options de configuration utilisÃ©es :
      *
      * templates.forcecompile : indique s'il faut ou non forcer une recompilation
-     * complète des templates, que ceux-ci aient été modifiés ou non.
+     * complÃ¨te des templates, que ceux-ci aient Ã©tÃ© modifiÃ©s ou non.
      *
-     * templates.checktime : indique si le gestionnaire de template doit vérifier
-     * ou non si les templates ont été modifiés depuis leur dernière compilation.
+     * templates.checktime : indique si le gestionnaire de template doit vÃ©rifier
+     * ou non si les templates ont Ã©tÃ© modifiÃ©s depuis leur derniÃ¨re compilation.
      *
-     * cache.enabled: indique si le cache est utilisé ou non. Si vous n'utilisez
-     * pas le cache, les templates seront compilés à chaque fois et aucun fichier
-     * compilé ne sera créé.
+     * cache.enabled: indique si le cache est utilisÃ© ou non. Si vous n'utilisez
+     * pas le cache, les templates seront compilÃ©s Ã  chaque fois et aucun fichier
+     * compilÃ© ne sera crÃ©Ã©.
      */
 
 
     /**
-     * @var array Pile utilisée pour enregistrer l'état du gestionnaire de
-     * templates et permettre à {@link run()} d'être réentrante.
+     * @var array Pile utilisÃ©e pour enregistrer l'Ã©tat du gestionnaire de
+     * templates et permettre Ã  {@link run()} d'Ãªtre rÃ©entrante.
      */
     private static $stateStack=array();
 
     /**
-     * @var array Tableau utilisé pour gérer les blocs <opt> imbriqués (voir
+     * @var array Tableau utilisÃ© pour gÃ©rer les blocs <opt> imbriquÃ©s (voir
      * {@link optBegin()} et {@link optEnd()})
      * @access private
      */
@@ -60,15 +60,15 @@ class Template
     private static $optLevel=0;
 
     /**
-     * @var array Sources de données passées en paramètre
+     * @var array Sources de donnÃ©es passÃ©es en paramÃ¨tre
      *
      * @access private
      */
     public static $data=null;
 
     /**
-     * @var string Path complet du template en cours d'exécution.
-     * Utilisé pour résoudre les chemins relatifs (tables, sous-templates...)
+     * @var string Path complet du template en cours d'exÃ©cution.
+     * UtilisÃ© pour rÃ©soudre les chemins relatifs (tables, sous-templates...)
      * @access private
      */
     private static $template='';
@@ -78,8 +78,8 @@ class Template
     /**
      * constructeur
      *
-     * Le constructeur est privé : il n'est pas possible d'instancier la
-     * classe. Utilisez directement les méthodes statiques proposées.
+     * Le constructeur est privÃ© : il n'est pas possible d'instancier la
+     * classe. Utilisez directement les mÃ©thodes statiques proposÃ©es.
      */
     private function __construct()
     {
@@ -94,90 +94,90 @@ class Template
     }
 
     /**
-     * TODO: doc obsolète, à revoir
-     * Exécute un template, en le recompilant au préalable si nécessaire.
+     * TODO: doc obsolÃ¨te, Ã  revoir
+     * ExÃ©cute un template, en le recompilant au prÃ©alable si nÃ©cessaire.
      *
-     * La fonction run est réentrante : on peut appeller run sur un template qui
-     * lui même va appeller run pour un sous-template et ainsi de suite.
+     * La fonction run est rÃ©entrante : on peut appeller run sur un template qui
+     * lui mÃªme va appeller run pour un sous-template et ainsi de suite.
      *
      * @param string $template le nom ou le chemin, relatif ou absolu, du
-     * template à exécuter. Si vous indiquez un chemin relatif, le template est
-     * recherché dans le répertoire du script appellant puis dans le répertoire
-     * 'templates' de l'application et enfin dans le répertoire 'templates' du
+     * template Ã  exÃ©cuter. Si vous indiquez un chemin relatif, le template est
+     * recherchÃ© dans le rÃ©pertoire du script appellant puis dans le rÃ©pertoire
+     * 'templates' de l'application et enfin dans le rÃ©pertoire 'templates' du
      * framework.
      *
-     * @param mixed $dataSources indique les sources de données à utiliser
-     * pour déterminer la valeur des balises de champs présentes dans le
+     * @param mixed $dataSources indique les sources de donnÃ©es Ã  utiliser
+     * pour dÃ©terminer la valeur des balises de champs prÃ©sentes dans le
      * template.
      *
-     * Les gestionnaire de templates reconnait trois sources de données :
+     * Les gestionnaire de templates reconnait trois sources de donnÃ©es :
      *
      * 1. Des fonctions de callback.  Une fonction de callback est une fonction
-     * ou une méthode qui prend en argument le nom du champ recherché et
+     * ou une mÃ©thode qui prend en argument le nom du champ recherchÃ© et
      * retourne une valeur. Si votre template contient une balise de champ
-     * '[toto]', les fonctions de callback que vous indiquez seront appellé les
-     * unes après les autres jusqu'à ce que l'une d'entre elles retourne une
+     * '[toto]', les fonctions de callback que vous indiquez seront appellÃ© les
+     * unes aprÃ¨s les autres jusqu'Ã  ce que l'une d'entre elles retourne une
      * valeur.
      *
      * Lorsque vous indiquez une fonction callback, il peut s'agir :
      *
      * - d'une fonction globale : indiquez dans le tableau $dataSources une
-     * chaine de caractères contenant le nom de la fonction à appeller (exemple
+     * chaine de caractÃ¨res contenant le nom de la fonction Ã  appeller (exemple
      * : 'mycallback')
      *
-     * - d'une méthode statique de classe : indiquez dans le tableau
-     * $dataSources soit une chaine de caractères contenant le nom de la classe
-     * suivi de '::' puis du nom de la méthode statique à appeller (exemple :
-     * 'Template:: postCallback') soit un tableau à deux éléments contenant à
-     * l'index zéro le nom de la classe et à l'index 1 le nom de la méthode
-     * statique à appeller (exemple : array ('Template', 'postCallback'))
+     * - d'une mÃ©thode statique de classe : indiquez dans le tableau
+     * $dataSources soit une chaine de caractÃ¨res contenant le nom de la classe
+     * suivi de '::' puis du nom de la mÃ©thode statique Ã  appeller (exemple :
+     * 'Template:: postCallback') soit un tableau Ã  deux Ã©lÃ©ments contenant Ã 
+     * l'index zÃ©ro le nom de la classe et Ã  l'index 1 le nom de la mÃ©thode
+     * statique Ã  appeller (exemple : array ('Template', 'postCallback'))
      *
-     * - d'une méthode d'objet : indiquez dans le tableau $dataSources un
-     * tableau à deux éléments contenant à l'index zéro l'objet et à l'index 1
-     * le nom de la méthode à appeller (exemple : array ($this, 'postCallback'))
+     * - d'une mÃ©thode d'objet : indiquez dans le tableau $dataSources un
+     * tableau Ã  deux Ã©lÃ©ments contenant Ã  l'index zÃ©ro l'objet et Ã  l'index 1
+     * le nom de la mÃ©thode Ã  appeller (exemple : array ($this, 'postCallback'))
      *
-     * 2. Des propriétés d'objets. Indiquez dans le tableau $dataSources l'objet
-     * à utiliser. Si le gestionnaire de template rencontre une balise de champ
+     * 2. Des propriÃ©tÃ©s d'objets. Indiquez dans le tableau $dataSources l'objet
+     * Ã  utiliser. Si le gestionnaire de template rencontre une balise de champ
      * '[toto]' dans le template, il regardera si votre objet contient une
-     * propriété nommée 'toto' et si c'est le cas utilisera la valeur obtenue.
+     * propriÃ©tÃ© nommÃ©e 'toto' et si c'est le cas utilisera la valeur obtenue.
      *
-     * n.b. vous pouvez, dans votre objet, utiliser la méthode magique '__get'
-     * pour créer de pseudo propriétés.
+     * n.b. vous pouvez, dans votre objet, utiliser la mÃ©thode magique '__get'
+     * pour crÃ©er de pseudo propriÃ©tÃ©s.
      *
-     * 3. Des valeurs : tous les éléments du tableau $dataSources dont la clé
-     * est alphanumérique (i.e. ce n'est pas un simple index) sont considérées
+     * 3. Des valeurs : tous les Ã©lÃ©ments du tableau $dataSources dont la clÃ©
+     * est alphanumÃ©rique (i.e. ce n'est pas un simple index) sont considÃ©rÃ©es
      * comme des valeurs.
      *
      * Si votre template contient une balise de champ '[toto]' et que vous avez
-     * passé comme élément dans le tableau : 'toto'=>'xxx', c'est cette valeur
-     * qui sera utilisée.
+     * passÃ© comme Ã©lÃ©ment dans le tableau : 'toto'=>'xxx', c'est cette valeur
+     * qui sera utilisÃ©e.
      *
-     * @param string $callbacks les nom des fonctions callback à utiliser pour
+     * @param string $callbacks les nom des fonctions callback Ã  utiliser pour
      * instancier le template. Vous pouvez indiquer une fonction unique ou
-     * plusieurs en séparant leurs noms par une virgule. Ce paramètre est
+     * plusieurs en sÃ©parant leurs noms par une virgule. Ce paramÃ¨tre est
      * optionnel : si vous n'indiquez pas de fonctions callbacks, la fonction
      * essaiera d'utiliser une fonction dont le nom correspond au nom du
-     * script appellant suffixé avec "_callback".
+     * script appellant suffixÃ© avec "_callback".
      */
 
 
     /**
-     * Exécute un template
+     * ExÃ©cute un template
      *
      * @param string $path le nom du template (il peut s'agir du path du template s'il s'agit
-     * d'un fichier ou d'un nom symbolique s'il s'agit d'un source généré)
+     * d'un fichier ou d'un nom symbolique s'il s'agit d'un source gÃ©nÃ©rÃ©)
      *
-     * @param array|boolean les données du template
-     * @param string $source le source du template. (uniquement pour les templates générés à la volée)
+     * @param array|boolean les donnÃ©es du template
+     * @param string $source le source du template. (uniquement pour les templates gÃ©nÃ©rÃ©s Ã  la volÃ©e)
      * quand source est non null, on n'essaie pas de charger le fichier $path, on utilise dirtectement
      * le source
      */
     public static function runInternal($path, array $data, $source=null)
     {
 //echo '<div style="background:#888;padding: 1em;border: 1px solid red;"><div>','TEMPLATE ', $path,'</div>';
-        debug && Debug::log('Exécution du template %s', $path);
+        debug && Debug::log('ExÃ©cution du template %s', $path);
 
-        // Sauvegarde l'état
+        // Sauvegarde l'Ã©tat
         array_push
         (
             self::$stateStack,
@@ -191,10 +191,10 @@ class Template
         // Stocke le path du template
         self::$template=$path;
 
-        // Stocke les sources de données passées en paramètre
+        // Stocke les sources de donnÃ©es passÃ©es en paramÃ¨tre
         self::$data=$data;
 
-        // Calcule la signature des sources de données
+        // Calcule la signature des sources de donnÃ©es
         $signature='';
         foreach(self::$data as $data)
         {
@@ -204,7 +204,7 @@ class Template
             {
                 $signature.='f';
                 if (! is_callable($data))
-                    throw new Exception("fonction $data non trouvée");
+                    throw new Exception("fonction $data non trouvÃ©e");
             }
             elseif (is_array($data))
             {
@@ -212,13 +212,13 @@ class Template
                     $signature.='m';
                 else
                     $signature.='a';
-                    // TODO : les clés du tableau doivent être des chaines
+                    // TODO : les clÃ©s du tableau doivent Ãªtre des chaines
             }
             else
-                throw new Exception('Type de source de données incorrecte : objet, tableau ou callback attendu');
+                throw new Exception('Type de source de donnÃ©es incorrecte : objet, tableau ou callback attendu');
         }
 
-        // Détermine le path dans le cache du fichier
+        // DÃ©termine le path dans le cache du fichier
         $cachePath=Utils::setExtension($path, $signature . Utils::getExtension($path));
 
         // Compile le template s'il y a besoin
@@ -235,34 +235,34 @@ class Template
             $source=TemplateCompiler::compile($source, self::$data);
 
 //          if (php_version < 6) ou  if (! PHP_IS_UTF8)
-            $source=utf8_decode($source);
+            $source=$source;
 
-            // Stocke le template dans le cache et l'exécute
+            // Stocke le template dans le cache et l'exÃ©cute
             if (config::get('cache.enabled'))
             {
                 debug && Debug::log("Mise en cache de '%s'", $path);
                 Cache::set($cachePath, $source);
-                debug && Debug::log("Exécution à partir du cache");
+                debug && Debug::log("ExÃ©cution Ã  partir du cache");
                 timer && Timer::leave();
                 require(Cache::getPath($cachePath));
             }
             else
             {
                 timer && Timer::leave();
-                debug && Debug::log("Cache désactivé, evaluation du template compilé");
+                debug && Debug::log("Cache dÃ©sactivÃ©, evaluation du template compilÃ©");
                 eval(self::PHP_END_TAG . $source);
             }
 
         }
 
-        // Sinon, exécute le template à partir du cache
+        // Sinon, exÃ©cute le template Ã  partir du cache
         else
         {
-            debug && Debug::log("Exécution à partir du cache");
+            debug && Debug::log("ExÃ©cution Ã  partir du cache");
             require(Cache::getPath($cachePath));
         }
 
-        // restaure l'état du gestionnaire
+        // restaure l'Ã©tat du gestionnaire
         $t=array_pop(self::$stateStack);
         self::$template         =$t['template'];
         self::$data             =$t['data'];
@@ -272,7 +272,7 @@ class Template
     public static function run($path /* $dataSource1, $dataSource2, ..., $dataSourceN */ )
     {
         timer && Timer::enter('Template.run '.$path);
-        // Résout le path s'il est relatif
+        // RÃ©sout le path s'il est relatif
         if (Utils::isRelativePath($path))
         {
             $sav=$path;
@@ -280,62 +280,62 @@ class Template
                 throw new Exception("Impossible de trouver le template $sav. searchPath=".print_r(Utils::$searchPath, true));
         }
 
-        // Crée un tableau à partir des sources de données passées en paramètre
+        // CrÃ©e un tableau Ã  partir des sources de donnÃ©es passÃ©es en paramÃ¨tre
         $data=func_get_args();
         array_shift($data);
 
         // Ajoute une source '$this' correspondant au module appellant
         array_unshift($data,array('this'=>Utils::callerObject(2)));
 
-        // Exécute le template
+        // ExÃ©cute le template
         self::runInternal($path,$data);
         timer && Timer::leave();
     }
 
     public static function runSource($path, $source /* $dataSource1, $dataSource2, ..., $dataSourceN */ )
     {
-        // Détermine le path du répertoire du script qui nous appelle
+        // DÃ©termine le path du rÃ©pertoire du script qui nous appelle
         //$path=dirname(Utils::callerScript()).DIRECTORY_SEPARATOR;
-        // TODO: +numéro de ligne ou nom de la fonction ?
+        // TODO: +numÃ©ro de ligne ou nom de la fonction ?
 
-        // Crée un tableau à partir des sources de données passées en paramètre
+        // CrÃ©e un tableau Ã  partir des sources de donnÃ©es passÃ©es en paramÃ¨tre
         $data=func_get_args();
-        array_shift($data); // enlève $path de la liste
-        array_shift($data); // enlève $source de la liste
+        array_shift($data); // enlÃ¨ve $path de la liste
+        array_shift($data); // enlÃ¨ve $source de la liste
 
         // Ajoute une source '$this' correspondant au module appellant
         array_unshift($data,array('this'=>Utils::callerObject(2)));
 
-        // Exécute le template
+        // ExÃ©cute le template
         self::runInternal($path,$data,$source);
     }
 
     /**
-     * Teste si un template a besoin d'être recompilé en comparant la version
+     * Teste si un template a besoin d'Ãªtre recompilÃ© en comparant la version
      * en cache avec la version source.
      *
-     * La fonction prend également en compte les options templates.forcecompile
+     * La fonction prend Ã©galement en compte les options templates.forcecompile
      * et templates.checkTime
      *
-     * @param string $template path du template à vérifier
-     * @param string autres si le template dépend d'autres fichiers, vous pouvez
+     * @param string $template path du template Ã  vÃ©rifier
+     * @param string autres si le template dÃ©pend d'autres fichiers, vous pouvez
      * les indiquer.
      *
-     * @return boolean vrai si le template doit être recompilé, false sinon.
+     * @return boolean vrai si le template doit Ãªtre recompilÃ©, false sinon.
      */
     private static function needsCompilation($path, $cachePath)
     {
-        // Si templates.forceCompile est à true, on recompile systématiquement
+        // Si templates.forceCompile est Ã  true, on recompile systÃ©matiquement
         if (Config::get('templates.forcecompile')) return true;
 
-        // Si le cache est désactivé, on recompile systématiquement
+        // Si le cache est dÃ©sactivÃ©, on recompile systÃ©matiquement
         if (! Config::get('cache.enabled')) return true;
 
-        // si le fichier n'est pas encore dans le cache, il faut le générer
+        // si le fichier n'est pas encore dans le cache, il faut le gÃ©nÃ©rer
         $mtime=Cache::lastModified($cachePath);
         if ( $mtime==0 ) return true;
 
-        // Si templates.checktime est à false, terminé
+        // Si templates.checktime est Ã  false, terminÃ©
         if (! Config::get('templates.checktime')) return false;
 
         // Compare la date du fichier en cache avec celle du fichier original
@@ -343,16 +343,16 @@ class Template
 
         // explication du '@' ci-dessus :
         // si le fichier n'existe pas (utilisation de runSource, par exemple)
-        // évite de générer un warning et retourne false (ie pas besoin de
+        // Ã©vite de gÃ©nÃ©rer un warning et retourne false (ie pas besoin de
         // recompiler)
 
-        // Le fichier est dans le cache et il est à jour
+        // Le fichier est dans le cache et il est Ã  jour
         return false;
     }
 
     /**
-     * Fonction appellée au début d'un bloc <opt>
-     * @internal cette fonction ne doit être appellée que depuis un template.
+     * Fonction appellÃ©e au dÃ©but d'un bloc <opt>
+     * @internal cette fonction ne doit Ãªtre appellÃ©e que depuis un template.
      * @access public
      */
     public static function optBegin()
@@ -362,16 +362,16 @@ class Template
     }
 
     /**
-     * Fonction appellée à la fin d'un bloc <opt>
-     * @internal cette fonction ne doit être appellée que depuis un template.
+     * Fonction appellÃ©e Ã  la fin d'un bloc <opt>
+     * @internal cette fonction ne doit Ãªtre appellÃ©e que depuis un template.
      * @access public
      */
     public static function optEnd($minimum=1)
     {
-        // Si on a rencontré au moins un champ non vide
+        // Si on a rencontrÃ© au moins un champ non vide
         if (self::$optFilled[self::$optLevel--]>=$minimum)
         {
-            // Indique à l'éventuel bloc opt parent qu'on est renseigné
+            // Indique Ã  l'Ã©ventuel bloc opt parent qu'on est renseignÃ©
             self::$optFilled[self::$optLevel]++ ;
 
             // Envoit le contenu du bloc
@@ -386,51 +386,51 @@ class Template
     }
 
     /**
-     * Examine la valeur passée en paramètre et marque le bloc opt en cours comme
-     * "rempli" si la valeur est renseignée.
+     * Examine la valeur passÃ©e en paramÃ¨tre et marque le bloc opt en cours comme
+     * "rempli" si la valeur est renseignÃ©e.
      *
-     * La valeur est considérée comme vide si :
+     * La valeur est considÃ©rÃ©e comme vide si :
      * - c'est la valeur 'null'
-     * - c'est une chaine de caractères vide
-     * - c'est un tableau ne contenant aucun élément
+     * - c'est une chaine de caractÃ¨res vide
+     * - c'est un tableau ne contenant aucun Ã©lÃ©ment
      *
-     * Elle est comme renseignée si :
+     * Elle est comme renseignÃ©e si :
      * - c'est une chaine non vide
-     * - c'est un entier ou un réel (même si c'est la valeur zéro)
-     * - c'est un booléen (même si c'est la valeur false)
+     * - c'est un entier ou un rÃ©el (mÃªme si c'est la valeur zÃ©ro)
+     * - c'est un boolÃ©en (mÃªme si c'est la valeur false)
      * - c'est un tableau non vide
      * - un objet, une ressource, etc.
      *
-     * @param mixed $x la valeur à examiner
-     * @return mixed la valeur passée en paramètre
+     * @param mixed $x la valeur Ã  examiner
+     * @return mixed la valeur passÃ©e en paramÃ¨tre
      */
     public static function filled($x)
     {
-        // Cas où $x est considéré comme non rempli
+        // Cas oÃ¹ $x est considÃ©rÃ© comme non rempli
         if (is_null($x)) return $x;
         if ($x==='') return $x;
         if (is_array($x) && count($x)===0) return $x;
 
-        // Dans tous les autres cas, considéré comme renseigné
+        // Dans tous les autres cas, considÃ©rÃ© comme renseignÃ©
         // int ou float (y compris 0), array non vide, bool (y compris false)
         self::$optFilled[self::$optLevel]++;
     	return $x;
     }
 
     /**
-     * Construit la liste des valeurs qui est utilisée par un bloc <fill>...</fill>
+     * Construit la liste des valeurs qui est utilisÃ©e par un bloc <fill>...</fill>
      *
      * @param string|array $values les valeurs provenant du champ
      * @param boolean $strict true pour que le fill tiennent compte des accents
-     * et de la casse des caractères, false (valeur par défaut) sinon.
-     * @return array un tableau dont les clés contiennent les articles trouvés
+     * et de la casse des caractÃ¨res, false (valeur par dÃ©faut) sinon.
+     * @return array un tableau dont les clÃ©s contiennent les articles trouvÃ©s
      * dans $values et dont la valeur est true.
      */
     public static function getFillValues($values, $strict=false)
     {
         if (! is_array($values))
-            $values=preg_split('~\s*[,;/·¨|]\s*~', trim($values), -1, PREG_SPLIT_NO_EMPTY);
-        // autres candidats possibles comme séparateurs utilisés dans le preg_split ci-dessus : cr, lf, tilde
+            $values=preg_split('~\s*[,;/Â·Â¨|]\s*~', trim($values), -1, PREG_SPLIT_NO_EMPTY);
+        // autres candidats possibles comme sÃ©parateurs utilisÃ©s dans le preg_split ci-dessus : cr, lf, tilde
 
         $save=$values;
 
@@ -448,12 +448,12 @@ class Template
 
 /*
 runSlot examine la config en cours pour savoir s'il faut examiner le noeud ou pas.
-si enabled=false : return false (ne pas exécuter le slot, ne pas afficher le contenu par défaut)
-si file="" et action="" return true (afficher le contenu par défaut du slot)
+si enabled=false : return false (ne pas exÃ©cuter le slot, ne pas afficher le contenu par dÃ©faut)
+si file="" et action="" return true (afficher le contenu par dÃ©faut du slot)
 si file : Template::Run(file, currentdatasources)
 sinonsi action : Routing::dispatch(action, currentdatasource)
-runSlot retourne true s'il faut afficher le contenu par défaut du noeud
-return false (ne pas afficher le contenu par défaut)
+runSlot retourne true s'il faut afficher le contenu par dÃ©faut du noeud
+return false (ne pas afficher le contenu par dÃ©faut)
 */
     public static function runSlot($name, $defaultAction='', array $args=null)
     {
@@ -465,7 +465,7 @@ return false (ne pas afficher le contenu par défaut)
 
         debug && Debug::log('slot %s : %s', $name, $action);
 
-        // S'il s'agit d'une action, on l'exécute
+        // S'il s'agit d'une action, on l'exÃ©cute
         if ($action[0]==='/')
         {
             $action=ltrim($action, '/');
@@ -473,7 +473,7 @@ return false (ne pas afficher le contenu par défaut)
             $action=strtok('/');
             if ($action==='') $action='Index';
 
-            // On repart de la requête d'origine, et on ajoute les nouveaux paramètres
+            // On repart de la requÃªte d'origine, et on ajoute les nouveaux paramÃ¨tres
             $request=Runtime::$request->copy();
             if (! is_null($args)) $request->addParameters($args);
 
@@ -488,31 +488,31 @@ return false (ne pas afficher le contenu par défaut)
             Runtime::$request->setModule($sav);
         }
 
-        // C'est un template : on l'exécute
+        // C'est un template : on l'exÃ©cute
         else
         {
             $path=$action;
 
-            // Résout le path s'il est relatif
+            // RÃ©sout le path s'il est relatif
             if (Utils::isRelativePath($action))
             {
-                if (false === $path=Utils::searchFile($path, Runtime::$root))   // root : permet que le template soit relatif à la racine du site (exemple : wordpress)
+                if (false === $path=Utils::searchFile($path, Runtime::$root))   // root : permet que le template soit relatif Ã  la racine du site (exemple : wordpress)
                     throw new Exception("Impossible de trouver le template $action. searchPath=".print_r(Utils::$searchPath, true));
             }
 
-            // Ajoute les arguments passés en paramètre aux sources de données en cours.
-            // Le premier élément de self::$data est un tableau qui contient $this
-            // (et éventuellement d'autres données).
-            // On fusionne les arguments passés au slot dans ce tableau. Le slot a ainsi
-            // accès à toutes les données de ses "ancêtres", mais les données spécifiques
-            // qu'on lui a passé sont prioritaires.
-            // En utilisant array_merge(), si une même clé existe à la fois dans $args
-            // et dans data[0], la valeur présente dans $args écrasera la valeur existante
-            // (cas d'un slot récursive comme pour les localisations emploi bdsp).
+            // Ajoute les arguments passÃ©s en paramÃ¨tre aux sources de donnÃ©es en cours.
+            // Le premier Ã©lÃ©ment de self::$data est un tableau qui contient $this
+            // (et Ã©ventuellement d'autres donnÃ©es).
+            // On fusionne les arguments passÃ©s au slot dans ce tableau. Le slot a ainsi
+            // accÃ¨s Ã  toutes les donnÃ©es de ses "ancÃªtres", mais les donnÃ©es spÃ©cifiques
+            // qu'on lui a passÃ© sont prioritaires.
+            // En utilisant array_merge(), si une mÃªme clÃ© existe Ã  la fois dans $args
+            // et dans data[0], la valeur prÃ©sente dans $args Ã©crasera la valeur existante
+            // (cas d'un slot rÃ©cursive comme pour les localisations emploi bdsp).
             $data=self::$data;
             if (!is_null($args)) $data[0] = array_merge($data[0], $args);
 
-            // Exécute le template
+            // ExÃ©cute le template
             self::runInternal($path,$data);
         }
         return false;

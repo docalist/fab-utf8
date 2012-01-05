@@ -2,7 +2,7 @@
 /**
  * @package     fab
  * @subpackage  template
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: TemplateCode.php 1247 2011-03-15 16:15:02Z daniel.menard.bdsp $
  */
 
@@ -19,10 +19,10 @@ class TemplateCode
 
     /**
      * Pour l'analyse des expressions, on utilise token_get_all, mais on ajoute
-     * deux tokens qui n'existent pas en standard : T_CHAR pour les caractères et
+     * deux tokens qui n'existent pas en standard : T_CHAR pour les caractÃ¨res et
      * T_END qui marque la fin de l'expression. Cela nous simplifie l'analyse.
      */
-    const T_CHAR=20000; // les tokens actuels de php vont de 258 à 375, peu de risque de conflit...
+    const T_CHAR=20000; // les tokens actuels de php vont de 258 Ã  375, peu de risque de conflit...
     const T_END=20001;
 
 
@@ -30,23 +30,23 @@ class TemplateCode
      * Analyse une chaine contenant une expression php et retourne un tableau contenant
      * les tokens correspondants
      *
-     * @param string $expression l'expression à analyser
+     * @param string $expression l'expression Ã  analyser
      * @return array les tokens obtenus
      */
     public static function tokenize($expression)
     {
-        // Utilise l'analyseur syntaxique de php pour décomposer l'expression en tokens
+        // Utilise l'analyseur syntaxique de php pour dÃ©composer l'expression en tokens
         ob_start();
         $tokens = token_get_all(self::PHP_START_TAG . $expression . self::PHP_END_TAG);
         $warning=ob_get_clean();
         if ($warning !== '')
             throw new Exception("Une erreur s'est produite durant l'analyse de l'expression :<br />".$expression.'<br />'.$warning);
 
-        // Enlève le premier et le dernier token (PHP_START_TAG et PHP_END_TAG)
+        // EnlÃ¨ve le premier et le dernier token (PHP_START_TAG et PHP_END_TAG)
         array_shift($tokens);
         array_pop($tokens);
 
-        // Supprime les espaces du source et crée des tokens T_CHAR pour les caractères
+        // Supprime les espaces du source et crÃ©e des tokens T_CHAR pour les caractÃ¨res
         foreach ($tokens as $index=>$token)
         {
             // Transforme en T_CHAR ce que token_get_all nous retourne sous forme de chaines
@@ -63,7 +63,7 @@ class TemplateCode
                    )
                     $tokens[$index][1]=' ';
 
-                // Sinon on peut supprimer complètement l'espace
+                // Sinon on peut supprimer complÃ¨tement l'espace
                 else
                     unset($tokens[$index]);
             }
@@ -73,7 +73,7 @@ class TemplateCode
                 unset($tokens[$index]);
         }
 
-        // Comme on a peut-être supprimé des tokens, force une renumérotation des index
+        // Comme on a peut-Ãªtre supprimÃ© des tokens, force une renumÃ©rotation des index
         $tokens=array_values($tokens);
 
         // Ajoute la marque de fin (T_END)
@@ -85,10 +85,10 @@ class TemplateCode
 
 
     /**
-     * Génère l'expression PHP correspondant au tableau de tokens passés en paramètre
+     * GÃ©nÃ¨re l'expression PHP correspondant au tableau de tokens passÃ©s en paramÃ¨tre
      *
-     * Remarque : les tokens doivent avoir été générés par {@link tokenize()}, cela
-     * ne fonctionnera pas avec le résultat standard de token_get_all().
+     * Remarque : les tokens doivent avoir Ã©tÃ© gÃ©nÃ©rÃ©s par {@link tokenize()}, cela
+     * ne fonctionnera pas avec le rÃ©sultat standard de token_get_all().
      *
      * @param string $tokens le tableau de tokens
      * @return string l'expression php correspondante
@@ -103,9 +103,9 @@ class TemplateCode
 
 
     /**
-     * Affiche les tokens passés en paramètre (debug)
+     * Affiche les tokens passÃ©s en paramÃ¨tre (debug)
      *
-     * @param array $tokens un tableau de tokens tel que retourné par {@link tokenize()}
+     * @param array $tokens un tableau de tokens tel que retournÃ© par {@link tokenize()}
      * @return void
      */
     private static function dumpTokens($tokens)
@@ -136,9 +136,9 @@ class TemplateCode
     private static $currentExpression=null;
 
     /**
-     * Evalue l'expression PHP passée en paramètre et retourne sa valeur.
+     * Evalue l'expression PHP passÃ©e en paramÃ¨tre et retourne sa valeur.
      *
-     * @param string $expression l'expression PHP à évaluer
+     * @param string $expression l'expression PHP Ã  Ã©valuer
      * @return mixed la valeur obtenue
      * @throws Exception en cas d'erreur.
      */
@@ -146,100 +146,100 @@ class TemplateCode
     {
         if (trim($expression)==='') return null;
 
-        // Supprime les éventuelles accolades autour de l'expression
+        // Supprime les Ã©ventuelles accolades autour de l'expression
         if ($expression[0]==='{') $expression=substr($expression, 1, -1);
 
-        // Capture la sortie éventuellement générée lors de l'évaluation
+        // Capture la sortie Ã©ventuellement gÃ©nÃ©rÃ©e lors de l'Ã©valuation
         ob_start();
 
-        // Installe un gestionnaire d'exception spécifique
+        // Installe un gestionnaire d'exception spÃ©cifique
         self::$currentExpression=$expression;
         set_error_handler(array(__CLASS__,'evalError'));
 
-        // Exécute l'expression
+        // ExÃ©cute l'expression
         $result=eval('return '.$expression.';');
 
-        // Restaure le gestionnaire d'exceptions précédent
+        // Restaure le gestionnaire d'exceptions prÃ©cÃ©dent
         restore_error_handler();
         self::$currentExpression=null;
 
-        // Récupère la sortie éventuelle
+        // RÃ©cupÃ¨re la sortie Ã©ventuelle
         $h=ob_get_clean();
 
-        // L'évaluation n'a pas généré d'exception, mais si une sortie a été générée (un warning, par exemple), c'est une erreur
+        // L'Ã©valuation n'a pas gÃ©nÃ©rÃ© d'exception, mais si une sortie a Ã©tÃ© gÃ©nÃ©rÃ©e (un warning, par exemple), c'est une erreur
         if ($h !=='')
             throw new Exception('Erreur dans l\'expression PHP [ ' . $expression . ' ] : ' . $h);
 //        echo 'eval(', $expression, ') = '; var_dump($result); echo '<br />';
-        // Retourne le résultat
+        // Retourne le rÃ©sultat
         return $result;
     }
 
     /**
-     * Gestionnaire d'erreurs appellé par {@link evalExpression} en cas d'erreur
-     * dans l'expression évaluée
+     * Gestionnaire d'erreurs appellÃ© par {@link evalExpression} en cas d'erreur
+     * dans l'expression Ã©valuÃ©e
      */
     private static function evalError($errno, $errstr, $errfile, $errline, $errcontext)
     {
         // errContext contient les variables qui existaient au moment de l'erreur
-        // Celle qui nous intéresse, c'est l'expression passée à eval
-        // on supprimer le 'return ' de début et le ';' de fin (cf evalExpression)
+        // Celle qui nous intÃ©resse, c'est l'expression passÃ©e Ã  eval
+        // on supprimer le 'return ' de dÃ©but et le ';' de fin (cf evalExpression)
         //$h=substr(substr($errcontext['expression'], 7), 0, -1);
 
-        // Génère une exception
+        // GÃ©nÃ¨re une exception
         throw new Exception('Erreur dans l\'expression PHP [ ' . self::$currentExpression . ' ] : ' . $errstr . ' ligne '.$errline);
     }
 
     /**
      * Analyse et optimise une expression PHP
      *
-     * - appelle une fonction utilisateur lorsqu'une variable est rencontrée
-     * - permet d'avoir dans le code de pseudo-fonctions qui vont être appellées si
-     *   elles sont rencontrées
+     * - appelle une fonction utilisateur lorsqu'une variable est rencontrÃ©e
+     * - permet d'avoir dans le code de pseudo-fonctions qui vont Ãªtre appellÃ©es si
+     *   elles sont rencontrÃ©es
      * - les affectations de variables sont interdites (=, .=, &=, |=...)
-     * - gère une liste de fonctions autorisées, génère une exception si une fonction
-     *   non autorisée est appellée
-     * - optimise les expressions en évaluant tout ce qu'il est possible d'évaluer
+     * - gÃ¨re une liste de fonctions autorisÃ©es, gÃ©nÃ¨re une exception si une fonction
+     *   non autorisÃ©e est appellÃ©e
+     * - optimise les expressions en Ã©valuant tout ce qu'il est possible d'Ã©valuer
      *
-     * TODO: compléter la doc
+     * TODO: complÃ©ter la doc
      *
-     * @param mixed $expression l'expression à analyser. Cette expression peut être
-     * fournie sous la forme d'une chaine de caractère ou sous la forme d'un tableau
-     * de tokens tel que retourné par {@link tokenize()}.
+     * @param mixed $expression l'expression Ã  analyser. Cette expression peut Ãªtre
+     * fournie sous la forme d'une chaine de caractÃ¨re ou sous la forme d'un tableau
+     * de tokens tel que retournÃ© par {@link tokenize()}.
      *
-     * @param mixed $varCallback la méthode à appeller lorsqu'une variable est rencontrée
-     * dans l'expression analysée. Si vous indiquez 'null', aucun traitement ne sera effectué
-     * sur les variables. Sinon, $varCallback doit être le nom d'une méthode de la classe Template
-     * TODO: à revoir
+     * @param mixed $varCallback la mÃ©thode Ã  appeller lorsqu'une variable est rencontrÃ©e
+     * dans l'expression analysÃ©e. Si vous indiquez 'null', aucun traitement ne sera effectuÃ©
+     * sur les variables. Sinon, $varCallback doit Ãªtre le nom d'une mÃ©thode de la classe Template
+     * TODO: Ã  revoir
      *
      * @param array|null $pseudoFunctions un tableau de pseudo fonctions ("nom pour l'utilisateur"=>callback)
      */
     public static function parseExpression(&$expression, $varCallback=null, $pseudoFunctions=null)
     {
-        // Indique si l'expression en cours est évaluable
-        // True par défaut, passe à faux quand on rencontre une variable, l'opérateur '=>' dans un array() ou
-        // quand on tombe sur quelque chose qu'on ne sait pas évaluer (propriété d'un objet, par exemple)
+        // Indique si l'expression en cours est Ã©valuable
+        // True par dÃ©faut, passe Ã  faux quand on rencontre une variable, l'opÃ©rateur '=>' dans un array() ou
+        // quand on tombe sur quelque chose qu'on ne sait pas Ã©valuer (propriÃ©tÃ© d'un objet, par exemple)
         $canEval=true;
 
-        // Indique si l'expression passée en paramètre était encadrée par des accolades
+        // Indique si l'expression passÃ©e en paramÃ¨tre Ã©tait encadrÃ©e par des accolades
         $addCurly=false;
 
-        // Indique si on est à l'intérieur d'une chaine de caractères ou non
+        // Indique si on est Ã  l'intÃ©rieur d'une chaine de caractÃ¨res ou non
         $inString=false;
 
-        // Compteur utilisé pour gérer l'opérateur ternaire (xx?yy:zz).
-        // Incrémenté lorsqu'on rencontre un signe '?', décrémenté lorsqu'on rencontre un signe ':'.
-        // Lorsqu'on rencontre le signe ':' et que $ternary est à zéro, c'est que c'est un collier d'expressions
+        // Compteur utilisÃ© pour gÃ©rer l'opÃ©rateur ternaire (xx?yy:zz).
+        // IncrÃ©mentÃ© lorsqu'on rencontre un signe '?', dÃ©crÃ©mentÃ© lorsqu'on rencontre un signe ':'.
+        // Lorsqu'on rencontre le signe ':' et que $ternary est Ã  zÃ©ro, c'est que c'est un collier d'expressions
         $ternary=0;
 
         // Indique si l'expression est un collier d'expressions ($x:$y:$z)
-        // Passe à true quand on rencontre un ':' et que ternary est à zéro.
-        // Utilisé en fin d'analyse pour "enrober" l'expression finale avec le code nécessaire
+        // Passe Ã  true quand on rencontre un ':' et que ternary est Ã  zÃ©ro.
+        // UtilisÃ© en fin d'analyse pour "enrober" l'expression finale avec le code nÃ©cessaire
         $colon=false;
 
-        $curly=0; // TODO : utile ? à conserver ?
+        $curly=0; // TODO : utile ? Ã  conserver ?
 
 
-        // Si $expression est un tableau de tokens, on ajoute juste T_END à la fin
+        // Si $expression est un tableau de tokens, on ajoute juste T_END Ã  la fin
         if (is_array($expression))
         {
             $tokens=$expression;
@@ -257,7 +257,7 @@ class TemplateCode
             $tokens=self::tokenize($expression);
         }
         //self::dumpTokens($tokens);
-        // Examine tous les tokens les uns après les autres
+        // Examine tous les tokens les uns aprÃ¨s les autres
         for ($index=0; $index<count($tokens); $index++)
         {
             $token=$tokens[$index];
@@ -266,7 +266,7 @@ class TemplateCode
                 case self::T_CHAR:
                     switch ($token[1])
                     {
-                        // Début/fin de chaine de caractère contenant des variables
+                        // DÃ©but/fin de chaine de caractÃ¨re contenant des variables
                         case '"':
                             $inString=! $inString;
                             break;
@@ -276,7 +276,7 @@ class TemplateCode
                             --$curly;
                             break;
 
-                        // Remplace '!' par '->' sauf s'il s'agit de l'opérateur 'not'
+                        // Remplace '!' par '->' sauf s'il s'agit de l'opÃ©rateur 'not'
                         case '!':
                             if ($index>0)
                             {
@@ -288,7 +288,7 @@ class TemplateCode
                                 // Si ce qui suit est un T_STRING
                                 if ($tokens[$index+1][0] == T_STRING)
                                 {
-                                    // et que ce qui précède est autre chose que :
+                                    // et que ce qui prÃ©cÃ¨de est autre chose que :
                                     switch($tokens[$index-1][0])
                                     {
                                         case T_BOOLEAN_AND:
@@ -316,22 +316,22 @@ class TemplateCode
                             }
                             break;
 
-                        // L'opérateur '=' (affectation) n'est pas autorisé
+                        // L'opÃ©rateur '=' (affectation) n'est pas autorisÃ©
                         case '=':
                             throw new Exception('affectation interdite dans une expression, utilisez "=="'.$expression);
 
-                        // Symbole '?' : mémorise qu'on est dans un opérateur ternaire (xx?yy:zz)
+                        // Symbole '?' : mÃ©morise qu'on est dans un opÃ©rateur ternaire (xx?yy:zz)
                         case '?':
                             $ternary++;
                             break;
 
-                        // Symbole ':' : opérateur ternaire ou collier d'expression ($x:$y:$z)
+                        // Symbole ':' : opÃ©rateur ternaire ou collier d'expression ($x:$y:$z)
                         case ':':
                             if ($ternary>0)     // On a un '?' en cours
                             {
                                 $ternary--;
                             }
-                            else                // Aucun '?' en cours : c'est le début ou la suite d'un collier d'expressions
+                            else                // Aucun '?' en cours : c'est le dÃ©but ou la suite d'un collier d'expressions
                             {
                                 $tokens[$index][1]=') OR $tmp=(';
                                 $colon=true;
@@ -339,9 +339,9 @@ class TemplateCode
                             break;
 
                         case '`':
-                            throw new Exception("L'opérateur d'exécution est interdit dans une expression");
+                            throw new Exception("L'opÃ©rateur d'exÃ©cution est interdit dans une expression");
                         case '@':
-                            throw new Exception("L'opérateur de suppression des messages d'erreur est interdit dans une expression");
+                            throw new Exception("L'opÃ©rateur de suppression des messages d'erreur est interdit dans une expression");
                     }
                     break;
 
@@ -356,9 +356,9 @@ class TemplateCode
 
                         if ($inString)
                         {
-                            if ($isCode) // il faut stopper la chaine, concaténer l'expression puis la suite de la chaine
+                            if ($isCode) // il faut stopper la chaine, concatÃ©ner l'expression puis la suite de la chaine
                                 $t=array(array(self::T_CHAR,'"'), array(self::T_CHAR,'.'), array(self::T_CHAR,$var), array(self::T_CHAR,'.'), array(self::T_CHAR,'"'));
-                            else // il faut insérer la valeur telle quelle dans la chaine
+                            else // il faut insÃ©rer la valeur telle quelle dans la chaine
                                 $t=array(array(self::T_CHAR,addslashes($var)));
                         }
                         else
@@ -381,11 +381,11 @@ class TemplateCode
                     $curly++;
                     break;
 
-                // un identifiant : appel de fonction, constante, propriété
-                case T_STRING:  // un identifiant de fonction, de constante, de propriété, etc.
-                case T_ARRAY:   // array(xxx), géré comme un appel de fonction
-                case T_EMPTY:   // empty(xxx), géré comme un appel de fonction
-                case T_ISSET:   // isset(xxx), géré comme un appel de fonction
+                // un identifiant : appel de fonction, constante, propriÃ©tÃ©
+                case T_STRING:  // un identifiant de fonction, de constante, de propriÃ©tÃ©, etc.
+                case T_ARRAY:   // array(xxx), gÃ©rÃ© comme un appel de fonction
+                case T_EMPTY:   // empty(xxx), gÃ©rÃ© comme un appel de fonction
+                case T_ISSET:   // isset(xxx), gÃ©rÃ© comme un appel de fonction
 
                     // Appel de fonction
                     if ($tokens[$index+1][1]==='(')
@@ -394,25 +394,25 @@ class TemplateCode
                         break;
                     }
 
-                    // Si c'est une constante définie, on peut évaluer
+                    // Si c'est une constante dÃ©finie, on peut Ã©valuer
                     if (defined($tokens[$index][1])) break;
 
-                    // C'est autre chose (une propriété, etc.), on ne peut pas évaluer
+                    // C'est autre chose (une propriÃ©tÃ©, etc.), on ne peut pas Ã©valuer
                     $canEval=false;
                     break;
 
                 case T_DOUBLE_ARROW: // seulement si on est dans un array()
-                case T_NEW: // autorisé, pour permettre des new TextTable() et autres... mais c'est dommage
+                case T_NEW: // autorisÃ©, pour permettre des new TextTable() et autres... mais c'est dommage
                     $canEval=false;
                     break;
 
-                // Réécriture des chaines à guillemets doubles en chaines simples si elle ne contiennent plus de variables
+                // RÃ©Ã©criture des chaines Ã  guillemets doubles en chaines simples si elle ne contiennent plus de variables
                 case T_CONSTANT_ENCAPSED_STRING:
 //                    $tokens[$index][1]=var_export(substr($token[1], 1, -1),true);
                     $tokens[$index][1]=var_export(self::evalExpression($token[1]), true);
                     break;
 
-                // Autres tokens autorisés, mais sur lesquels on ne fait rien
+                // Autres tokens autorisÃ©s, mais sur lesquels on ne fait rien
                 case T_NUM_STRING:
                 case self::T_END:
                 case T_WHITESPACE:
@@ -454,7 +454,7 @@ class TemplateCode
                     break;
 
                 // Liste des tokens interdits dans une expression de template
-                case T_AND_EQUAL:       // tous les opérateurs d'assignation (.=, &=, ...)
+                case T_AND_EQUAL:       // tous les opÃ©rateurs d'assignation (.=, &=, ...)
                 case T_CONCAT_EQUAL:
                 case T_DIV_EQUAL:
                 case T_MINUS_EQUAL:
@@ -524,7 +524,7 @@ class TemplateCode
                 case T_EXIT:
                 case T_HALT_COMPILER:
 
-                case T_OPEN_TAG:        // début et fin de blocs php
+                case T_OPEN_TAG:        // dÃ©but et fin de blocs php
                 case T_OPEN_TAG_WITH_ECHO:
                 case T_CLOSE_TAG:
 
@@ -538,7 +538,7 @@ class TemplateCode
                 case T_CONST:
                 case T_DOLLAR_OPEN_CURLY_BRACES:
 
-                case T_FILE:        // à gérer : __FILE__
+                case T_FILE:        // Ã  gÃ©rer : __FILE__
                 case T_LINE:        // __LINE__
                 case T_FUNC_C:
                 case T_CLASS_C:
@@ -549,7 +549,7 @@ class TemplateCode
                 case T_STRING_VARNAME:
                 case T_USE :
 
-             // case T_COMMENT: // inutile : enlevé durant la tokenisation
+             // case T_COMMENT: // inutile : enlevÃ© durant la tokenisation
              // case T_DOC_COMMENT: // idem
              // case T_ML_COMMENT: php 4 only
              // case T_OLD_FUNCTION: php 4 only
@@ -558,7 +558,7 @@ class TemplateCode
 //                default:
                     throw new Exception('Interdit dans une expression : "'. $token[1]. '" ('.token_name($token[0]));
 
-                // Tokens inconnus ou non gérés
+                // Tokens inconnus ou non gÃ©rÃ©s
                 default:
                      //echo $token[0], '-', token_name($token[0]),'[',$token[1],']', "<br />";
                      self::dumpTokens($tokens);
@@ -583,16 +583,16 @@ class TemplateCode
     }
 
     /**
-     * Analyse et exécute un appel de fonction présent dans l'expression
+     * Analyse et exÃ©cute un appel de fonction prÃ©sent dans l'expression
      */
     private static function parseFunctionCall(& $tokens, $index, $varCallback, $pseudoFunctions)
     {
         $function=$tokens[$index][1];
 
-        // Fonctions qui peuvent être appellées lors de la compilation
+        // Fonctions qui peuvent Ãªtre appellÃ©es lors de la compilation
         static $compileTimeFunctions=null;
 
-        // Fonctions autorisées mais qui ne doivent être appellées que lors de l'exécution du template
+        // Fonctions autorisÃ©es mais qui ne doivent Ãªtre appellÃ©es que lors de l'exÃ©cution du template
         static $runtimeFunctions=null;
 
         if (is_null($compileTimeFunctions))
@@ -672,7 +672,7 @@ class TemplateCode
                 'filectime',
                 'filemtime',
                 'filesize',
-                'htmlspecialchars_decode', // laisse en fonction runtime pour permettre de générer des commentaires xml dans un template
+                'htmlspecialchars_decode', // laisse en fonction runtime pour permettre de gÃ©nÃ©rer des commentaires xml dans un template
                 'is_dir',
                 'is_file',
                 'is_link',
@@ -685,7 +685,7 @@ class TemplateCode
             ));
         }
 
-        // Détermine si cette fonction est autorisée et ce à quoi on a affaire
+        // DÃ©termine si cette fonction est autorisÃ©e et ce Ã  quoi on a affaire
         $handler=strtolower($function);    // autorise les noms de fonction aussi bien en maju qu'en minu
         $canEval=true;
 //        if (isset($pseudoFunctions[$handler]))
@@ -695,13 +695,13 @@ class TemplateCode
 //	self::dumpTokens(array_slice($tokens, $index-2));
 //}
 
-        // les méthodes statiques (::) ou d'objet (->) sont toutes autorisées
+        // les mÃ©thodes statiques (::) ou d'objet (->) sont toutes autorisÃ©es
         if (isset($tokens[$index-1]) && ($tokens[$index-1][0]===T_DOUBLE_COLON || $tokens[$index-1][0]===T_OBJECT_OPERATOR))
         {
             $functype=2;
             $canEval=false;
         }
-        // les new XXX() ressemble à des fonctions, sont autorisés
+        // les new XXX() ressemble Ã  des fonctions, sont autorisÃ©s
         elseif (
                     (isset($tokens[$index-1]) && $tokens[$index-1][0]===T_NEW)
                 ||
@@ -714,7 +714,7 @@ class TemplateCode
         }
         elseif ($pseudoFunctions && array_key_exists($handler, $pseudoFunctions))
         {
-            if (is_null($pseudoFunctions[$handler])) // pseudo fonction autorisée mais handler==null
+            if (is_null($pseudoFunctions[$handler])) // pseudo fonction autorisÃ©e mais handler==null
             {
                 $functype=2;
                 $canEval=false;
@@ -735,7 +735,7 @@ class TemplateCode
             $canEval=false;
         }
         else
-            throw new Exception($function.' : fonction inconnue ou non autorisée');
+            throw new Exception($function.' : fonction inconnue ou non autorisÃ©e');
 
         // Extrait chacun des arguments de l'appel de fonction
         $level=1;
@@ -782,16 +782,16 @@ class TemplateCode
             // Appelle la fonction
             $result=call_user_func_array($handler, $args); // TODO : gestion d'erreur
 
-            // Génère le code PHP du résultat obtenu
+            // GÃ©nÃ¨re le code PHP du rÃ©sultat obtenu
             $result=Utils::varExport($result, true);
 
-            // Remplace les tokens codant l'appel de fonction par un token unique contenant le résultat
+            // Remplace les tokens codant l'appel de fonction par un token unique contenant le rÃ©sultat
             array_splice($tokens, $index, $i-$index+1, array(array(self::T_CHAR,$result)));
         }
         else
         {
             if ($functype===0)
-                throw new Exception('Les arguments de la pseudo-fonction '.$function.' doivent être évaluables lors de la compilation');
+                throw new Exception('Les arguments de la pseudo-fonction '.$function.' doivent Ãªtre Ã©valuables lors de la compilation');
 
             $t=array();
             foreach ($args as $no=>$arg)

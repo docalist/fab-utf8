@@ -2,17 +2,17 @@
 /**
  * @package     fab
  * @subpackage  template
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: TemplateEnvironment.php 600 2008-02-06 15:21:54Z daniel.menard.bdsp $
  */
 
 /**
- * Gère l'environnement d'exécution d'un template, c'est à dire l'ensemble
- * des sources de données (tableaux, objets, callback...) passées en paramètre
- * lors de l'exécution d'un template ainsi que les variables temporaires
+ * GÃ¨re l'environnement d'exÃ©cution d'un template, c'est Ã  dire l'ensemble
+ * des sources de donnÃ©es (tableaux, objets, callback...) passÃ©es en paramÃ¨tre
+ * lors de l'exÃ©cution d'un template ainsi que les variables temporaires
  * introduites par le code du template.
  * 
- * Cette classe n'est utilisée que pendant la compilation d'un template 
+ * Cette classe n'est utilisÃ©e que pendant la compilation d'un template 
  * (cf {@link TemplateCompiler}).
  * 
  * @package     fab
@@ -21,27 +21,27 @@
 class TemplateEnvironment
 {
     /**
-     * @var array L'environnement d'exécution du template, c'est à dire l'ensemble
-     * des données, tableaux, objets et callbacks passés en paramêtres pour instancier le
+     * @var array L'environnement d'exÃ©cution du template, c'est Ã  dire l'ensemble
+     * des donnÃ©es, tableaux, objets et callbacks passÃ©s en paramÃªtres pour instancier le
      * template.
      * 
-     * Initialement, il s'agit d'une copie exacte de l'environnement passé à Template::run.
+     * Initialement, il s'agit d'une copie exacte de l'environnement passÃ© Ã  Template::run.
      * 
-     * Si le template crée des données locales (par exemple les variables créées par 
-     * l'attribut as d'une balise loop), lors de l'entrée dans le bloc, elles seront 
-     * ajoutées au début du tableau afin qu'elles soient prioritaires (cf {@link push()}).
+     * Si le template crÃ©e des donnÃ©es locales (par exemple les variables crÃ©Ã©es par 
+     * l'attribut as d'une balise loop), lors de l'entrÃ©e dans le bloc, elles seront 
+     * ajoutÃ©es au dÃ©but du tableau afin qu'elles soient prioritaires (cf {@link push()}).
      * 
-     * Lorsqu'on sort du bloc qui a créé les variables, on dépile simplement le premier 
-     * élément du tableau pour retrouver l'environnement initial (cf {@link pop()}).
+     * Lorsqu'on sort du bloc qui a crÃ©Ã© les variables, on dÃ©pile simplement le premier 
+     * Ã©lÃ©ment du tableau pour retrouver l'environnement initial (cf {@link pop()}).
      * 
      * @access private
      */
     private $env=array();
     
     /**
-     * @var integer indique le nombre d'éléments de {@link $env} qui sont des variables
-     * locales. Pour chaque élément i de $env, si i&lt;localCount, alors i est une variable locale,
-     * sinon, c'est une données passée en paramètre à Template::Run
+     * @var integer indique le nombre d'Ã©lÃ©ments de {@link $env} qui sont des variables
+     * locales. Pour chaque Ã©lÃ©ment i de $env, si i&lt;localCount, alors i est une variable locale,
+     * sinon, c'est une donnÃ©es passÃ©e en paramÃ¨tre Ã  Template::Run
      * 
      * @access private 
      */
@@ -49,10 +49,10 @@ class TemplateEnvironment
     
 
     /**
-     * @var array Liaisons entre chacune des variables rencontrées dans le template
-     * et la source de données correspondante.
+     * @var array Liaisons entre chacune des variables rencontrÃ©es dans le template
+     * et la source de donnÃ©es correspondante.
      * Ce tableau est construit au cours de la compilation. Les bindings sont ensuite
-     * générés au début du template généré.
+     * gÃ©nÃ©rÃ©s au dÃ©but du template gÃ©nÃ©rÃ©.
      * 
      * @access private
      */
@@ -60,10 +60,10 @@ class TemplateEnvironment
     
     
     /**
-     * Initialise un nouvel environnement contenant les sources de données présentes dans le 
-     * tableau passé en paramètre
+     * Initialise un nouvel environnement contenant les sources de donnÃ©es prÃ©sentes dans le 
+     * tableau passÃ© en paramÃ¨tre
      * 
-     * @param array|null $env un tableau contenant les sources de données du template
+     * @param array|null $env un tableau contenant les sources de donnÃ©es du template
      * @return void 
      */
     public function __construct($env=null)
@@ -73,105 +73,105 @@ class TemplateEnvironment
 
 
     /**
-     * Empile de nouvelles variables locales dans l'environnement d'exécution du template.
+     * Empile de nouvelles variables locales dans l'environnement d'exÃ©cution du template.
      *
-     * @param array $vars un tableau contenant les variables à ajouter à l'environnement.
-     * Pour chaque élément, la clé indique le nom de la variable (sans le dollar initial)
+     * @param array $vars un tableau contenant les variables Ã  ajouter Ã  l'environnement.
+     * Pour chaque Ã©lÃ©ment, la clÃ© indique le nom de la variable (sans le dollar initial)
      * sous sa forme visible parl'utilisateur, et la valeur indique le code php qui sera 
-     * utilisé chaque fois que cette variable sera utilisée dans le template (en général
-     * il s'agit du nom de la variable réelle).
+     * utilisÃ© chaque fois que cette variable sera utilisÃ©e dans le template (en gÃ©nÃ©ral
+     * il s'agit du nom de la variable rÃ©elle).
      */
     public function push($vars)
     {
-        array_unshift($this->env, $vars); // empile au début
+        array_unshift($this->env, $vars); // empile au dÃ©but
         ++$this->localCount;
     }
 
 
     /**
-     * Restaure l'environnement d'exécution tel qu'il était avant le dernier appel
-     * à {@link push()} en supprimant de l'environnement le dernier tableau de 
-     * variables ajouté.
+     * Restaure l'environnement d'exÃ©cution tel qu'il Ã©tait avant le dernier appel
+     * Ã  {@link push()} en supprimant de l'environnement le dernier tableau de 
+     * variables ajoutÃ©.
      * 
-     * @return array l'élément dépilé
+     * @return array l'Ã©lÃ©ment dÃ©pilÃ©
      */
     public function pop()
     {
         --$this->localCount;
-        return array_shift($this->env);    // dépile au début
+        return array_shift($this->env);    // dÃ©pile au dÃ©but
     }
 
 
     /**
      * Recherche une variable dans l'environnement et retourne le code php correspondant.
      * 
-     * Si la variable est trouvée et qu'il ne s'agit pas d'une variable locale, une liaison
-     * est établie entre la variable telle qu'indiquée dans le template et la source de données
+     * Si la variable est trouvÃ©e et qu'il ne s'agit pas d'une variable locale, une liaison
+     * est Ã©tablie entre la variable telle qu'indiquÃ©e dans le template et la source de donnÃ©es
      * correspondante.
      * 
-     * @param string $var la variable recherchée
-     * @return string|boolean le code php correspondant à la variable ou false si aucune source
-     * de données ne connaît la variable recherchée.
+     * @param string $var la variable recherchÃ©e
+     * @return string|boolean le code php correspondant Ã  la variable ou false si aucune source
+     * de donnÃ©es ne connaÃ®t la variable recherchÃ©e.
      */
     public function get($var)
     {
 //        debug && Debug::log('%s', $var);
 
-        // Parcours toutes les sources de données
+        // Parcours toutes les sources de donnÃ©es
         foreach ($this->env as $i=>$data)
         {
             $j=$i-$this->localCount;
-            // Clé d'un tableau de données
+            // ClÃ© d'un tableau de donnÃ©es
             if (is_array($data) && array_key_exists($var, $data)) 
             {
-//                debug && Debug::log('C\'est une clé du tableau de données');
+//                debug && Debug::log('C\'est une clÃ© du tableau de donnÃ©es');
                 
                 // Si c'est une variable locale introduite par un bloc, pas de binding
                 if ($i<$this->localCount) return $data[$var];
 
-                // Sinon, c'est une variable utilisateur, crée une liaison
+                // Sinon, c'est une variable utilisateur, crÃ©e une liaison
                 return $this->addBinding($var, 'Template::$data['.$j.'][\''.$var.'\']');
             }
 
             // Objet
             if (is_object($data))
             {
-                // Propriété d'un objet
+                // PropriÃ©tÃ© d'un objet
                 
                 /*
-                    property_exists teste s'il s'agit d'une propriété réelle de l'objet, mais ne fonctionne pas si c'est une propriété magique
-                    isset teste bien les deux, mais retourera false pour une propriété réelle existante mais dont la valeur est "null"
+                    property_exists teste s'il s'agit d'une propriÃ©tÃ© rÃ©elle de l'objet, mais ne fonctionne pas si c'est une propriÃ©tÃ© magique
+                    isset teste bien les deux, mais retourera false pour une propriÃ©tÃ© rÃ©elle existante mais dont la valeur est "null"
                     du coup il faudrait faire les deux...
-                    mais isset, pour les méthodes magiques, ne fonctionnera que si l'utilisateur a écrit une méthode __get dans son objet
-                    au final, on fait simplement un appel à __get (si la méthode existe), et on teste si on récupère "null" ou pas
+                    mais isset, pour les mÃ©thodes magiques, ne fonctionnera que si l'utilisateur a Ã©crit une mÃ©thode __get dans son objet
+                    au final, on fait simplement un appel Ã  __get (si la mÃ©thode existe), et on teste si on rÃ©cupÃ¨re "null" ou pas
                  */
  
                 if (property_exists($data,$var) || (is_callable(array($data,'__get'))&& !(is_null(call_user_func(array($data,'__get'),$var)))))
                 {
-//                    debug && Debug::log('C\'est une propriété de l\'objet %s', get_class($data));
+//                    debug && Debug::log('C\'est une propriÃ©tÃ© de l\'objet %s', get_class($data));
                     return $this->addBinding($var, 'Template::$data['.$j.']->'.$var);
                 }
                 
-                // Clé d'un objet ArrayAccess
+                // ClÃ© d'un objet ArrayAccess
                 if ($data instanceof ArrayAccess)
                 {
                     try // tester avec isset
                     {
-//                        debug && Debug::log('Tentative d\'accès à %s[\'%s\']', get_class($data), $var);
-                        $value=$data[$var]; // essaie d'accéder, pas d'erreur ?
+//                        debug && Debug::log('Tentative d\'accÃ¨s Ã  %s[\'%s\']', get_class($data), $var);
+                        $value=$data[$var]; // essaie d'accÃ©der, pas d'erreur ?
 
                         $code=$this->addBinding(get_class($data), 'Template::$data['.$j.']');
                         return $code.'[\''.$var.'\']';
-                        // pas de référence : see http://bugs.php.net/bug.php?id=34783
+                        // pas de rÃ©fÃ©rence : see http://bugs.php.net/bug.php?id=34783
                         // It is impossible to have ArrayAccess deal with references
                     }
                     catch(Exception $e)
                     {
-//                        debug && Debug::log('Génère une erreur %s', $e->getMessage());
+//                        debug && Debug::log('GÃ©nÃ¨re une erreur %s', $e->getMessage());
                     }
                 }
 //                else
-//                    debug && Debug::log('Ce n\'est pas une clé de l\'objet %s', get_class($data));
+//                    debug && Debug::log('Ce n\'est pas une clÃ© de l\'objet %s', get_class($data));
             }
 
             // Fonction de callback
@@ -183,7 +183,7 @@ class TemplateEnvironment
                 ob_end_clean();
                 Template::$isCompiling--;
                 
-                // Si la fonction retourne autre chose que "null", terminé
+                // Si la fonction retourne autre chose que "null", terminÃ©
                 if ( ! is_null($value) )
                 {
                     // Simple fonction 
@@ -193,7 +193,7 @@ class TemplateEnvironment
                         return $code.'(\''.$var.'\')';
                     }
 
-                    // Méthode statique ou dynamique d'un objet
+                    // MÃ©thode statique ou dynamique d'un objet
                     else // is_array
                     {
                         $code=$this->addBinding($data[1], 'Template::$data['.$j.']');
@@ -209,7 +209,7 @@ class TemplateEnvironment
     }
     
     /**
-     * nom de la variable dans le template => (nom de la variable compilée, code de la liaison)
+     * nom de la variable dans le template => (nom de la variable compilÃ©e, code de la liaison)
      */
     private function addBinding($var, $code)
     {
@@ -217,7 +217,7 @@ class TemplateEnvironment
         if (isset($this->bindings[$h]))
         {
 //            if ($this->bindings[$var][1] !== $code)
-//                throw new Exception("Appels multiples à addBinding('$var') avec des liaisons différentes"
+//                throw new Exception("Appels multiples Ã  addBinding('$var') avec des liaisons diffÃ©rentes"
 //                . ' Valeur actuelle : ' . $this->bindings[$var][1] .', '
 //                . ' Nouvelle valeur : ' . $code
 //                
@@ -243,11 +243,11 @@ class TemplateEnvironment
     /**
      * Alloue une nouvelle variable temporaire
      * 
-     * La variable temporaire reste allouée temps que {@link freeTemp()} n'est pas 
-     * appellée pour cette variable. Si d'autres appels à getTemp sont faits avec 
-     * le même nom, les variables retournées seront numérotées (tmp, tmp2, etc.) 
+     * La variable temporaire reste allouÃ©e temps que {@link freeTemp()} n'est pas 
+     * appellÃ©e pour cette variable. Si d'autres appels Ã  getTemp sont faits avec 
+     * le mÃªme nom, les variables retournÃ©es seront numÃ©rotÃ©es (tmp, tmp2, etc.) 
      * 
-     * @param string $name le nom souhaité pour la variable temporaire à allouer
+     * @param string $name le nom souhaitÃ© pour la variable temporaire Ã  allouer
      * @return string
      */
     public function getTemp($name='tmp')
@@ -255,8 +255,8 @@ class TemplateEnvironment
         if ($name[0]==='$') $name=substr($name,1);
         if ($name[0]!=='_') $name='_'.$name;
 
-        // On travaille en minu, sinon, si on est appellé avec le même préfixe mais avec des casses différentes,
-        // on génère des variables distingues vis à vis de php, mais assez difficiles à distinguer (par exemple getField1 et getfield1)
+        // On travaille en minu, sinon, si on est appellÃ© avec le mÃªme prÃ©fixe mais avec des casses diffÃ©rentes,
+        // on gÃ©nÃ¨re des variables distingues vis Ã  vis de php, mais assez difficiles Ã  distinguer (par exemple getField1 et getfield1)
         $lcname=strtolower($name);
         $h=$lcname;
         
@@ -274,9 +274,9 @@ class TemplateEnvironment
     }
     
     /**
-     * Libère une variable temporaire allouée par {@link getTemp()}
+     * LibÃ¨re une variable temporaire allouÃ©e par {@link getTemp()}
      * 
-     * @param string $name le nom de la variable temporaire à libérer
+     * @param string $name le nom de la variable temporaire Ã  libÃ©rer
      */
     public function freeTemp($name)
     {

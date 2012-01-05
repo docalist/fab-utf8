@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Ce fichier contient le code utilisé pour greffer un système de protection automatique
+ * Ce fichier contient le code utilisÃ© pour greffer un systÃ¨me de protection automatique
  * contre les failles XSS au gestionnaire de templates.
  *
  * @author dmenard
@@ -9,7 +9,7 @@
  */
 
 /**
- * Classe utilisée pour marquer une chaine comme étant "sûre".
+ * Classe utilisÃ©e pour marquer une chaine comme Ã©tant "sÃ»re".
  *
  */
 class SafeString
@@ -33,7 +33,7 @@ class SafeString
 }
 
 /**
- * Facilité pour créer une SafeString
+ * FacilitÃ© pour crÃ©er une SafeString
  * @param $string
  */
 function SafeString($string)
@@ -42,7 +42,7 @@ function SafeString($string)
 }
 
 /**
- * Fonction utilisée pour filtrer des données
+ * Fonction utilisÃ©e pour filtrer des donnÃ©es
  */
 /* public static */ function filter($data)
 {
@@ -53,8 +53,8 @@ function SafeString($string)
 }
 
 /**
- * Fonction trouvée sur le web, à tester : filtre les données
- * en fonction du contexte indiqué en paramètre.
+ * Fonction trouvÃ©e sur le web, Ã  tester : filtre les donnÃ©es
+ * en fonction du contexte indiquÃ© en paramÃ¨tre.
  *
  * Source : http://www.codebelay.com/killxss.phps
  */
