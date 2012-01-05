@@ -2,17 +2,17 @@
 /**
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  * @version     SVN: $Id$
  */
 
 /**
  * Classe de base pour les interfaces d'import qui travaillent sur des fichiers au format AJP
- * (format dit "ajout piloté").
+ * (format dit "ajout pilotÃ©").
  *
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  * @version     SVN: $Id$
  */
 class AjpImport extends TextImport
@@ -35,7 +35,7 @@ class AjpImport extends TextImport
             if ($field !== '//') break;
         }
 
-        // Vérifie que l'enregistrement commence par un nom de champ
+        // VÃ©rifie que l'enregistrement commence par un nom de champ
         if (! array_key_exists($field, $this->format))
             $this->fileError("l'enregistrement AJP ne commence pas par un nom de champ valide.");
 
@@ -56,7 +56,7 @@ class AjpImport extends TextImport
                 $field = $value;
             }
 
-            // Début ou suite du champ
+            // DÃ©but ou suite du champ
             else
             {
                 if (substr($content, -1) === '-')
@@ -69,7 +69,7 @@ class AjpImport extends TextImport
         // Stocke le dernier champ
         $this->store($field, $content);
 
-        // Tansfère les champs du format source dans les champs du format destination
+        // TansfÃ¨re les champs du format source dans les champs du format destination
         foreach($this->format as $from=>$to)
         {
             if ($from === $to || ! isset($this->record[$from])) continue;
@@ -79,7 +79,7 @@ class AjpImport extends TextImport
                 $this->transfert("$to,$from", $to);
         }
 
-        // Terminé.
+        // TerminÃ©.
        return $this->record;
     }
 
@@ -88,7 +88,7 @@ class AjpImport extends TextImport
      * Stocke le contenu d'un champ
      *
      * @param string $field le nom du champ.
-     * @param scalar|array $content le contenu à ajouter au champ.
+     * @param scalar|array $content le contenu Ã  ajouter au champ.
      */
     private function store($field, & $content)
     {

@@ -2,44 +2,44 @@
 /**
  * @package     fab
  * @subpackage  helpers
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>
  * @version     SVN: $Id$
  */
 
 /**
- * Représente une table de référence.
+ * ReprÃ©sente une table de rÃ©fÃ©rence.
  *
- * Une table de référence (également appellée liste d'autorité, table de correspondance, etc.)
- * est une structure de données qui permet d'associer des valeurs entre elles. Par exemple,
- * une table des codes pays permettra d'associer un code ISO (FRA, DEU...) à un libellé
+ * Une table de rÃ©fÃ©rence (Ã©galement appellÃ©e liste d'autoritÃ©, table de correspondance, etc.)
+ * est une structure de donnÃ©es qui permet d'associer des valeurs entre elles. Par exemple,
+ * une table des codes pays permettra d'associer un code ISO (FRA, DEU...) Ã  un libellÃ©
  * (France, Allemagne...).
  *
- * Une table de référence peut comporter une, deux ou plusieurs colonnes. Une table contenant
- * une seule colonne permet de définir un ensemble de valeurs autorisées. Une table a deux
- * colonnes se comporte comme un tableau associatif qui pour chaque entrée associe une valeur
- * à une clé. Une table avec plus de deux colonnes permet de stocker des informations
- * supplémentaires (pour la table des pays, par exemple, on pourrait stocker le code ISO sur
- * 3 lettres, le code ISO sur deux lettres, le nom du pays en français et en anglais, le nom
+ * Une table de rÃ©fÃ©rence peut comporter une, deux ou plusieurs colonnes. Une table contenant
+ * une seule colonne permet de dÃ©finir un ensemble de valeurs autorisÃ©es. Une table a deux
+ * colonnes se comporte comme un tableau associatif qui pour chaque entrÃ©e associe une valeur
+ * Ã  une clÃ©. Une table avec plus de deux colonnes permet de stocker des informations
+ * supplÃ©mentaires (pour la table des pays, par exemple, on pourrait stocker le code ISO sur
+ * 3 lettres, le code ISO sur deux lettres, le nom du pays en franÃ§ais et en anglais, le nom
  * de la capitale, etc.)
  *
- * La classe <code>ReferenceTable</code> peut aussi être utilisée pour stocker d'autres types
- * d'informations : nombre de hits sur une page donnée, comptes utilisateurs, logs, etc.
+ * La classe <code>ReferenceTable</code> peut aussi Ãªtre utilisÃ©e pour stocker d'autres types
+ * d'informations : nombre de hits sur une page donnÃ©e, comptes utilisateurs, logs, etc.
  *
- * Il existe deux types de tables de référence : les tables au format texte et les tables au
+ * Il existe deux types de tables de rÃ©fÃ©rence : les tables au format texte et les tables au
  * format {@link http://www.sqlite.org/ SQLite}.
  *
  * Les tables au format texte sont de simples fichier texte (extension .txt) dans lesquels les
- * données sont stockées au {@link http://fr.wikipedia.org/wiki/Format_TSV format texte tabulé}.
- * Les tables de ce type sont des tables d'autorité fermées qui ne peuvent pas être modifiées
+ * donnÃ©es sont stockÃ©es au {@link http://fr.wikipedia.org/wiki/Format_TSV format texte tabulÃ©}.
+ * Les tables de ce type sont des tables d'autoritÃ© fermÃ©es qui ne peuvent pas Ãªtre modifiÃ©es
  * (sauf en modifiant le fichier texte d'origine).
  *
- * Le fichier texte contient une ligne d'entêtes qui désigne les noms des différentes colonnes
- * (ou champs) de la table. Les données viennent ensuite, à raison d'une entrée par ligne,
- * chaque champ apparaissant dans le même ordre que la ligne d'entête et séparé des autres
- * champs par un caractère tabulation.
+ * Le fichier texte contient une ligne d'entÃªtes qui dÃ©signe les noms des diffÃ©rentes colonnes
+ * (ou champs) de la table. Les donnÃ©es viennent ensuite, Ã  raison d'une entrÃ©e par ligne,
+ * chaque champ apparaissant dans le mÃªme ordre que la ligne d'entÃªte et sÃ©parÃ© des autres
+ * champs par un caractÃ¨re tabulation.
  *
- * La ligne d'entête indique pour chaque colonne le nom du champ associé et peut indiquer entre
- * parenthèses un ou plusieurs paramètres séparés par une virgule.
+ * La ligne d'entÃªte indique pour chaque colonne le nom du champ associÃ© et peut indiquer entre
+ * parenthÃ¨ses un ou plusieurs paramÃ¨tres sÃ©parÃ©s par une virgule.
  *
  * Exemple :
  * <code>
@@ -48,61 +48,61 @@
  * DEU                      Allemagne
  * </code>.
  *
- * Les {@link http://www.sqlite.org/lang_createtable.html paramètres} permettent d'indiquer :
- * - Le {@link http://www.sqlite.org/datatype3.html type des données} stockées dans le champ :
+ * Les {@link http://www.sqlite.org/lang_createtable.html paramÃ¨tres} permettent d'indiquer :
+ * - Le {@link http://www.sqlite.org/datatype3.html type des donnÃ©es} stockÃ©es dans le champ :
  *   <code>INTEGER</code>, <code>FLOAT</code>, <code>REAL</code>, <code>NUMERIC</code>,
  *   <code>BOOLEAN</code>, <code>TIME</code>, <code>DATE</code>, <code>TIMESTAMP</code>,
  *   <code>VARCHAR</code>, <code>NVARCHAR</code>, <code>TEXT</code> ou <code>BLOB</code> ;
- * - Le type d'indexation a appliquer à ce champ : <code>INDEX</code>, <code>PRIMARY KEY</code>,
+ * - Le type d'indexation a appliquer Ã  ce champ : <code>INDEX</code>, <code>PRIMARY KEY</code>,
  *   <code>UNIQUE</code> ;
  * - L'acceptation ou non des valeurs NULL : <code>NOT NULL</code> ;
- * - Une valeur par défaut : <code>DEFAULT "xxx"</code> ;
- * - Une séquence de collation : <code>COLLATE BINARY</code>, <code>COLLATE NOCASE</code>,
+ * - Une valeur par dÃ©faut : <code>DEFAULT "xxx"</code> ;
+ * - Une sÃ©quence de collation : <code>COLLATE BINARY</code>, <code>COLLATE NOCASE</code>,
  *   <code>COLLATE RTRIM</code> ;
  *
- * Si vous n'indiquez aucun paramètre pour un champ, celui-ci est créé avec les options
- * <code>TEXT, INDEX, COLLATE NOCASE</code> : le type par défaut d'un champ est
- * <code>TEXT</code>, par défaut, il est indexé, et les comparaisons se font sans tenir compte
- * de la casse des caractères.
+ * Si vous n'indiquez aucun paramÃ¨tre pour un champ, celui-ci est crÃ©Ã© avec les options
+ * <code>TEXT, INDEX, COLLATE NOCASE</code> : le type par dÃ©faut d'un champ est
+ * <code>TEXT</code>, par dÃ©faut, il est indexÃ©, et les comparaisons se font sans tenir compte
+ * de la casse des caractÃ¨res.
  *
- * Les tables au format {@link http://www.sqite.org/ SQLite} (extension .db) représentent des
- * tables d'autorité ouvertes et peuvent être mises à jour directement par ajout, modification
- * ou suppression d'entrées.
+ * Les tables au format {@link http://www.sqite.org/ SQLite} (extension .db) reprÃ©sentent des
+ * tables d'autoritÃ© ouvertes et peuvent Ãªtre mises Ã  jour directement par ajout, modification
+ * ou suppression d'entrÃ©es.
  *
- * Ces tables peuvent être créées en important une table existante au format texte ou par
- * programme en indiquant les champs composant la table (même syntaxe que pour les entêtes
+ * Ces tables peuvent Ãªtre crÃ©Ã©es en important une table existante au format texte ou par
+ * programme en indiquant les champs composant la table (mÃªme syntaxe que pour les entÃªtes
  * des tables au format texte).
  *
  * En interne, c'est d'ailleurs ce que fait la classe ReferenceTable pour les tables au format
- * texte. Lors du premier appel, la classe créée dans le répertoire temporaire de l'application
+ * texte. Lors du premier appel, la classe crÃ©Ã©e dans le rÃ©pertoire temporaire de l'application
  * une copie au format SQLite de la table au format texte puis utilise directement cette copie
- * lors des appels suivants. Si le fichier texte d'origine est modifiée, la copie en cache est
- * automatiquement mise à jour.
+ * lors des appels suivants. Si le fichier texte d'origine est modifiÃ©e, la copie en cache est
+ * automatiquement mise Ã  jour.
  *
- * La classe ReferenceTable offre des méthodes permettant :
- * - de créer une table de reférence (au format texte ou au format SQLite) :
+ * La classe ReferenceTable offre des mÃ©thodes permettant :
+ * - de crÃ©er une table de refÃ©rence (au format texte ou au format SQLite) :
  *   {@link ReferenceTable::create()},
  * - d'ouvrir une table existante : {@link __construct() new ReferenceTable()},
  *   {@link ReferenceTable::open()} ;
  * - d'obtenir des informations sur la table : {@link getPath()}, {@link getFields()},
  *   {@link isReadOnly()} ;
- * - de rechercher des entrées dans la table : {@link search()}, {@link lookup()} ;
- * - d'ajouter, de modifier ou de supprimer des entrées (uniquement pour les tables au format
+ * - de rechercher des entrÃ©es dans la table : {@link search()}, {@link lookup()} ;
+ * - d'ajouter, de modifier ou de supprimer des entrÃ©es (uniquement pour les tables au format
  *   SQLite) : {@link add()}, {@link update()}, {@link delete()} ;
  * - d'exporter tout ou partie de la table : {@link export()}.
  *
- * La modification d'une table (SQLite uniquement) peut poser des problèmes de concurrence
- * d'accès : à tout moment, il ne peut y avoir qu'un seul process en train de modifier la table.
+ * La modification d'une table (SQLite uniquement) peut poser des problÃ¨mes de concurrence
+ * d'accÃ¨s : Ã  tout moment, il ne peut y avoir qu'un seul process en train de modifier la table.
  *
  * @package     fab
  * @subpackage  helpers
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>
  */
 class ReferenceTable
 {
     /**
-     * Cache utilisé par {@link create()}, {@link open()} et {@link close()} pour maintenir la
-     * liste des tables déjà ouvertes.
+     * Cache utilisÃ© par {@link create()}, {@link open()} et {@link close()} pour maintenir la
+     * liste des tables dÃ©jÃ  ouvertes.
      *
      * @var array(ReferenceTable)
      */
@@ -110,7 +110,7 @@ class ReferenceTable
 
 
     /**
-     * Objet {@link http://php.net/PDO PDO} permettant d'accèder à la base de données SQLite de
+     * Objet {@link http://php.net/PDO PDO} permettant d'accÃ¨der Ã  la base de donnÃ©es SQLite de
      * la table en cours.
      *
      * @var PDO
@@ -127,11 +127,11 @@ class ReferenceTable
 
 
     /**
-     * Indique si la table peut être mise à jour ou non.
+     * Indique si la table peut Ãªtre mise Ã  jour ou non.
      *
-     * Seules les tables ouvertes directement à partir de la base SQLite (extension .db) peuvent
-     * être mises à jour. Les tables au format texte (.txt) qui sont compilées ne peuvent pas
-     * être modifiées.
+     * Seules les tables ouvertes directement Ã  partir de la base SQLite (extension .db) peuvent
+     * Ãªtre mises Ã  jour. Les tables au format texte (.txt) qui sont compilÃ©es ne peuvent pas
+     * Ãªtre modifiÃ©es.
      *
      * @var boolean
      */
@@ -147,7 +147,7 @@ class ReferenceTable
 
 
     /**
-     * Le path de la table de référence.
+     * Le path de la table de rÃ©fÃ©rence.
      *
      * @var string
      */
@@ -155,53 +155,53 @@ class ReferenceTable
 
 
     /**
-     * Séparateur utilisé dans les champs articles
+     * SÃ©parateur utilisÃ© dans les champs articles
      *
      * @var string
      */
-    const SEP='·';
+    const SEP='Â·';
 
 
     /**
-     * Méthode statique permettant d'ouvrir une table de référence existante.
+     * MÃ©thode statique permettant d'ouvrir une table de rÃ©fÃ©rence existante.
      *
-     * La méthode <code>open()</code> ouvre la table dont le chemin est passé en paramètre et
-     * retourne un objet {@link ReferenceTable} permettant d'y accéder.
+     * La mÃ©thode <code>open()</code> ouvre la table dont le chemin est passÃ© en paramÃ¨tre et
+     * retourne un objet {@link ReferenceTable} permettant d'y accÃ©der.
      *
-     * Une exception est générée si la table indiquée n'existe pas.
+     * Une exception est gÃ©nÃ©rÃ©e si la table indiquÃ©e n'existe pas.
      *
-     * La méthode <code>open()</code> utilise un cache pour stocker les tables déjà ouvertes :
+     * La mÃ©thode <code>open()</code> utilise un cache pour stocker les tables dÃ©jÃ  ouvertes :
      * lors du premier appel, la table est ouverte et l'objet <code>ReferenceTable</code> obtenu
      * est mis en cache.
      *
-     * Lors d'un appel ultérieur à <code>open()</code> portant sur la même table, l'objet en
-     * cache est directement retourné à l'appellant.
+     * Lors d'un appel ultÃ©rieur Ã  <code>open()</code> portant sur la mÃªme table, l'objet en
+     * cache est directement retournÃ© Ã  l'appellant.
      *
-     * @param string $path le path de la table de référence à charger. Il peut s'agir d'un chemin
-     * absolu (commençant par '/' ou par 'X:') ou d'un chemin relatif à la racine de l'application.
+     * @param string $path le path de la table de rÃ©fÃ©rence Ã  charger. Il peut s'agir d'un chemin
+     * absolu (commenÃ§ant par '/' ou par 'X:') ou d'un chemin relatif Ã  la racine de l'application.
      *
      * @return ReferenceTable un objet <code>ReferenceTable</code> permettant de manipuler la table.
      *
-     * @throw Exception si la table indiquée n'existe pas.
+     * @throw Exception si la table indiquÃ©e n'existe pas.
      */
     public static function open($path)
     {
-        // Le path de la table est relatif à la racine de l'application
+        // Le path de la table est relatif Ã  la racine de l'application
         if (Utils::isRelativePath($path))
             $path = Utils::makePath(Runtime::$root, $path);
 
-        // Vérifie que la table demandée existe
+        // VÃ©rifie que la table demandÃ©e existe
         if (! file_exists($path))
-            throw new Exception("La table de référence $path n'existe pas.");
+            throw new Exception("La table de rÃ©fÃ©rence $path n'existe pas.");
 
         // Normalise le path avant de tester le cache
         $path = realpath($path);
 
-        // Si la table est déjà ouverte, retourne l'objet PDO existant
+        // Si la table est dÃ©jÃ  ouverte, retourne l'objet PDO existant
         if (isset(self::$opened[$path]))
             return self::$opened[$path];
 
-        // Sinon, ouvre la table, la met en cache et retourne le résultat
+        // Sinon, ouvre la table, la met en cache et retourne le rÃ©sultat
         $table = new self($path);
         self::$opened[$path] = $table;
         return $table;
@@ -209,22 +209,22 @@ class ReferenceTable
 
 
     /**
-     * Supprime la base indiquée par <code>$path</code> du cache utilisé par la méthode
+     * Supprime la base indiquÃ©e par <code>$path</code> du cache utilisÃ© par la mÃ©thode
      * {@link open()}.
      *
-     * Cette méthode est rarement utilisée car la table est automatiquement fermée lorsque la
-     * dernière référence existante sur l'objet ReferenceTable est supprimée.
+     * Cette mÃ©thode est rarement utilisÃ©e car la table est automatiquement fermÃ©e lorsque la
+     * derniÃ¨re rÃ©fÃ©rence existante sur l'objet ReferenceTable est supprimÃ©e.
      *
-     * Néanmoins, la méthode close() est utile, par exemple, si vous voulez supprimer une table
-     * temporaire que vous avez créé (comme le cache a une référence sur l'objet, la base n'est pas
-     * fermée et donc vous ne pouvez pas la supprimer).
+     * NÃ©anmoins, la mÃ©thode close() est utile, par exemple, si vous voulez supprimer une table
+     * temporaire que vous avez crÃ©Ã© (comme le cache a une rÃ©fÃ©rence sur l'objet, la base n'est pas
+     * fermÃ©e et donc vous ne pouvez pas la supprimer).
      *
-     * @param string $path le path de la table de référence à fermer. Il peut s'agir d'un chemin
-     * absolu (commençant par '/' ou par 'X:') ou d'un chemin relatif à la racine de l'application.
+     * @param string $path le path de la table de rÃ©fÃ©rence Ã  fermer. Il peut s'agir d'un chemin
+     * absolu (commenÃ§ant par '/' ou par 'X:') ou d'un chemin relatif Ã  la racine de l'application.
      */
     public static function close($path)
     {
-        // Le path de la table est relatif à la racine de l'application
+        // Le path de la table est relatif Ã  la racine de l'application
         if (Utils::isRelativePath($path))
             $path = Utils::makePath(Runtime::$root, $path);
 
@@ -237,14 +237,14 @@ class ReferenceTable
 
 
     /**
-     * Méthode statique permettant de créer une nouvelle table de référence.
+     * MÃ©thode statique permettant de crÃ©er une nouvelle table de rÃ©fÃ©rence.
      *
-     * Une exception est générée si la table indiquée existe déjà.
+     * Une exception est gÃ©nÃ©rÃ©e si la table indiquÃ©e existe dÃ©jÃ .
      *
-     * @param string $path le path de la table de référence à créer. Il peut s'agir d'un chemin
-     * absolu (commençant par '/' ou par 'X:') ou d'un chemin relatif à la racine de l'application.
+     * @param string $path le path de la table de rÃ©fÃ©rence Ã  crÃ©er. Il peut s'agir d'un chemin
+     * absolu (commenÃ§ant par '/' ou par 'X:') ou d'un chemin relatif Ã  la racine de l'application.
      *
-     * @param array $fields un tableau indiquant le nom et les paramètres de chacun des champs de
+     * @param array $fields un tableau indiquant le nom et les paramÃ¨tres de chacun des champs de
      * la table.
      *
      * Exemple :
@@ -261,17 +261,17 @@ class ReferenceTable
      * </code>
      *
      * @return ReferenceTable un objet <code>ReferenceTable</code> permettant de manipuler la
-     * table nouvellement créée.
+     * table nouvellement crÃ©Ã©e.
      */
     public static function create($path, array $fields)
     {
-        // Le path de la table est relatif à la racine de l'application
+        // Le path de la table est relatif Ã  la racine de l'application
         if (Utils::isRelativePath($path))
             $path = Utils::makePath(Runtime::$root, $path);
 
-        // Vérifie que la table demandée n'existe pas déjà
+        // VÃ©rifie que la table demandÃ©e n'existe pas dÃ©jÃ 
         if (file_exists($path))
-            throw new Exception("La table de référence $path existe déjà.");
+            throw new Exception("La table de rÃ©fÃ©rence $path existe dÃ©jÃ .");
 
         // Normalise le path de la table
         $path = realpath($path);
@@ -280,7 +280,7 @@ class ReferenceTable
         switch (strtolower(Utils::getExtension($path)))
         {
             case '.txt':
-                self::parseFields($test=$fields); // juste pour vérifier que les paramètres sont ok
+                self::parseFields($test=$fields); // juste pour vÃ©rifier que les paramÃ¨tres sont ok
                 $file = fopen($path, 'w');
                 fputcsv($file, $fields, "\t");
                 fclose($file);
@@ -291,26 +291,26 @@ class ReferenceTable
                 break;
 
             default :
-                throw new Exception("Le type de la table de référence $path n'est pas reconnu.");
+                throw new Exception("Le type de la table de rÃ©fÃ©rence $path n'est pas reconnu.");
         }
 
-        // Ouvre et retourne la table de référence créée
+        // Ouvre et retourne la table de rÃ©fÃ©rence crÃ©Ã©e
         return self::open($path);
     }
 
 
     /**
-     * Analyse la ligne d'entête d'une table au format texte et retourne la requete sql permettant
-     * de créer la table des données et les index indiqués dans les entêtes.
+     * Analyse la ligne d'entÃªte d'une table au format texte et retourne la requete sql permettant
+     * de crÃ©er la table des donnÃ©es et les index indiquÃ©s dans les entÃªtes.
      *
-     * @param array(string) $fields un tableau décrivant les champs de la table. Chaque champ peut
-     * être sous la forme "nom (type contraintes)".
-     * En sortie, <code>$fields</code> est modifié pour ne contenir que le nom des champs.
+     * @param array(string) $fields un tableau dÃ©crivant les champs de la table. Chaque champ peut
+     * Ãªtre sous la forme "nom (type contraintes)".
+     * En sortie, <code>$fields</code> est modifiÃ© pour ne contenir que le nom des champs.
      *
-     * @return string la requête sql permettant de créer la table et les index indiqués dans
+     * @return string la requÃªte sql permettant de crÃ©er la table et les index indiquÃ©s dans
      * $fields.
      *
-     * @throw Exception si la syntaxe de la ligne d'entête est incorrecte.
+     * @throw Exception si la syntaxe de la ligne d'entÃªte est incorrecte.
      */
     public static function parseFields(& $fields)
     {
@@ -318,7 +318,7 @@ class ReferenceTable
         $_names=$names=$_defs=$defs=$index=array();
         foreach($fields as $field)
         {
-            // Sépare le nom du champ de ses paramètres
+            // SÃ©pare le nom du champ de ses paramÃ¨tres
             $pt = strpos($field, '(');
             if ($pt)
             {
@@ -331,10 +331,10 @@ class ReferenceTable
                 $parms = 'INDEX, COLLATE NOCASE';
             }
 
-            // Enlève les étoiles éventuelles à la fin des noms de champ (signifiait "no index" avant)
+            // EnlÃ¨ve les Ã©toiles Ã©ventuelles Ã  la fin des noms de champ (signifiait "no index" avant)
             $name = trim($name, '* ');
 
-            // Analyse les paramètres indiqués
+            // Analyse les paramÃ¨tres indiquÃ©s
             $parms = explode(',', $parms);
             $type = '';
             $_constraints = $constraints = array();
@@ -356,10 +356,10 @@ class ReferenceTable
                     case 'timestamp':
                     case 'varchar':
                     case 'nvarchar':
-                    case 'text': // valeur par défaut
+                    case 'text': // valeur par dÃ©faut
                     case 'blob':
                         if ($type)
-                            throw new Exception("Vous ne pouvez pas spécifier à la fois les types $type et $parm pour le champ $name");
+                            throw new Exception("Vous ne pouvez pas spÃ©cifier Ã  la fois les types $type et $parm pour le champ $name");
                         $type = strtoupper($parm);
                         break;
 
@@ -379,12 +379,12 @@ class ReferenceTable
                         elseif (strncasecmp($parm, 'collate ', 8) === 0)
                             $constraints[] = strtoupper($parm);
                         else
-                            throw new Exception("Paramètre non reconnu pour le champ $name : $parm");
+                            throw new Exception("ParamÃ¨tre non reconnu pour le champ $name : $parm");
 
                 }
             }
 
-            // Stocke la définition du champ
+            // Stocke la dÃ©finition du champ
             if (empty($type)) $type='TEXT';
 
             $names[]=$name;
@@ -400,7 +400,7 @@ class ReferenceTable
             $_defs[]=$def;
         }
 
-        // Crée la requête sql permettant de créer la table et ses index
+        // CrÃ©e la requÃªte sql permettant de crÃ©er la table et ses index
         $defs = array_merge($defs, $_defs);
         $names = array_merge($names, $_names);
         $sql = 'CREATE TABLE "data"(' . implode(', ', $defs) . ');';
@@ -413,56 +413,56 @@ class ReferenceTable
 
 
     /**
-     * Crée et initialise une base de données SQLite en créant la table et les index requis.
+     * CrÃ©e et initialise une base de donnÃ©es SQLite en crÃ©ant la table et les index requis.
      *
-     * @param string $path le path de la base de données à créer.
+     * @param string $path le path de la base de donnÃ©es Ã  crÃ©er.
      *
-     * @param string $sql une chaine contenant les requêtes sql permettant de créer la table
-     * de données et les index requis telle que retournée par {@link parseFields()}.
+     * @param string $sql une chaine contenant les requÃªtes sql permettant de crÃ©er la table
+     * de donnÃ©es et les index requis telle que retournÃ©e par {@link parseFields()}.
      *
-     * @return PDO l'objet PDO représentant la base créée.
+     * @return PDO l'objet PDO reprÃ©sentant la base crÃ©Ã©e.
      */
     private static function createSQLiteDatabase($path, $sql)
     {
-        // Crée le répertoire de la base de données si nécessaire
+        // CrÃ©e le rÃ©pertoire de la base de donnÃ©es si nÃ©cessaire
         $dir = dirname($path);
         if (! is_dir($dir))
             if (! Utils::makeDirectory($dir))
-                throw new Exception ("Impossible de créer le répertoire $dir.");
+                throw new Exception ("Impossible de crÃ©er le rÃ©pertoire $dir.");
 
-        // Supprime la base de données existante si nécessaire
+        // Supprime la base de donnÃ©es existante si nÃ©cessaire
         if (file_exists($path))
             if (! unlink($path))
                 throw new Exception("Impossible de supprimer le fichier $path)");
 
-        // Crée la base de données SQLite
+        // CrÃ©e la base de donnÃ©es SQLite
         $db = new PDO("sqlite:$path");
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $db->beginTransaction();
 
-        // Crée la table contenant les données et les index indiqués dans la requête sql
+        // CrÃ©e la table contenant les donnÃ©es et les index indiquÃ©s dans la requÃªte sql
         $db->exec($sql);
 
-        // Retourne la table créée
+        // Retourne la table crÃ©Ã©e
         return $db;
     }
 
 
     /**
-     * Ouvre la table de référence dont le chemin est passé en paramètre.
+     * Ouvre la table de rÃ©fÃ©rence dont le chemin est passÃ© en paramÃ¨tre.
      *
-     * Les tables au format texte (extension .txt) sont compilées à la volée. Lors du tout
-     * premier appel, le fichier texte est chargé puis est chargé dans une bases de données
-     * {@link http://www.sqlite.org/ SQLite} stockée dans un répertoire temporaire.
+     * Les tables au format texte (extension .txt) sont compilÃ©es Ã  la volÃ©e. Lors du tout
+     * premier appel, le fichier texte est chargÃ© puis est chargÃ© dans une bases de donnÃ©es
+     * {@link http://www.sqlite.org/ SQLite} stockÃ©e dans un rÃ©pertoire temporaire.
      *
      * Lors des appels suivants, la base SQLite est ouverte directement. Si le fichier
-     * d'origine a été modifié, la table est recompilée automatiquement pour mettre à jour
-     * la base de données.
+     * d'origine a Ã©tÃ© modifiÃ©, la table est recompilÃ©e automatiquement pour mettre Ã  jour
+     * la base de donnÃ©es.
      *
      * Les tables au format SQLite sont ouvertes directement.
      *
-     * @param string $path le path du fichier texte de la table de référence à charger. Il peut
-     * s'agir d'un chemin absolu (commençant par '/' ou par 'X:') ou d'un chemin relatif à la
+     * @param string $path le path du fichier texte de la table de rÃ©fÃ©rence Ã  charger. Il peut
+     * s'agir d'un chemin absolu (commenÃ§ant par '/' ou par 'X:') ou d'un chemin relatif Ã  la
      * racine de l'application.
      */
     public function __construct($path)
@@ -470,13 +470,13 @@ class ReferenceTable
         // Indique s'il s'agit d'une table au format texte (.txt) ou au format sqlite (.db)
         $compile = null;
 
-        // Le path de la table est relatif à la racine de l'application
+        // Le path de la table est relatif Ã  la racine de l'application
         if (Utils::isRelativePath($path))
             $path = Utils::makePath(Runtime::$root, $path);
 
-        // Vérifie que la table demandée existe
+        // VÃ©rifie que la table demandÃ©e existe
         if (! file_exists($path))
-            throw new Exception("La table de référence $path n'existe pas.");
+            throw new Exception("La table de rÃ©fÃ©rence $path n'existe pas.");
 
         // Normalise le path de la table
         $path = realpath($path);
@@ -495,7 +495,7 @@ class ReferenceTable
                 break;
 
             default :
-                throw new Exception("Le type de la table de référence $path n'est pas reconnu.");
+                throw new Exception("Le type de la table de rÃ©fÃ©rence $path n'est pas reconnu.");
         }
 
         // Stocke le path de la table
@@ -516,18 +516,18 @@ class ReferenceTable
         if (! $this->readonly)
             $this->commit = $this->db->beginTransaction();
 
-        // Récupère les noms des champs de la table
+        // RÃ©cupÃ¨re les noms des champs de la table
         $this->fields = $this->db->query('PRAGMA table_info(data)')->fetchAll(PDO::FETCH_NUM | PDO::FETCH_COLUMN, 1);
     }
 
 
     /**
-     * Destructeur. Committe les éventuelles modifications apportées à la table et ferme
-     * la base de données.
+     * Destructeur. Committe les Ã©ventuelles modifications apportÃ©es Ã  la table et ferme
+     * la base de donnÃ©es.
      */
     public function __destruct()
     {
-        // Si la table a été ouverte en écriture, committe les évenutelles modifications apportées
+        // Si la table a Ã©tÃ© ouverte en Ã©criture, committe les Ã©venutelles modifications apportÃ©es
         if ($this->commit)
             $this->db->commit();
 
@@ -537,28 +537,28 @@ class ReferenceTable
 
 
     /**
-     * Charge le fichier texte indiqué par <code>$path</code> dans la base de données SQLite
-     * indiquée par <code>$cache</code>.
+     * Charge le fichier texte indiquÃ© par <code>$path</code> dans la base de donnÃ©es SQLite
+     * indiquÃ©e par <code>$cache</code>.
      *
-     * Si la base de données existe déjà, elle est écrasée. Le fichier texte doit exister (aucune
-     * vérification n'est faite).
+     * Si la base de donnÃ©es existe dÃ©jÃ , elle est Ã©crasÃ©e. Le fichier texte doit exister (aucune
+     * vÃ©rification n'est faite).
      *
-     * @param string $path le chemin du fichier texte à charger.
-     * @param string $cache le chemin de la base de données SQLite à créer.
+     * @param string $path le chemin du fichier texte Ã  charger.
+     * @param string $cache le chemin de la base de donnÃ©es SQLite Ã  crÃ©er.
      */
     private function compile($path, $cache)
     {
         // Ouvre le fichier texte
         $file = fopen($path, 'r');
 
-        // Charge les entêtes de colonne
+        // Charge les entÃªtes de colonne
         $this->fields = fgetcsv($file, 1024, "\t");
         $sql = self::parseFields($this->fields);
 
         $this->db = self::createSQLiteDatabase($cache, $sql);
         $this->commit = true;
 
-        // Prépare le statement utilisé pour charger les données
+        // PrÃ©pare le statement utilisÃ© pour charger les donnÃ©es
         $sql = sprintf
         (
             'INSERT INTO "data"("%s") VALUES (%s);',
@@ -567,7 +567,7 @@ class ReferenceTable
         );
         $statement = $this->db->prepare($sql);
 
-        // Charge les données
+        // Charge les donnÃ©es
         $index = array_flip($this->fields);
         while (false !== $values = fgetcsv($file, 1024, "\t"))
         {
@@ -588,11 +588,11 @@ class ReferenceTable
 
 
     /**
-     * Retourne le chemin de la table de référence.
+     * Retourne le chemin de la table de rÃ©fÃ©rence.
      *
-     * Pour une table au format SQLite, le path retourné correspond au path indiqué lors de
-     * l'ouverture de la table. Pour une table au format texte, le path retourné correspond au
-     * chemin du fichier texte de la table (et non pas la version compilée stockée en cache).
+     * Pour une table au format SQLite, le path retournÃ© correspond au path indiquÃ© lors de
+     * l'ouverture de la table. Pour une table au format texte, le path retournÃ© correspond au
+     * chemin du fichier texte de la table (et non pas la version compilÃ©e stockÃ©e en cache).
      *
      * @return string
      */
@@ -603,7 +603,7 @@ class ReferenceTable
 
 
     /**
-     * Retourne un tableau contenant les noms des champs présents dans la table.
+     * Retourne un tableau contenant les noms des champs prÃ©sents dans la table.
      *
      * @return array(string)
      */
@@ -617,10 +617,10 @@ class ReferenceTable
 
 
     /**
-     * Indique si la table peut être mise à jour ou non.
+     * Indique si la table peut Ãªtre mise Ã  jour ou non.
      *
-     * Seules les tables au format SQLite (extension .db) peuvent être mises à jour.
-     * Les tables au format texte (.txt) ne peuvent pas être modifiées.
+     * Seules les tables au format SQLite (extension .db) peuvent Ãªtre mises Ã  jour.
+     * Les tables au format texte (.txt) ne peuvent pas Ãªtre modifiÃ©es.
      *
      * @return boolean
      */
@@ -633,15 +633,15 @@ class ReferenceTable
     /**
      * Lance une recherche dans la table.
      *
-     * La méthode search exécute une requête SQL de la forme
+     * La mÃ©thode search exÃ©cute une requÃªte SQL de la forme
      *
      * <code>SELECT $what FROM data WHERE $where $options;</code>
      *
-     * dans laquelle <code>$what</code> représente les champs que vous voulez récupérer,
-     * <code>$where</code> représente les critères de recherche que vous passez en paramètre et
-     * <code>$options</code> représente des clauses SQL additionelles telles que
+     * dans laquelle <code>$what</code> reprÃ©sente les champs que vous voulez rÃ©cupÃ©rer,
+     * <code>$where</code> reprÃ©sente les critÃ¨res de recherche que vous passez en paramÃ¨tre et
+     * <code>$options</code> reprÃ©sente des clauses SQL additionelles telles que
      * <code>ORDER BY xxx</code> ou <code>LIMIT 0,10</code> (consultez la
-     * {@link http://www.sqlite.org/lang_select.html documentation SQLite} pour connaître les
+     * {@link http://www.sqlite.org/lang_select.html documentation SQLite} pour connaÃ®tre les
      * options disponibles).
      *
      * Exemples d'utilisation :
@@ -651,56 +651,56 @@ class ReferenceTable
      * $table->search('Code LIKE "F%"', 'ORDER BY Label');
      * </code>
      *
-     * @param string $where les critères de recherche qui seront inclus dans la partie
-     * <code>WHERE</code> de la requête sql. Exemple : <code>$table->search('Code="FRA"')</code>.
-     * L'argument <code>$where</code> est optionnel. Si vous ne le précisez pas, la méthode
-     * retourne tous les enregistrements présents dans la table.
+     * @param string $where les critÃ¨res de recherche qui seront inclus dans la partie
+     * <code>WHERE</code> de la requÃªte sql. Exemple : <code>$table->search('Code="FRA"')</code>.
+     * L'argument <code>$where</code> est optionnel. Si vous ne le prÃ©cisez pas, la mÃ©thode
+     * retourne tous les enregistrements prÃ©sents dans la table.
      *
-     * @param string $options optionnel, des clauses sql supplémentaires à ajouter à la requête
+     * @param string $options optionnel, des clauses sql supplÃ©mentaires Ã  ajouter Ã  la requÃªte
      * (par exemple <code>ORDER BY Code</code>).
      *
-     * @param string $what optionnel, les champs que vous souhaitez récupérer (* et ROWID par
-     * défaut).
+     * @param string $what optionnel, les champs que vous souhaitez rÃ©cupÃ©rer (* et ROWID par
+     * dÃ©faut).
      *
-     * @return array La méthode retourne un tableau vide si aucun enregistrement de la table ne
-     * correspond aux critères indiqués. Dans le cas contraire, elle retourne un tableau de tableaux
-     * associatifs contenant les enregistrements trouvés.
+     * @return array La mÃ©thode retourne un tableau vide si aucun enregistrement de la table ne
+     * correspond aux critÃ¨res indiquÃ©s. Dans le cas contraire, elle retourne un tableau de tableaux
+     * associatifs contenant les enregistrements trouvÃ©s.
      *
      * Exemple :
      * <code>
      * array
      * (
-     *     0 => array('Code'=>'FRA', 'Label'=>'Français', 'ROWID' =>12),
+     *     0 => array('Code'=>'FRA', 'Label'=>'FranÃ§ais', 'ROWID' =>12),
      *     1 => array('Code'=>'ENG', 'Label'=>'Anglais' , 'ROWID' =>54),
      *     ...
      * )
      * </code>
      *
-     * Par défaut, les enregistrements retournés contiennent tous les champs définis dans la table
-     * plus un champ spécifique à SQLite, <code>ROWID</code> qui contient la clé primaire de
+     * Par dÃ©faut, les enregistrements retournÃ©s contiennent tous les champs dÃ©finis dans la table
+     * plus un champ spÃ©cifique Ã  SQLite, <code>ROWID</code> qui contient la clÃ© primaire de
      * l'enregistrement.
      *
-     * <code>ROWID</code> est utile pour {@link update() mettre à jour} et pour
+     * <code>ROWID</code> est utile pour {@link update() mettre Ã  jour} et pour
      * {@link delete() supprimer} les enregistrements obtenus.
      *
-     * Vous pouvez changer les champs retournés en passant une valeur à l'argument
+     * Vous pouvez changer les champs retournÃ©s en passant une valeur Ã  l'argument
      * <code>$what</code>.
      */
     public function search($where='', $options='', $what = '*, ROWID')
     {
-        // Construit la requête sql
+        // Construit la requÃªte sql
         $sql = "SELECT $what FROM data";
         if ($where) $sql .= " WHERE $where";
         if ($options) $sql .= " $options";
 
-        // Prépare et exécute la requête
+        // PrÃ©pare et exÃ©cute la requÃªte
         $statement = $this->db->prepare($sql);
         $statement->execute();
 
-        // Récupère les réponses
+        // RÃ©cupÃ¨re les rÃ©ponses
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        // Ferme la requête et retourne le résultat
+        // Ferme la requÃªte et retourne le rÃ©sultat
         $statement->closeCursor();
         return $result;
     }
@@ -709,56 +709,56 @@ class ReferenceTable
     /**
      * Recherche un enregistrement unique dans la table.
      *
-     * La méthode <code>find()</code>fonctionne exactement comme la méthode {@link search()} si ce
-     * n'est qu'elle retourne le premier enregistrement trouvé.
+     * La mÃ©thode <code>find()</code>fonctionne exactement comme la mÃ©thode {@link search()} si ce
+     * n'est qu'elle retourne le premier enregistrement trouvÃ©.
      *
-     * Cette méthode est utile quand on sait qu'il y a au plus une réponse : au lieu d'avoir à gérer
-     * un tableau de tableaux en résultat, la méthode <code>find()</code> retourne directement
-     * l'enregistrement trouvé.
+     * Cette mÃ©thode est utile quand on sait qu'il y a au plus une rÃ©ponse : au lieu d'avoir Ã  gÃ©rer
+     * un tableau de tableaux en rÃ©sultat, la mÃ©thode <code>find()</code> retourne directement
+     * l'enregistrement trouvÃ©.
      *
-     * @param string $where les critères de recherche.
+     * @param string $where les critÃ¨res de recherche.
      *
-     * @param string $options optionnel, des clauses sql supplémentaires à ajouter à la requête
+     * @param string $options optionnel, des clauses sql supplÃ©mentaires Ã  ajouter Ã  la requÃªte
      * (par exemple <code>ORDER BY Code</code>).
      *
-     * @param string $what optionnel, les champs que vous souhaitez récupérer (* et ROWID par
-     * défaut).
+     * @param string $what optionnel, les champs que vous souhaitez rÃ©cupÃ©rer (* et ROWID par
+     * dÃ©faut).
      *
-     * @return false|array La méthode retourne false si aucun enregistrement de la table ne
-     * correspond aux critères indiqués. Dans le cas contraire, elle retourne le premier
-     * enregistrement trouvé sous la forme d'un tableau associatif.
+     * @return false|array La mÃ©thode retourne false si aucun enregistrement de la table ne
+     * correspond aux critÃ¨res indiquÃ©s. Dans le cas contraire, elle retourne le premier
+     * enregistrement trouvÃ© sous la forme d'un tableau associatif.
      *
      * Exemple :
      * <code>
-     * array('Code'=>'FRA', 'Label'=>'Français', 'ROWID' =>12),
+     * array('Code'=>'FRA', 'Label'=>'FranÃ§ais', 'ROWID' =>12),
      * </code>
      *
-     * Par défaut, les enregistrements retournés contiennent tous les champs définis dans la table
-     * plus un champ spécifique à SQLite, <code>ROWID</code> qui contient la clé primaire de
+     * Par dÃ©faut, les enregistrements retournÃ©s contiennent tous les champs dÃ©finis dans la table
+     * plus un champ spÃ©cifique Ã  SQLite, <code>ROWID</code> qui contient la clÃ© primaire de
      * l'enregistrement.
      *
-     * <code>ROWID</code> est utile pour {@link update() mettre à jour} et pour
+     * <code>ROWID</code> est utile pour {@link update() mettre Ã  jour} et pour
      * {@link delete() supprimer} les enregistrements obtenus.
      *
-     * Vous pouvez changer les champs retournés en passant une valeur à l'argument
+     * Vous pouvez changer les champs retournÃ©s en passant une valeur Ã  l'argument
      * <code>$what</code>.
      */
     public function find($where='', $options='', $what = '*, ROWID')
     {
-        // Construit la requête sql
+        // Construit la requÃªte sql
         $sql = "SELECT $what FROM data";
         if ($where) $sql .= " WHERE $where";
         if (false === stripos($options, 'LIMIT')) $options .= ' LIMIT 1';
         $sql .= " $options";
 
-        // Prépare et exécute la requête
+        // PrÃ©pare et exÃ©cute la requÃªte
         $statement = $this->db->prepare($sql);
         $statement->execute();
 
-        // Récupère les réponses
+        // RÃ©cupÃ¨re les rÃ©ponses
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-        // Ferme la requête et retourne le résultat
+        // Ferme la requÃªte et retourne le rÃ©sultat
         $statement->closeCursor();
         return $result;
     }
@@ -790,9 +790,9 @@ class ReferenceTable
      * $table->add($table->search());
      * </code>
      *
-     * @param array $records un ou plusieurs enregistrements à ajouter. Chacun des
-     * enregistrements doit un ou plusieurs des champs définis dans la table. Le champ
-     * <code>ROWID</code>, s'il est présent dans l'enregistrement, est ignoré.
+     * @param array $records un ou plusieurs enregistrements Ã  ajouter. Chacun des
+     * enregistrements doit un ou plusieurs des champs dÃ©finis dans la table. Le champ
+     * <code>ROWID</code>, s'il est prÃ©sent dans l'enregistrement, est ignorÃ©.
      *
      * Pour ajouter un enregistrement unique, passez directement un tableau associatif contenant
      * les champs de l'enregistrement.
@@ -801,11 +801,11 @@ class ReferenceTable
      * <code>
      * $table->add
      * (
-     *     array('Code'=>'FRA', 'Label'=>'Français2')
+     *     array('Code'=>'FRA', 'Label'=>'FranÃ§ais2')
      * );
      * </code>
      *
-     * Pour ajouter plusieurs enregistrements en une seule étape, passez en paramètre un
+     * Pour ajouter plusieurs enregistrements en une seule Ã©tape, passez en paramÃ¨tre un
      * tableau de tableaux associatifs.
      *
      * Exemple :
@@ -815,41 +815,41 @@ class ReferenceTable
      *     array
      *     (
      *         0 => array('Code'=>'FRA', 'Label'=>'French' ),
-     *         1 => array('Code'=>'ENG', 'Label'=>'English', 'ROWID' => 54), // ROWID : ignoré
+     *         1 => array('Code'=>'ENG', 'Label'=>'English', 'ROWID' => 54), // ROWID : ignorÃ©
      *         2 => array('Code'=>'INC'),                                    // Label : null
-     *         3 => array(),                                                 // vide  : ignoré
+     *         3 => array(),                                                 // vide  : ignorÃ©
      *         ...
      *     )
      * );
      * </code>
      *
-     * Les enregistrements complètement vides sont ignorés.
+     * Les enregistrements complÃ¨tement vides sont ignorÃ©s.
      *
-     * @return int le nombre d'enregistrements ajoutés.
+     * @return int le nombre d'enregistrements ajoutÃ©s.
      */
     public function add($records)
     {
-        // Vérifie qu'on a le droit de modifier la table
+        // VÃ©rifie qu'on a le droit de modifier la table
         if ($this->readonly)
             throw new Exception('La table "' . $this->path . '" est en lecture seulement.');
 
-        // Si on a un enregistrement unique, crée un tableau pour n'avoir qu'un seul cas à gérer
+        // Si on a un enregistrement unique, crÃ©e un tableau pour n'avoir qu'un seul cas Ã  gÃ©rer
         if (! is_array(reset($records))) $records = array($records);
 
-        // Insère tous les enregistrements
+        // InsÃ¨re tous les enregistrements
         $sql = '';
         $count = 0;
         $index = array_flip($this->fields);
         foreach($records as $record)
         {
-            // Ignore les enregistrementes complètement vides
+            // Ignore les enregistrementes complÃ¨tement vides
             if (empty($record)) continue;
 
-            // Crée la requête sql pour ajouter l'enregistrement
+            // CrÃ©e la requÃªte sql pour ajouter l'enregistrement
             $fields = $values = '';
             foreach($record as $field=>$value)
             {
-                // Ignore le champ ROWID s'il est présent
+                // Ignore le champ ROWID s'il est prÃ©sent
                 if (0 === strcasecmp($field,'ROWID')) continue;
 
                 if ($fields)
@@ -878,11 +878,11 @@ class ReferenceTable
             }
             $sql = "INSERT INTO data($fields) VALUES($values)";
 
-            // Exécute la requête
+            // ExÃ©cute la requÃªte
             $count += $this->db->exec($sql);
         }
 
-        // Retourne le nombre d'enregistrements ajoutés
+        // Retourne le nombre d'enregistrements ajoutÃ©s
         return $count;
     }
 
@@ -894,25 +894,25 @@ class ReferenceTable
      * <code>
      * $table = ReferenceTable::open('pays.txt');
      * $records = $t->search('Code="FRA"');
-     * $records[0]['Label'] = 'France métropolitaine';
+     * $records[0]['Label'] = 'France mÃ©tropolitaine';
      * $table->update($records);
      * </code>
      *
-     * @param array $records un ou plusieurs enregistrements à mettre à jour. Chacun des
-     * enregistrements doit obligatoirement contenir le champ <code>ROWID</code> (obtenu à partir
-     * d'un appel préalable à {@link search()}, par exemple).
+     * @param array $records un ou plusieurs enregistrements Ã  mettre Ã  jour. Chacun des
+     * enregistrements doit obligatoirement contenir le champ <code>ROWID</code> (obtenu Ã  partir
+     * d'un appel prÃ©alable Ã  {@link search()}, par exemple).
      *
-     * Pour mettre à jour un enregistrement unique, passez directement un tableau associatif
+     * Pour mettre Ã  jour un enregistrement unique, passez directement un tableau associatif
      * contenant les champs de l'enregistrement :
      *
      * <code>
      * $table->update
      * (
-     *     array('Code'=>'FRA', 'Label'=>'Français2', 'ROWID'=>12)
+     *     array('Code'=>'FRA', 'Label'=>'FranÃ§ais2', 'ROWID'=>12)
      * );
      * </code>
      *
-     * Pour mettre à jour plusieurs enregistrements en une seule étape, passez en paramètre un
+     * Pour mettre Ã  jour plusieurs enregistrements en une seule Ã©tape, passez en paramÃ¨tre un
      * tableau de tableaux :
      *
      * <code>
@@ -927,25 +927,25 @@ class ReferenceTable
      * );
      * </code>
      *
-     * @return int le nombre d'enregistrements modifiés.
+     * @return int le nombre d'enregistrements modifiÃ©s.
      */
     public function update($records)
     {
-        // Vérifie qu'on a le droit de modifier la table
+        // VÃ©rifie qu'on a le droit de modifier la table
         if ($this->readonly)
             throw new Exception('La table "' . $this->path . '" est en lecture seulement.');
 
-        // Si on a un enregistrement unique, crée un tableau pour n'avoir qu'un cas à gérer
+        // Si on a un enregistrement unique, crÃ©e un tableau pour n'avoir qu'un cas Ã  gÃ©rer
         if (! is_array(reset($records))) $records = array($records);
 
         // Modifie tous les enregistrements
         $count = 0;
         foreach($records as $record)
         {
-            // Ignore les enregistrementes complètement vides
+            // Ignore les enregistrementes complÃ¨tement vides
             if (empty($record)) continue;
 
-            // Crée la requête sql pour ajouter l'enregistrement
+            // CrÃ©e la requÃªte sql pour ajouter l'enregistrement
             $rowid = null;
             $set = '';
             $index = array_flip($this->fields);
@@ -975,11 +975,11 @@ class ReferenceTable
 
             $sql = "UPDATE data SET $set WHERE ROWID=$rowid";
 
-            // Exécute la requête
+            // ExÃ©cute la requÃªte
             $count += $this->db->exec($sql);
         }
 
-        // Retourne le nombre d'enregistrements ajoutés
+        // Retourne le nombre d'enregistrements ajoutÃ©s
         return $count;
     }
 
@@ -998,10 +998,10 @@ class ReferenceTable
      * $table->delete($table->search());
      * </code>
      *
-     * @param array $records un ou plusieurs enregistrements à supprimer. Chacun des
-     * enregistrements doit obligatoirement contenir le champ <code>ROWID</code> (obtenu à partir
-     * d'un appel préalable à {@link search()}, par exemple). Les autres champs présents dans
-     * l'enregistrement sont ignorés.
+     * @param array $records un ou plusieurs enregistrements Ã  supprimer. Chacun des
+     * enregistrements doit obligatoirement contenir le champ <code>ROWID</code> (obtenu Ã  partir
+     * d'un appel prÃ©alable Ã  {@link search()}, par exemple). Les autres champs prÃ©sents dans
+     * l'enregistrement sont ignorÃ©s.
      *
      * Pour supprimer un enregistrement unique, passez directement un tableau associatif
      * contenant les champs de l'enregistrement :
@@ -1013,7 +1013,7 @@ class ReferenceTable
      * );
      * </code>
      *
-     * Pour supprimer plusieurs enregistrements en une seule étape, passez en paramètre un
+     * Pour supprimer plusieurs enregistrements en une seule Ã©tape, passez en paramÃ¨tre un
      * tableau de tableaux :
      *
      * <code>
@@ -1022,28 +1022,28 @@ class ReferenceTable
      *     array
      *     (
      *         0 => array('ROWID'=>12),
-     *         1 => array('Code'=>'ENG', 'Label'=>'English', 'ROWID'=>54), // Code, Label : ignorés
+     *         1 => array('Code'=>'ENG', 'Label'=>'English', 'ROWID'=>54), // Code, Label : ignorÃ©s
      *         ...
      *     )
      * );
      * </code>
      *
-     * @return int le nombre d'enregistrements supprimés.
+     * @return int le nombre d'enregistrements supprimÃ©s.
      */
     public function delete($records)
     {
-        // Vérifie qu'on a le droit de modifier la table
+        // VÃ©rifie qu'on a le droit de modifier la table
         if ($this->readonly)
             throw new Exception('La table "' . $this->path . '" est en lecture seulement.');
 
-        // Si on a un enregistrement unique, crée un tableau pour n'avoir qu'un cas à gérer
+        // Si on a un enregistrement unique, crÃ©e un tableau pour n'avoir qu'un cas Ã  gÃ©rer
         if (! is_array(reset($records))) $records = array($records);
 
         // Supprime tous les enregistrements
         $id = array();
         foreach($records as $record)
         {
-            // Ignore les enregistrementes complètement vides
+            // Ignore les enregistrementes complÃ¨tement vides
             if (empty($record)) continue;
 
             // Stocke les ROWID de tous les enregistrements
@@ -1056,11 +1056,11 @@ class ReferenceTable
                 }
             }
 
-            // Aucun rowid trouvé
+            // Aucun rowid trouvÃ©
             throw new Exception("Pour supprimer un enregistrement, vous devez fournir le champ ROWID");
         }
 
-        // Exécute la requête et retourne le nombre d'enregistrements supprimés
+        // ExÃ©cute la requÃªte et retourne le nombre d'enregistrements supprimÃ©s
         if (empty($id)) return 0;
         $sql = 'DELETE FROM data WHERE ROWID IN (' . implode(',', $id) . ')';
         return $this->db->exec($sql);
@@ -1073,47 +1073,47 @@ class ReferenceTable
      * Exemples :
      * <code>
      * - lookup('Code', 'Fra') : recherche la valeur 'Fra' dans le champ code et retourne la valeur
-     *   exacte trouvée dans le champ Code ('FRA').
+     *   exacte trouvÃ©e dans le champ Code ('FRA').
      * - lookup('Code', 'FRA', 'Label') : recherche la valeur 'FRA' dans le champ code et retourne
-     *   le label associé ('France').
+     *   le label associÃ© ('France').
      * - lookup('Label', 'France', 'Code') : recherche la valeur 'France' dans le champ Label et
-     *   retourne le Code associé ('FRA').
+     *   retourne le Code associÃ© ('FRA').
      * </code>
      *
      * Remarque : pour des recherches plus complexes ou pour retourner autre chose qu'un champ
-     * unique, utilisez les méthodes {@link search()} et {@link find()}.
+     * unique, utilisez les mÃ©thodes {@link search()} et {@link find()}.
      *
-     * @param string $field le nom du champ dans lequel <code>$value</code> est recherchée.
+     * @param string $field le nom du champ dans lequel <code>$value</code> est recherchÃ©e.
      *
-     * @param string $value la valeur recherchée.
+     * @param string $value la valeur recherchÃ©e.
      *
-     * @param string $return optionel, le nom du champ à retourner. Si vous n'indiquez rien, la
-     * méthode retourne le contenu exact du champ retourné.
+     * @param string $return optionel, le nom du champ Ã  retourner. Si vous n'indiquez rien, la
+     * mÃ©thode retourne le contenu exact du champ retournÃ©.
      *
-     * Vous pouvez également indiquer dans $return la valeur spéciale "*". Dans ce cas, la
-     * totalité de l'entrée sera retournée sous la forme d'un tableau associatif dont les clés
-     * correspondent aux entêtes de la table et dont les valeurs correspondent à l'entrée trouvée.
+     * Vous pouvez Ã©galement indiquer dans $return la valeur spÃ©ciale "*". Dans ce cas, la
+     * totalitÃ© de l'entrÃ©e sera retournÃ©e sous la forme d'un tableau associatif dont les clÃ©s
+     * correspondent aux entÃªtes de la table et dont les valeurs correspondent Ã  l'entrÃ©e trouvÃ©e.
      *
-     * @param boolean $falseIfNotFound indique ce que la méthode doit retourner si la valeur
-     * recherchée n'a pas été trouvée dans la table :
-     * - Par défaut (<code>$falseIfNotFound == false</code>), la méthode retourne la valeur
-     *   recherchée. Cela permet, par exemple, "d'essayer" de traduire un code mais de ne pas
+     * @param boolean $falseIfNotFound indique ce que la mÃ©thode doit retourner si la valeur
+     * recherchÃ©e n'a pas Ã©tÃ© trouvÃ©e dans la table :
+     * - Par dÃ©faut (<code>$falseIfNotFound == false</code>), la mÃ©thode retourne la valeur
+     *   recherchÃ©e. Cela permet, par exemple, "d'essayer" de traduire un code mais de ne pas
      *   perdre le code si celui-ci n'existe pas :
      *
      *   <code>
      *   echo 'Pays : ', $tbl->lookup('Code', $CodPays, 'Label');
      *   </code>
      *
-     * - Si vous passez <code>true</code>, la méthode retournera <code>false</code> si
-     *   la valeur demandée n'existe pas. Cela permet de savoir si le code recherché existe ou non :
+     * - Si vous passez <code>true</code>, la mÃ©thode retournera <code>false</code> si
+     *   la valeur demandÃ©e n'existe pas. Cela permet de savoir si le code recherchÃ© existe ou non :
      *
      *   <code>
      *   if (false !== $pays = $tbl->lookup('Code', $CodPays, 'Label', true)) echo "Pays : $pays";
      *   </code>
      *
-     * @return string Retourne la valeur demandée si une réponse a été trouvée.
-     * Si aucun enregistrement ne répond au critère de recherche indiqué, la méthode retourne la
-     * valeur recherchée (i.e. Lookup('Code', 'XYZ') -> 'XYZ').
+     * @return string Retourne la valeur demandÃ©e si une rÃ©ponse a Ã©tÃ© trouvÃ©e.
+     * Si aucun enregistrement ne rÃ©pond au critÃ¨re de recherche indiquÃ©, la mÃ©thode retourne la
+     * valeur recherchÃ©e (i.e. Lookup('Code', 'XYZ') -> 'XYZ').
      */
     public function lookup($field, $value, $return = null, $falseIfNotFound=false)
     {
@@ -1127,10 +1127,10 @@ class ReferenceTable
 
 
     /**
-     * Exporte la totalité ou une partie de la table dans un fichier au format texte tabulé.
+     * Exporte la totalitÃ© ou une partie de la table dans un fichier au format texte tabulÃ©.
      *
      * @param resource|string $to la destination de l'export. Vous pouvez indiquer au choix :
-     * - le handle d'un fichier déjà ouvert en écriture et que vous vous chargerez de fermer :
+     * - le handle d'un fichier dÃ©jÃ  ouvert en Ã©criture et que vous vous chargerez de fermer :
      *
      * Exemple :
      * <code>
@@ -1144,29 +1144,29 @@ class ReferenceTable
      * Exemple :
      * <code>
      * ReferenceTable::open('pays.txt')->export(STDOUT);
-     * ReferenceTable::open('pays.txt')->export(); // idem : STDOUT est la valeur par défaut
+     * ReferenceTable::open('pays.txt')->export(); // idem : STDOUT est la valeur par dÃ©faut
      * </code>
      *
-     * - le path d'un fichier qui sera généré. Il peut s'agir d'un chemin absolu (commençant
-     * par '/' ou par 'X:') ou d'un chemin relatif à la racine de l'application.
+     * - le path d'un fichier qui sera gÃ©nÃ©rÃ©. Il peut s'agir d'un chemin absolu (commenÃ§ant
+     * par '/' ou par 'X:') ou d'un chemin relatif Ã  la racine de l'application.
      *
-     * Attention : si le fichier existe déjà, il sera écrasé sans confirmation.
+     * Attention : si le fichier existe dÃ©jÃ , il sera Ã©crasÃ© sans confirmation.
      *
      * Exemple :
      * <code>
      * ReferenceTable::open('pays.txt')->export('c:/backups/pays.sav');
      * </code>
      *
-     * @param string $where des critères de recherche qui seront inclus dans la
-     * partie <code>WHERE</code> de la requête sql pour les filtrer les enregistrements exportés.
+     * @param string $where des critÃ¨res de recherche qui seront inclus dans la
+     * partie <code>WHERE</code> de la requÃªte sql pour les filtrer les enregistrements exportÃ©s.
      * Exemple : <code>$table->export(STDOUT, 'Code="FRA"')</code>.
-     * L'argument <code>$where</code> est optionnel. Si vous ne le précisez pas, la méthode exporte
-     * tous les enregistrements présents dans la table.
+     * L'argument <code>$where</code> est optionnel. Si vous ne le prÃ©cisez pas, la mÃ©thode exporte
+     * tous les enregistrements prÃ©sents dans la table.
      *
-     * @param string $options optionnel, des clauses sql supplémentaires qui seront ajoutées à la
-     * requête SQL (par exemple <code>ORDER BY xxx</code> ou <code>LIMIT 0,10</code>).
+     * @param string $options optionnel, des clauses sql supplÃ©mentaires qui seront ajoutÃ©es Ã  la
+     * requÃªte SQL (par exemple <code>ORDER BY xxx</code> ou <code>LIMIT 0,10</code>).
      *
-     * @return int le nombre d'enregistrements exportés.
+     * @return int le nombre d'enregistrements exportÃ©s.
      */
     public function export($to=STDOUT, $where='', $options='')
     {
@@ -1181,19 +1181,19 @@ class ReferenceTable
             $file = fopen($to, 'w');
         }
 
-        // Ecrit les entêtes
+        // Ecrit les entÃªtes
         fputcsv($file, $this->getFields(), "\t");
 
-        // Prépare la requête
+        // PrÃ©pare la requÃªte
         $sql = 'SELECT ' . implode(',', $this->getFields()) . ' FROM data';
         if ($where)   $sql .= " WHERE $where";
         if ($options) $sql .= " $options";
 
-        // Exécute la requête
+        // ExÃ©cute la requÃªte
         $statement = $this->db->prepare($sql);
         $statement->execute();
 
-        // Exporte toutes les réponses
+        // Exporte toutes les rÃ©ponses
         $count = 0;
         while (false !== $record = $statement->fetch(PDO::FETCH_ASSOC))
         {
@@ -1201,13 +1201,13 @@ class ReferenceTable
             ++$count;
         }
 
-        // Ferme la requête
+        // Ferme la requÃªte
         $statement->closeCursor();
 
         // Ferme le stream de destination
         if ($file !== $to) fclose($file);
 
-        // Retourne le nombre d'enregistrements exportés
+        // Retourne le nombre d'enregistrements exportÃ©s
         return $count;
     }
 }

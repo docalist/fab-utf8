@@ -2,33 +2,33 @@
 /**
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  * @version     SVN: $Id$
  */
 
 /**
- * Classe de base abstraite pour toutes les interfaces d'import basée sur un format décrivant
+ * Classe de base abstraite pour toutes les interfaces d'import basÃ©e sur un format dÃ©crivant
  * les champs du fichier source.
  *
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  */
 abstract class FormatBasedImport extends AbstractImport
 {
     /**
-     * Format de l'interface : liste des champs présents dans le fichier source.
+     * Format de l'interface : liste des champs prÃ©sents dans le fichier source.
      *
-     * Cette propriété est destinée à être surchargée par les classes descendantes.
+     * Cette propriÃ©tÃ© est destinÃ©e Ã  Ãªtre surchargÃ©e par les classes descendantes.
      *
-     * Vous pouvez aussi surcharger la méthode {@link loadFormat()} pour que celle-ci initialise
+     * Vous pouvez aussi surcharger la mÃ©thode {@link loadFormat()} pour que celle-ci initialise
      * $format.
      *
-     * La clé désigne le nom du champ dans le format source, la valeur désigne le nom du champ
-     * dans le format destination. Si seule la valeur est indiquée, le même nom de champ est
-     * utilisé pour les deux.
+     * La clÃ© dÃ©signe le nom du champ dans le format source, la valeur dÃ©signe le nom du champ
+     * dans le format destination. Si seule la valeur est indiquÃ©e, le mÃªme nom de champ est
+     * utilisÃ© pour les deux.
      *
-     * Utilisez une étoile à la fin des noms de champ pour indiquer les champs articles. Ils seront
+     * Utilisez une Ã©toile Ã  la fin des noms de champ pour indiquer les champs articles. Ils seront
      * automatiquement convertis en tableaux.
      *
      * @var array
@@ -36,8 +36,8 @@ abstract class FormatBasedImport extends AbstractImport
     protected $format = array();
 
     /**
-     * Pour les champs articles (marqués avec une étoile dans {@link $format}), séparateur utilisé
-     * pour séparer les articles.
+     * Pour les champs articles (marquÃ©s avec une Ã©toile dans {@link $format}), sÃ©parateur utilisÃ©
+     * pour sÃ©parer les articles.
      *
      * @var string
      */
@@ -45,7 +45,7 @@ abstract class FormatBasedImport extends AbstractImport
 
 
     /**
-     * Tableau listant les champs articles. Initialisé par loadFormat().
+     * Tableau listant les champs articles. InitialisÃ© par loadFormat().
      *
      * @var array
      */
@@ -55,9 +55,9 @@ abstract class FormatBasedImport extends AbstractImport
     /**
      * Constructeur.
      *
-     * Vérifie le format indiqué dans l'interface puis ouvre le fichier passé en paramètre.
+     * VÃ©rifie le format indiquÃ© dans l'interface puis ouvre le fichier passÃ© en paramÃ¨tre.
      *
-     * @param string $path path absolu du fichier à ouvrir.
+     * @param string $path path absolu du fichier Ã  ouvrir.
      */
     public function __construct($path)
     {
@@ -67,7 +67,7 @@ abstract class FormatBasedImport extends AbstractImport
 
 
     /**
-     * Charge et vérifie le format.
+     * Charge et vÃ©rifie le format.
      */
     protected function loadFormat()
     {
@@ -87,20 +87,20 @@ abstract class FormatBasedImport extends AbstractImport
             }
 
             if (isset($result[$source]))
-                throw new Exception(__CLASS__ . " : Champ $source dupliqué dans le format");
+                throw new Exception(__CLASS__ . " : Champ $source dupliquÃ© dans le format");
 
             $result[$source] = $destination;
         }
 
         if (empty($result))
-            throw new Exception(__CLASS__ . ' : Aucun format défini');
+            throw new Exception(__CLASS__ . ' : Aucun format dÃ©fini');
 
         $this->format = $result;
     }
 
 
     /**
-     * Indique si le champ indiqué est multivalué ou non
+     * Indique si le champ indiquÃ© est multivaluÃ© ou non
      *
      * @param string $field
      */

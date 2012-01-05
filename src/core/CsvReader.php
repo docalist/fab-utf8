@@ -2,34 +2,34 @@
 /**
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>
  * @version     SVN: $Id$
  */
 
 /**
  * Classe de base pour les Reader qui travaillent sur des fichiers au format CSV.
  *
- * Par défaut, ce reader lit des fichiers CSV dans lequel les champs sont séparés par
- * des tabulations et encadrés par des guillemets. Dans les classes descendantes, vous
- * pouvez modifier ce comportement en surchargeant les propriétés {@link $delimiter}
+ * Par dÃ©faut, ce reader lit des fichiers CSV dans lequel les champs sont sÃ©parÃ©s par
+ * des tabulations et encadrÃ©s par des guillemets. Dans les classes descendantes, vous
+ * pouvez modifier ce comportement en surchargeant les propriÃ©tÃ©s {@link $delimiter}
  * et {@link $enclosure}.
  *
- * Le fichier CSV doit contenir une ligne d'entête indiquant les noms des colonnes.
+ * Le fichier CSV doit contenir une ligne d'entÃªte indiquant les noms des colonnes.
  *
- * Une exception sera générée si le fichier CSV contient des noms de colonnes qui ne sont
- * pas reconnues par l'objet {@link Reader} associé. Pour ne pas générer d'exception,
- * surchargez la propriété {@link $ignoreUnknownFields} et initialisez-la à
+ * Une exception sera gÃ©nÃ©rÃ©e si le fichier CSV contient des noms de colonnes qui ne sont
+ * pas reconnues par l'objet {@link Reader} associÃ©. Pour ne pas gÃ©nÃ©rer d'exception,
+ * surchargez la propriÃ©tÃ© {@link $ignoreUnknownFields} et initialisez-la Ã 
  * <code>true</code>.
  *
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>
  * @version     SVN: $Id$
  */
 class CsvReader extends TextFileRecordReader
 {
     /**
-     * Délimiteur utilisé entre les différentes colonnes (tabulation par défaut).
+     * DÃ©limiteur utilisÃ© entre les diffÃ©rentes colonnes (tabulation par dÃ©faut).
      *
      * @var string
      */
@@ -37,8 +37,8 @@ class CsvReader extends TextFileRecordReader
 
 
     /**
-     * Caractère utilisé pour délimiter le contenu de chaque champ (guillemet
-     * double par défaut).
+     * CaractÃ¨re utilisÃ© pour dÃ©limiter le contenu de chaque champ (guillemet
+     * double par dÃ©faut).
      *
      * @var string
      */
@@ -46,15 +46,15 @@ class CsvReader extends TextFileRecordReader
 
 
     /**
-     * Liste des champs définis dans la ligne d'entête du fichier.
+     * Liste des champs dÃ©finis dans la ligne d'entÃªte du fichier.
      *
-     * <code>$headers</code> ne contient que les champs pour lesquels la méthode
-     * {@link Record::isField() isField()} de l'objet {@link Record} associé
+     * <code>$headers</code> ne contient que les champs pour lesquels la mÃ©thode
+     * {@link Record::isField() isField()} de l'objet {@link Record} associÃ©
      * retourne <code>true</code>.
      *
-     * <code>$headers</code> sert également de tableau d'indirection : pour chaque
-     * numéro de colonne, la valeur associée contient le nom du champ de l'objet
-     * {@link Record}  associé qui recevra les données présentes dans cette colonne.
+     * <code>$headers</code> sert Ã©galement de tableau d'indirection : pour chaque
+     * numÃ©ro de colonne, la valeur associÃ©e contient le nom du champ de l'objet
+     * {@link Record}  associÃ© qui recevra les donnÃ©es prÃ©sentes dans cette colonne.
      *
      * @var array
      */
@@ -62,11 +62,11 @@ class CsvReader extends TextFileRecordReader
 
 
     /**
-     * Indique s'il faut générer une erreur si la ligne d'entête du fichier contient
-     * des noms de champs qui n'existent pas dans l'objet {@link Record} associé.
+     * Indique s'il faut gÃ©nÃ©rer une erreur si la ligne d'entÃªte du fichier contient
+     * des noms de champs qui n'existent pas dans l'objet {@link Record} associÃ©.
      *
-     * Lorsque <code>$ignoreUnknownFields</code> est à <code>true</code>, une Exception
-     * est générée si le fichier CSV contient des champs inconnus.
+     * Lorsque <code>$ignoreUnknownFields</code> est Ã  <code>true</code>, une Exception
+     * est gÃ©nÃ©rÃ©e si le fichier CSV contient des champs inconnus.
      *
      * @var bool
      */
@@ -74,18 +74,18 @@ class CsvReader extends TextFileRecordReader
 
 
     /**
-     * Vérifie de façon strict le nombre de colonnes (de valeurs) obtenues pour chaque
+     * VÃ©rifie de faÃ§on strict le nombre de colonnes (de valeurs) obtenues pour chaque
      * ligne.
      *
-     * Quand ce flag est à true, si une ligne contient plus de colonnes ou moins de
-     * colonnes que la ligne d'entête, une exception est générée.
+     * Quand ce flag est Ã  true, si une ligne contient plus de colonnes ou moins de
+     * colonnes que la ligne d'entÃªte, une exception est gÃ©nÃ©rÃ©e.
      * @var unknown_type
      */
     protected $strictColumnsCount = true;
 
 
     /**
-     * Lors de l'ouverture d'un fichier, charge la ligne d'entête contenant
+     * Lors de l'ouverture d'un fichier, charge la ligne d'entÃªte contenant
      * les noms des champs.
      *
      * @param string $path
@@ -111,9 +111,9 @@ class CsvReader extends TextFileRecordReader
     }
 
     /**
-     * Surcharge la méthode rewind() héritée de TextFileRecordReader pour passer
-     * la ligne d'entête contenant les noms des champs à chaque fois que le
-     * fichier est "rembobiné".
+     * Surcharge la mÃ©thode rewind() hÃ©ritÃ©e de TextFileRecordReader pour passer
+     * la ligne d'entÃªte contenant les noms des champs Ã  chaque fois que le
+     * fichier est "rembobinÃ©".
      */
     public function rewind()
     {
@@ -162,7 +162,7 @@ class CsvReader extends TextFileRecordReader
      */
     public function read()
     {
-        // Vérifications
+        // VÃ©rifications
         $this->checkFile();
         if (! $this->record) return false;
 
@@ -172,7 +172,7 @@ class CsvReader extends TextFileRecordReader
         if (count($line) !== count($this->headers))
         {
             if (! $this->strictColumnsCount)
-                return $this->fileError('nombre de colonnes incorrect (%d trouvées, %d attendues)', count($line), count($this->headers));
+                return $this->fileError('nombre de colonnes incorrect (%d trouvÃ©es, %d attendues)', count($line), count($this->headers));
 
             if (count($line) !== count($this->headers))
                 $line = array_pad($line, count($this->headers), '');
@@ -183,10 +183,10 @@ class CsvReader extends TextFileRecordReader
         foreach($line as $col => $content)
             $this->record->store($this->headers[$col], $content);
 
-        // Met à jour le numéro d'enreg
+        // Met Ã  jour le numÃ©ro d'enreg
         ++$this->recordNumber;
 
-        // Terminé.
+        // TerminÃ©.
         return $this->record;
     }
 }

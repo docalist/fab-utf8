@@ -2,17 +2,17 @@
 /**
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  * @version     SVN: $Id$
  */
 
 /**
  * Classe de base pour les {@link RecordReader} qui travaillent sur des fichiers au format AJP
- * (format dit "ajout piloté").
+ * (format dit "ajout pilotÃ©").
  *
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  * @version     SVN: $Id$
  */
 abstract class AjpReader extends TextFileRecordReader
@@ -38,7 +38,7 @@ abstract class AjpReader extends TextFileRecordReader
             if ($field !== '//') break;
         }
 
-        // Vérifie que l'enregistrement commence par un nom de champ
+        // VÃ©rifie que l'enregistrement commence par un nom de champ
         if (! $this->record->isField($field))
             $this->fileError("l'enregistrement AJP ne commence pas par un nom de champ valide.");
 
@@ -62,7 +62,7 @@ abstract class AjpReader extends TextFileRecordReader
                 $field = $value;
             }
 
-            // Début ou suite du champ
+            // DÃ©but ou suite du champ
             else
             {
                 if (substr($content, -1) === '-')
@@ -76,10 +76,10 @@ abstract class AjpReader extends TextFileRecordReader
         if ($content)
             $this->record->store($field, $content);
 
-        // Met à jour le numéro d'enreg
+        // Met Ã  jour le numÃ©ro d'enreg
         ++$this->recordNumber;
 
-        // Terminé.
+        // TerminÃ©.
         return $this->record;
     }
 }

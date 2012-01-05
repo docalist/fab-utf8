@@ -2,7 +2,7 @@
 /**
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  * @version     SVN: $Id$
  */
 
@@ -12,12 +12,12 @@
  *
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  */
 abstract class TextImport extends FormatBasedImport
 {
     /**
-     * Numéro de la ligne en cours au sein du fichier.
+     * NumÃ©ro de la ligne en cours au sein du fichier.
      *
      * @var int
      */
@@ -27,8 +27,8 @@ abstract class TextImport extends FormatBasedImport
     /**
      * Charset du fichier d'origine.
      *
-     * La NCT s'attend à recevoir des données en ISO-8859-1. Si le charset indiqué est différent,
-     * la méthode {@link getLine()} se charge de convertir les caractères dans le bon charset.
+     * La NCT s'attend Ã  recevoir des donnÃ©es en ISO-8859-1. Si le charset indiquÃ© est diffÃ©rent,
+     * la mÃ©thode {@link getLine()} se charge de convertir les caractÃ¨res dans le bon charset.
      *
      * @var string
      */
@@ -38,11 +38,11 @@ abstract class TextImport extends FormatBasedImport
     /**
      * Lit la ligne suivante du fichier.
      *
-     * Les lignes sont trimmées (espaces de début et de fin supprimés).
+     * Les lignes sont trimmÃ©es (espaces de dÃ©but et de fin supprimÃ©s).
      *
-     * Les lignes vides sont ignorées, sauf si $ignoreEmpty est à false.
+     * Les lignes vides sont ignorÃ©es, sauf si $ignoreEmpty est Ã  false.
      *
-     * La propriété {@link $line} est incrémentée.
+     * La propriÃ©tÃ© {@link $line} est incrÃ©mentÃ©e.
      *
      * @param string|false $ignoreEmpty
      */
@@ -65,11 +65,11 @@ abstract class TextImport extends FormatBasedImport
 
 
     /**
-     * Génère une exception en indiquant le nom du fichier en cours et la ligne à laquelle
+     * GÃ©nÃ¨re une exception en indiquant le nom du fichier en cours et la ligne Ã  laquelle
      * s'est produite l'erreur.
      *
-     * La méthode fonctionne comme sprintf : message peut contenir des délimiteurs (%s...) et vous
-     * pouvez passer en paramètre les arguments requis.
+     * La mÃ©thode fonctionne comme sprintf : message peut contenir des dÃ©limiteurs (%s...) et vous
+     * pouvez passer en paramÃ¨tre les arguments requis.
      *
      * @param string $message
      * @param mixed $args...
@@ -84,11 +84,11 @@ abstract class TextImport extends FormatBasedImport
 
 
     /**
-     * Convertit les données passées en paramètre d'un charset vers un autre.
+     * Convertit les donnÃ©es passÃ©es en paramÃ¨tre d'un charset vers un autre.
      *
-     * L'implémentation par défaut utilise iconv.
+     * L'implÃ©mentation par dÃ©faut utilise iconv.
      *
-     * @param string $string la chaine à convertir
+     * @param string $string la chaine Ã  convertir
      * @param string $from le charset d'origine
      * @param string $to le charset de destination
      *

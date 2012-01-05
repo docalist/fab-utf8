@@ -2,7 +2,7 @@
 /**
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  * @version     SVN: $Id$
  */
 
@@ -11,12 +11,12 @@
  *
  * @package     nct
  * @subpackage  common
- * @author      Daniel Ménard <Daniel.Menard@ehesp.fr>, Séverine Ferron <Severine.Ferron@ehesp.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@ehesp.fr>, SÃ©verine Ferron <Severine.Ferron@ehesp.fr>
  */
 abstract class AbstractImport
 {
     /**
-     * Path du fichier à charger.
+     * Path du fichier Ã  charger.
      *
      * @var string
      */
@@ -42,9 +42,9 @@ abstract class AbstractImport
     /**
      * Constructeur.
      *
-     * Ouvre le fichier passé en paramètre.
+     * Ouvre le fichier passÃ© en paramÃ¨tre.
      *
-     * @param string $path path absolu du fichier à ouvrir.
+     * @param string $path path absolu du fichier Ã  ouvrir.
      */
     public function __construct($path)
     {
@@ -64,15 +64,15 @@ abstract class AbstractImport
 
 
     /**
-     * Ouvre le fichier indiqué.
+     * Ouvre le fichier indiquÃ©.
      *
      * @param string $path
      */
     protected function open($path)
     {
-        // Vérifie que le fichier existe
+        // VÃ©rifie que le fichier existe
         if (! file_exists($path))
-            throw new Exception("$path : fichier non trouvé");
+            throw new Exception("$path : fichier non trouvÃ©");
 
         // Stocke son path
         $this->path = $path;
@@ -105,30 +105,30 @@ abstract class AbstractImport
 
 
     // ---------------------------------------------------------------------------------------------
-    // Méthodes utilitaires
+    // MÃ©thodes utilitaires
     // ---------------------------------------------------------------------------------------------
 
     /**
-     * Transfère le contenu d'un ou plusieurs champs dans d'autres.
+     * TransfÃ¨re le contenu d'un ou plusieurs champs dans d'autres.
      *
-     * La méthode transfert permet de déplacer, de concaténer ou de dupliquer des champs.
+     * La mÃ©thode transfert permet de dÃ©placer, de concatÃ©ner ou de dupliquer des champs.
      *
      * Exemples :
      * <code>
-     * // Transfère TITFRAN Dans TitOrigA
+     * // TransfÃ¨re TITFRAN Dans TitOrigA
      * transfert('TITFRAN', 'TitOrigA')
      *
-     * // Transfère tous les champ mots-clés dans le champ MotsCles
+     * // TransfÃ¨re tous les champ mots-clÃ©s dans le champ MotsCles
      * transfert('MOTSCLE1,MOTSCLE2,MOTSCLE3,MOTSCLE4,PERIODE', 'MotsCles');
      *
      * // Recopie MotsCles dans NouvDesc
      * transfert('MotsCles', 'MotsCles,NouvDesc');
      *
-     * // Ajoute NouvDesc à MotsCles
+     * // Ajoute NouvDesc Ã  MotsCles
      * transfert('MotsCles,NouvDesc', 'MotsCles');
      * </code>
      *
-     * @param string $from un ou plusieurs champs sources (séparés par une virgule).
+     * @param string $from un ou plusieurs champs sources (sÃ©parÃ©s par une virgule).
      * @param string $to un ou plusieurs champs destination.
      */
     public function transfert($from, $to)
@@ -151,26 +151,26 @@ abstract class AbstractImport
         return $this;
     }
 
-//is('CodLang', 'Mémoire', true/false) // tokenize(article) "est égal à" tokenize(search)
+//is('CodLang', 'MÃ©moire', true/false) // tokenize(article) "est Ã©gal Ã " tokenize(search)
 //match('CodLang', '~^fre$~', true/false) // tokenize(article) preg_match regexp
 
     /**
      *
-     * Recherche une ou plusieurs chaines de caractères dans un ou plusieurs champs de
+     * Recherche une ou plusieurs chaines de caractÃ¨res dans un ou plusieurs champs de
      * l'enregistrement.
      *
-     * @param string $fields le ou les champs (séparés par une virgule) dans lesquels rechercher.
+     * @param string $fields le ou les champs (sÃ©parÃ©s par une virgule) dans lesquels rechercher.
      *
-     * @param string|array $patterns la ou les chaines de caractères recherchées.
+     * @param string|array $patterns la ou les chaines de caractÃ¨res recherchÃ©es.
      *
-     * @param boolean $tokenize indique si la chaine recherchée et le contenu des champs sont
-     * tokenisés avant de faire la comparaison (true par défaut).
+     * @param boolean $tokenize indique si la chaine recherchÃ©e et le contenu des champs sont
+     * tokenisÃ©s avant de faire la comparaison (true par dÃ©faut).
      *
-     * @return boolean true si la chaine recherchée a été trouvée, false sinon.
+     * @return boolean true si la chaine recherchÃ©e a Ã©tÃ© trouvÃ©e, false sinon.
      */
     public function is($fields, $patterns, $tokenize = true)
     {
-        // Détermine les champs à modifier
+        // DÃ©termine les champs Ã  modifier
         if (empty($fields) || $fields === '*')
             $fields = implode(',', array_keys($this->record));
 
@@ -201,13 +201,13 @@ abstract class AbstractImport
             }
         }
 
-        // Non trouvé
+        // Non trouvÃ©
         return false;
     }
 
     /**
-     * Teste si l'un des articles présents dans l'un des champs indiquées correspond à l'un des
-     * patterns passés en paramètre.
+     * Teste si l'un des articles prÃ©sents dans l'un des champs indiquÃ©es correspond Ã  l'un des
+     * patterns passÃ©s en paramÃ¨tre.
      *
      * chaine ou regexp ?
      *
@@ -228,10 +228,10 @@ abstract class AbstractImport
 
 
     /**
-     * Applique un callback à tous les articles d'un champ.
+     * Applique un callback Ã  tous les articles d'un champ.
      *
-     * La méthode transform() permet d'appliquer une fonction ou une méthode à tous les articles
-     * présents dans un ou plusieurs des champs présents dans l'enregistrement.
+     * La mÃ©thode transform() permet d'appliquer une fonction ou une mÃ©thode Ã  tous les articles
+     * prÃ©sents dans un ou plusieurs des champs prÃ©sents dans l'enregistrement.
      *
      * Exemples d'utilisation :
      * <code>
@@ -241,16 +241,16 @@ abstract class AbstractImport
      * // Transformer des dates en format "aaa-mm-jj" en format Bdsp
      * transform('strtr', 'DatEdit,DatOrig', '-', '/'); // 2011-02-02 -> 2011/02/02
      *
-     * // Supprimer la mention "pp." qui figure au début d'une pagination
+     * // Supprimer la mention "pp." qui figure au dÃ©but d'une pagination
      * transform('pregReplace', 'PageColl', '~p+\.?\s*(\d+)-(\d+)~', '$1-$2')
      * </code>
      *
-     * @param string $callback le nom du callback à appeller pour chaque article de chacun des
-     * champs indiqués dans $field. Il peut s'agir d'une méthode de la classe en cours ou d'une
+     * @param string $callback le nom du callback Ã  appeller pour chaque article de chacun des
+     * champs indiquÃ©s dans $field. Il peut s'agir d'une mÃ©thode de la classe en cours ou d'une
      * fonction globale.
      *
-     * Le callback recevra en paramètres l'article à transformer et les éventuels arguments
-     * supplémentaires passés à transform(). Il doit retourner l'article modifié.
+     * Le callback recevra en paramÃ¨tres l'article Ã  transformer et les Ã©ventuels arguments
+     * supplÃ©mentaires passÃ©s Ã  transform(). Il doit retourner l'article modifiÃ©.
      *
      * Le callback doit avoir la signature suivante :
      * protected function callback(string $value) returns string
@@ -258,30 +258,30 @@ abstract class AbstractImport
      * ou, si vous utilisez les arguments optionnels :
      * protected function callback(string $value, $arg1, ...) returns string
      *
-     * Le callback n'est pas appellé pour les champs vides.
+     * Le callback n'est pas appellÃ© pour les champs vides.
      *
-     * @param string $fields le ou les champs (séparés par une virgule) pour lesquels le callback
-     * va être appellé. Si $fields est vide ou contient la chaine "*", le callback sera appellé
+     * @param string $fields le ou les champs (sÃ©parÃ©s par une virgule) pour lesquels le callback
+     * va Ãªtre appellÃ©. Si $fields est vide ou contient la chaine "*", le callback sera appellÃ©
      * pour tous les champs de l'enregistrement.
      *
-     * @param mixed $args... optionnel, des argument supplémentaires à passer au callback.
+     * @param mixed $args... optionnel, des argument supplÃ©mentaires Ã  passer au callback.
      *
      * @return $this
      */
     protected function transform($callback, $fields = null, $args=null)
     {
-        // Détermine les champs à modifier
+        // DÃ©termine les champs Ã  modifier
         if (empty($fields) || $fields === '*')
             $fields = implode(',', array_keys($this->record));
 
-        // Détermine si le callback est une méthode de la classe ou une fonction globale
+        // DÃ©termine si le callback est une mÃ©thode de la classe ou une fonction globale
         if (is_string($callback) && method_exists($this, $callback))
             $callback = array($this, $callback);
 
         if (! is_callable($callback))
-            throw new Exception('Callback non trouvé : ' . var_export($callback));
+            throw new Exception('Callback non trouvÃ© : ' . var_export($callback));
 
-        // Détermine les arguments à passer au callback
+        // DÃ©termine les arguments Ã  passer au callback
         $args = func_get_args();
         $args = array_slice($args, 1);
 
@@ -308,13 +308,13 @@ abstract class AbstractImport
 
 
     /**
-     * Version de preg_replace() utilisable comme callback lors d'un appel à {@link transform()}.
+     * Version de preg_replace() utilisable comme callback lors d'un appel Ã  {@link transform()}.
      *
-     * La méthode transform() appelle le callback en lui passant comme premier argument la valeur à
-     * modifier mais la fonction preg_replace() de php attend en premier paramètre l'expression
-     * régulière à utiliser, la valeur à modifier étant en seconde position.
+     * La mÃ©thode transform() appelle le callback en lui passant comme premier argument la valeur Ã 
+     * modifier mais la fonction preg_replace() de php attend en premier paramÃ¨tre l'expression
+     * rÃ©guliÃ¨re Ã  utiliser, la valeur Ã  modifier Ã©tant en seconde position.
      *
-     * On se contente donc de changer l'ordre des paramètres fournis à preg_replace.
+     * On se contente donc de changer l'ordre des paramÃ¨tres fournis Ã  preg_replace.
      *
      * @param string $subject
      * @param string $pattern
@@ -329,11 +329,11 @@ abstract class AbstractImport
 
 
     /**
-     * Version de str_replace() utilisable comme callback lors d'un appel à {@link transform()}.
+     * Version de str_replace() utilisable comme callback lors d'un appel Ã  {@link transform()}.
      *
-     * La méthode transform() appelle le callback en lui passant comme premier argument la valeur à
+     * La mÃ©thode transform() appelle le callback en lui passant comme premier argument la valeur Ã 
      * modifier, ce qui n'est pas l'ordre attendu par str_replace. On se contente donc de changer
-     * l'ordre des paramètres.
+     * l'ordre des paramÃ¨tres.
      *
      * @param string $subject
      * @param string|array $search
@@ -347,18 +347,18 @@ abstract class AbstractImport
 
 
     /**
-     * Ajoute un préfixe à tous les articles présents dans le ou les champs indiqués.
+     * Ajoute un prÃ©fixe Ã  tous les articles prÃ©sents dans le ou les champs indiquÃ©s.
      *
      * Exemple :
      * <code>
      * prefix('Ident', 'AED-BDSP : ');
      * </code>
      *
-     * @param string $fields le ou les champs (séparés par une virgule) dans lesquels le préfixe
-     * sera ajouté. Si $fields est vide ou contient la chaine "*", le préfixe sera ajouté à tous
+     * @param string $fields le ou les champs (sÃ©parÃ©s par une virgule) dans lesquels le prÃ©fixe
+     * sera ajoutÃ©. Si $fields est vide ou contient la chaine "*", le prÃ©fixe sera ajoutÃ© Ã  tous
      * les champs de l'enregistrement.
      *
-     * @param string $prefix le préfixe à ajouter.
+     * @param string $prefix le prÃ©fixe Ã  ajouter.
      *
      * @return $this
      */
@@ -369,10 +369,10 @@ abstract class AbstractImport
 
 
     /**
-     * Callback utilisé par {@link prefix()}.
+     * Callback utilisÃ© par {@link prefix()}.
      *
      * @param string $value la valeur du champ.
-     * @param string $prefix le préfixe à ajouter.
+     * @param string $prefix le prÃ©fixe Ã  ajouter.
      */
     private function addPrefix($value, $prefix)
     {
@@ -380,18 +380,18 @@ abstract class AbstractImport
     }
 
     /**
-     * Ajoute un suffixe à tous les articles présents dans le ou les champs indiqués.
+     * Ajoute un suffixe Ã  tous les articles prÃ©sents dans le ou les champs indiquÃ©s.
      *
      * Exemple :
      * <code>
      * suffix('ORGCOM1', '/ com.');
      * </code>
      *
-     * @param string $fields le ou les champs (séparés par une virgule) dans lesquels le suffixe
-     * sera ajouté. Si $fields est vide ou contient la chaine "*", le suffixe sera ajouté à tous
+     * @param string $fields le ou les champs (sÃ©parÃ©s par une virgule) dans lesquels le suffixe
+     * sera ajoutÃ©. Si $fields est vide ou contient la chaine "*", le suffixe sera ajoutÃ© Ã  tous
      * les champs de l'enregistrement.
      *
-     * @param string $suffix le suffixe à ajouter.
+     * @param string $suffix le suffixe Ã  ajouter.
      *
      * @return $this
      */
@@ -402,10 +402,10 @@ abstract class AbstractImport
 
 
     /**
-     * Callback utilisé par {@link suffix()}.
+     * Callback utilisÃ© par {@link suffix()}.
      *
      * @param string $value la valeur du champ.
-     * @param string $prefix le préfixe à ajouter.
+     * @param string $prefix le prÃ©fixe Ã  ajouter.
      */
     private function addSuffix($value, $suffix)
     {
@@ -421,11 +421,11 @@ abstract class AbstractImport
      * clear('AUTB,ORGCOM1');
      * </code>
      *
-     * @param string $fields le ou les champs (séparés par une virgule) à vider. Si $fields est
-     * vide ou contient la chaine "*", tous les champs de l'enregistrement seront supprimés.
+     * @param string $fields le ou les champs (sÃ©parÃ©s par une virgule) Ã  vider. Si $fields est
+     * vide ou contient la chaine "*", tous les champs de l'enregistrement seront supprimÃ©s.
      *
      * Vous pouvez passer un ou plusieurs arguments et chaque argument peut contenir un ou
-     * plusieurs noms de champs séparés par une virgule.
+     * plusieurs noms de champs sÃ©parÃ©s par une virgule.
      *
      * Exemple :
      * <code>
@@ -437,7 +437,7 @@ abstract class AbstractImport
      */
     protected function clear($fields = null)
     {
-        // Si aucun champ n'a été indiqué, vide tout l'enregistrement
+        // Si aucun champ n'a Ã©tÃ© indiquÃ©, vide tout l'enregistrement
         if (empty($fields) || $fields === '*')
         {
             $this->record = array();
@@ -447,7 +447,7 @@ abstract class AbstractImport
         $fields = func_get_args();
         array_shift($fields);
 
-        // Vide les champs indiqués
+        // Vide les champs indiquÃ©s
         foreach($fields as $field)
         {
             foreach(explode(',', $field) as $field)
@@ -462,10 +462,10 @@ abstract class AbstractImport
 
 
     /**
-     * Concatène tous les articles présent dans un champ avec le séparateur indiqué.
+     * ConcatÃ¨ne tous les articles prÃ©sent dans un champ avec le sÃ©parateur indiquÃ©.
      *
-     * @param string $field le champ dont les article seront concaténés.
-     * @param string $sep le sparateur à utiliser.
+     * @param string $field le champ dont les article seront concatÃ©nÃ©s.
+     * @param string $sep le sparateur Ã  utiliser.
      */
     protected function concatValues($field, $sep='')
     {
@@ -477,11 +477,11 @@ abstract class AbstractImport
 
 
     /**
-     * Examine l'enregistrement passé en paramètre et retourne le contenu du premier des champs
-     * indiqués qui n'est pas vide
+     * Examine l'enregistrement passÃ© en paramÃ¨tre et retourne le contenu du premier des champs
+     * indiquÃ©s qui n'est pas vide
      *
-     * @param string $fields la liste des champs à étudier. Vous pouvez passer un ou plusieurs
-     * arguments et chaque argument peut contenir un ou plusieurs noms de champs séparés par une
+     * @param string $fields la liste des champs Ã  Ã©tudier. Vous pouvez passer un ou plusieurs
+     * arguments et chaque argument peut contenir un ou plusieurs noms de champs sÃ©parÃ©s par une
      * virgule.
      *
      * Exemple :
@@ -491,7 +491,7 @@ abstract class AbstractImport
      * </code>
      *
      * @return string|false retourne le contenu du premier champ non vide ou false si aucun des
-     * champs indiqués n'est renseigné.
+     * champs indiquÃ©s n'est renseignÃ©.
      */
     protected function firstFilled($fields)
     {
