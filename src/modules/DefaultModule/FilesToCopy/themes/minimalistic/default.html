@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <metas />
     <title>{$this->getPageTitle()}</title>
     <css />        
@@ -19,20 +19,20 @@
         <div id="content">{$this->runAction()}</div>
     
         <div id="sidebar"> 
-            <h2>Connexion/déconnexion</h2>
+            <h2>Connexion/dÃ©connexion</h2>
             <ul>
                 <if test="{! User::isConnected()}">
                     <li><a href="/FileBasedSecurity/Login?redirect={$this->request}">Connexion au site</a></li>
                 </if>
                 <else>
-                    <li><a href="/FileBasedSecurity/Logout?redirect={$this->request}">Déconnexion {User::get('login')}</a></li>
+                    <li><a href="/FileBasedSecurity/Logout?redirect={$this->request}">DÃ©connexion {User::get('login')}</a></li>
                 </else>
             </ul>            
 
             <h2>Outils</h2>
             <ul>
                 <li test="{User::hasAccess('Admin')}"><a href="/Admin/">Administration du site</a></li>
-                <li test="{User::hasAccess('Admin')}"><a href="/TaskManager/">Gestionnaire de tâches</a></li>
+                <li test="{User::hasAccess('Admin')}"><a href="/TaskManager/">Gestionnaire de tÃ¢ches</a></li>
                 <li><a href="/AutoDoc/">Consulter la documentation</a></li>
                 <li><a href="/PhpInfo/">Afficher le PhpInfo</a></li>
                 <li><a href="/debug.php{$this->request}">Passer en mode "debug"</a></li>
@@ -42,7 +42,7 @@
             
             <ul>
             <li><a href="http://fab.googlecode.com/">Fab</a></li> 
-            <li><a href="http://www.bdsp.ehesp.fr/">Banque de données santé publique</a></li> 
+            <li><a href="http://www.bdsp.ehesp.fr/">Banque de donnÃ©es santÃ© publique</a></li> 
             <li><a href="http://www.xapian.org/">Xapian</a></li> 
             </ul>
             

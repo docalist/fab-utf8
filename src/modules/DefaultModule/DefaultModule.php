@@ -24,9 +24,9 @@ class DefaultModule extends Module
             if ($name==='')
                 $error = 'Vous devez indiquer un nom.';
             elseif($path === '')
-                $error = 'Vous devez indiquer un rÈpertoire.';
+                $error = 'Vous devez indiquer un r√©pertoire.';
 //            elseif(file_exists($path))
-//                $error = 'Le rÈpertoire indiquÈ existe dÈj‡.';
+//                $error = 'Le r√©pertoire indiqu√© existe d√©j√†.';
             elseif($login === '')
                 $error = 'Vous devez indiquer un identifiant pour le compte administrateur.';
             elseif($password !== $password2)
@@ -48,7 +48,7 @@ class DefaultModule extends Module
                     rtrim(dirname(dirname(Runtime::$realHome)), '\\/'),
                     $name
                 );
-                printf('<h2>Votre application est crÈÈe : <a href="%s">%s</a></h2>', $url, $url);
+                printf('<h2>Votre application est cr√©√©e : <a href="%s">%s</a></h2>', $url, $url);
                 return;
             }
         }
@@ -76,30 +76,30 @@ class DefaultModule extends Module
 
     private function createApplication($path)
     {
-        echo "<h1>CrÈation de l'application $path</h1>";
+        echo "<h1>Cr√©ation de l'application $path</h1>";
 
-        // Structure des rÈpertoires
+        // Structure des r√©pertoires
         $directories = array
         (
-            '/'                 => "rÈpertoire racine de l'application",
+            '/'                 => "r√©pertoire racine de l'application",
             '/config'           => "fichiers de configuration de l'application",
-            '/data'             => "donnÈes de l'application",
-            '/data/schemas'     => "schÈmas des bases de donnÈes",
-            '/data/db'          => "bases de donnÈes de l'application",
-            '/data/backup'      => "sauvegardes des bases de donnÈes",
+            '/data'             => "donn√©es de l'application",
+            '/data/schemas'     => "sch√©mas des bases de donn√©es",
+            '/data/db'          => "bases de donn√©es de l'application",
+            '/data/backup'      => "sauvegardes des bases de donn√©es",
             '/doc'              => "documentation de l'application",
             '/modules'          => "modules de l'application",
-            '/themes'           => "thËmes de l'application",
-            '/themes/minimalistic'   => "thËme par dÈfaut de l'application",
+            '/themes'           => "th√®mes de l'application",
+            '/themes/minimalistic'   => "th√®me par d√©faut de l'application",
             '/web'              => "partie visible (accessible) de l'application",
             '/web/css'          => "feuilles de styles CSS",
-            '/web/css/minimalistic'  => "feuille CSS du thËme par dÈfaut",
-            '/web/css/minimalistic/images'  => "images du thËme",
+            '/web/css/minimalistic'  => "feuille CSS du th√®me par d√©faut",
+            '/web/css/minimalistic/images'  => "images du th√®me",
             '/web/js'           => "librairies Javascript",
             '/web/images'       => "images",
         );
 
-        echo '<h2>CrÈation de la structure des rÈpertoires :</h2>';
+        echo '<h2>Cr√©ation de la structure des r√©pertoires :</h2>';
         echo '<ul>';
         foreach($directories as $dir=>$role)
         {
@@ -113,25 +113,25 @@ class DefaultModule extends Module
         // Fichiers de base
         $files=array
         (
-            '/config/general.config' => "configuration gÈnÈrale du site",
+            '/config/general.config' => "configuration g√©n√©rale du site",
             '/config/Admin.config' => "configuration du backoffice",
-            '/config/FileBasedSecurity.config' => "paramËtres de sÈcuritÈ",
-            '/web/index.php' => "contrÙleur d'accËs au site (point d'entrÈe)",
-            '/web/debug.php' => "contrÙleur d'accËs en mode 'debug'",
-            '/themes/minimalistic/default.html' => "layout par dÈfaut (contenu + menu)",
-            '/themes/minimalistic/nomenu.html' => "layout par dÈfaut (pas de menu)",
-            '/web/css/minimalistic/minimalistic.css' => "feuille de styles CSS par dÈfaut",
-            '/web/css/minimalistic/images/bg.jpg' => "image du thËme",
-            '/web/css/minimalistic/images/bullet.jpg' => "image du thËme",
-            '/web/css/minimalistic/images/footer.jpg' => "image du thËme",
-            '/web/css/minimalistic/images/header.jpg' => "image du thËme",
-            '/web/css/minimalistic/images/sidebarh2.jpg' => "image du thËme",
+            '/config/FileBasedSecurity.config' => "param√®tres de s√©curit√©",
+            '/web/index.php' => "contr√¥leur d'acc√®s au site (point d'entr√©e)",
+            '/web/debug.php' => "contr√¥leur d'acc√®s en mode 'debug'",
+            '/themes/minimalistic/default.html' => "layout par d√©faut (contenu + menu)",
+            '/themes/minimalistic/nomenu.html' => "layout par d√©faut (pas de menu)",
+            '/web/css/minimalistic/minimalistic.css' => "feuille de styles CSS par d√©faut",
+            '/web/css/minimalistic/images/bg.jpg' => "image du th√®me",
+            '/web/css/minimalistic/images/bullet.jpg' => "image du th√®me",
+            '/web/css/minimalistic/images/footer.jpg' => "image du th√®me",
+            '/web/css/minimalistic/images/header.jpg' => "image du th√®me",
+            '/web/css/minimalistic/images/sidebarh2.jpg' => "image du th√®me",
             '/web/images/flower.jpg' => "image d'exemple",
             '/web/images/bdsp-64x83.png' => "logo Bdsp",
             '/web/images/xapian-powered.png' => "logo Xapian",
         );
 
-        echo "<h2>CrÈation des fichiers de base de l'application :</h2>";
+        echo "<h2>Cr√©ation des fichiers de base de l'application :</h2>";
         echo '<ul>';
         $dir = dirname(__FILE__) . '/FilesToCopy';
         foreach($files as $name=>$role)
@@ -169,7 +169,7 @@ class DefaultModule extends Module
             case 'fabroot':
                 return Runtime::$fabRoot;
             default:
-                echo 'Variables non gÈrÈe : ', $match[1], '<br />';
+                echo 'Variables non g√©r√©e : ', $match[1], '<br />';
                 return 'Unknown var : #' . $match[1] . '#';
         }
     }
