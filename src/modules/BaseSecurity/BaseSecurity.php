@@ -1,22 +1,22 @@
 <?php
 
 /**
- * Cette classe définit l'interface de base pour les modules de sécurité.
+ * Cette classe dÃ©finit l'interface de base pour les modules de sÃ©curitÃ©.
  *
- * Tous les modules de sécurité doivent hériter de cette classe de base.
+ * Tous les modules de sÃ©curitÃ© doivent hÃ©riter de cette classe de base.
  *
- * Remarque : un module de sécurité est aussi un module classique qui peut
- * avoir des actions. Cela permet de gérer la sécurité (hasAccess, etc.) au
- * même endroit que les actions (afficher le formulaire de connexion, access
+ * Remarque : un module de sÃ©curitÃ© est aussi un module classique qui peut
+ * avoir des actions. Cela permet de gÃ©rer la sÃ©curitÃ© (hasAccess, etc.) au
+ * mÃªme endroit que les actions (afficher le formulaire de connexion, access
  * denied, etc.)
  *
- * Cette classe de base implémente également un modèle de sécurité trivial.
+ * Cette classe de base implÃ©mente Ã©galement un modÃ¨le de sÃ©curitÃ© trivial.
  *
  * L'utilisateur :
  *
  * - est toujours anonyme
  *
- * - est toujours connecté (isConnected retourne toujours true)
+ * - est toujours connectÃ© (isConnected retourne toujours true)
  *
  * - a tous les droits (hasRight retourne toujours true)
  */
@@ -26,15 +26,15 @@ class BaseSecurity extends Module
      * @var string Les droits de l'utilisateur.
      * exemple : "AdminBdsp, EditWebs"
      *
-     * (on peut utiliser n'importe quelle suite de caractères comme séparateur,
-     * sauf les lettres, les chiffres, le souligné et le tiret)
+     * (on peut utiliser n'importe quelle suite de caractÃ¨res comme sÃ©parateur,
+     * sauf les lettres, les chiffres, le soulignÃ© et le tiret)
      */
     public $rights;
 
     /**
-     * Teste si l'utilisateur est connecté (authentifié)
+     * Teste si l'utilisateur est connectÃ© (authentifiÃ©)
      *
-     * @return boolean true si l'utilisateur est connecté, false s'il
+     * @return boolean true si l'utilisateur est connectÃ©, false s'il
      * s'agit d'un visiteur anonyme
      */
     public function isConnected()
@@ -43,7 +43,7 @@ class BaseSecurity extends Module
     }
 
     /**
-     * Vérifie que l'utilisateur est connecté et l'envoie sur la page de
+     * VÃ©rifie que l'utilisateur est connectÃ© et l'envoie sur la page de
      * connexion si ce n'est pas le cas.
      */
     public function checkConnected()
@@ -58,60 +58,60 @@ class BaseSecurity extends Module
      */
     public function actionLogon()
     {
-// TODO: à étudier
+// TODO: Ã  Ã©tudier
 // redirection vers l'url de connexion ?
-// affichage direct du formulaire indiqué dans la config puis die() ?
+// affichage direct du formulaire indiquÃ© dans la config puis die() ?
 // appelle de l'action showLoginForm d'un module ?
-//        $template=Config::get('user.loginform');  // plutôt l'url vers laquelle il faut aller ?
+//        $template=Config::get('user.loginform');  // plutÃ´t l'url vers laquelle il faut aller ?
 //        Routing::redirect()
     }
 
     /**
-     * Teste si l'utilisateur dispose du droit unique indiqué.
-     * Contrairement à {@link hasAccess()}, hasRight() ne permet de tester qu'un
-     * droit unique et non pas une combinaison de droits séparés par des
+     * Teste si l'utilisateur dispose du droit unique indiquÃ©.
+     * Contrairement Ã  {@link hasAccess()}, hasRight() ne permet de tester qu'un
+     * droit unique et non pas une combinaison de droits sÃ©parÃ©s par des
      * virgules et des plus.
      *
-     * @param string $right le droit à tester
-     * @return boolean true si l'utilisateur dispose du droit demandé, false
+     * @param string $right le droit Ã  tester
+     * @return boolean true si l'utilisateur dispose du droit demandÃ©, false
      * sinon.
      */
-    public function hasRight($right) // TODO: est-ce que ce code (ou une partie) ne devrait pas être plutôt dans User?
+    public function hasRight($right) // TODO: est-ce que ce code (ou une partie) ne devrait pas Ãªtre plutÃ´t dans User?
     {
         // Tout le monde dispose du droit 'default'
         if (strcasecmp($right,'default')==0) return true;
 
-        // Le droit 'cli' n'est accordé que si php tourne en ligne de commande
+        // Le droit 'cli' n'est accordÃ© que si php tourne en ligne de commande
         if (strcasecmp($right,'cli')==0) return php_sapi_name()=='cli';
 
-        // Extrait le rôle et l'objet du droit (on coupe à la seconde majuscule)
+        // Extrait le rÃ´le et l'objet du droit (on coupe Ã  la seconde majuscule)
         $i=strcspn($right,'ABCDEFGHIJKLMNOPQRSTUVWXYZ',1);
         $role=substr($right, 0, $i+1);
         $object=substr($right, $i+1);
 
-        // Construit l'expression régulière utilisée
+        // Construit l'expression rÃ©guliÃ¨re utilisÃ©e
         $re="~\\b(?:(?:$right)";
         if ($role && $role!=$right) $re.="|(?:$role)";
         if ($object) $re.="|(?:$object)";
         $re.=")\\b~";
 
-        // Retourne vrai si on trouve soit le droit, soit le rôle, soit l'objet dans les droits
+        // Retourne vrai si on trouve soit le droit, soit le rÃ´le, soit l'objet dans les droits
         return preg_match($re, $this->rights) != 0;
     }
 
     /**
-     * Teste si l'utilisateur dispose des droits indiqués.
+     * Teste si l'utilisateur dispose des droits indiquÃ©s.
      *
-     * @param string $level le ou les droit(s) à tester
+     * @param string $level le ou les droit(s) Ã  tester
      * @return boolean true si l'utilisateur dispose du droit requis,
      * false sinon
      */
-    public function hasAccess($rights) // TODO: est-ce que ce code ne devrait pas être plutôt dans User?
+    public function hasAccess($rights) // TODO: est-ce que ce code ne devrait pas Ãªtre plutÃ´t dans User?
     {
         if (trim($rights)=='') return true;
-        foreach(explode(',', $rights) as $right) // ensemble séparés par des ','
+        foreach(explode(',', $rights) as $right) // ensemble sÃ©parÃ©s par des ','
         {
-        	foreach(explode('+',trim($right)) as $right) // ensemble séparé par des '+'
+        	foreach(explode('+',trim($right)) as $right) // ensemble sÃ©parÃ© par des '+'
             	if (! $this->hasRight(trim($right)))
                     continue 2;
             return true;
@@ -120,10 +120,10 @@ class BaseSecurity extends Module
     }
 
     /**
-     * Vérifie que l'utilisateur dispose des droits indiqués et génère une
+     * VÃ©rifie que l'utilisateur dispose des droits indiquÃ©s et gÃ©nÃ¨re une
      * erreur 'access denied' sinon.
      *
-     * @param string $level le droit à tester
+     * @param string $level le droit Ã  tester
      */
     public function checkAccess($rights)
     {
@@ -133,17 +133,17 @@ class BaseSecurity extends Module
 
 
     /**
-     * Génère une erreur 'access denied'
+     * GÃ©nÃ¨re une erreur 'access denied'
      */
     public function accessDenied()
     {
-    	throw new Exception('Accès refusé');
+    	throw new Exception('AccÃ¨s refusÃ©');
     }
 
     /**
-     * Accorde des droits supplémentaire à l'utilisateur.
+     * Accorde des droits supplÃ©mentaire Ã  l'utilisateur.
      *
-     * @param string $rights les droits à accorder
+     * @param string $rights les droits Ã  accorder
      */
     public function grantAccess($rights)
     {
