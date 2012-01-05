@@ -2,16 +2,16 @@
 /**
  * @package     fab
  * @subpackage  database
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id
  */
 
 /**
- * DatabaseSchema représente le schéma, c'est-à-dire la structure d'une base de
- * données fab.
+ * DatabaseSchema reprÃ©sente le schÃ©ma, c'est-Ã -dire la structure d'une base de
+ * donnÃ©es fab.
  *
  * Cette classe offre des fonctions permettant de charger, de valider et de
- * sauvegarder la structure d'une base de données en format XML et JSON.
+ * sauvegarder la structure d'une base de donnÃ©es en format XML et JSON.
  *
  * @package     fab
  * @subpackage  database
@@ -19,7 +19,7 @@
 class DatabaseSchema
 {
     /**
-     * Les types de champ autorisés
+     * Les types de champ autorisÃ©s
      *
      */
     const
@@ -30,7 +30,7 @@ class DatabaseSchema
 
 
     /**
-     * Les types autorisés pour les index et les alias
+     * Les types autorisÃ©s pour les index et les alias
      *
      */
     const
@@ -42,23 +42,23 @@ class DatabaseSchema
         LOOKUP_INVERTED=2;
 
     /**
-     * Ce tableau décrit les propriétés d'une schéma de base de données.
+     * Ce tableau dÃ©crit les propriÃ©tÃ©s d'une schÃ©ma de base de donnÃ©es.
      *
      * @var array
      */
-    private static $dtd=array       // NUPLM = non utilisé pour le moment
+    private static $dtd=array       // NUPLM = non utilisÃ© pour le moment
     (
         'schema'=>array
         (
                                         // PROPRIETES GENERALES DE LA BASE
 
-            'label'=>'',                // Un libellé court décrivant la base
-            'version'=>'1.0',           // NUPLM Version de fab qui a créé la base
+            'label'=>'',                // Un libellÃ© court dÃ©crivant la base
+            'version'=>'1.0',           // NUPLM Version de fab qui a crÃ©Ã© la base
             'description'=>'',          // Description, notes, historique des modifs...
-            'stopwords'=>'',            // Liste par défaut des mots-vides à ignorer lors de l'indexation
+            'stopwords'=>'',            // Liste par dÃ©faut des mots-vides Ã  ignorer lors de l'indexation
             'indexstopwords'=>false,    // faut-il indexer les mots vides ?
-            'creation'=>'',           // Date de création du schéma
-            'lastupdate'=>'',         // Date de dernière modification du schéma
+            'creation'=>'',           // Date de crÃ©ation du schÃ©ma
+            'lastupdate'=>'',         // Date de derniÃ¨re modification du schÃ©ma
             '_lastid'=>array
             (
                 'field'=>0,
@@ -72,26 +72,26 @@ class DatabaseSchema
             (
                 'field'=>array
                 (
-                    '_id'=>0,            // Identifiant (numéro unique) du champ
-                    'name'=>'',             // Nom du champ, d'autres noms peuvent être définis via des alias
-                    'type'=>'text',         // Type du champ (juste à titre d'information, non utilisé pour l'instant)
-                    '_type'=>self::FIELD_TEXT,          // Traduction de la propriété type en entier
-                    'label'=>'',            // Libellé du champ
+                    '_id'=>0,            // Identifiant (numÃ©ro unique) du champ
+                    'name'=>'',             // Nom du champ, d'autres noms peuvent Ãªtre dÃ©finis via des alias
+                    'type'=>'text',         // Type du champ (juste Ã  titre d'information, non utilisÃ© pour l'instant)
+                    '_type'=>self::FIELD_TEXT,          // Traduction de la propriÃ©tÃ© type en entier
+                    'label'=>'',            // LibellÃ© du champ
                     'description'=>'',      // Description
                     'defaultstopwords'=>true, // Utiliser les mots-vides de la base
-                    'stopwords'=>'',        // Liste spécifique de mots-vides à appliquer à ce champ
+                    'stopwords'=>'',        // Liste spÃ©cifique de mots-vides Ã  appliquer Ã  ce champ
                     'zones' =>array
                     (
                         'zone' => array
                         (
-                            '_id'=>0,            // Identifiant (numéro unique) du champ
-                            'name'=>'',             // Nom du champ, d'autres noms peuvent être définis via des alias
-                            'type'=>'text',         // Type du champ (juste à titre d'information, non utilisé pour l'instant)
-                            '_type'=>self::FIELD_TEXT,          // Traduction de la propriété type en entier
-                            'label'=>'',            // Libellé du champ
+                            '_id'=>0,            // Identifiant (numÃ©ro unique) du champ
+                            'name'=>'',             // Nom du champ, d'autres noms peuvent Ãªtre dÃ©finis via des alias
+                            'type'=>'text',         // Type du champ (juste Ã  titre d'information, non utilisÃ© pour l'instant)
+                            '_type'=>self::FIELD_TEXT,          // Traduction de la propriÃ©tÃ© type en entier
+                            'label'=>'',            // LibellÃ© du champ
                             'description'=>'',      // Description
                             'defaultstopwords'=>true, // Utiliser les mots-vides de la base
-                            'stopwords'=>'',        // Liste spécifique de mots-vides à appliquer à ce champ
+                            'stopwords'=>'',        // Liste spÃ©cifique de mots-vides Ã  appliquer Ã  ce champ
                         )
                     )
                 )
@@ -99,9 +99,9 @@ class DatabaseSchema
 
             /*
                 Combinatoire stopwords/defaultstopwords :
-                - lorsque defaultstopwords est à true, les mots indiqués dans
-                  stopwords viennent en plus de ceux indiqués dans db.stopwords.
-                - lorsque defaultstopwords est à false, les mots indiqués
+                - lorsque defaultstopwords est Ã  true, les mots indiquÃ©s dans
+                  stopwords viennent en plus de ceux indiquÃ©s dans db.stopwords.
+                - lorsque defaultstopwords est Ã  false, les mots indiquÃ©s
                   dans stopwords remplacent ceux de la base
 
                 Liste finale des mots vides pour un champ =
@@ -117,13 +117,13 @@ class DatabaseSchema
             (
                 'index'=>array
                 (
-                    '_id'=>0,            // Identifiant (numéro unique) de l'index
+                    '_id'=>0,            // Identifiant (numÃ©ro unique) de l'index
                     'name'=>'',             // Nom de l'index
-                    'label'=>'',            // Libellé de l'index
+                    'label'=>'',            // LibellÃ© de l'index
                     'description'=>'',      // Description de l'index
                     'type'=>'probabilistic',         // Type d'index : 'probabilistic' ou 'boolean'
-                    'spelling'=>false,  // Ajouter les termes de cet index dans le dictionnaire utilisé par le correcteur orthographique
-                    '_type'=>self::INDEX_PROBABILISTIC,             // Traduction de la propriété type en entier
+                    'spelling'=>false,  // Ajouter les termes de cet index dans le dictionnaire utilisÃ© par le correcteur orthographique
+                    '_type'=>self::INDEX_PROBABILISTIC,             // Traduction de la propriÃ©tÃ© type en entier
                     'fields'=>array         // La liste des champs qui alimentent cet index
                     (
                         'field'=> array
@@ -134,10 +134,10 @@ class DatabaseSchema
                             'phrases'=>false,   // Indexer les phrases
                             'values'=>false,    // Indexer les valeurs
                             'count'=>false,     // Compter le nombre de valeurs (empty, has1, has2...)
-                            'global'=>false,    // DEPRECATED : n'est plus utilsé, conservé pour compatibilité
-                            'start'=>'',      // Position ou chaine indiquant le début du texte à indexer
-                            'end'=>'',        // Position ou chain indquant la fin du texte à indexer
-                            'weight'=>1         // Poids des tokens ajoutés à cet index
+                            'global'=>false,    // DEPRECATED : n'est plus utilsÃ©, conservÃ© pour compatibilitÃ©
+                            'start'=>'',      // Position ou chaine indiquant le dÃ©but du texte Ã  indexer
+                            'end'=>'',        // Position ou chain indquant la fin du texte Ã  indexer
+                            'weight'=>1         // Poids des tokens ajoutÃ©s Ã  cet index
                         )
                     )
                 )
@@ -147,22 +147,22 @@ class DatabaseSchema
             (
                 'lookuptable'=>array
                 (
-                    '_id'=>0,            // Identifiant (numéro unique) de la table
+                    '_id'=>0,            // Identifiant (numÃ©ro unique) de la table
                     'name'=>'',             // Nom de la table
-                    'label'=>'',            // Libellé de l'index
+                    'label'=>'',            // LibellÃ© de l'index
                     'description'=>'',      // Description de l'index
-                    'type'=>'simple',       // type de table : "simple" ou "inversée"
+                    'type'=>'simple',       // type de table : "simple" ou "inversÃ©e"
                     '_type'=>self::LOOKUP_SIMPLE, // Traduction de type en entier
                     'fields'=>array         // La liste des champs qui alimentent cette table
                     (
                         'field'=>array
                         (
-                            '_id'=>0,       // Identifiant (numéro unique) du champ
+                            '_id'=>0,       // Identifiant (numÃ©ro unique) du champ
                             'name'=>'',     // Nom du champ
-                            'startvalue'=>1,        // Indice du premier article à prendre en compte (1-based)
-                            'endvalue'=>0,        // Indice du dernier article à prendre en compte (0=jusqu'à la fin)
-                            'start'=>'',    // Position de début ou chaine délimitant le début de la valeur à ajouter à la table
-                            'end'=>''       // Longueur ou chaine délimitant la fin de la valeur à ajouter à la table
+                            'startvalue'=>1,        // Indice du premier article Ã  prendre en compte (1-based)
+                            'endvalue'=>0,        // Indice du dernier article Ã  prendre en compte (0=jusqu'Ã  la fin)
+                            'start'=>'',    // Position de dÃ©but ou chaine dÃ©limitant le dÃ©but de la valeur Ã  ajouter Ã  la table
+                            'end'=>''       // Longueur ou chaine dÃ©limitant la fin de la valeur Ã  ajouter Ã  la table
                         )
                     )
                 )
@@ -172,17 +172,17 @@ class DatabaseSchema
             (
                 'alias'=>array
                 (
-                    '_id'=>0,            // Identifiant (numéro unique) de l'alias (non utilisé)
+                    '_id'=>0,            // Identifiant (numÃ©ro unique) de l'alias (non utilisÃ©)
                     'name'=>'',             // Nom de l'alias
-                    'label'=>'',            // Libellé de l'index
+                    'label'=>'',            // LibellÃ© de l'index
                     'description'=>'',      // Description de l'index
                     'type'=>'probabilistic',         // Type d'index : 'probabilistic' ou 'boolean'
-                    '_type'=>self::INDEX_PROBABILISTIC,             // Traduction de la propriété type en entier
+                    '_type'=>self::INDEX_PROBABILISTIC,             // Traduction de la propriÃ©tÃ© type en entier
                     'indices'=>array        // La liste des index qui composent cet alias
                     (
                         'index'=>array
                         (
-                            '_id'=>0,            // Identifiant (numéro unique) du champ
+                            '_id'=>0,            // Identifiant (numÃ©ro unique) du champ
                             'name'=>'',         // Nom de l'index
                         )
                     )
@@ -193,20 +193,20 @@ class DatabaseSchema
             (
                 'sortkey'=>array
                 (
-                    '_id'=>0,            // Identifiant (numéro unique) de la clé de tri
-                    'name'=>'',             // Nom de la clé de tri
-                    'label'=>'',            // Libellé de l'index
+                    '_id'=>0,            // Identifiant (numÃ©ro unique) de la clÃ© de tri
+                    'name'=>'',             // Nom de la clÃ© de tri
+                    'label'=>'',            // LibellÃ© de l'index
                     'description'=>'',      // Description de l'index
-                    'type'=>'string',       // Type de la clé à créer ('string' ou 'number')
-                    'fields'=>array         // La liste des champs qui composent cette clé de tri
+                    'type'=>'string',       // Type de la clÃ© Ã  crÃ©er ('string' ou 'number')
+                    'fields'=>array         // La liste des champs qui composent cette clÃ© de tri
                     (
                         'field'=>array
                         (
-                            '_id'=>0,            // Identifiant (numéro unique) du champ
+                            '_id'=>0,            // Identifiant (numÃ©ro unique) du champ
                             'name'=>'',         // Nom du champ
-                            'start'=>'',      // Position de début ou chaine délimitant le début de la valeur à ajouter à la clé
-                            'end'=>'',        // Longueur ou chaine délimitant la fin de la valeur à ajouter à la clé
-                            'length'=>0      // Longueur totale de la partie de clé (tronquée ou paddée à cette taille)
+                            'start'=>'',      // Position de dÃ©but ou chaine dÃ©limitant le dÃ©but de la valeur Ã  ajouter Ã  la clÃ©
+                            'end'=>'',        // Longueur ou chaine dÃ©limitant la fin de la valeur Ã  ajouter Ã  la clÃ©
+                            'length'=>0      // Longueur totale de la partie de clÃ© (tronquÃ©e ou paddÃ©e Ã  cette taille)
                         )
                     )
                 )
@@ -216,36 +216,36 @@ class DatabaseSchema
 
 
     /**
-     * Constructeur. Crée un nouveau schéma de base de données à partir
-     * de l'argument passé en paramètre.
+     * Constructeur. CrÃ©e un nouveau schÃ©ma de base de donnÃ©es Ã  partir
+     * de l'argument passÃ© en paramÃ¨tre.
      *
      * L'argument est optionnel. Si vous n'indiquez rien ou si vous passez
-     * 'null', un nouveau schéma de base de données (vide) sera créée.
+     * 'null', un nouveau schÃ©ma de base de donnÃ©es (vide) sera crÃ©Ã©e.
      *
-     * Sinon, le schéma de la base de données va être chargée à partir de
-     * l'argument passé en paramètre. Il peut s'agir :
-     * <li>d'un tableau ou d'un objet php décrivant la base</li>
-     * <li>d'une chaine de caractères contenant le source xml décrivant la base</li>
-     * <li>d'une chaine de caractères contenant le source JSON décrivant la base</li>
+     * Sinon, le schÃ©ma de la base de donnÃ©es va Ãªtre chargÃ©e Ã  partir de
+     * l'argument passÃ© en paramÃ¨tre. Il peut s'agir :
+     * <li>d'un tableau ou d'un objet php dÃ©crivant la base</li>
+     * <li>d'une chaine de caractÃ¨res contenant le source xml dÃ©crivant la base</li>
+     * <li>d'une chaine de caractÃ¨res contenant le source JSON dÃ©crivant la base</li>
      *
      * @param mixed $def
-     * @throws DatabaseSchemaException si le type de l'argument passé en
-     * paramètre ne peut pas être déterminé ou si la définition a des erreurs
-     * fatales (par exemple un fichier xml mal formé)
+     * @throws DatabaseSchemaException si le type de l'argument passÃ© en
+     * paramÃ¨tre ne peut pas Ãªtre dÃ©terminÃ© ou si la dÃ©finition a des erreurs
+     * fatales (par exemple un fichier xml mal formÃ©)
      */
     public function __construct($def=null)
     {
-        // Faut-il ajouter les propriétés par défaut ? (oui pour tous sauf xml qui le fait déjà)
+        // Faut-il ajouter les propriÃ©tÃ©s par dÃ©faut ? (oui pour tous sauf xml qui le fait dÃ©jÃ )
         $addDefaultsProps=true;
 
-        // Un schéma vide
+        // Un schÃ©ma vide
         if (is_null($def))
         {
-            $this->label='Nouvelle base de données';
+            $this->label='Nouvelle base de donnÃ©es';
             $this->creation=date('Y/m/d H:i:s');
         }
 
-        // Une chaine de caractères contenant du xml ou du JSON
+        // Une chaine de caractÃ¨res contenant du xml ou du JSON
         elseif (is_string($def))
         {
             switch (substr(ltrim($def), 0, 1))
@@ -260,11 +260,11 @@ class DatabaseSchema
                     break;
 
                 default:
-                    throw new DatabaseSchemaException('Impossible de déterminer le type du schéma de base de données passée à '.__CLASS__);
+                    throw new DatabaseSchemaException('Impossible de dÃ©terminer le type du schÃ©ma de base de donnÃ©es passÃ©e Ã  '.__CLASS__);
             }
         }
 
-        // Ajoute toutes les propriétés qui ne sont pas définies avec leur valeur par défaut
+        // Ajoute toutes les propriÃ©tÃ©s qui ne sont pas dÃ©finies avec leur valeur par dÃ©faut
         if ($addDefaultsProps)
         {
             $this->addDefaultProperties();
@@ -273,7 +273,7 @@ class DatabaseSchema
 
 
     /**
-     * Ajoute les propriétés par défaut à tous les objets de la hiérarchie
+     * Ajoute les propriÃ©tÃ©s par dÃ©faut Ã  tous les objets de la hiÃ©rarchie
      *
      */
     public function addDefaultProperties()
@@ -283,7 +283,7 @@ class DatabaseSchema
 
 
     /**
-     * Met à jour la date de dernière modification (lastupdate) du schéma
+     * Met Ã  jour la date de derniÃ¨re modification (lastupdate) du schÃ©ma
      *
      * @param int $timestamp
      */
@@ -297,35 +297,35 @@ class DatabaseSchema
 
 
     /**
-     * Crée le schéma de la base de données à partir d'un source xml
+     * CrÃ©e le schÃ©ma de la base de donnÃ©es Ã  partir d'un source xml
      *
      * @param string $xmlSource
      * @return StdClass
      */
     private function fromXml($xmlSource)
     {
-        // Crée un document XML
+        // CrÃ©e un document XML
         $xml=new domDocument();
         $xml->preserveWhiteSpace=false;
 
-        // gestion des erreurs : voir comment 1 à http://fr.php.net/manual/en/function.dom-domdocument-loadxml.php
+        // gestion des erreurs : voir comment 1 Ã  http://fr.php.net/manual/en/function.dom-domdocument-loadxml.php
         libxml_clear_errors(); // >PHP5.1
         libxml_use_internal_errors(true);// >PHP5.1
 
         // Charge le document
         if (! $xml->loadXML($xmlSource))
         {
-            $h="Schéma incorrect, ce n'est pas un fichier xml valide :<br />\n";
+            $h="SchÃ©ma incorrect, ce n'est pas un fichier xml valide :<br />\n";
             foreach (libxml_get_errors() as $error)
                 $h.= "- ligne $error->line : $error->message<br />\n";
-            libxml_clear_errors(); // libère la mémoire utilisée par les erreurs
+            libxml_clear_errors(); // libÃ¨re la mÃ©moire utilisÃ©e par les erreurs
             throw new DatabaseSchemaXmlException($h);
         }
 
-        // Convertit le schéma xml en objet
+        // Convertit le schÃ©ma xml en objet
         $o=self::xmlToObject($xml->documentElement, self::$dtd);
 
-        // Initialise nos propriétés à partir de l'objet obtenu
+        // Initialise nos propriÃ©tÃ©s Ã  partir de l'objet obtenu
         foreach(get_object_vars($o) as $prop=>$value)
         {
             $this->$prop=$value;
@@ -334,20 +334,20 @@ class DatabaseSchema
 
 
     /**
-     * Fonction utilitaire utilisée par {@link fromXml()} pour convertir un
+     * Fonction utilitaire utilisÃ©e par {@link fromXml()} pour convertir un
      * source xml en objet.
      *
-     * @param DOMNode $node le noeud xml à convertir
-     * @param array $dtd un tableau indiquant les noeuds et attributs autorisés
+     * @param DOMNode $node le noeud xml Ã  convertir
+     * @param array $dtd un tableau indiquant les noeuds et attributs autorisÃ©s
      * @return StdClass
      * @throws DatabaseSchemaXmlNodeException si le source xml contient des
-     * attributs ou des tags non autorisés
+     * attributs ou des tags non autorisÃ©s
      */
     private static function xmlToObject(DOMNode $node, array $dtd)
     {
-        // Vérifie que le nom du noeud correspond au tag attendu tel qu'indiqué par le dtd
+        // VÃ©rifie que le nom du noeud correspond au tag attendu tel qu'indiquÃ© par le dtd
         if (count($dtd)>1)
-            throw new LogicException('DTD invalide : le tableau doit contenir un seul élément');
+            throw new LogicException('DTD invalide : le tableau doit contenir un seul Ã©lÃ©ment');
         reset($dtd);
         $tag=key($dtd);
         if ($node->tagName !== $tag)
@@ -355,75 +355,75 @@ class DatabaseSchema
             if ($tag==='schema' && $node->tagName==='database')
             {
                 // ok
-                // à supprimer plus tard : code temporaire le temps
-                // que tous les schémas ayant un tag racine "database" soient
-                // modifiés en tag racine "schéma"
+                // Ã  supprimer plus tard : code temporaire le temps
+                // que tous les schÃ©mas ayant un tag racine "database" soient
+                // modifiÃ©s en tag racine "schÃ©ma"
             }
             else
             {
-                throw new DatabaseSchemaXmlNodeException($node, "élément non autorisé, '$tag' attendu");
+                throw new DatabaseSchemaXmlNodeException($node, "Ã©lÃ©ment non autorisÃ©, '$tag' attendu");
             }
         }
         $dtd=array_pop($dtd);
 
-        // Crée un nouvel objet contenant les propriétés par défaut indiquées dans le dtd
+        // CrÃ©e un nouvel objet contenant les propriÃ©tÃ©s par dÃ©faut indiquÃ©es dans le dtd
         $result=self::defaults(new StdClass, $dtd);
 
-        // Les attributs du tag sont des propriétés de l'objet
+        // Les attributs du tag sont des propriÃ©tÃ©s de l'objet
         if ($node->hasAttributes())
         {
             foreach ($node->attributes as $attribute)
             {
-                // Le nom de l'attribut va devenir le nom de la propriété
+                // Le nom de l'attribut va devenir le nom de la propriÃ©tÃ©
                 $name=$attribute->nodeName;
 
-                // Vérifie que c'est un élément autorisé
+                // VÃ©rifie que c'est un Ã©lÃ©ment autorisÃ©
                 if (! array_key_exists($name, $dtd))
-                    throw new DatabaseSchemaXmlNodeException($node, "l'attribut '$name' n'est pas autorisé");
+                    throw new DatabaseSchemaXmlNodeException($node, "l'attribut '$name' n'est pas autorisÃ©");
 
-                // Si la propriété est un objet, elle ne peut pas être définie sous forme d'attribut
+                // Si la propriÃ©tÃ© est un objet, elle ne peut pas Ãªtre dÃ©finie sous forme d'attribut
                 if (is_array($dtd[$name]))
-                    throw new DatabaseSchemaXmlNodeException($node, "'$name' n'est pas autorisé comme attribut, seulement comme élément fils");
+                    throw new DatabaseSchemaXmlNodeException($node, "'$name' n'est pas autorisÃ© comme attribut, seulement comme Ã©lÃ©ment fils");
 
-                // Définit la propriété
-                $result->$name=self::xmlToValue(utf8_decode($attribute->nodeValue), $attribute, $dtd[$name]);
+                // DÃ©finit la propriÃ©tÃ©
+                $result->$name=self::xmlToValue($attribute->nodeValue, $attribute, $dtd[$name]);
             }
         }
 
-        // Les noeuds fils du tag sont également des propriéts de l'objet
+        // Les noeuds fils du tag sont Ã©galement des propriÃ©ts de l'objet
         foreach ($node->childNodes as $child)
         {
             switch ($child->nodeType)
             {
                 case XML_ELEMENT_NODE:
-                    // Le nom de l'élément va devenir le nom de la propriété
+                    // Le nom de l'Ã©lÃ©ment va devenir le nom de la propriÃ©tÃ©
                     $name=$child->tagName;
 
-                    // Vérifie que c'est un élément autorisé
+                    // VÃ©rifie que c'est un Ã©lÃ©ment autorisÃ©
                     if (! array_key_exists($name, $dtd))
-                        throw new DatabaseSchemaXmlNodeException($node, "l'élément '$name' n'est pas autorisé");
+                        throw new DatabaseSchemaXmlNodeException($node, "l'Ã©lÃ©ment '$name' n'est pas autorisÃ©");
 
-                    // Vérifie qu'on n'a pas à la fois un attribut et un élément de même nom (<database label="xxx"><label>yyy...)
+                    // VÃ©rifie qu'on n'a pas Ã  la fois un attribut et un Ã©lÃ©ment de mÃªme nom (<database label="xxx"><label>yyy...)
                     if ($node->hasAttribute($name))
-                        throw new DatabaseSchemaXmlNodeException($node, "'$name' apparaît à la fois comme attribut et comme élément");
+                        throw new DatabaseSchemaXmlNodeException($node, "'$name' apparaÃ®t Ã  la fois comme attribut et comme Ã©lÃ©ment");
 
-                    // Cas d'une propriété simple (scalaire)
+                    // Cas d'une propriÃ©tÃ© simple (scalaire)
                     if (! is_array($dtd[$name]))
                     {
-                        $result->$name=self::xmlToValue(utf8_decode($child->nodeValue), $child, $dtd[$name]); // si plusieurs fois le même tag, c'est le dernier qui gagne
+                        $result->$name=self::xmlToValue($child->nodeValue, $child, $dtd[$name]); // si plusieurs fois le mÃªme tag, c'est le dernier qui gagne
                     }
 
                     // Cas d'un tableau
                     else
                     {
-                        // Une collection : le tableau a un seul élément qui est lui même un tableau décrivant les noeuds
+                        // Une collection : le tableau a un seul Ã©lÃ©ment qui est lui mÃªme un tableau dÃ©crivant les noeuds
                         if (count($dtd[$name])===1 && is_array(reset($dtd[$name])))
                         {
                             foreach($child->childNodes as $child)
                                 array_push($result->$name, self::xmlToObject($child, $dtd[$name]));
                         }
 
-                        // Un objet (exemple : _lastid) : plusieurs propriétés ou une seule mais pas un tableau
+                        // Un objet (exemple : _lastid) : plusieurs propriÃ©tÃ©s ou une seule mais pas un tableau
                         else
                         {
                             $result->$name=self::xmlToObject($child, array($name=>$dtd[$name]));
@@ -431,13 +431,13 @@ class DatabaseSchema
                     }
                     break;
 
-                // Types de noeud autorisés mais ignorés
+                // Types de noeud autorisÃ©s mais ignorÃ©s
                 case XML_COMMENT_NODE:
                     break;
 
                 // Types de noeud interdits
                 default:
-                    throw new DatabaseSchemaXmlNodeException($node, "les noeuds de type '".$child->nodeName . "' ne sont pas autorisés");
+                    throw new DatabaseSchemaXmlNodeException($node, "les noeuds de type '".$child->nodeName . "' ne sont pas autorisÃ©s");
             }
         }
         return $result;
@@ -445,12 +445,12 @@ class DatabaseSchema
 
 
     /**
-     * Fonction utilitaire utilisée par {@link xmlToObject()} pour convertir la
+     * Fonction utilitaire utilisÃ©e par {@link xmlToObject()} pour convertir la
      * valeur d'un attribut ou le contenu d'un tag.
      *
-     * Pour les booléens, la fonction reconnait les valeurs 'true' ou 'false'.
-     * Pour les autres types scalaires, la fonction encode les caractères '<',
-     * '>', '&' et '"' par l'entité xml correspondante.
+     * Pour les boolÃ©ens, la fonction reconnait les valeurs 'true' ou 'false'.
+     * Pour les autres types scalaires, la fonction encode les caractÃ¨res '<',
+     * '>', '&' et '"' par l'entitÃ© xml correspondante.
      *
      * @param scalar $value
      * @return string
@@ -461,7 +461,7 @@ class DatabaseSchema
         {
             if($xml==='true') return true;
             if($xml==='false') return false;
-            throw new DatabaseSchemaXmlNodeException($node, 'booléen attendu');
+            throw new DatabaseSchemaXmlNodeException($node, 'boolÃ©en attendu');
         }
 
         if (is_int($dtdValue))
@@ -475,20 +475,20 @@ class DatabaseSchema
 
 
     /**
-     * Retourne la version xml du schéma.
+     * Retourne la version xml du schÃ©ma.
      *
-     * @param bool $prolog indique s'il faut ou non générer le prologue
-     * xml (<?xml...), true par défaut.
+     * @param bool $prolog indique s'il faut ou non gÃ©nÃ©rer le prologue
+     * xml (<?xml...), true par dÃ©faut.
      *
      * @param string $indent permet d'indiquer l'indentation initiale du fichier
-     * xml généré. Par défaut, chaine vide (les premiers tags commenceront à la
+     * xml gÃ©nÃ©rÃ©. Par dÃ©faut, chaine vide (les premiers tags commenceront Ã  la
      * colonne 1).
      *
      * @return string
      */
     public function toXml($prolog=true, $indent='')
     {
-        // FIXME : on devrait utiliser XMLWriter plutôt que de générer le xml "à la main"
+        // FIXME : on devrait utiliser XMLWriter plutÃ´t que de gÃ©nÃ©rer le xml "Ã  la main"
         ob_start();
         if ($prolog) echo '<?xml version="1.0" encoding="UTF-8"?>', "\n";
         self::nodeToXml(self::$dtd, $this, $indent);
@@ -497,20 +497,20 @@ class DatabaseSchema
 
 
     /**
-     * Fonction utilitaire utilisée par {@link toXml()} pour générer la version
-     * Xml du schéma.
+     * Fonction utilitaire utilisÃ©e par {@link toXml()} pour gÃ©nÃ©rer la version
+     * Xml du schÃ©ma.
      *
-     * @param array $dtd le dtd décrivant le schéma
-     * @param string $tag le nom du tag xml à générer
-     * @param StdClass $object l'objet à générer
+     * @param array $dtd le dtd dÃ©crivant le schÃ©ma
+     * @param string $tag le nom du tag xml Ã  gÃ©nÃ©rer
+     * @param StdClass $object l'objet Ã  gÃ©nÃ©rer
      * @param string $indent l'indentation en cours
-     * @return string le source xml généré
+     * @return string le source xml gÃ©nÃ©rÃ©
      */
     private static function nodeToXml($dtd, $object, $indent='')
     {
-        // Extrait du DTD le nom du tag à générer
+        // Extrait du DTD le nom du tag Ã  gÃ©nÃ©rer
         if (count($dtd)>1)
-            throw new LogicException('DTD invalide : le tableau doit contenir un seul élément');
+            throw new LogicException('DTD invalide : le tableau doit contenir un seul Ã©lÃ©ment');
         reset($dtd);
         $tag=key($dtd);
         $dtd=array_pop($dtd);
@@ -520,14 +520,14 @@ class DatabaseSchema
         $complexNodes=array();
         $objects=array();
 
-        // Parcourt toutes les propriétés pour les classer
+        // Parcourt toutes les propriÃ©tÃ©s pour les classer
         foreach($object as $prop=>$value)
         {
-            // La propriété a la valeur par défaut indiquée dans le DTD : on l'ignore
+            // La propriÃ©tÃ© a la valeur par dÃ©faut indiquÃ©e dans le DTD : on l'ignore
             if(array_key_exists($prop,$dtd) && $value === $dtd[$prop])
                 continue;
 
-            // Valeurs scalaires (entiers, chaines, booléens...)
+            // Valeurs scalaires (entiers, chaines, boolÃ©ens...)
             if (is_scalar($value) || is_null($value))
             {
                 $value=(string)$value;
@@ -536,7 +536,7 @@ class DatabaseSchema
                 if (strlen($value)<80)
                     $attr[]=$prop;
 
-                // sinon, ce sera un élément
+                // sinon, ce sera un Ã©lÃ©ment
                 else
                     $simpleNodes[]=$prop;
             }
@@ -559,12 +559,12 @@ class DatabaseSchema
         if (count($attr)===0 && count($simpleNodes)===0 && count($complexNodes)===0 & count($objects)===0)
             return;
 
-        // Ecrit le début du tag et ses attributs
-        echo $indent, '<', utf8_encode($tag);
+        // Ecrit le dÃ©but du tag et ses attributs
+        echo $indent, '<', $tag;
         foreach($attr as $prop)
-            echo ' ', utf8_encode($prop), '="', self::valueToXml($object->$prop), '"';
+            echo ' ', $prop, '="', self::valueToXml($object->$prop), '"';
 
-        // Si le tag ne contient pas de noeuds fils, terminé
+        // Si le tag ne contient pas de noeuds fils, terminÃ©
         if (count($simpleNodes)===0 && count($complexNodes)===0)
         {
             echo " />\n";
@@ -576,9 +576,9 @@ class DatabaseSchema
 
         // Ecrit en premier les noeuds simples qui n'ont pas de fils
         foreach($simpleNodes as $prop)
-            echo $indent, '    <', utf8_encode($prop), '>', self::valueToXml($object->$prop), '</', $prop, '>', "\n";
+            echo $indent, '    <', $prop, '>', self::valueToXml($object->$prop), '</', $prop, '>', "\n";
 
-        // Puis toutes les propriétés 'objet'
+        // Puis toutes les propriÃ©tÃ©s 'objet'
         foreach($objects as $prop)
         {
             self::nodeToXml(array($prop=>$dtd[$prop]), $object->$prop, $indent.'    ');
@@ -587,26 +587,26 @@ class DatabaseSchema
         // Puis tous les nouds qui ont des fils
         foreach($complexNodes as $prop)
         {
-            echo $indent, '    <', utf8_encode($prop), ">\n";
+            echo $indent, '    <', $prop, ">\n";
             foreach($object->$prop as $i=>$item)
             {
                 self::nodeToXml($dtd[$prop], $item, $indent.'        ');
             }
-            echo $indent, '    </', utf8_encode($prop), ">\n";
+            echo $indent, '    </', $prop, ">\n";
         }
 
         // Ecrit le tag de fermeture
-        echo $indent, '</', utf8_encode($tag), ">\n";
+        echo $indent, '</', $tag, ">\n";
     }
 
 
     /**
-     * Fonction utilitaire utilisée par {@link nodeToXml()} pour écrire la
+     * Fonction utilitaire utilisÃ©e par {@link nodeToXml()} pour Ã©crire la
      * valeur d'un attribut ou le contenu d'un tag.
      *
-     * Pour les booléens, la fonction génère les valeurs 'true' ou 'false'.
-     * Pour les autres types scalaires, la fonction encode les caractères '<',
-     * '>', '&' et '"' par l'entité xml correspondante.
+     * Pour les boolÃ©ens, la fonction gÃ©nÃ¨re les valeurs 'true' ou 'false'.
+     * Pour les autres types scalaires, la fonction encode les caractÃ¨res '<',
+     * '>', '&' et '"' par l'entitÃ© xml correspondante.
      *
      * @param scalar $value
      * @return string
@@ -616,25 +616,25 @@ class DatabaseSchema
 
         if (is_bool($value))
             return $value ? 'true' : 'false';
-        return htmlspecialchars(utf8_encode($value), ENT_COMPAT);
+        return htmlspecialchars($value, ENT_COMPAT);
     }
 
 
     /**
-     * Initialise le schéma à partir d'un source JSON.
+     * Initialise le schÃ©ma Ã  partir d'un source JSON.
      *
-     * La chaine passée en paramètre doit être encodée en UTF8. Elle est
-     * décodée de manière à ce que le schéma obtenu soit encodé en ISO-8859-1.
+     * La chaine passÃ©e en paramÃ¨tre doit Ãªtre encodÃ©e en UTF8. Elle est
+     * dÃ©codÃ©e de maniÃ¨re Ã  ce que le schÃ©ma obtenu soit encodÃ© en ISO-8859-1.
      *
      * @param string $xmlSource
      * @return StdClass
      */
     private function fromJson($json)
     {
-        // Crée un objet à partir de la chaine JSON
-        $o=Utils::utf8Decode(json_decode($json, false));
+        // CrÃ©e un objet Ã  partir de la chaine JSON
+        $o=json_decode($json, false);
 
-        // Initialise nos propriétés à partir de l'objet obtenu
+        // Initialise nos propriÃ©tÃ©s Ã  partir de l'objet obtenu
         foreach(get_object_vars($o) as $prop=>$value)
         {
             $this->$prop=$value;
@@ -643,23 +643,23 @@ class DatabaseSchema
 
 
     /**
-     * Retourne la version JSON du schéma.
+     * Retourne la version JSON du schÃ©ma.
      *
-     * Remarque : la chaine obtenu est encodée en UTF-8.
+     * Remarque : la chaine obtenu est encodÃ©e en UTF-8.
      *
      * @return string
      */
     public function toJson()
     {
-        // Si notre schéma est compilé, les clés de tous les tableaux
+        // Si notre schÃ©ma est compilÃ©, les clÃ©s de tous les tableaux
         // sont des chaines et non plus des entiers. Or, la fonction json_encode
-        // de php traite ce cas en générant alors un objet et non plus un
-        // tableau (je pense que c'est conforme à la spécification JSON dans la
-        // mesure où on ne peut pas, en json, spécifier les clés du tableau).
-        // Le problème, c'est que l'éditeur de structure ne sait pas gérer ça :
+        // de php traite ce cas en gÃ©nÃ©rant alors un objet et non plus un
+        // tableau (je pense que c'est conforme Ã  la spÃ©cification JSON dans la
+        // mesure oÃ¹ on ne peut pas, en json, spÃ©cifier les clÃ©s du tableau).
+        // Le problÃ¨me, c'est que l'Ã©diteur de structure ne sait pas gÃ©rer Ã§a :
         // il veut absolument un tableau.
-        // Pour contourner le problème, on utilise notre propre version de
-        // json_encode qui ignore les clés des tableaux (ie fait l'inverse de
+        // Pour contourner le problÃ¨me, on utilise notre propre version de
+        // json_encode qui ignore les clÃ©s des tableaux (ie fait l'inverse de
         // compileArrays)
 
         ob_start();
@@ -671,7 +671,7 @@ class DatabaseSchema
     }
 
     /**
-     * Fonction utilitaire utilisée par {@link toJson()}
+     * Fonction utilitaire utilisÃ©e par {@link toJson()}
      *
      * @param mixed $o
      */
@@ -679,7 +679,7 @@ class DatabaseSchema
     {
         if (is_null($o) || is_scalar($o))
         {
-            echo json_encode(is_string($o) ? utf8_encode($o) : $o);
+            echo json_encode($o);
             return;
         }
         if (is_object($o))
@@ -688,7 +688,7 @@ class DatabaseSchema
             $comma=null;
             foreach($o as $prop=>$value)
             {
-                echo $comma, json_encode(utf8_encode($prop)), ':';
+                echo $comma, json_encode($prop), ':';
                 self::jsonEncode($value);
                 $comma=',';
             }
@@ -699,7 +699,7 @@ class DatabaseSchema
         {
             echo '[';
             $comma=null;
-            foreach($o as $value) // ignore les clés
+            foreach($o as $value) // ignore les clÃ©s
             {
                 echo $comma;
                 self::jsonEncode($value);
@@ -708,7 +708,7 @@ class DatabaseSchema
             echo ']';
             return;
         }
-        throw new LogicException(__CLASS__ . '::'.__METHOD__.' : type non géré : '.var_export($o,true));
+        throw new LogicException(__CLASS__ . '::'.__METHOD__.' : type non gÃ©rÃ© : '.var_export($o,true));
     }
 
     private static function boolean($x)
@@ -727,11 +727,11 @@ class DatabaseSchema
     }
 
     /**
-     * Redresse et valide le schéma, détecte les éventuelles erreurs.
+     * Redresse et valide le schÃ©ma, dÃ©tecte les Ã©ventuelles erreurs.
      *
-     * @return (true|array) retourne 'true' si aucune erreur n'a été détectée
-     * dans le schéma. Retourne un tableau contenant un message pour chacune
-     * des erreurs rencontrées sinon.
+     * @return (true|array) retourne 'true' si aucune erreur n'a Ã©tÃ© dÃ©tectÃ©e
+     * dans le schÃ©ma. Retourne un tableau contenant un message pour chacune
+     * des erreurs rencontrÃ©es sinon.
      */
     public function validate()
     {
@@ -741,26 +741,26 @@ class DatabaseSchema
         self::stopwords($this->stopwords);
         $this->indexstopwords=self::boolean($this->indexstopwords);
 
-        // Vérifie qu'on a au moins un champ
+        // VÃ©rifie qu'on a au moins un champ
 //        if (count($this->fields)===0)
-//            $errors[]="Schéma, aucun champ n'a été défini";
+//            $errors[]="SchÃ©ma, aucun champ n'a Ã©tÃ© dÃ©fini";
 
-        // Tableau utilisé pour dresser la liste des champs/index/alias utilisés
+        // Tableau utilisÃ© pour dresser la liste des champs/index/alias utilisÃ©s
         $fields=array();
         $indices=array();
         $lookuptables=array();
         $aliases=array();
         $sortkeys=array();
 
-        // Vérifie la liste des champs
+        // VÃ©rifie la liste des champs
         foreach($this->fields as $i=>&$field)
         {
-            // Vérifie que le champ a un nom correct, sans caractères interdits
+            // VÃ©rifie que le champ a un nom correct, sans caractÃ¨res interdits
             $name=trim(Utils::ConvertString($field->name, 'alphanum'));
             if ($name==='' || strpos($name, ' ')!==false)
                 $errors[]="Nom incorrect pour le champ #$i : '$field->name'";
 
-            // Vérifie le type du champ
+            // VÃ©rifie le type du champ
             switch($field->type=strtolower(trim($field->type)))
             {
                 case 'autonumber':
@@ -772,35 +772,35 @@ class DatabaseSchema
                     $errors[]="Type incorrect pour le champ #$i";
             }
 
-            // Vérifie que le nom du champ est unique
+            // VÃ©rifie que le nom du champ est unique
             if (isset($fields[$name]))
-                $errors[]="Les champs #$i et #$fields[$name] ont le même nom";
+                $errors[]="Les champs #$i et #$fields[$name] ont le mÃªme nom";
             $fields[$name]=$i;
 
             // Tri et nettoie les mots-vides
             self::stopwords($field->stopwords);
 
-            // Vérifie la propriété defaultstopwords
+            // VÃ©rifie la propriÃ©tÃ© defaultstopwords
             $field->defaultstopwords=self::boolean($field->defaultstopwords);
 
         }
         unset($field);
 
 
-        // Vérifie la liste des index
+        // VÃ©rifie la liste des index
         foreach($this->indices as $i=>&$index)
         {
-            // Vérifie que l'index a un nom
+            // VÃ©rifie que l'index a un nom
             $name=trim(Utils::ConvertString($index->name, 'alphanum'));
             if ($name==='' || strpos($name, ' ')!==false)
                 $errors[]="Nom incorrect pour l'index #~$i : '$index->name'";
 
-            // Vérifie que le nom de l'index est unique
+            // VÃ©rifie que le nom de l'index est unique
             if (isset($indices[$name]))
-                $errors[]="Les index #$i et #$indices[$name] ont le même nom";
+                $errors[]="Les index #$i et #$indices[$name] ont le mÃªme nom";
             $indices[$name]=$i;
 
-            // Vérifie le type de l'index
+            // VÃ©rifie le type de l'index
             switch($index->type=strtolower(trim($index->type)))
             {
                 case 'probabilistic':
@@ -810,17 +810,17 @@ class DatabaseSchema
                     $errors[]="Type incorrect pour l'index #$i";
             }
 
-            // Vérifie que l'index a au moins un champ
+            // VÃ©rifie que l'index a au moins un champ
             if (count($index->fields)===0)
-                $errors[]="Aucun champ n'a été indiqué pour l'index #$i ($index->name)";
+                $errors[]="Aucun champ n'a Ã©tÃ© indiquÃ© pour l'index #$i ($index->name)";
             else foreach ($index->fields as $j=>&$field)
             {
-                // Vérifie que le champ indiqué existe
+                // VÃ©rifie que le champ indiquÃ© existe
                 $name=trim(Utils::ConvertString($field->name, 'alphanum'));
                 if (!isset($fields[$name]))
                     $errors[]="Champ inconnu dans l'index #$i : '$name'";
 
-                // Vérifie les propriétés booléenne words/phrases/values/count
+                // VÃ©rifie les propriÃ©tÃ©s boolÃ©enne words/phrases/values/count
                 $field->words=self::boolean($field->words);
                 $field->phrases=self::boolean($field->phrases);
                 if ($field->phrases) $field->words=true;
@@ -828,15 +828,15 @@ class DatabaseSchema
                 $field->count=self::boolean($field->count);
 //                $field->global=self::boolean($field->global);
 
-                // Vérifie qu'au moins un des types d'indexation est sélectionné
+                // VÃ©rifie qu'au moins un des types d'indexation est sÃ©lectionnÃ©
                 if (! ($field->words || $field->phrases || $field->values || $field->count))
-                    $errors[]="Le champ #$j ne sert à rien dans l'index #$i : aucun type d'indexation indiqué";
+                    $errors[]="Le champ #$j ne sert Ã  rien dans l'index #$i : aucun type d'indexation indiquÃ©";
 
                 // Poids du champ
                 $field->weight=trim($field->weight);
                 if ($field->weight==='') $field->weight=1;
                 if ((! is_int($field->weight) && !ctype_digit($field->weight)) || (1>$field->weight=(int)$field->weight))
-                    $errors[]="Propriété weight incorrecte pour le champ #$j de l'index #$i (entier supérieur à zéro attendu)";
+                    $errors[]="PropriÃ©tÃ© weight incorrecte pour le champ #$j de l'index #$i (entier supÃ©rieur Ã  zÃ©ro attendu)";
 
                 // Ajuste start et end
                 $this->startEnd($field, $errors, "Champ #$j de l'index #$i : ");
@@ -846,87 +846,87 @@ class DatabaseSchema
         unset($index);
 
 
-        // Vérifie la liste des tables des entrées
+        // VÃ©rifie la liste des tables des entrÃ©es
         foreach($this->lookuptables as $i=>&$lookuptable)
         {
-            // Vérifie que la table a un nom
+            // VÃ©rifie que la table a un nom
             $name=trim(Utils::ConvertString($lookuptable->name, 'alphanum'));
             if ($name==='' || strpos($name, ' ')!==false)
-                $errors[]="Nom incorrect pour la table des entrées #~$i : '$index->name'";
+                $errors[]="Nom incorrect pour la table des entrÃ©es #~$i : '$index->name'";
 
-            // Vérifie que le nom de la table est unique
+            // VÃ©rifie que le nom de la table est unique
             if (isset($lookuptables[$name]))
-                $errors[]="Les tables d'entrées #$i et #$lookuptables[$name] ont le même nom";
+                $errors[]="Les tables d'entrÃ©es #$i et #$lookuptables[$name] ont le mÃªme nom";
             $lookuptables[$name]=$i;
 
-            // Vérifie le type de la table
+            // VÃ©rifie le type de la table
             switch($lookuptable->type=strtolower(trim($lookuptable->type)))
             {
                 case 'simple':
                 case 'inverted':
                     break;
                 default:
-                    $errors[]="Type incorrect pour la table des entrées #$i";
+                    $errors[]="Type incorrect pour la table des entrÃ©es #$i";
             }
 
-            // Vérifie que la table a au moins un champ
+            // VÃ©rifie que la table a au moins un champ
             if (count($lookuptable->fields)===0)
-                $errors[]="Aucun champ n'a été indiqué pour la table des entrées #$i ($lookuptable->name)";
+                $errors[]="Aucun champ n'a Ã©tÃ© indiquÃ© pour la table des entrÃ©es #$i ($lookuptable->name)";
             else foreach ($lookuptable->fields as $j=>&$field)
             {
-                // Vérifie que le champ indiqué existe
+                // VÃ©rifie que le champ indiquÃ© existe
                 $name=trim(Utils::ConvertString($field->name, 'alphanum'));
                 if (!isset($fields[$name]))
-                    $errors[]="Champ inconnu dans la table des entrées #$i : '$name'";
+                    $errors[]="Champ inconnu dans la table des entrÃ©es #$i : '$name'";
 
-                // Vérifie startValue et endValue
+                // VÃ©rifie startValue et endValue
 
                 if (! (is_int($field->startvalue) || ctype_digit($field->startvalue)))
                 {
-                    $errors[]="Champ $name de la table des entrées #$i : startvalue doit être un entier";
+                    $errors[]="Champ $name de la table des entrÃ©es #$i : startvalue doit Ãªtre un entier";
                 }
                 else
                 {
                     $field->startvalue=(int)$field->startvalue;
                     if ($field->startvalue < 1)
-                        $errors[]="Champ $name de la table des entrées #$i : startvalue doit être supérieur à zéro";
+                        $errors[]="Champ $name de la table des entrÃ©es #$i : startvalue doit Ãªtre supÃ©rieur Ã  zÃ©ro";
                 }
 
                 if (! (is_int($field->endvalue) || ctype_digit($field->endvalue)))
                 {
-                    $errors[]="Champ $name de la table des entrées #$i : endvalue doit être un entier";
+                    $errors[]="Champ $name de la table des entrÃ©es #$i : endvalue doit Ãªtre un entier";
                 }
                 else
                 {
                     $field->endvalue=(int)$field->endvalue;
                     if ($field->endvalue < 0)
-                        $errors[]="Champ $name de la table des entrées #$i : endvalue ne peut pas être négatif";
+                        $errors[]="Champ $name de la table des entrÃ©es #$i : endvalue ne peut pas Ãªtre nÃ©gatif";
                 }
 
                 // Ajuste start et end
-                $this->startEnd($field, $errors, "Champ #$j de la table des entrées #$i : ");
+                $this->startEnd($field, $errors, "Champ #$j de la table des entrÃ©es #$i : ");
             }
             unset($field);
         }
         unset($lookuptable);
 
 
-        // Vérifie la liste des alias
+        // VÃ©rifie la liste des alias
         foreach($this->aliases as $i=>& $alias)
         {
-            // Vérifie que l'alias a un nom
+            // VÃ©rifie que l'alias a un nom
             $name=trim(Utils::ConvertString($alias->name, 'alphanum'));
             if ($name==='' || strpos($name, ' ')!==false)
                 $errors[]="Nom incorrect pour l'alias #$i";
 
-            // Vérifie que ce nom est unique
+            // VÃ©rifie que ce nom est unique
             if (isset($indices[$name]))
-                $errors[]="Impossible de définir l'alias '$name' : ce nom est déjà utilisé pour désigner un index de base";
+                $errors[]="Impossible de dÃ©finir l'alias '$name' : ce nom est dÃ©jÃ  utilisÃ© pour dÃ©signer un index de base";
             if (isset($aliases[$name]))
-                $errors[]="Les alias #$i et #$aliases[$name] ont le même nom";
+                $errors[]="Les alias #$i et #$aliases[$name] ont le mÃªme nom";
             $aliases[$name]=$i;
 
-            // Vérifie le type de l'alias
+            // VÃ©rifie le type de l'alias
             switch($alias->type=strtolower(trim($alias->type)))
             {
                 case 'probabilistic':
@@ -936,12 +936,12 @@ class DatabaseSchema
                     $errors[]="Type incorrect pour l'alias #$i";
             }
 
-            // Vérifie que l'alias a au moins un index
+            // VÃ©rifie que l'alias a au moins un index
             if (count($alias->indices)===0)
-                $errors[]="Aucun index n'a été indiqué pour l'alias #$i ($alias->name)";
+                $errors[]="Aucun index n'a Ã©tÃ© indiquÃ© pour l'alias #$i ($alias->name)";
             else foreach ($alias->indices as $j=>&$index)
             {
-                // Vérifie que l'index indiqué existe
+                // VÃ©rifie que l'index indiquÃ© existe
                 $name=trim(Utils::ConvertString($index->name, 'alphanum'));
                 if (!isset($indices[$name]))
                     $errors[]="Index '$name' inconnu dans l'alias #$i ($alias->name)";
@@ -951,20 +951,20 @@ class DatabaseSchema
         unset($alias);
 
 
-        // Vérifie la liste des clés de tri
+        // VÃ©rifie la liste des clÃ©s de tri
         foreach($this->sortkeys as $i=>& $sortkey)
         {
-            // Vérifie que la clé a un nom
+            // VÃ©rifie que la clÃ© a un nom
             $name=trim(Utils::ConvertString($sortkey->name, 'alphanum'));
             if ($name==='' || strpos($name, ' ')!==false)
-                $errors[]="Nom incorrect pour la clé de tri #$i";
+                $errors[]="Nom incorrect pour la clÃ© de tri #$i";
 
-            // Vérifie que ce nom est unique
+            // VÃ©rifie que ce nom est unique
             if (isset($sortkeys[$name]))
-                $errors[]="Les clés de tri #$i et #$sortkeys[$name] ont le même nom";
+                $errors[]="Les clÃ©s de tri #$i et #$sortkeys[$name] ont le mÃªme nom";
             $sortkeys[$name]=$i;
 
-            // Vérifie le type de clé
+            // VÃ©rifie le type de clÃ©
             $sortkey->type=strtolower(trim($sortkey->type));
             switch($sortkey->type)
             {
@@ -975,23 +975,23 @@ class DatabaseSchema
                 case null:
                     $sortkey->type='string';
                 default:
-                    $errors[]="Type incorrect pour la clé de tri #$i : '$name'";
+                    $errors[]="Type incorrect pour la clÃ© de tri #$i : '$name'";
             }
 
-            // Vérifie que la clé a au moins un champ
+            // VÃ©rifie que la clÃ© a au moins un champ
             if (count($sortkey->fields)===0)
-                $errors[]="Aucun champ n'a été indiqué pour la clé de tri #$i ($sortkey->name)";
+                $errors[]="Aucun champ n'a Ã©tÃ© indiquÃ© pour la clÃ© de tri #$i ($sortkey->name)";
             else
             {
                 foreach ($sortkey->fields as $j=>&$field)
                 {
-                    // Vérifie que le champ indiqué existe
+                    // VÃ©rifie que le champ indiquÃ© existe
                     $name=trim(Utils::ConvertString($field->name, 'alphanum'));
                     if (!isset($fields[$name]))
-                        $errors[]="Nom de champ inconnu dans la clé de tri #$i : '$name'";
+                        $errors[]="Nom de champ inconnu dans la clÃ© de tri #$i : '$name'";
 
                     // Ajuste start et end
-                    $this->startEnd($field, $errors, "Champ #$j de la clé de tri #$i : ");
+                    $this->startEnd($field, $errors, "Champ #$j de la clÃ© de tri #$i : ");
                     $field->length=(int)$field->length;
                 }
                 unset($field);
@@ -999,16 +999,16 @@ class DatabaseSchema
         }
         unset($sortkey);
 
-        // Retourne le résultat
+        // Retourne le rÃ©sultat
         return count($errors) ? $errors : true;
     }
 
 
     /**
-     * Fonction utilitaire utilisée par {@link validate()} pour nettoyer une
+     * Fonction utilitaire utilisÃ©e par {@link validate()} pour nettoyer une
      * liste de mots vides.
      *
-     * Les mots indiqués sont minusculisés, dédoublonnés et triés.
+     * Les mots indiquÃ©s sont minusculisÃ©s, dÃ©doublonnÃ©s et triÃ©s.
      *
      * @param string & $stopwords
      * @return void
@@ -1019,14 +1019,14 @@ class DatabaseSchema
     }
 
     /**
-     * Fonction utilitaire utilisée par {@link validate()} pour ajuster les
-     * propriétés start et end d'un objet
+     * Fonction utilitaire utilisÃ©e par {@link validate()} pour ajuster les
+     * propriÃ©tÃ©s start et end d'un objet
      *
      * @param StdClass $object
      */
     private function startEnd($object, & $errors, $label)
     {
-        // Convertit en entier les chaines qui représentent des entiers, en null les chaines vides
+        // Convertit en entier les chaines qui reprÃ©sentent des entiers, en null les chaines vides
         foreach (array('start','end') as $prop)
         {
             if (is_string($object->$prop))
@@ -1042,40 +1042,40 @@ class DatabaseSchema
             }
         }
 
-        // Si start et end sont des indices, vérifie que end > start
+        // Si start et end sont des indices, vÃ©rifie que end > start
         if (
             is_int($object->start) &&
             is_int($object->end) &&
             (($object->start>0 && $object->end>0) || ($object->start<0 && $object->end<0)) &&
             ($object->start > $object->end))
-            $errors[]=$label . 'end doit être strictement supérieur à start';
+            $errors[]=$label . 'end doit Ãªtre strictement supÃ©rieur Ã  start';
 
         // Si start vaut 0, met null
         if ($object->start===0) $object->start=null;
 
-        // End ne peut pas être à zéro
-        if ($object->end===0) $errors[]=$label . 'end ne peut pas être à zéro';
+        // End ne peut pas Ãªtre Ã  zÃ©ro
+        if ($object->end===0) $errors[]=$label . 'end ne peut pas Ãªtre Ã  zÃ©ro';
 
     }
 
     /**
      * Fusionne des objets ou des tableaux ensembles.
      *
-     * Ajoute dans $a tous les éléments de $b qui n'existe pas déjà.
+     * Ajoute dans $a tous les Ã©lÃ©ments de $b qui n'existe pas dÃ©jÃ .
      *
      * L'algorithme de fusion est le suivant :
-     * Pour chaque élément (key,value) de $b :
+     * Pour chaque Ã©lÃ©ment (key,value) de $b :
      * - si key est un entier : $a[]=valeur
-     * - si key n'existe pas encore dans a : $a[clé]=valeur
-     * - si key existe et si a[key] est un objet ou un tableau, fusion récursive
+     * - si key n'existe pas encore dans a : $a[clÃ©]=valeur
+     * - si key existe et si a[key] est un objet ou un tableau, fusion rÃ©cursive
      * de a[key] avec value.
      *
-     * Le même traitement est répêté pour chacun des arguments supplémentaires
-     * passés en paramètre.
+     * Le mÃªme traitement est rÃ©pÃªtÃ© pour chacun des arguments supplÃ©mentaires
+     * passÃ©s en paramÃ¨tre.
      *
-     * Le type initial du premier argument détermine le type de la valeur
-     * retournée : si c'est un objet, la fonction retourne un objet StdClass
-     * contenant l'ensemble des propriétés obtenues. Dans tous les autres cas,
+     * Le type initial du premier argument dÃ©termine le type de la valeur
+     * retournÃ©e : si c'est un objet, la fonction retourne un objet StdClass
+     * contenant l'ensemble des propriÃ©tÃ©s obtenues. Dans tous les autres cas,
      * elle retourne un tableau.
      *
      * Exemple (en pseudo code) :
@@ -1090,8 +1090,8 @@ class DatabaseSchema
      * merge(t1,t2) et merge(t1,o2) vont tous les deux retourner un tableau :
      * array('city'=>'rennes', 'country'=>'fra', 'postcode'=>35043)
      *
-     * Si les arguments passés en paramètre sont des types simples, ils seront
-     * castés en tableau puis seront fusionnés comme indiqué.
+     * Si les arguments passÃ©s en paramÃ¨tre sont des types simples, ils seront
+     * castÃ©s en tableau puis seront fusionnÃ©s comme indiquÃ©.
      * Exemple :
      * merge('hello', 'word') = array(0=>'hello', 1=>'word')
      *
@@ -1125,7 +1125,7 @@ class DatabaseSchema
     */
 
     /**
-     * Crée toutes les propriétés qui existent dans le dtd mais qui n'existe
+     * CrÃ©e toutes les propriÃ©tÃ©s qui existent dans le dtd mais qui n'existe
      * pas encore dans l'obet.
      *
      * @param objetc $object
@@ -1163,46 +1163,46 @@ class DatabaseSchema
     }
 
     /**
-     * Compile le schéma en cours.
+     * Compile le schÃ©ma en cours.
      *
      * - Indexation des objets de la base par nom :
-     * Dans un schéma non compilé, les clés de tous les tableaux
+     * Dans un schÃ©ma non compilÃ©, les clÃ©s de tous les tableaux
      * (db.fields, db.indices, db.indices[x].fields, etc.) sont de simples
-     * numéros. Dans un schéma compilé, les clés sont la version
-     * minusculisée et sans accents du nom de l'item (la propriété name de
+     * numÃ©ros. Dans un schÃ©ma compilÃ©, les clÃ©s sont la version
+     * minusculisÃ©e et sans accents du nom de l'item (la propriÃ©tÃ© name de
      * l'objet)
      *
-     * - Attribution d'un ID unique à chacun des objets de la base :
-     * Pour chaque objet (champ, index, alias, table de lookup, clé de tri),
-     * attribution d'un numéro unique qui n'ait jamais été utilisé auparavant
+     * - Attribution d'un ID unique Ã  chacun des objets de la base :
+     * Pour chaque objet (champ, index, alias, table de lookup, clÃ© de tri),
+     * attribution d'un numÃ©ro unique qui n'ait jamais Ã©tÃ© utilisÃ© auparavant
      * (utilisation de db.lastId, coir ci-dessous).
-     * Remarque : actuellement, un ID est un simple numéro commencant à 1, quel
-     * que soit le type d'objet. Les numéros sont attribués de manière consécutive,
-     * mais rien ne garantit que le schéma final a des numéros consécutifs
-     * (par exemple, si on a supprimé un champ, il y aura un "trou" dans les
-     * id des champs, et l'ID du champ supprimé ne sera jamais réutilisé).
+     * Remarque : actuellement, un ID est un simple numÃ©ro commencant Ã  1, quel
+     * que soit le type d'objet. Les numÃ©ros sont attribuÃ©s de maniÃ¨re consÃ©cutive,
+     * mais rien ne garantit que le schÃ©ma final a des numÃ©ros consÃ©cutifs
+     * (par exemple, si on a supprimÃ© un champ, il y aura un "trou" dans les
+     * id des champs, et l'ID du champ supprimÃ© ne sera jamais rÃ©utilisÃ©).
      *
-     * - Création/mise à jour de db._lastid
-     * Création si elle n'existe pas encore ou mise à jour dans le cas
-     * contraire de la propriété db.lastId. Il s'agit d'un objet ajouté comme
-     * propriété de la base elle même. Chacune des propriétés de cet objet
-     * est un entier qui indique le dernier ID attribué pour un type d'objet
-     * particulier. Actuellement, les propriétés de cet objet sont : lastId.field,
+     * - CrÃ©ation/mise Ã  jour de db._lastid
+     * CrÃ©ation si elle n'existe pas encore ou mise Ã  jour dans le cas
+     * contraire de la propriÃ©tÃ© db.lastId. Il s'agit d'un objet ajoutÃ© comme
+     * propriÃ©tÃ© de la base elle mÃªme. Chacune des propriÃ©tÃ©s de cet objet
+     * est un entier qui indique le dernier ID attribuÃ© pour un type d'objet
+     * particulier. Actuellement, les propriÃ©tÃ©s de cet objet sont : lastId.field,
      * lastId.index, lastId.alias, lastId.lookuptable et lastId.sortkey'.
      *
-     * - Création d'une propriété de type entier pour les propriétés ayant une
-     * valeur exprimée sous forme de chaine de caractères :
+     * - CrÃ©ation d'une propriÃ©tÃ© de type entier pour les propriÃ©tÃ©s ayant une
+     * valeur exprimÃ©e sous forme de chaine de caractÃ¨res :
      * field.type ('text', 'int'...) -> field._type (1, 2...)
      * index.type ('none', 'word'...) -> index._type
      *
-     * - Conversion en entier si possible des propriétés 'start' et 'end'
-     * objets concernés : index.field, lookuptable.field, sortkey.field
-     * Si la chaine de caractères représente un entier, conversion sous forme
+     * - Conversion en entier si possible des propriÃ©tÃ©s 'start' et 'end'
+     * objets concernÃ©s : index.field, lookuptable.field, sortkey.field
+     * Si la chaine de caractÃ¨res reprÃ©sente un entier, conversion sous forme
      * d'entier, sinon on conserve sous forme de chaine (permet des tests
      * rapides du style is_int() ou is_string())
      *
-     * - Indexation pour accès rapide des mots-vides
-     * db.stopwords, field.stopwords : _stopwords[] = tableau indexé par mot
+     * - Indexation pour accÃ¨s rapide des mots-vides
+     * db.stopwords, field.stopwords : _stopwords[] = tableau indexÃ© par mot
      * (permet de faire isset(stopwords[mot]))
      */
     public function compile()
@@ -1210,7 +1210,7 @@ class DatabaseSchema
         // Indexe tous les tableaux par nom
         self::compileArrays($this);
 
-        // Attribue un ID à tous les éléments des tableaux de premier niveau
+        // Attribue un ID Ã  tous les Ã©lÃ©ments des tableaux de premier niveau
         foreach($this as $prop=>$value)
         {
             if ($prop[0] !== '_' && is_array($value) && count($value))
@@ -1236,7 +1236,7 @@ class DatabaseSchema
                 case 'int':        $field->_type=self::FIELD_INT;           break;
                 case 'text':       $field->_type=self::FIELD_TEXT;          break;
                 default:
-                    throw new LogicException('Type de champ incorrect, aurait dû être détecté avant : ' . $field->type);
+                    throw new LogicException('Type de champ incorrect, aurait dÃ» Ãªtre dÃ©tectÃ© avant : ' . $field->type);
             }
         }
 
@@ -1248,13 +1248,13 @@ class DatabaseSchema
             unset($field);
 
             // initialise le type de l'index
-            if (!isset($index->type)) $index->type='probabilistic'; // cas d'un schéma compilé avant que _type ne soit implémenté
+            if (!isset($index->type)) $index->type='probabilistic'; // cas d'un schÃ©ma compilÃ© avant que _type ne soit implÃ©mentÃ©
             switch(strtolower(trim($index->type)))
             {
                 case 'probabilistic': $index->_type=self::INDEX_PROBABILISTIC;    break;
                 case 'boolean':       $index->_type=self::INDEX_BOOLEAN;          break;
                 default:
-                    throw new LogicException('Type d\'index incorrect, aurait dû être détecté avant : ' . $index->type);
+                    throw new LogicException('Type d\'index incorrect, aurait dÃ» Ãªtre dÃ©tectÃ© avant : ' . $index->type);
             }
         }
 
@@ -1268,10 +1268,10 @@ class DatabaseSchema
                 case 'simple':      $lookuptable->_type=self::LOOKUP_SIMPLE;  break;
                 case 'inverted':    $lookuptable->_type=self::LOOKUP_INVERTED; break;
                 default:
-                    throw new LogicException('Type de table incorrect, aurait dû être détecté avant : ' . $lookuptable->type);
+                    throw new LogicException('Type de table incorrect, aurait dÃ» Ãªtre dÃ©tectÃ© avant : ' . $lookuptable->type);
             }
 
-            // Stocke l'ID de chacun des champs des tables des entrées
+            // Stocke l'ID de chacun des champs des tables des entrÃ©es
             foreach ($lookuptable->fields as &$field)
                 $field->_id=$this->fields[trim(Utils::ConvertString($field->name, 'alphanum'))]->_id;
             unset($field);
@@ -1286,18 +1286,18 @@ class DatabaseSchema
             unset($index);
 
             // initialise le type de l'alias
-            if (!isset($alias->type)) $alias->type='probabilistic'; // cas d'un schéma compilé avant que _type ne soit implémenté
+            if (!isset($alias->type)) $alias->type='probabilistic'; // cas d'un schÃ©ma compilÃ© avant que _type ne soit implÃ©mentÃ©
             switch(strtolower(trim($alias->type)))
             {
                 case 'probabilistic': $alias->_type=self::INDEX_PROBABILISTIC;    break;
                 case 'boolean':       $alias->_type=self::INDEX_BOOLEAN;          break;
                 default:
-                    throw new LogicException('Type d\'alias incorrect, aurait dû être détecté avant : ' . $alias->type);
+                    throw new LogicException('Type d\'alias incorrect, aurait dÃ» Ãªtre dÃ©tectÃ© avant : ' . $alias->type);
             }
         }
 
 
-        // Stocke l'ID de chacun des champs des clés de tri
+        // Stocke l'ID de chacun des champs des clÃ©s de tri
         foreach($this->sortkeys as $sortkey)
         {
             foreach ($sortkey->fields as &$field)
@@ -1308,11 +1308,11 @@ class DatabaseSchema
 
 
     /**
-     * Fonction utilitaire utilisée par {@link compile()}.
+     * Fonction utilitaire utilisÃ©e par {@link compile()}.
      *
-     * Compile les propriétés de type tableaux présentes dans l'objet passé en
-     * paramètre (remplace les clés du tableau par la version minu du nom de
-     * l'élément)
+     * Compile les propriÃ©tÃ©s de type tableaux prÃ©sentes dans l'objet passÃ© en
+     * paramÃ¨tre (remplace les clÃ©s du tableau par la version minu du nom de
+     * l'Ã©lÃ©ment)
      *
      * @param StdClass $object
      */
@@ -1335,101 +1335,101 @@ class DatabaseSchema
     }
 
     /**
-     * Etablit la liste des modifications apportées entre le schéma passé
-     * en paramètre et le schéma actuel.
+     * Etablit la liste des modifications apportÃ©es entre le schÃ©ma passÃ©
+     * en paramÃ¨tre et le schÃ©ma actuel.
      *
      * Remarque :
-     * Pour faire la comparaison, le schéma actuel et le schéma
-     * passé en paramètre doivent être compilées. La fonction appellera
-     * automatiquement la méthode {@link compile()} pour chacun des schémas
-     * si ceux-ci ne sont pas déjà compilées.
+     * Pour faire la comparaison, le schÃ©ma actuel et le schÃ©ma
+     * passÃ© en paramÃ¨tre doivent Ãªtre compilÃ©es. La fonction appellera
+     * automatiquement la mÃ©thode {@link compile()} pour chacun des schÃ©mas
+     * si ceux-ci ne sont pas dÃ©jÃ  compilÃ©es.
      *
-     * @param DatabaseSchema $old le schéma à comparer (typiquement : une
-     * version plus ancienne du schéma actuel).
+     * @param DatabaseSchema $old le schÃ©ma Ã  comparer (typiquement : une
+     * version plus ancienne du schÃ©ma actuel).
      *
-     * @return array un tableau listant les modifications apportées entre le
-     * schéma passé en paramètre et le schéma actuel.
+     * @return array un tableau listant les modifications apportÃ©es entre le
+     * schÃ©ma passÃ© en paramÃ¨tre et le schÃ©ma actuel.
      *
-     * Chaque clé du tableau est un message décrivant la modification effectuée
-     * et la valeur associée à cette clé indique le "niveau de gravité" de la
-     * modification apportée.
+     * Chaque clÃ© du tableau est un message dÃ©crivant la modification effectuÃ©e
+     * et la valeur associÃ©e Ã  cette clÃ© indique le "niveau de gravitÃ©" de la
+     * modification apportÃ©e.
      *
-     * Exemple de tableau retourné :
+     * Exemple de tableau retournÃ© :
      * <code>
      *      array
      *      (
-     *          "Création du champ url" => 0
+     *          "CrÃ©ation du champ url" => 0
      *          "Suppression de la table de lookup lieux" => 1
-     *          "Création de l'index liens" => 2
+     *          "CrÃ©ation de l'index liens" => 2
      *      )
      * </code>
      *
-     * Le niveau de gravité est un chiffre dont la signification est la
+     * Le niveau de gravitÃ© est un chiffre dont la signification est la
      * suivante :
      *
-     * - 0 : la modification peut être appliquée immédiatement à une base,
-     *   aucune réindexation n'est nécessaire (exemple : changement du nom d'un
+     * - 0 : la modification peut Ãªtre appliquÃ©e immÃ©diatement Ã  une base,
+     *   aucune rÃ©indexation n'est nÃ©cessaire (exemple : changement du nom d'un
      *   champ)
-     * - 1 : la modification peut être appliquée immédiatement, mais il est
-     *   souhaitable de réindexer la base pour purger les données qui ne sont
-     *   plus nécessaires (exemple : suppression d'un champ ou d'un index).
-     * - 2 : la base devra obligatoirement être réindexée pour que la
-     *   modification apportée puisse être prise en compte (exemple : création
+     * - 1 : la modification peut Ãªtre appliquÃ©e immÃ©diatement, mais il est
+     *   souhaitable de rÃ©indexer la base pour purger les donnÃ©es qui ne sont
+     *   plus nÃ©cessaires (exemple : suppression d'un champ ou d'un index).
+     * - 2 : la base devra obligatoirement Ãªtre rÃ©indexÃ©e pour que la
+     *   modification apportÃ©e puisse Ãªtre prise en compte (exemple : crÃ©ation
      *   d'un nouvel index).
      *
-     * Remarque : pour savoir s'il faut ou non réindexer la base, il suffit
+     * Remarque : pour savoir s'il faut ou non rÃ©indexer la base, il suffit
      * d'utiliser la fonction {@link http://php.net/max max()} de php au
      * tableau obtenu.
      *
      * Exemple :
      * <code>
      *      if (max($dbs->compare($oldDbs)) > 1)
-     *          echo 'Il faut réindexer la base';
+     *          echo 'Il faut rÃ©indexer la base';
      * </code>
      *
-     * La fonction retourne un tableau vide si les deux schémas sont
+     * La fonction retourne un tableau vide si les deux schÃ©mas sont
      * identiques.
      *
      */
     public function compare(DatabaseSchema $old)
     {
-        // Compile les deux schémas si nécessaire
+        // Compile les deux schÃ©mas si nÃ©cessaire
         $old->compile();
         $new=$this;
         $new->compile();
 
-        // Le tableau résultat
+        // Le tableau rÃ©sultat
         $changes=array();
 
-        // Propriétés générales de la base
+        // PropriÃ©tÃ©s gÃ©nÃ©rales de la base
         // -------------------------------
         if ($old->label !== $new->label)
-            $changes['Modification du libellé de la base']=0;
+            $changes['Modification du libellÃ© de la base']=0;
         if ($old->description !== $new->description)
             $changes['Modification de la description de la base']=0;
         if ($old->stopwords !== $new->stopwords)
             $changes['Modification des mots-vides de la base']=2;
         if ($old->indexstopwords !== $new->indexstopwords)
-            $changes['Modification de la propriété "indexer les mots-vides" de la base']=2;
+            $changes['Modification de la propriÃ©tÃ© "indexer les mots-vides" de la base']=2;
 
         // Liste des champs
         // ----------------
         $t1=$this->index($old->fields);
         $t2=$this->index($new->fields);
 
-        // Champs supprimés
+        // Champs supprimÃ©s
         foreach($deleted=array_diff_key($t1, $t2) as $i=>$item)
             $changes['Suppression du champ ' . $item->name]=1;
 
-        // Champs créés
+        // Champs crÃ©Ã©s
         foreach($added=array_diff_key($t2, $t1) as $i=>$item)
-            $changes['Création du champ ' . $item->name]=0;
+            $changes['CrÃ©ation du champ ' . $item->name]=0;
 
         // Ordre des champs
         if (array_keys(array_diff_key($t1,$deleted)) !== array_keys(array_diff_key($t2, $added)))
             $changes['Modification de l\'ordre des champs de la base']=0;
 
-        // Champs modifiés
+        // Champs modifiÃ©s
         foreach($t2 as $id=>$newField)
         {
             if (! isset($t1[$id])) continue;
@@ -1442,13 +1442,13 @@ class DatabaseSchema
                 $changes['Changement du type du champ ' . $newField->name . ' (' . $oldField->type . ' -> ' . $newField->type . ')']=2;
 
             if ($oldField->label !== $newField->label)
-                $changes['Changement du libellé du champ ' . $newField->name]=0;
+                $changes['Changement du libellÃ© du champ ' . $newField->name]=0;
 
             if ($oldField->description !== $newField->description)
                 $changes['Changement de la description du champ ' . $newField->name]=0;
 
             if ($oldField->defaultstopwords !== $newField->defaultstopwords )
-                $changes['Changement de la propriété "defaultstopwords" du champ ' . $newField->name]=2;
+                $changes['Changement de la propriÃ©tÃ© "defaultstopwords" du champ ' . $newField->name]=2;
 
             if ($oldField->stopwords !== $newField->stopwords )
                 $changes['Changement des mots-vides pour le champ ' . $newField->name]=2;
@@ -1460,21 +1460,21 @@ class DatabaseSchema
         $t1=$this->index($old->indices);
         $t2=$this->index($new->indices);
 
-        // Index supprimés
+        // Index supprimÃ©s
         foreach($deleted=array_diff_key($t1, $t2) as $i=>$item)
             $changes['Suppression de l\'index ' . $item->name]=1;
-            // todo : si l'index est vide, rien à faire, level 0
+            // todo : si l'index est vide, rien Ã  faire, level 0
 
-        // Index créés
+        // Index crÃ©Ã©s
         foreach($added=array_diff_key($t2, $t1) as $i=>$item)
-            $changes['Création de l\'index ' . $item->name]=2;
-            // todo: si nouvel index sur nouveau champ et count=false, rien à faire, level 0
+            $changes['CrÃ©ation de l\'index ' . $item->name]=2;
+            // todo: si nouvel index sur nouveau champ et count=false, rien Ã  faire, level 0
 
         // Ordre des index
         if (array_keys(array_diff_key($t1,$deleted)) !== array_keys(array_diff_key($t2, $added)))
             $changes['Modification de l\'ordre des index']=0;
 
-        // Index modifiés
+        // Index modifiÃ©s
         foreach($t2 as $id=>$newIndex)
         {
             if (! isset($t1[$id])) continue;
@@ -1484,7 +1484,7 @@ class DatabaseSchema
                 $changes['Renommage de l\'index ' . $oldIndex->name . ' en ' . $newIndex->name]=0;
 
             if ($oldIndex->label !== $newIndex->label)
-                $changes['Changement du libellé de l\'index ' . $newIndex->name]=0;
+                $changes['Changement du libellÃ© de l\'index ' . $newIndex->name]=0;
 
             if ($oldIndex->description !== $newIndex->description)
                 $changes['Changement de la description de l\'index ' . $newIndex->name]=0;
@@ -1507,28 +1507,28 @@ class DatabaseSchema
             $f1=$this->index($oldIndex->fields);
             $f2=$this->index($newIndex->fields);
 
-            // Champs enlevés
+            // Champs enlevÃ©s
             foreach($deleted=array_diff_key($f1, $f2) as $i=>$item)
                 $changes['Suppression du champ ' . $item->name . ' de l\'index ' . $newIndex->name]=2;
-                // todo : si l'index est vide, rien à faire, level 0
+                // todo : si l'index est vide, rien Ã  faire, level 0
 
-            // Champ ajoutés
+            // Champ ajoutÃ©s
             foreach($added=array_diff_key($f2, $f1) as $i=>$item)
                 $changes['Ajout du champ ' . $item->name . ' dans l\'index ' . $newIndex->name]=2;
-                // todo: si nouvel index sur nouveau champ et count=false, rien à faire, level 0
+                // todo: si nouvel index sur nouveau champ et count=false, rien Ã  faire, level 0
 
             // Ordre des champs de l'index
             if (array_keys(array_diff_key($f1,$deleted)) !== array_keys(array_diff_key($f2, $added)))
                 $changes['Modification de l\'ordre des champs dans l\'index ' . $newIndex->name]=0;
 
-            // Champs d'index modifiés
+            // Champs d'index modifiÃ©s
             foreach($f2 as $id=>$newField)
             {
                 if (! isset($f1[$id])) continue;
                 $oldField=$f1[$id];
 
                 if ($oldField != $newField)
-                    $changes['Index ' . $newIndex->name . ' : Modification des paramètres d\'indexation du champ ' . $newField->name]=2;
+                    $changes['Index ' . $newIndex->name . ' : Modification des paramÃ¨tres d\'indexation du champ ' . $newField->name]=2;
             }
         }
 
@@ -1538,19 +1538,19 @@ class DatabaseSchema
         $t1=$this->index($old->aliases);
         $t2=$this->index($new->aliases);
 
-        // Alias supprimés
+        // Alias supprimÃ©s
         foreach($deleted=array_diff_key($t1, $t2) as $i=>$item)
             $changes['Suppression de l\'alias ' . $item->name]=0;
 
-        // Alias créés
+        // Alias crÃ©Ã©s
         foreach($added=array_diff_key($t2, $t1) as $i=>$item)
-            $changes['Création de l\'alias ' . $item->name]=0;
+            $changes['CrÃ©ation de l\'alias ' . $item->name]=0;
 
         // Ordre des alias
         if (array_keys(array_diff_key($t1,$deleted)) !== array_keys(array_diff_key($t2, $added)))
             $changes['Modification de l\'ordre des alias']=0;
 
-        // Alias modifiés
+        // Alias modifiÃ©s
         foreach($t2 as $id=>$newAlias)
         {
             if (! isset($t1[$id])) continue;
@@ -1560,7 +1560,7 @@ class DatabaseSchema
                 $changes['Renommage de l\'alias ' . $oldAlias->name . ' en ' . $newAlias->name]=0;
 
             if ($oldAlias->label !== $newAlias->label)
-                $changes['Changement du libellé de l\'alias ' . $newAlias->name]=0;
+                $changes['Changement du libellÃ© de l\'alias ' . $newAlias->name]=0;
 
             if ($oldAlias->description !== $newAlias->description)
                 $changes['Changement de la description de l\'alias ' . $newAlias->name]=0;
@@ -1572,11 +1572,11 @@ class DatabaseSchema
             $f1=$this->index($oldAlias->indices);
             $f2=$this->index($newAlias->indices);
 
-            // Index enlevés
+            // Index enlevÃ©s
             foreach($deleted=array_diff_key($f1, $f2) as $i=>$item)
                 $changes['Suppression de l\'index ' . $item->name . ' de l\'alias ' . $newAlias->name]=0;
 
-            // Index ajoutés
+            // Index ajoutÃ©s
             foreach($added=array_diff_key($f2, $f1) as $i=>$item)
                 $changes['Ajout de l\'index ' . $item->name . ' dans l\'alias ' . $newAlias->name]=0;
 
@@ -1584,15 +1584,15 @@ class DatabaseSchema
             if (array_keys(array_diff_key($f1,$deleted)) !== array_keys(array_diff_key($f2, $added)))
                 $changes['Modification de l\'ordre des index dans l\'alias ' . $newAlias->name]=0;
 
-            // Index d'alias modifiés
-            /* Inutile : les index indiqués pour un alias n'ont pas d'autres propriétés que name
+            // Index d'alias modifiÃ©s
+            /* Inutile : les index indiquÃ©s pour un alias n'ont pas d'autres propriÃ©tÃ©s que name
             foreach($f2 as $id=>$newIndex)
             {
                 if (! isset($f1[$id])) continue;
                 $oldIndex=$f1[$id];
 
                 if ($oldIndex != $newIndex)
-                    $changes['Alias ' . $newAlias->name . ' : Modification des paramètres d\'alias de l\'index ' . $newIndex->name]=0;
+                    $changes['Alias ' . $newAlias->name . ' : Modification des paramÃ¨tres d\'alias de l\'index ' . $newIndex->name]=0;
             }
             */
         }
@@ -1603,19 +1603,19 @@ class DatabaseSchema
         $t1=$this->index($old->lookuptables);
         $t2=$this->index($new->lookuptables);
 
-        // Tables de lookup supprimées
+        // Tables de lookup supprimÃ©es
         foreach($deleted=array_diff_key($t1, $t2) as $i=>$item)
             $changes['Suppression de la table de lookup ' . $item->name]=1;
 
-        // Tables de lookup créées
+        // Tables de lookup crÃ©Ã©es
         foreach($added=array_diff_key($t2, $t1) as $i=>$item)
-            $changes['Création de la table de lookup ' . $item->name]=2;
+            $changes['CrÃ©ation de la table de lookup ' . $item->name]=2;
 
         // Ordre des tables de lookup
         if (array_keys(array_diff_key($t1,$deleted)) !== array_keys(array_diff_key($t2, $added)))
             $changes['Modification de l\'ordre des tables de lookup']=0;
 
-        // Tables de lookup modifiées
+        // Tables de lookup modifiÃ©es
         foreach($t2 as $id=>$newTable)
         {
             if (! isset($t1[$id])) continue;
@@ -1625,7 +1625,7 @@ class DatabaseSchema
                 $changes['Renommage de la table de lookup ' . $oldTable->name . ' en ' . $newTable->name]=0;
 
             if ($oldTable->label !== $newTable->label)
-                $changes['Changement du libellé de la table de lookup ' . $newTable->name]=0;
+                $changes['Changement du libellÃ© de la table de lookup ' . $newTable->name]=0;
 
             if ($oldTable->description !== $newTable->description)
                 $changes['Changement de la description de la table de lookup ' . $newTable->name]=0;
@@ -1634,28 +1634,28 @@ class DatabaseSchema
             $f1=$this->index($oldTable->fields);
             $f2=$this->index($newTable->fields);
 
-            // Champs enlevés
+            // Champs enlevÃ©s
             foreach($deleted=array_diff_key($f1, $f2) as $i=>$item)
                 $changes['Suppression du champ ' . $item->name . ' de la table de lookup ' . $newTable->name]=2;
-                // todo : si l'index est vide, rien à faire, level 0
+                // todo : si l'index est vide, rien Ã  faire, level 0
 
-            // Champ ajoutés
+            // Champ ajoutÃ©s
             foreach($added=array_diff_key($f2, $f1) as $i=>$item)
                 $changes['Ajout du champ ' . $item->name . ' dans la table de lookup ' . $newTable->name]=2;
-                // todo: si nouvel index sur nouveau champ et count=false, rien à faire, level 0
+                // todo: si nouvel index sur nouveau champ et count=false, rien Ã  faire, level 0
 
             // Ordre des champs de l'index
             if (array_keys(array_diff_key($f1,$deleted)) !== array_keys(array_diff_key($f2, $added)))
                 $changes['Modification de l\'ordre des champs dans la table de lookup ' . $newTable->name]=0;
 
-            // Champs dde tables de lookup modifiés
+            // Champs dde tables de lookup modifiÃ©s
             foreach($f2 as $id=>$newField)
             {
                 if (! isset($f1[$id])) continue;
                 $oldField=$f1[$id];
 
                 if ($oldField != $newField)
-                    $changes['Table de lookup ' . $newTable->name . ' : Modification des paramètres pour le champ ' . $newField->name]=2;
+                    $changes['Table de lookup ' . $newTable->name . ' : Modification des paramÃ¨tres pour le champ ' . $newField->name]=2;
             }
         }
 
@@ -1665,19 +1665,19 @@ class DatabaseSchema
         $t1=$this->index($old->lookuptables);
         $t2=$this->index($new->lookuptables);
 
-        // Tables de lookup supprimées
+        // Tables de lookup supprimÃ©es
         foreach($deleted=array_diff_key($t1, $t2) as $i=>$item)
             $changes['Suppression de la table de lookup ' . $item->name]=1;
 
-        // Tables de lookup créées
+        // Tables de lookup crÃ©Ã©es
         foreach($added=array_diff_key($t2, $t1) as $i=>$item)
-            $changes['Création de la table de lookup ' . $item->name]=2;
+            $changes['CrÃ©ation de la table de lookup ' . $item->name]=2;
 
         // Ordre des tables de lookup
         if (array_keys(array_diff_key($t1,$deleted)) !== array_keys(array_diff_key($t2, $added)))
             $changes['Modification de l\'ordre des tables de lookup']=0;
 
-        // Tables de lookup modifiées
+        // Tables de lookup modifiÃ©es
         foreach($t2 as $id=>$newTable)
         {
             if (! isset($t1[$id])) continue;
@@ -1687,7 +1687,7 @@ class DatabaseSchema
                 $changes['Renommage de la table de lookup ' . $oldTable->name . ' en ' . $newTable->name]=0;
 
             if ($oldTable->label !== $newTable->label)
-                $changes['Changement du libellé de la table de lookup ' . $newTable->name]=0;
+                $changes['Changement du libellÃ© de la table de lookup ' . $newTable->name]=0;
 
             if ($oldTable->description !== $newTable->description)
                 $changes['Changement de la description de la table de lookup ' . $newTable->name]=0;
@@ -1696,108 +1696,108 @@ class DatabaseSchema
             $f1=$this->index($oldTable->fields);
             $f2=$this->index($newTable->fields);
 
-            // Champs enlevés
+            // Champs enlevÃ©s
             foreach($deleted=array_diff_key($f1, $f2) as $i=>$item)
                 $changes['Suppression du champ ' . $item->name . ' de la table de lookup ' . $newTable->name]=2;
-                // todo : si l'index est vide, rien à faire, level 0
+                // todo : si l'index est vide, rien Ã  faire, level 0
 
-            // Champ ajoutés
+            // Champ ajoutÃ©s
             foreach($added=array_diff_key($f2, $f1) as $i=>$item)
                 $changes['Ajout du champ ' . $item->name . ' dans la table de lookup ' . $newTable->name]=2;
-                // todo: si nouvel index sur nouveau champ et count=false, rien à faire, level 0
+                // todo: si nouvel index sur nouveau champ et count=false, rien Ã  faire, level 0
 
             // Ordre des champs de l'index
             if (array_keys(array_diff_key($f1,$deleted)) !== array_keys(array_diff_key($f2, $added)))
                 $changes['Modification de l\'ordre des champs dans la table de lookup ' . $newTable->name]=0;
 
-            // Champs de tables de lookup modifiés
+            // Champs de tables de lookup modifiÃ©s
             foreach($f2 as $id=>$newField)
             {
                 if (! isset($f1[$id])) continue;
                 $oldField=$f1[$id];
 
                 if ($oldField != $newField)
-                    $changes['Table de lookup ' . $newTable->name . ' : Modification des paramètres pour le champ ' . $newField->name]=2;
+                    $changes['Table de lookup ' . $newTable->name . ' : Modification des paramÃ¨tres pour le champ ' . $newField->name]=2;
             }
         }
 
 
-        // Liste des clés de tri
+        // Liste des clÃ©s de tri
         // ---------------------
         $t1=$this->index($old->sortkeys);
         $t2=$this->index($new->sortkeys);
 
-        // Clés de tri supprimées
+        // ClÃ©s de tri supprimÃ©es
         foreach($deleted=array_diff_key($t1, $t2) as $i=>$item)
-            $changes['Suppression de la clé de tri ' . $item->name]=1;
+            $changes['Suppression de la clÃ© de tri ' . $item->name]=1;
 
-        // Clés de tri créées
+        // ClÃ©s de tri crÃ©Ã©es
         foreach($added=array_diff_key($t2, $t1) as $i=>$item)
-            $changes['Création de la clé de tri ' . $item->name]=2;
+            $changes['CrÃ©ation de la clÃ© de tri ' . $item->name]=2;
 
-        // Ordre des clés de tri
+        // Ordre des clÃ©s de tri
         if (array_keys(array_diff_key($t1,$deleted)) !== array_keys(array_diff_key($t2, $added)))
-            $changes['Modification de l\'ordre des clés de tri']=0;
+            $changes['Modification de l\'ordre des clÃ©s de tri']=0;
 
-        // Clés de tri modifiées
+        // ClÃ©s de tri modifiÃ©es
         foreach($t2 as $id=>$newSortKey)
         {
             if (! isset($t1[$id])) continue;
             $oldSortKey=$t1[$id];
 
             if ($oldSortKey->name !== $newSortKey->name)
-                $changes['Renommage de la clé de tri ' . $oldSortKey->name . ' en ' . $newSortKey->name]=0;
+                $changes['Renommage de la clÃ© de tri ' . $oldSortKey->name . ' en ' . $newSortKey->name]=0;
 
             if ($oldSortKey->label !== $newSortKey->label)
-                $changes['Changement du libellé de la clé de tri ' . $newSortKey->name]=0;
+                $changes['Changement du libellÃ© de la clÃ© de tri ' . $newSortKey->name]=0;
 
             if ($oldSortKey->description !== $newSortKey->description)
-                $changes['Changement de la description de la clé de tri ' . $newSortKey->name]=0;
+                $changes['Changement de la description de la clÃ© de tri ' . $newSortKey->name]=0;
 
             if ($oldSortKey->type !== $newSortKey->type)
-                $changes['Changement du type de la clé de tri ' . $newSortKey->name]=2;
+                $changes['Changement du type de la clÃ© de tri ' . $newSortKey->name]=2;
 
-            // Liste des champs de cette clé de tri
+            // Liste des champs de cette clÃ© de tri
             $f1=$this->index($oldSortKey->fields);
             $f2=$this->index($newSortKey->fields);
 
-            // Champs enlevés
+            // Champs enlevÃ©s
             foreach($deleted=array_diff_key($f1, $f2) as $i=>$item)
-                $changes['Suppression du champ ' . $item->name . ' de la clé de tri ' . $newSortKey->name]=2;
+                $changes['Suppression du champ ' . $item->name . ' de la clÃ© de tri ' . $newSortKey->name]=2;
 
-            // Champ ajoutés
+            // Champ ajoutÃ©s
             foreach($added=array_diff_key($f2, $f1) as $i=>$item)
-                $changes['Ajout du champ ' . $item->name . ' dans la clé de tri ' . $newSortKey->name]=2;
+                $changes['Ajout du champ ' . $item->name . ' dans la clÃ© de tri ' . $newSortKey->name]=2;
 
-            // Ordre des champs de la clé de tri
+            // Ordre des champs de la clÃ© de tri
             if (array_keys(array_diff_key($f1,$deleted)) !== array_keys(array_diff_key($f2, $added)))
-                $changes['Modification de l\'ordre des champs dans la clé de tri ' . $newSortKey->name]=2;
+                $changes['Modification de l\'ordre des champs dans la clÃ© de tri ' . $newSortKey->name]=2;
 
-            // Champs de clés de tri modifiés
+            // Champs de clÃ©s de tri modifiÃ©s
             foreach($f2 as $id=>$newField)
             {
                 if (! isset($f1[$id])) continue;
                 $oldField=$f1[$id];
 
                 if ($oldField != $newField)
-                    $changes['Clé de tri ' . $newSortKey->name . ' : Modification des paramètres pour le champ ' . $newField->name]=2;
+                    $changes['ClÃ© de tri ' . $newSortKey->name . ' : Modification des paramÃ¨tres pour le champ ' . $newField->name]=2;
             }
         }
 
-        // Retourne le résultat
+        // Retourne le rÃ©sultat
         return $changes;
     }
 
     /**
-     * Fonction utilitaire utilisée par {@link compare()}.
+     * Fonction utilitaire utilisÃ©e par {@link compare()}.
      *
-     * Index la collection d'objet en paramétre par id.
+     * Index la collection d'objet en paramÃ©tre par id.
      *
      * @param array $collection un tableau contenant des objets ayant une
-     * propriété '_id'
+     * propriÃ©tÃ© '_id'
      *
-     * @return array le même tableau mais dans lequel les clés des objets
-     * correspondent à la valeur de la propriété _id.
+     * @return array le mÃªme tableau mais dans lequel les clÃ©s des objets
+     * correspondent Ã  la valeur de la propriÃ©tÃ© _id.
      */
     private function index($collection)
     {
@@ -1810,7 +1810,7 @@ class DatabaseSchema
 
 
 /**
- * Exception générique générée par {@link DatabaseSchema}
+ * Exception gÃ©nÃ©rique gÃ©nÃ©rÃ©e par {@link DatabaseSchema}
  *
  * @package     fab
  * @subpackage  database
@@ -1818,8 +1818,8 @@ class DatabaseSchema
 class DatabaseSchemaException extends RuntimeException { };
 
 /**
- * Exception générée lorsqu'un fichier xml représentant un schéma de base
- * de données contient des erreurs
+ * Exception gÃ©nÃ©rÃ©e lorsqu'un fichier xml reprÃ©sentant un schÃ©ma de base
+ * de donnÃ©es contient des erreurs
  *
  * @package     fab
  * @subpackage  database
@@ -1827,8 +1827,8 @@ class DatabaseSchemaException extends RuntimeException { };
 class DatabaseSchemaXmlException extends DatabaseSchemaException { };
 
 /**
- * Exception générée lorsqu'un fichier xml représentant un schéma de base
- * de données contient un noeud incorrect
+ * Exception gÃ©nÃ©rÃ©e lorsqu'un fichier xml reprÃ©sentant un schÃ©ma de base
+ * de donnÃ©es contient un noeud incorrect
  *
  * @package     fab
  * @subpackage  database

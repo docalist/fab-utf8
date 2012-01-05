@@ -2,13 +2,13 @@
 /**
  * @package     fab
  * @subpackage  database
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: XapianDatabase.php 1252 2011-04-14 11:25:50Z daniel.menard.bdsp $
  */
 
 /**
- * Un driver de base de données pour fab utilisant une base Xapian pour
- * l'indexation et le stockage des données
+ * Un driver de base de donnÃ©es pour fab utilisant une base Xapian pour
+ * l'indexation et le stockage des donnÃ©es
  *
  * @package     fab
  * @subpackage  database
@@ -16,7 +16,7 @@
 class XapianDatabaseDriver extends Database
 {
     /**
-     * Le schéma de la base de données (cf {@link getSchema()}).
+     * Le schÃ©ma de la base de donnÃ©es (cf {@link getSchema()}).
      *
      * @var DatabaseSchema
      */
@@ -25,13 +25,13 @@ class XapianDatabaseDriver extends Database
 
     /**
      * Tableau interne indiquant, pour chaque champ de type 'AutoNumber' le nom
-     * de la clé metadata utilisée pour stocker le dernier numéro utilisé.
+     * de la clÃ© metadata utilisÃ©e pour stocker le dernier numÃ©ro utilisÃ©.
      *
-     * Les clés du tableau sont les noms (minu sans accents) des champs de type
+     * Les clÃ©s du tableau sont les noms (minu sans accents) des champs de type
      * AutoNumber. La valeur est une chaine de la forme 'fab_autonumber_ID' ou
      * 'ID' est l'identifiant du champ.
      *
-     * Ce tableau est initialisé dans InitDatabase() et n'est utilisé que par
+     * Ce tableau est initialisÃ© dans InitDatabase() et n'est utilisÃ© que par
      * saveRecord()
      *
      * @var {array(string)}
@@ -40,11 +40,11 @@ class XapianDatabaseDriver extends Database
 
 
     /**
-     * Permet un accès à la valeur d'un champ dont on connaît l'id
+     * Permet un accÃ¨s Ã  la valeur d'un champ dont on connaÃ®t l'id
      *
-     * Pour chaque champ (name,id), fieldById[id] contient une référence
+     * Pour chaque champ (name,id), fieldById[id] contient une rÃ©fÃ©rence
      * vers fields[name] (ie modifier fields[i] ou fieldsById[i] changent la
-     * même variable)
+     * mÃªme variable)
      *
      * @var Array
      */
@@ -52,7 +52,7 @@ class XapianDatabaseDriver extends Database
 
 
     /**
-     * L'objet XapianDatabase retourné par xapian après ouverture ou création
+     * L'objet XapianDatabase retournÃ© par xapian aprÃ¨s ouverture ou crÃ©ation
      * de la base.
      *
      * @var XapianDatabase
@@ -61,7 +61,7 @@ class XapianDatabaseDriver extends Database
 
 
     /**
-     * L'objet XapianDocument contenant les données de l'enregistrement en
+     * L'objet XapianDocument contenant les donnÃ©es de l'enregistrement en
      * cours ou null s'il n'y a pas d'enregistrement courant.
      *
      * @var XapianDocument
@@ -73,13 +73,13 @@ class XapianDatabaseDriver extends Database
      * Un flag indiquant si on est en train de modifier l'enregistrement en
      * cours ou non  :
      *
-     * - 0 : l'enregistrement courant n'est pas en cours d'édition
+     * - 0 : l'enregistrement courant n'est pas en cours d'Ã©dition
      *
-     * - 1 : un nouvel enregistrement est en cours de création
-     * ({@link addRecord()} a été appellée)
+     * - 1 : un nouvel enregistrement est en cours de crÃ©ation
+     * ({@link addRecord()} a Ã©tÃ© appellÃ©e)
      *
      * - 2 : l'enregistrement courant est en cours de modification
-     * ({@link editRecord()} a été appellée)
+     * ({@link editRecord()} a Ã©tÃ© appellÃ©e)
      *
      * @var int
      */
@@ -90,7 +90,7 @@ class XapianDatabaseDriver extends Database
      * Un tableau contenant la valeur de chacun des champs de l'enregistrement
      * en cours.
      *
-     * Ce tableau est passé à l'objet {@link XapianDatabaseRecord} que l'on crée
+     * Ce tableau est passÃ© Ã  l'objet {@link XapianDatabaseRecord} que l'on crÃ©e
      * lors de l'ouverture de la base.
      *
      * @var Array
@@ -99,9 +99,9 @@ class XapianDatabaseDriver extends Database
 
 
     /**
-     * L'objet XapianEnquire représentant l'environnement de recherche.
+     * L'objet XapianEnquire reprÃ©sentant l'environnement de recherche.
      *
-     * Vaut null tant que {@link search()} n'a pas été appellée.
+     * Vaut null tant que {@link search()} n'a pas Ã©tÃ© appellÃ©e.
      *
      * @var XapianEnquire
      */
@@ -109,9 +109,9 @@ class XapianDatabaseDriver extends Database
 
 
     /**
-     * L'objet XapianQueryParser utilisé pour analyser les équations de recherche.
+     * L'objet XapianQueryParser utilisÃ© pour analyser les Ã©quations de recherche.
      *
-     * Initialisé par {@link setupSearch()} et utilisé uniquement dans
+     * InitialisÃ© par {@link setupSearch()} et utilisÃ© uniquement dans
      * {@link search()}
      *
      * @var XapianQueryParser
@@ -119,59 +119,59 @@ class XapianDatabaseDriver extends Database
     private $xapianQueryParser=null;
 
     /**
-     * Un query parser utilisé de façon spéciale pour générer la version
-     * corrigée (orthographe) de la requête de l'utilisateur.
+     * Un query parser utilisÃ© de faÃ§on spÃ©ciale pour gÃ©nÃ©rer la version
+     * corrigÃ©e (orthographe) de la requÃªte de l'utilisateur.
      *
      * @var XapianQueryParser
      */
     private $xapianSpellChecker=null;
 
     /**
-     * L'objet XapianMultiValueSorter utilisé pour réaliser les tris multivalués.
+     * L'objet XapianMultiValueSorter utilisÃ© pour rÃ©aliser les tris multivaluÃ©s.
      *
-     * Initialisé par {@link setSortOrder()}.
+     * InitialisÃ© par {@link setSortOrder()}.
      *
      * @var XapianMultiValueSorter
      */
     private $xapianSorter=null;
 
     /**
-     * L'objet XapianMSet contenant les résultats de la recherche.
+     * L'objet XapianMSet contenant les rÃ©sultats de la recherche.
      *
-     * Vaut null tant que {@link search()} n'a pas été appellée.
+     * Vaut null tant que {@link search()} n'a pas Ã©tÃ© appellÃ©e.
      *
      * @var XapianMSet
      */
     private $xapianMSet=null;
 
     /**
-     * L'objet XapianMSetIterator permettant de parcourir les réponses obtenues
+     * L'objet XapianMSetIterator permettant de parcourir les rÃ©ponses obtenues
      *
-     * Vaut null tant que {@link search()} n'a pas été appellée.
+     * Vaut null tant que {@link search()} n'a pas Ã©tÃ© appellÃ©e.
      *
      * @var XapianMSetIterator
      */
     private $xapianMSetIterator=null;
 
     /**
-     * L'objet XapianQuery contenant l'équation de recherche indiquée par
-     * l'utilisateur (sans les filtres éventuels appliqués).
+     * L'objet XapianQuery contenant l'Ã©quation de recherche indiquÃ©e par
+     * l'utilisateur (sans les filtres Ã©ventuels appliquÃ©s).
      *
-     * Vaut null tant que {@link search()} n'a pas été appellée.
+     * Vaut null tant que {@link search()} n'a pas Ã©tÃ© appellÃ©e.
      *
-     * Utilisé par {@link getQueryTerms()} pour retourner la liste des termes
-     * composant la requête
+     * UtilisÃ© par {@link getQueryTerms()} pour retourner la liste des termes
+     * composant la requÃªte
      *
      * @var XapianQuery
      */
     private $xapianQuery=null;
 
     /**
-     * L'objet XapianFilter contient la requête correspondant aux filtres
-     * appliqués à la recherche
+     * L'objet XapianFilter contient la requÃªte correspondant aux filtres
+     * appliquÃ©s Ã  la recherche
      *
-     * Vaut null tant que {@link search()} n'a pas été appellée.
-     * Vaut null si aucun filtre n'a été spécifié.
+     * Vaut null tant que {@link search()} n'a pas Ã©tÃ© appellÃ©e.
+     * Vaut null si aucun filtre n'a Ã©tÃ© spÃ©cifiÃ©.
      *
      * @var XapianQuery
      */
@@ -179,31 +179,31 @@ class XapianDatabaseDriver extends Database
 
 
     /**
-     * L'objet UserQuery contient tous les paramètrs de la requête exécutée.
+     * L'objet UserQuery contient tous les paramÃ¨trs de la requÃªte exÃ©cutÃ©e.
      *
-     * Vaut null tant que {@link search()} n'a pas été appellée.
+     * Vaut null tant que {@link search()} n'a pas Ã©tÃ© appellÃ©e.
      *
      * @var UserQuery
      */
     private $query=null;
 
     /**
-     * Libellé de l'ordre de tri utilisé lors de la recherche.
+     * LibellÃ© de l'ordre de tri utilisÃ© lors de la recherche.
      *
-     * Si plusieurs critères de tri ont été indiqués lors de la requête,
-     * le libellé obtenu est une chaine listant toutes les clés (séparées
+     * Si plusieurs critÃ¨res de tri ont Ã©tÃ© indiquÃ©s lors de la requÃªte,
+     * le libellÃ© obtenu est une chaine listant toutes les clÃ©s (sÃ©parÃ©es
      * par des espaces).
      *
      * Exemples :
-     * - 'type', 'date-', '%', '+', '-' pour une clé de tri unique
-     * - 'type date-', 'date- %' pour une clé de tri composite
+     * - 'type', 'date-', '%', '+', '-' pour une clÃ© de tri unique
+     * - 'type date-', 'date- %' pour une clÃ© de tri composite
      *
      * @var string
      */
     private $sortOrder='';
 
     /**
-     * Tableau contenant les numéros des slots qui contiennent les valeurs
+     * Tableau contenant les numÃ©ros des slots qui contiennent les valeurs
      * composant l'ordre de tri en cours.
      *
      * @var null|array
@@ -211,24 +211,24 @@ class XapianDatabaseDriver extends Database
     private $sortKey=array();
 
     /**
-     * Une estimation du nombre de réponses obtenues pour la recherche en cours.
+     * Une estimation du nombre de rÃ©ponses obtenues pour la recherche en cours.
      *
      * @var int
      */
     private $count=0;
 
     /**
-     * La version corrigée par le correcteur orthographique de xapian de la
-     * requête en cours.
+     * La version corrigÃ©e par le correcteur orthographique de xapian de la
+     * requÃªte en cours.
      *
      * @var string
      */
     private $correctedEquation=null;
 
     /**
-     * MatchingSpy employé pour créer les facettes de la recherche
+     * MatchingSpy employÃ© pour crÃ©er les facettes de la recherche
      *
-     * Expérimental (branche MatchSpy de Xapian), cf search().
+     * ExpÃ©rimental (branche MatchSpy de Xapian), cf search().
      *
      * @var XapianMatchDecider
      */
@@ -236,7 +236,7 @@ class XapianDatabaseDriver extends Database
 
 
     /**
-     * Le contexte de la dernière recherche exécutée (les options passées à
+     * Le contexte de la derniÃ¨re recherche exÃ©cutÃ©e (les options passÃ©es Ã 
      * {@link search()}).
      *
      * @var Request // todo: utiliser classe Parameters quand dispo
@@ -244,14 +244,14 @@ class XapianDatabaseDriver extends Database
     private $options=null;
 
     /**
-     * Retourne le schéma de la base de données
+     * Retourne le schÃ©ma de la base de donnÃ©es
      *
-     * @param bool $raw Par défaut, le schéma retourné contient des propriétés _stopwords qui
-     * contiennent un tableau permettant un accès direct aux mots-vides définis pour la base et
-     * pour chacun des champs (cf initDatabase). Normallement, ces propriétés _stopwords ne
-     * figurent pas dans le schéma (tel qu'il est stocké dans /data/schemas ou dans les
-     * metadonnées de la base).
-     * Pour récupérer le schéma réel, appellez getSchema() en indiquant $raw=true.
+     * @param bool $raw Par dÃ©faut, le schÃ©ma retournÃ© contient des propriÃ©tÃ©s _stopwords qui
+     * contiennent un tableau permettant un accÃ¨s direct aux mots-vides dÃ©finis pour la base et
+     * pour chacun des champs (cf initDatabase). Normallement, ces propriÃ©tÃ©s _stopwords ne
+     * figurent pas dans le schÃ©ma (tel qu'il est stockÃ© dans /data/schemas ou dans les
+     * metadonnÃ©es de la base).
+     * Pour rÃ©cupÃ©rer le schÃ©ma rÃ©el, appellez getSchema() en indiquant $raw=true.
      *
      * @return DatabaseSchema
      */
@@ -264,67 +264,67 @@ class XapianDatabaseDriver extends Database
     }
 
     // *************************************************************************
-    // ***************** Création et ouverture de la base **********************
+    // ***************** CrÃ©ation et ouverture de la base **********************
     // *************************************************************************
 
     /**
-     * Crée une nouvelle base xapian
+     * CrÃ©e une nouvelle base xapian
      *
-     * @param string $path le path de la base à créer
-     * @param DatabaseSchema $schema le schéma de la base à créer
-     * @param array $options options éventuelle, non utilisé
+     * @param string $path le path de la base Ã  crÃ©er
+     * @param DatabaseSchema $schema le schÃ©ma de la base Ã  crÃ©er
+     * @param array $options options Ã©ventuelle, non utilisÃ©
      */
     protected function doCreate($path, /* DS DatabaseSchema */ $schema, $options=null)
     {
         /* DS A ENLEVER */
-        // Vérifie que le schéma de la base de données est correcte
+        // VÃ©rifie que le schÃ©ma de la base de donnÃ©es est correcte
         if (true !== $t=$schema->validate())
-            throw new Exception('Le schéma passé en paramètre contient des erreurs : ' . implode('<br />', $t));
+            throw new Exception('Le schÃ©ma passÃ© en paramÃ¨tre contient des erreurs : ' . implode('<br />', $t));
 
-        // Compile le schéma
+        // Compile le schÃ©ma
         $schema->compile();
 
-        // Crée la base xapian
-        $this->xapianDatabase=new XapianWritableDatabase($path, Xapian::DB_CREATE_OR_OVERWRITE); // todo: remettre à DB_CREATE
+        // CrÃ©e la base xapian
+        $this->xapianDatabase=new XapianWritableDatabase($path, Xapian::DB_CREATE_OR_OVERWRITE); // todo: remettre Ã  DB_CREATE
 //        $this->xapianDatabase=Xapian::chert_open($path,Xapian::DB_CREATE_OR_OVERWRITE,8192);
 
         // Enregistre le schema dans la base
         $this->xapianDatabase->set_metadata('schema', $schema->toXml());
         $this->xapianDatabase->set_metadata('schema_object', serialize($schema));
 
-        // Initialise les propriétés de l'objet
+        // Initialise les propriÃ©tÃ©s de l'objet
         $this->schema=$schema;
         $this->initDatabase(true);
     }
 
     /**
-     * Modifie la structure d'une base de données en lui appliquant le
-     * schéma passé en paramêtre.
+     * Modifie la structure d'une base de donnÃ©es en lui appliquant le
+     * schÃ©ma passÃ© en paramÃªtre.
      *
-     * La fonction se contente d'enregistrer le nouveau schéma dans
-     * la base : selon les modifications apportées, il peut être nécessaire
-     * ensuite de lancer une réindexation complète (par exemple pour créer les
-     * nouveaux index ou pour purger les champs qui ont été supprimés).
+     * La fonction se contente d'enregistrer le nouveau schÃ©ma dans
+     * la base : selon les modifications apportÃ©es, il peut Ãªtre nÃ©cessaire
+     * ensuite de lancer une rÃ©indexation complÃ¨te (par exemple pour crÃ©er les
+     * nouveaux index ou pour purger les champs qui ont Ã©tÃ© supprimÃ©s).
      *
-     * @param DatabaseSchema $newSchema le nouveau schéma de la base.
+     * @param DatabaseSchema $newSchema le nouveau schÃ©ma de la base.
      */
     public function setSchema(DatabaseSchema $schema)
     {
         if (! $this->xapianDatabase instanceOf XapianWritableDatabase)
-            throw new LogicException('Impossible de modifier le schéma d\'une base ouverte en lecture seule.');
+            throw new LogicException('Impossible de modifier le schÃ©ma d\'une base ouverte en lecture seule.');
 
-        // Vérifie que le schéma de la base de données est correct
+        // VÃ©rifie que le schÃ©ma de la base de donnÃ©es est correct
         if (true !== $t=$schema->validate())
-            throw new Exception('Le schéma passé en paramètre contient des erreurs : ' . implode('<br />', $t));
+            throw new Exception('Le schÃ©ma passÃ© en paramÃ¨tre contient des erreurs : ' . implode('<br />', $t));
 
-        // Compile le schéma
+        // Compile le schÃ©ma
         $schema->compile();
 
-        // Enregistre le schéma dans la base
+        // Enregistre le schÃ©ma dans la base
         $this->xapianDatabase->set_metadata('schema', $schema->toXml());
         $this->xapianDatabase->set_metadata('schema_object', serialize($schema));
 
-        // Initialise les propriétés de l'objet
+        // Initialise les propriÃ©tÃ©s de l'objet
         $this->schema=$schema;
         $this->initDatabase(true);
     }
@@ -333,9 +333,9 @@ class XapianDatabaseDriver extends Database
     /**
      * Ouvre une base Xapian
      *
-     * @param string $path le path de la base à ouvrir.
+     * @param string $path le path de la base Ã  ouvrir.
      * @param bool $readOnly true pour ouvrir la base en lecture seule, false
-     * pour l'ouvrir en mode lexture/écriture.
+     * pour l'ouvrir en mode lexture/Ã©criture.
      */
     protected function doOpen($path, $readOnly=true)
     {
@@ -345,7 +345,7 @@ class XapianDatabaseDriver extends Database
             $this->xapianDatabase=new XapianDatabase($path);
         }
 
-        // Ouverture de la base xapian en écriture
+        // Ouverture de la base xapian en Ã©criture
         else
         {
             $starttime=microtime(true);
@@ -359,11 +359,11 @@ class XapianDatabaseDriver extends Database
                 }
                 catch (Exception $e)
                 {
-                    // comme l'exception DatabaseLockError de xapian n'est pas mappée en php
-                    // on teste le début du message d'erreur pour déterminer le type de l'exception
+                    // comme l'exception DatabaseLockError de xapian n'est pas mappÃ©e en php
+                    // on teste le dÃ©but du message d'erreur pour dÃ©terminer le type de l'exception
                     if (strpos($e->getMessage(), 'DatabaseLockError:')===0)
                     {
-//                        echo 'la base est verrouillée, essais effectués : ', $i, "<br />\n";
+//                        echo 'la base est verrouillÃ©e, essais effectuÃ©s : ', $i, "<br />\n";
 
                         // Si on a fait plus de maxtries essais, on abandonne
                         if ($i>$maxtries) throw $e;
@@ -371,7 +371,7 @@ class XapianDatabaseDriver extends Database
                         // Sinon, on attend un peu et on refait un essai
                         $wait=rand(1,9) * 10000;
 //                        echo 'attente de ', $wait/10000, ' secondes<br />', "\n";
-                        usleep($wait); // attend de 0.01 à 0.09 secondes
+                        usleep($wait); // attend de 0.01 Ã  0.09 secondes
                         continue;
                     }
 
@@ -379,33 +379,33 @@ class XapianDatabaseDriver extends Database
                     throw $e;
                 }
 
-                // on a réussi à ouvrir la base
+                // on a rÃ©ussi Ã  ouvrir la base
                 break;
             }
-//            echo 'Base ouverte en écriture au bout de ', $i, ' essai(s). Temps total : ', (microtime(true)-$starttime), ' sec.<br />', "\n";
+//            echo 'Base ouverte en Ã©criture au bout de ', $i, ' essai(s). Temps total : ', (microtime(true)-$starttime), ' sec.<br />', "\n";
         }
 
-        // Charge le schéma de la base
+        // Charge le schÃ©ma de la base
         $this->schema=unserialize($this->xapianDatabase->get_metadata('schema_object'));
         if (! $this->schema instanceof DatabaseSchema)
-            throw new Exception("Impossible d'ouvrir la base, schéma non géré");
+            throw new Exception("Impossible d'ouvrir la base, schÃ©ma non gÃ©rÃ©");
 
-        // Initialise les propriétés de l'objet
+        // Initialise les propriÃ©tÃ©s de l'objet
         $this->initDatabase($readOnly);
     }
 
 
     /**
-     * Initialise les propriétés de la base
+     * Initialise les propriÃ©tÃ©s de la base
      *
      * @param bool $readOnly
      */
     private function initDatabase($readOnly=true)
     {
-        // Crée le tableau qui contiendra la valeur des champs
+        // CrÃ©e le tableau qui contiendra la valeur des champs
         $this->fields=array_fill_keys(array_keys($this->schema->fields), null);
 
-        // Crée l'objet DatabaseRecord
+        // CrÃ©e l'objet DatabaseRecord
         $this->record=new XapianDatabaseRecord($this->fields, $this->schema);
 
         foreach($this->schema->fields as $name=>$field)
@@ -417,13 +417,13 @@ class XapianDatabaseDriver extends Database
         foreach($this->schema->lookuptables as $name=>&$lookuptable) // fixme:
             $this->lookuptableById[$lookuptable->_id]=& $lookuptable;
 
-        // Les propriétés qui suivent ne sont initialisées que pour une base en lecture/écriture
+        // Les propriÃ©tÃ©s qui suivent ne sont initialisÃ©es que pour une base en lecture/Ã©criture
 //        if ($readOnly) return;
 
         // Mots vides de la base
         $this->schema->_stopwords=array_flip(Utils::tokenize($this->schema->stopwords));
 
-        // Crée la liste des champs de type AutoNumber + mots-vides des champs
+        // CrÃ©e la liste des champs de type AutoNumber + mots-vides des champs
         foreach($this->schema->fields as $name=>$field)
         {
             // Champs autonumber
@@ -455,27 +455,27 @@ class XapianDatabaseDriver extends Database
 
 
     /**
-     * Initialise la création d'un nouvel enregistrement
+     * Initialise la crÃ©ation d'un nouvel enregistrement
      *
-     * L'enregistrement ne sera effectivement créé que lorsque {@link update()}
-     * sera appellé.
+     * L'enregistrement ne sera effectivement crÃ©Ã© que lorsque {@link update()}
+     * sera appellÃ©.
      *
      * @throws DatabaseReadOnlyException si la base est ouverte en lecture seule
      */
     public function addRecord()
     {
-        // Vérifie que la base n'est pas en lecture seule
+        // VÃ©rifie que la base n'est pas en lecture seule
         if (! $this->xapianDatabase instanceof XapianWritableDatabase)
             throw new DatabaseReadOnlyException();
 
-        // Réinitialise tous les champs à leur valeur par défaut
+        // RÃ©initialise tous les champs Ã  leur valeur par dÃ©faut
         foreach($this->fields as $name=>&$value)
             $value=null;
 
-        // Réinitialise le document xapian en cours
+        // RÃ©initialise le document xapian en cours
         $this->xapianDocument=new XapianDocument();
 
-        // Mémorise qu'on a une édition en cours
+        // MÃ©morise qu'on a une Ã©dition en cours
         $this->editMode=1;
     }
 
@@ -483,23 +483,23 @@ class XapianDatabaseDriver extends Database
     /**
      * Initialise la modification d'un enregistrement existant.
      *
-     * L'enregistrement  ne sera effectivement modifié que lorsque {@link update}
-     * sera appellé.
+     * L'enregistrement  ne sera effectivement modifiÃ© que lorsque {@link update}
+     * sera appellÃ©.
      *
      * @throws DatabaseReadOnlyException si la base est ouverte en lecture seule
      * @throws DatabaseNoRecordException s'il n'y a pas d'enregistrement courant
      */
     public function editRecord()
     {
-        // Vérifie que la base n'est pas en lecture seule
+        // VÃ©rifie que la base n'est pas en lecture seule
         if (! $this->xapianDatabase instanceof XapianWritableDatabase)
             throw new DatabaseReadOnlyException();
 
-        // Vérifie qu'on a un enregistrement courant
+        // VÃ©rifie qu'on a un enregistrement courant
         if (is_null($this->xapianDocument))
             throw new DatabaseNoRecordException();
 
-        // Mémorise qu'on a une édition en cours
+        // MÃ©morise qu'on a une Ã©dition en cours
         $this->editMode=2;
     }
 
@@ -508,14 +508,14 @@ class XapianDatabaseDriver extends Database
      * Sauvegarde l'enregistrement en cours.
      *
      * @throws DatabaseNotEditingException si l'enregistrement courant n'est pas
-     * en cours de modification, c'est-à-dire si on appelle saveRecord() sans
-     * avoir appellé {@link addRecord()} ou {@link editRecord()} auparavant.
+     * en cours de modification, c'est-Ã -dire si on appelle saveRecord() sans
+     * avoir appellÃ© {@link addRecord()} ou {@link editRecord()} auparavant.
      *
-     * @return int l'identifiant (docid) de l'enregistrement créé ou modifié
+     * @return int l'identifiant (docid) de l'enregistrement crÃ©Ã© ou modifiÃ©
      */
     public function saveRecord()
     {
-        // Vérifie qu'on a une édition en cours
+        // VÃ©rifie qu'on a une Ã©dition en cours
         if ($this->editMode === 0)
             throw new DatabaseNotEditingException();
 
@@ -525,13 +525,13 @@ class XapianDatabaseDriver extends Database
             // Si le champ autonumber n'a pas de valeur, on lui en donne une
             if (! $this->fields[$name]) // null ou 0 ou '' ou false
             {
-                // get_metadata retourne '' si la clé n'existe pas. Valeur initiale=1+(int)''=1
+                // get_metadata retourne '' si la clÃ© n'existe pas. Valeur initiale=1+(int)''=1
                 $value=1+(int)$this->xapianDatabase->get_metadata($key);
                 $this->fields[$name]=$value;
                 $this->xapianDatabase->set_metadata($key, $value);
             }
 
-            // Sinon, si la valeur indiquée est supérieure au compteur, on met à jour le compteur
+            // Sinon, si la valeur indiquÃ©e est supÃ©rieure au compteur, on met Ã  jour le compteur
             else
             {
                 $value=(int)$this->fields[$name];
@@ -543,7 +543,7 @@ class XapianDatabaseDriver extends Database
         // Indexe l'enregistrement
         $this->initializeDocument();
 
-        // Ajoute un nouveau document si on est en train de créer un enreg
+        // Ajoute un nouveau document si on est en train de crÃ©er un enreg
         if ($this->editMode==1)
         {
             $docId=$this->xapianDatabase->add_document($this->xapianDocument);
@@ -556,33 +556,33 @@ class XapianDatabaseDriver extends Database
             $this->xapianDatabase->replace_document($docId, $this->xapianDocument);
         }
 
-        // Edition terminée
+        // Edition terminÃ©e
         $this->editMode=0;
 //        pre($this->schema);
 //        die('here');
 
-        // Retourne le docid du document créé ou modifié
+        // Retourne le docid du document crÃ©Ã© ou modifiÃ©
         return $docId;
     }
 
 
     /**
-     * Annule l'édition de l'enregistrement en cours.
+     * Annule l'Ã©dition de l'enregistrement en cours.
      *
      * @throws DatabaseNotEditingException si l'enregistrement courant n'est pas
-     * en cours de modification, c'est-à-dire si on appelle saveRecord() sans
-     * avoir appellé {@link addRecord()} ou {@link editRecord()} auparavant.
+     * en cours de modification, c'est-Ã -dire si on appelle saveRecord() sans
+     * avoir appellÃ© {@link addRecord()} ou {@link editRecord()} auparavant.
      */
     public function cancelUpdate()
     {
-        // Vérifie qu'on a une édition en cours
+        // VÃ©rifie qu'on a une Ã©dition en cours
         if ($this->editMode == 0)
             throw new DatabaseNotEditingException();
 
-        // Recharge le document original pour annuler les éventuelles modifications apportées
+        // Recharge le document original pour annuler les Ã©ventuelles modifications apportÃ©es
         $this->loadDocument();
 
-        // Edition terminée
+        // Edition terminÃ©e
         $this->editMode=0;
     }
 
@@ -593,13 +593,13 @@ class XapianDatabaseDriver extends Database
      */
     public function deleteRecord()
     {
-        // Vérifie que la base n'est pas en lecture seule
+        // VÃ©rifie que la base n'est pas en lecture seule
         if (! $this->xapianDatabase instanceof XapianWritableDatabase)
             throw new ReadOnlyDatabaseException();
 
-        // Interdiction d'appeller deleteRecord() juste après addRecord()
+        // Interdiction d'appeller deleteRecord() juste aprÃ¨s addRecord()
         if ($this->editMode == 1)
-            throw new LogicException("Appel de deleteRecord() après un appel à addRecord()");
+            throw new LogicException("Appel de deleteRecord() aprÃ¨s un appel Ã  addRecord()");
 
         // Supprime l'enregistrement
         $docId=$this->xapianMSetIterator->get_docid();
@@ -613,15 +613,15 @@ class XapianDatabaseDriver extends Database
 
 
     /**
-     * Retourne un extrait de chaine délimités par des positions ou des chaines
-     * de début et de fin.
+     * Retourne un extrait de chaine dÃ©limitÃ©s par des positions ou des chaines
+     * de dÃ©but et de fin.
      *
-     * Start et End représente les positions de début et de fin de la chaine à
-     * obtenir. Chacun des deux peut être soit un entier soit une chaine.
-     * Entier positif = position à partir du début
-     * Entier négatif = position depuis la fin
+     * Start et End reprÃ©sente les positions de dÃ©but et de fin de la chaine Ã 
+     * obtenir. Chacun des deux peut Ãªtre soit un entier soit une chaine.
+     * Entier positif = position Ã  partir du dÃ©but
+     * Entier nÃ©gatif = position depuis la fin
      *
-     * @todo complèter la doc
+     * @todo complÃ¨ter la doc
      *
      * @param string $value
      * @param int|string $start
@@ -631,30 +631,30 @@ class XapianDatabaseDriver extends Database
     private function startEnd($value, $start, $end=null)
     {
         if (is_int($start) && is_int($end) && (($start>0 && $end>0) || ($start<0 && $end<0)) && ($start > $end))
-            throw new InvalidArgumentException('Si start et end sont des entiers de même signe, start doit être inférieur à end');
+            throw new InvalidArgumentException('Si start et end sont des entiers de mÃªme signe, start doit Ãªtre infÃ©rieur Ã  end');
 
-        // On ignore les espaces de début : si on a "    AAAAMMJJ", (0,3) doit retourner AAAA, pas les espaces
+        // On ignore les espaces de dÃ©but : si on a "    AAAAMMJJ", (0,3) doit retourner AAAA, pas les espaces
         $value=ltrim($value);
 
         if (is_int($start))
         {
             if ($start) // 0 = prendre tout
             {
-                // start > 0 : on veut à partir du ième caractère, -1 pour php
+                // start > 0 : on veut Ã  partir du iÃ¨me caractÃ¨re, -1 pour php
                 if ($start > 0)
                 {
                     if (is_int($end) && $end>0 ) $end -= $start-1;
                     if (false === $value=substr($value, $start-1)) return '';
                 }
 
-                // start < 0 : on veut les i derniers caractères
+                // start < 0 : on veut les i derniers caractÃ¨res
                 elseif (strlen($value)>-$start)
                     $value=substr($value, $start);
             }
         }
         elseif($start !=='')
         {
-            $pt=stripos($value, $start); // insensible à la casse mais pas aux accents
+            $pt=stripos($value, $start); // insensible Ã  la casse mais pas aux accents
             if ($pt !== false)
                 $value=substr($value, $pt+strlen($start));
         }
@@ -683,11 +683,11 @@ class XapianDatabaseDriver extends Database
     /**
      * Ajoute un terme dans l'index
      *
-     * @param string $term le terme à ajouté
-     * @param string $prefix le préfixe à ajouter au terme
+     * @param string $term le terme Ã  ajoutÃ©
+     * @param string $prefix le prÃ©fixe Ã  ajouter au terme
      * @param int $weight le poids du terme
-     * @param null|int $position null : le terme est ajouté sans position,
-     * int : le terme est ajouté avec la position indiquée
+     * @param null|int $position null : le terme est ajoutÃ© sans position,
+     * int : le terme est ajoutÃ© avec la position indiquÃ©e
      */
     private function addTerm($term, $prefix, $weight=1, $position=null)
     {
@@ -703,7 +703,7 @@ class XapianDatabaseDriver extends Database
 
 
     /**
-     * Initialise le document xapian en cours lors de la création ou de la
+     * Initialise le document xapian en cours lors de la crÃ©ation ou de la
      * modification d'un enregistrement.
      *
      */
@@ -714,22 +714,22 @@ class XapianDatabaseDriver extends Database
         foreach($this->fieldById as $id=>$value)
             if (count($value)) $data[$id]=$value; // Supprime les null et array()
 
-        // Dans une version précédente, on utilisait array_filter($this->fieldById, 'count')
-        // qui fait la même chose que le code ci-dessus. Mais depuis php 5.2.11, cela ne
-        // fonctionne plus car fieldById est une référence qui se retrouve cassée si on la passe
-        // à array_filter. Cf http://bugs.php.net/bug.php?id=51986 pour plus d'informations.
+        // Dans une version prÃ©cÃ©dente, on utilisait array_filter($this->fieldById, 'count')
+        // qui fait la mÃªme chose que le code ci-dessus. Mais depuis php 5.2.11, cela ne
+        // fonctionne plus car fieldById est une rÃ©fÃ©rence qui se retrouve cassÃ©e si on la passe
+        // Ã  array_filter. Cf http://bugs.php.net/bug.php?id=51986 pour plus d'informations.
 
-        // Stocke les données de l'enregistrement
+        // Stocke les donnÃ©es de l'enregistrement
         $this->xapianDocument->set_data(serialize($data));
 
         // Supprime tous les tokens existants
         $this->xapianDocument->clear_terms();
 
-        // Met à jour chacun des index
+        // Met Ã  jour chacun des index
         $position=0;
         foreach ($this->schema->indices as $index)
         {
-            // Détermine le préfixe à utiliser pour cet index
+            // DÃ©termine le prÃ©fixe Ã  utiliser pour cet index
             $prefix=$index->_id.':';
 
             // Pour chaque champ de l'index, on ajoute les tokens du champ dans l'index
@@ -738,7 +738,7 @@ class XapianDatabaseDriver extends Database
                 // Traite tous les champs comme des champs articles
                 $data=(array) $this->fields[$name];
 
-                // Initialise la liste des mots-vides à utiliser
+                // Initialise la liste des mots-vides Ã  utiliser
                 $stopwords=$this->schema->fields[$name]->_stopwords;
 
                 // Index chaque article
@@ -753,21 +753,21 @@ class XapianDatabaseDriver extends Database
                     // Compte le nombre de valeurs non nulles
                     ++$count;
 
-                    // Si le champ n'est pas indexé au mot ou à l'article, on a fini
+                    // Si le champ n'est pas indexÃ© au mot ou Ã  l'article, on a fini
                     if (! $field->words && ! $field->values) continue;
 
                     // Tokenise le champ
                     $tokens=Utils::tokenize($value);
 
-                    // Indexation au mot et à la phrase
+                    // Indexation au mot et Ã  la phrase
                     if ($field->words)
                     {
                         foreach($tokens as $term)
                         {
-                            // Vérifie que la longueur du terme est dans les limites autorisées
+                            // VÃ©rifie que la longueur du terme est dans les limites autorisÃ©es
                             if (strlen($term)<self::MIN_TERM or strlen($term)>self::MAX_TERM) continue;
 
-                            // Si c'est un mot vide et que l'option "indexStopWords" est à false, on ignore le terme
+                            // Si c'est un mot vide et que l'option "indexStopWords" est Ã  false, on ignore le terme
                             if (! $this->schema->indexstopwords && isset($stopwords[$term])) continue;
 
                             // Ajoute le terme dans le document
@@ -777,18 +777,18 @@ class XapianDatabaseDriver extends Database
                             if (isset($index->spelling) && $index->spelling)
                                 $this->xapianDatabase->add_spelling($term);
 
-                            // Incrémente la position du terme en cours
+                            // IncrÃ©mente la position du terme en cours
                             $position++;
                         }
                     }
 
-                    // Indexation à l'article
+                    // Indexation Ã  l'article
                     if ($field->values)
                     {
                         $term=implode('_', $tokens);
                         if (strlen($term)>self::MAX_TERM-2)
                             $term=substr($term, 0, self::MAX_TERM-2);
-                        $term = strtr($term, '@', 'a');         // Il ne faut pas avoir d'arobase dans les articles (déclenche une recherche à la phrase dans Xapian)
+                        $term = strtr($term, '@', 'a');         // Il ne faut pas avoir d'arobase dans les articles (dÃ©clenche une recherche Ã  la phrase dans Xapian)
                         $term = '_' . $term . '_';
                         $this->addTerm($term, $prefix, $field->weight, null);
                     }
@@ -807,7 +807,7 @@ class XapianDatabaseDriver extends Database
         // Tables de lookup
         foreach ($this->schema->lookuptables as $lookupTable)
         {
-            // Détermine le préfixe à utiliser pour cette table
+            // DÃ©termine le prÃ©fixe Ã  utiliser pour cette table
             $prefix='T'.$lookupTable->_id.':';
 
             // Parcourt tous les champs qui alimentent cette table
@@ -817,7 +817,7 @@ class XapianDatabaseDriver extends Database
                 $data=(array) $this->fields[$name];
                 $data=array_slice($data, $field->startvalue-1, $field->endvalue===0 ? null : ($field->endvalue));
 
-                // Initialise la liste des mots-vides à utiliser
+                // Initialise la liste des mots-vides Ã  utiliser
                 $stopwords=$this->schema->fields[$name]->_stopwords;
 
                 // Index chaque article
@@ -839,13 +839,13 @@ class XapianDatabaseDriver extends Database
             }
         }
 
-        // Clés de tri
-        // FIXME : faire un clear_value avant. Attention : peut vire autre chose que des clés de tri. à voir
+        // ClÃ©s de tri
+        // FIXME : faire un clear_value avant. Attention : peut vire autre chose que des clÃ©s de tri. Ã  voir
         foreach($this->schema->sortkeys as $sortkeyname=>$sortkey)
         {
             foreach($sortkey->fields as $name=>$field)
             {
-                // Récupère les données du champ, le premier article si c'est un champ multivalué
+                // RÃ©cupÃ¨re les donnÃ©es du champ, le premier article si c'est un champ multivaluÃ©
                 $value=$this->fields[$name];
                 if (is_array($value)) $value=reset($value);
 
@@ -855,18 +855,18 @@ class XapianDatabaseDriver extends Database
 
                 $value=implode(' ', Utils::tokenize($value));
 
-                // Ne prend que les length premiers caractères
+                // Ne prend que les length premiers caractÃ¨res
                 if ($field->length)
                 {
                     if (strlen($value) > $field->length)
                         $value=substr($value, 0, $field->length);
                 }
 
-                // Si on a une valeur, terminé, sinon examine les champs suivants
+                // Si on a une valeur, terminÃ©, sinon examine les champs suivants
                 if ($value!==null && $value !== '') break;
             }
 
-            if (!isset($sortkey->type)) $sortkey->type='string'; // FIXME: juste en attendant que les bases asco soient recréées
+            if (!isset($sortkey->type)) $sortkey->type='string'; // FIXME: juste en attendant que les bases asco soient recrÃ©Ã©es
             switch($sortkey->type)
             {
                 case 'string':
@@ -877,7 +877,7 @@ class XapianDatabaseDriver extends Database
                     $value=Xapian::sortable_serialise($value);
                     break;
                 default:
-                    throw new LogicException("Type de clé incorrecte pour la clé de tri $sortkeyname");
+                    throw new LogicException("Type de clÃ© incorrecte pour la clÃ© de tri $sortkeyname");
 
             }
             $this->xapianDocument->add_value($sortkey->_id, $value);
@@ -893,8 +893,8 @@ class XapianDatabaseDriver extends Database
     /**
      * Met en place l'environnement de recherche
      *
-     * La fonction crée tous les objets xapian dont on a besoin pour faire
-     * analyser une équation et lancer une recherche
+     * La fonction crÃ©e tous les objets xapian dont on a besoin pour faire
+     * analyser une Ã©quation et lancer une recherche
      */
     private function setupSearch()
     {
@@ -904,7 +904,7 @@ class XapianDatabaseDriver extends Database
         // Initialise le QueryParser
         $this->xapianQueryParser=new XapianQueryParser();
 
-        // Paramètre l'index par défaut (l'index global)
+        // ParamÃ¨tre l'index par dÃ©faut (l'index global)
         $defaultIndex=$this->options->defaultindex;
         if (! is_null($defaultIndex))
         {
@@ -930,7 +930,7 @@ class XapianDatabaseDriver extends Database
 /*
         foreach($this->schema->indices as $name=>$index)
         {
-            if (!isset($index->_type)) $index->_type=DatabaseSchema::INDEX_PROBABILISTIC; // cas d'un schéma compilé avant que _type ne soit implémenté
+            if (!isset($index->_type)) $index->_type=DatabaseSchema::INDEX_PROBABILISTIC; // cas d'un schÃ©ma compilÃ© avant que _type ne soit implÃ©mentÃ©
             switch($index->_type)
             {
                 case DatabaseSchema::INDEX_PROBABILISTIC:
@@ -955,7 +955,7 @@ class XapianDatabaseDriver extends Database
 /*
         foreach($this->schema->aliases as $aliasName=>$alias)
         {
-            if (!isset($alias->_type)) $alias->_type=DatabaseSchema::INDEX_PROBABILISTIC; // cas d'un schéma compilé avant que _type ne soit implémenté
+            if (!isset($alias->_type)) $alias->_type=DatabaseSchema::INDEX_PROBABILISTIC; // cas d'un schÃ©ma compilÃ© avant que _type ne soit implÃ©mentÃ©
             switch($alias->_type)
             {
                 case DatabaseSchema::INDEX_PROBABILISTIC:
@@ -978,17 +978,17 @@ class XapianDatabaseDriver extends Database
         $this->stopper=new XapianSimpleStopper();
         foreach ($this->schema->_stopwords as $stopword=>$i)
             $this->stopper->add($stopword);
-        $this->xapianQueryParser->set_stopper($this->stopper); // fixme : stopper ne doit pas être une variable locale, sinon segfault
+        $this->xapianQueryParser->set_stopper($this->stopper); // fixme : stopper ne doit pas Ãªtre une variable locale, sinon segfault
 
         $this->xapianQueryParser->set_database($this->xapianDatabase); // indispensable pour FLAG_WILDCARD
 
-        // Expérimental : autorise un value range sur le champ REF s'il existe une clé de tri nommée REF
+        // ExpÃ©rimental : autorise un value range sur le champ REF s'il existe une clÃ© de tri nommÃ©e REF
         foreach($this->schema->sortkeys as $name=>$sortkey)
         {
-            if (!isset($sortkey->type)) $sortkey->type='string'; // FIXME: juste en attendant que les bases asco soient recréées
+            if (!isset($sortkey->type)) $sortkey->type='string'; // FIXME: juste en attendant que les bases asco soient recrÃ©Ã©es
             if ($sortkey->type==='string')
             {
-                // todo: xapian ne supporte pas de préfixe pour les stringValueRangeProcessor
+                // todo: xapian ne supporte pas de prÃ©fixe pour les stringValueRangeProcessor
                 // $this->vrp=new XapianStringValueRangeProcessor($this->schema->sortkeys['ref']->_id);
             }
             else
@@ -1001,41 +1001,41 @@ class XapianDatabaseDriver extends Database
     }
 
     /**
-     * Fonction callback utilisée par {@link parseQuery()} pour convertir
-     * la syntaxe [xxx] utilisée dans une équation de recherche en recherche
-     * à l'article
+     * Fonction callback utilisÃ©e par {@link parseQuery()} pour convertir
+     * la syntaxe [xxx] utilisÃ©e dans une Ã©quation de recherche en recherche
+     * Ã  l'article
      *
-     * @param array $matches le tableau généré par preg_replace_callback
+     * @param array $matches le tableau gÃ©nÃ©rÃ© par preg_replace_callback
      * @return string
      */
     private function searchByValueCallback($matches)
     {
-        // récupère le terme à convertir
+        // rÃ©cupÃ¨re le terme Ã  convertir
         $term=trim($matches[1]);
 
         // Regarde si le terme se termine par une troncature
         $wildcard=substr($term, -1)==='*';
 
-        // Concatène tous les tokens du terme avec un underscore
+        // ConcatÃ¨ne tous les tokens du terme avec un underscore
         $term=implode('_', Utils::tokenize($term));
 
-        // Tronque l'article s'il dépasse la limite autorisée
+        // Tronque l'article s'il dÃ©passe la limite autorisÃ©e
         if (strlen($term)>self::MAX_TERM-2)
             $term=substr($term, 0, self::MAX_TERM-2);
 
-        // Il ne faut pas avoir d'arobase dans les articles (déclenche une recherche à la phrase dans Xapian)
+        // Il ne faut pas avoir d'arobase dans les articles (dÃ©clenche une recherche Ã  la phrase dans Xapian)
         $term=strtr($term, '@', 'a');
 
-        // Encadre le terme avec des underscores et ajoute éventuellement la troncature
-        $term = '_' . $term ; // fixme: pb si ce qui précède est un caractère aa[bb]cc -> aa_bb_cc. Faut gérer ?
+        // Encadre le terme avec des underscores et ajoute Ã©ventuellement la troncature
+        $term = '_' . $term ; // fixme: pb si ce qui prÃ©cÃ¨de est un caractÃ¨re aa[bb]cc -> aa_bb_cc. Faut gÃ©rer ?
         if ($wildcard) $term.='*'; else $term.='_';
 
-        // Terminé
+        // TerminÃ©
         return $term;
     }
 
     /**
-     * Traduit les opérateurs booléens français (et, ou, sauf) en opérateurs
+     * Traduit les opÃ©rateurs boolÃ©ens franÃ§ais (et, ou, sauf) en opÃ©rateurs
      * reconnus par xapian.
      *
      * @param string $equation
@@ -1070,33 +1070,33 @@ class XapianDatabaseDriver extends Database
     }
 
     /**
-     * Construit une requête xapian à partir d'une équation de recherche saisie
+     * Construit une requÃªte xapian Ã  partir d'une Ã©quation de recherche saisie
      * par l'utilisateur.
      *
-     * Si la requête à analyser est null ou une chaine vide, un objet XapianQuery
-     * special permettant de rechercher tous les documents présents dans la base
-     * est retourné.
+     * Si la requÃªte Ã  analyser est null ou une chaine vide, un objet XapianQuery
+     * special permettant de rechercher tous les documents prÃ©sents dans la base
+     * est retournÃ©.
      *
-     * @param string|array $equation équation(s) à analyser.
+     * @param string|array $equation Ã©quation(s) Ã  analyser.
      *
-     * @param int $intraOpCode Opérateur par défaut à utiliser au sein de chaque
-     * équation.
+     * @param int $intraOpCode OpÃ©rateur par dÃ©faut Ã  utiliser au sein de chaque
+     * Ã©quation.
      *
-     * @param int $interOpCode Opérateur à utiliser pour combiner ensemble les
-     * différentes équations (lorsque $equation est un tableau d'équations).
+     * @param int $interOpCode OpÃ©rateur Ã  utiliser pour combiner ensemble les
+     * diffÃ©rentes Ã©quations (lorsque $equation est un tableau d'Ã©quations).
      *
-     * @param string $index Par défaut la requête est analysée en utilisant
-     * l'index par défaut définit dans le QueryParser. On peut forcer
+     * @param string $index Par dÃ©faut la requÃªte est analysÃ©e en utilisant
+     * l'index par dÃ©faut dÃ©finit dans le QueryParser. On peut forcer
      * l'utilisation d'un autre index en indiquant son nom ici.
      *
      * @return XapianQuery
      */
     private function parseQuery($equation, $intraOpCode=XapianQuery::OP_OR, $interOpCode=XapianQuery::OP_OR, $index=null)
     {
-        // Paramètre l'opérateur par défaut du Query Parser
+        // ParamÃ¨tre l'opÃ©rateur par dÃ©faut du Query Parser
         $this->xapianQueryParser->set_default_op($intraOpCode);
 
-        // Détermine les flags du Query Parser
+        // DÃ©termine les flags du Query Parser
         $flags=
             XapianQueryParser::FLAG_BOOLEAN |
             XapianQueryParser::FLAG_PHRASE |
@@ -1120,11 +1120,11 @@ class XapianDatabaseDriver extends Database
                 continue;
             }
 
-            // Pré-traitement de l'équation pour que xapian l'interprête comme on souhaite
-            $equation=preg_replace_callback('~(?:[a-z0-9]\.){2,9}~i', array('Utils', 'acronymToTerm'), $equation); // sigles à traiter, xapian ne le fait pas s'ils sont en minu (a.e.d.)
+            // PrÃ©-traitement de l'Ã©quation pour que xapian l'interprÃªte comme on souhaite
+            $equation=preg_replace_callback('~(?:[a-z0-9]\.){2,9}~i', array('Utils', 'acronymToTerm'), $equation); // sigles Ã  traiter, xapian ne le fait pas s'ils sont en minu (a.e.d.)
             $equation=preg_replace_callback('~\[(.*?)\]~', array($this,'searchByValueCallback'), $equation);
-            $equation=strtr($equation, array('æ'=>'ae', 'œ'=>'oe'));
-            $equation=strtr // ticket 125. Index= test  n'est pas interprêté comme Index=Test
+            $equation=strtr($equation, array('Ã¦'=>'ae', 'Å“'=>'oe'));
+            $equation=strtr // ticket 125. Index= test  n'est pas interprÃªtÃ© comme Index=Test
             (
                 $equation,
                 array
@@ -1134,14 +1134,14 @@ class XapianDatabaseDriver extends Database
                 )
             );
             $equation=$this->protectOperators($equation);
-            $equation=Utils::convertString($equation, 'queryparser'); // FIXME: utiliser la même table que tokenize()
+            $equation=Utils::convertString($equation, 'queryparser'); // FIXME: utiliser la mÃªme table que tokenize()
             $equation=$this->restoreOperators($equation);
 
             if (!is_null($index))
                 $equation="$index:($equation)";
 
-            // Construit la requête
-            $query[$nb++]=$this->xapianQueryParser->parse_Query(utf8_encode($equation), $flags);
+            // Construit la requÃªte
+            $query[$nb++]=$this->xapianQueryParser->parse_Query($equation, $flags);
         }
 
         if ($nb===0) return null;
@@ -1150,7 +1150,7 @@ class XapianDatabaseDriver extends Database
     }
 
     /**
-     * Indique si la requête xapian passée en paramètre est Xapian::MatchAll.
+     * Indique si la requÃªte xapian passÃ©e en paramÃ¨tre est Xapian::MatchAll.
      *
      * @param XapianQuery $query
      * @return bool
@@ -1161,45 +1161,45 @@ class XapianDatabaseDriver extends Database
     }
 
     /**
-     * Corrige l'orthographe de l'équation de recherche en cours.
+     * Corrige l'orthographe de l'Ã©quation de recherche en cours.
      *
-     * La méthode extrait de la requête en cours tous les termes qui n'existent
+     * La mÃ©thode extrait de la requÃªte en cours tous les termes qui n'existent
      * pas dans la base.
      *
-     * Elle appelle ensuite pour chaque mot la méthode
+     * Elle appelle ensuite pour chaque mot la mÃ©thode
      * XapianDatabase::->get_spelling_suggestion().
      *
-     * Si xapian propose une suggestion, le mot d'origine est remplacé par
-     * celle-ci dans la requête en cours en utilisant le format passé en
-     * paramètre.
+     * Si xapian propose une suggestion, le mot d'origine est remplacÃ© par
+     * celle-ci dans la requÃªte en cours en utilisant le format passÃ© en
+     * paramÃ¨tre.
      *
-     * Lors de ce remplacement, la méthode essaie de donner à la suggestion
-     * trouvée la même casse de caractères que le mot d'origine (si le mot était
-     * en majuscules, la suggestion sera en majuscules, s'il était en minuscules
-     * avec une initiale, la suggestion aura la même casse, etc.)
+     * Lors de ce remplacement, la mÃ©thode essaie de donner Ã  la suggestion
+     * trouvÃ©e la mÃªme casse de caractÃ¨res que le mot d'origine (si le mot Ã©tait
+     * en majuscules, la suggestion sera en majuscules, s'il Ã©tait en minuscules
+     * avec une initiale, la suggestion aura la mÃªme casse, etc.)
      *
-     * Les sigle sont également gérés : ils sont transformés en termes puis
-     * réintroduits sous forme de sigles dans l'équation d'origine.
+     * Les sigle sont Ã©galement gÃ©rÃ©s : ils sont transformÃ©s en termes puis
+     * rÃ©introduits sous forme de sigles dans l'Ã©quation d'origine.
      *
-     * Remarque : les suggestions faites sont toujours non accentuées.
+     * Remarque : les suggestions faites sont toujours non accentuÃ©es.
      *
-     * @param string $format le format (façon sprintf) à utiliser. Doit
+     * @param string $format le format (faÃ§on sprintf) Ã  utiliser. Doit
      * obligatoirement contenir la chaine '%s'.
      */
     private function spellcheckEquation($format='<strong>%s</strong>')
     {
-        // requête utilisée pour les tests :
+        // requÃªte utilisÃ©e pour les tests :
         // /debug.php/Base/Search?_equation=PZTIENT+Pztient+pztient+P.Z.T.I.E.N.T.+%5BEducation+Sznt%E9%5D+z++-priqe+en+chzrge+chzrge+%9Cuef+AND+pztient+dizb%E9tique+OR+diazbet*+REF%3A12+AutPhys%3A%28Flahzult+A.%29+%2BZ.N.A.E.S.+Titre%3Desai&_defaultop=OR
         timer && Timer::enter();
 
-        // Crée la liste des termes de la requête qui n'existent pas dans la base
-        // Chaque terme peut apparaître dans plusieurs index (12:test, 15:test, etc.)
-        // On considère qu'un terme n'existe pas s'il ne figure dans aucun des index
-        timer && Timer::enter('Création de la liste des mots inexistants');
+        // CrÃ©e la liste des termes de la requÃªte qui n'existent pas dans la base
+        // Chaque terme peut apparaÃ®tre dans plusieurs index (12:test, 15:test, etc.)
+        // On considÃ¨re qu'un terme n'existe pas s'il ne figure dans aucun des index
+        timer && Timer::enter('CrÃ©ation de la liste des mots inexistants');
         $found = array();
         foreach($this->searchInfo('internalqueryterms') as $term)
         {
-            // Extrait le préfixe du terme
+            // Extrait le prÃ©fixe du terme
             $prefix = '';
             if (false !== $pt=strpos($term, ':'))
             {
@@ -1207,16 +1207,16 @@ class XapianDatabaseDriver extends Database
                 $term = substr($term, $pt+1);
             }
 
-            // Extrait les mots présents dans le terme (essentiellement pour les articles)
+            // Extrait les mots prÃ©sents dans le terme (essentiellement pour les articles)
             $words = str_word_count($term, 1, '0123456789@');
 //          $docCount = $this->xapianDatabase->get_doccount();
             foreach($words as $word)
             {
-                // Si on a déjà rencontré ce mot, terminé
+                // Si on a dÃ©jÃ  rencontrÃ© ce mot, terminÃ©
                 if (isset($found[$word]) && $found[$word]) continue;
 
-                // Si c'est un nombre, terminé
-                if (ctype_digit($word)) continue;  // évite un warning xapian : no overloaded function get_spelling_suggestion(int))
+                // Si c'est un nombre, terminÃ©
+                if (ctype_digit($word)) continue;  // Ã©vite un warning xapian : no overloaded function get_spelling_suggestion(int))
 
                 if ($this->xapianDatabase->term_exists($prefix.$word))
 //                if ($this->xapianDatabase->get_termfreq($prefix.$word) > 0.001*$docCount)
@@ -1237,18 +1237,18 @@ class XapianDatabaseDriver extends Database
         timer && Timer::leave();
 
         timer && Timer::enter('Remplacement des mots par les corrections');
-        // Récupère l'équation de recherche de l'utilisateur
+        // RÃ©cupÃ¨re l'Ã©quation de recherche de l'utilisateur
         $string = $this->searchInfo('equation');
 
-        // Crée une version en minuscules non accentuées de l'équation de recherche
-        $string = strtr($string, array('æ'=>'ae', 'œ'=>'oe')); // ligatures
+        // CrÃ©e une version en minuscules non accentuÃ©es de l'Ã©quation de recherche
+        $string = strtr($string, array('Ã¦'=>'ae', 'Å“'=>'oe')); // ligatures
         $string = preg_replace_callback('~(?:[a-z0-9]\.){2,9}~i', array('Utils', 'acronymToTerm'), $string); // sigles
         $lower = Utils::convertString($string, 'alphanum');
 
-        // Extrait les mots présents dans l'équation en minu en stockant leur position de départ
+        // Extrait les mots prÃ©sents dans l'Ã©quation en minu en stockant leur position de dÃ©part
         $words = str_word_count($lower, 2, '0123456789@_');
 
-        // offset enregistre le décalage des positions dûs aux remplacements déjà effectués
+        // offset enregistre le dÃ©calage des positions dÃ»s aux remplacements dÃ©jÃ  effectuÃ©s
         $offset = 0;
 
         // Corrige les mots
@@ -1256,10 +1256,10 @@ class XapianDatabaseDriver extends Database
         {
             if (isset($corrections[$word]))
             {
-                // Récupère la correction
+                // RÃ©cupÃ¨re la correction
                 $correction = $corrections[$word];
 
-                // Essaie de donner à la suggestion la même "casse" que le mot d'origine
+                // Essaie de donner Ã  la suggestion la mÃªme "casse" que le mot d'origine
                 $word=substr($string, $position + $offset, strlen($word));
                 if (ctype_upper($word))
                     $correction=strtoupper($correction);
@@ -1281,11 +1281,11 @@ class XapianDatabaseDriver extends Database
 
 
     /**
-     * Fonction expérimentale utilisée par {@link parseQuery()} pour convertir
-     * les numéros de préfixe présents dans l'équation retournée par xapian en
-     * noms d'index tels que définis par l'utilisateur.
+     * Fonction expÃ©rimentale utilisÃ©e par {@link parseQuery()} pour convertir
+     * les numÃ©ros de prÃ©fixe prÃ©sents dans l'Ã©quation retournÃ©e par xapian en
+     * noms d'index tels que dÃ©finis par l'utilisateur.
      *
-     * @param array $matches le tableau généré par preg_replace_callback
+     * @param array $matches le tableau gÃ©nÃ©rÃ© par preg_replace_callback
      * @return string
      */
     private function idToName($matches)
@@ -1308,7 +1308,7 @@ class XapianDatabaseDriver extends Database
         $prefix='T' . $this->schema->lookuptables[$key]->_id . ':';
         $facet=$this->spy->get_terms_as_array($prefix);
 
-        // workaround bug dans TermSpy : si la lettre qui suit le prefix est une maju, l'entrée est ignorée
+        // workaround bug dans TermSpy : si la lettre qui suit le prefix est une maju, l'entrÃ©e est ignorÃ©e
 //        $t=array();
 //        foreach($facet as $key=>&$value)
 //            $t[substr($key,1)]=$value;
@@ -1323,38 +1323,38 @@ class XapianDatabaseDriver extends Database
     }
 
     /**
-     * Analyse une équation de recherche utilisée pour "booster" certains
+     * Analyse une Ã©quation de recherche utilisÃ©e pour "booster" certains
      * documents.
      *
-     * Xapian supporte l'opérateur OP_SCALE_WEIGHT qui permet de pondérer le
-     * poids obtenu par une requête. Associé à l'opérateur OP_AND_MAYBE, c'est
+     * Xapian supporte l'opÃ©rateur OP_SCALE_WEIGHT qui permet de pondÃ©rer le
+     * poids obtenu par une requÃªte. AssociÃ© Ã  l'opÃ©rateur OP_AND_MAYBE, c'est
      * un bon moyen de booster certains documents.
      *
-     * Malheureusement, cet opérateur ne peut pas être utilisée dans une
-     * requête analysée par le query parser standard de xapian : la syntaxe
-     * "factor*query" n'est pas supportée.
+     * Malheureusement, cet opÃ©rateur ne peut pas Ãªtre utilisÃ©e dans une
+     * requÃªte analysÃ©e par le query parser standard de xapian : la syntaxe
+     * "factor*query" n'est pas supportÃ©e.
      *
-     * Cette fonction est un analyseur simpliste permettant d'analyser (à coup
-     * d'xpressions régulières) une requête de boost.
+     * Cette fonction est un analyseur simpliste permettant d'analyser (Ã  coup
+     * d'xpressions rÃ©guliÃ¨res) une requÃªte de boost.
      *
-     * L'équation à analyser doit être une suite de clauses de la forme :
+     * L'Ã©quation Ã  analyser doit Ãªtre une suite de clauses de la forme :
      * NomIndex:factor*terme ou NomIndex:(factor*terme factor*terme ...)
      *
      * Exemple : "DatEdit:3.14159*2009 DatEdit:(9*2008 7*2007) TypDoc:5*article"
      *
-     * Pour être analysée correctement, la requête ne doit rien contenir
-     * d'autre (pas d'opérateurs, pas de troncature, pas de guillemets, etc.)
+     * Pour Ãªtre analysÃ©e correctement, la requÃªte ne doit rien contenir
+     * d'autre (pas d'opÃ©rateurs, pas de troncature, pas de guillemets, etc.)
      *
-     * Les noms d'index utilisés doivent obligatoirement être des index de base
-     * (les alias ne sont pas supportés).
+     * Les noms d'index utilisÃ©s doivent obligatoirement Ãªtre des index de base
+     * (les alias ne sont pas supportÃ©s).
      *
-     * Les facteurs de pondération utilisés sont soit des entiers, soit des
-     * réels (utiliser un point comme séparateur pour les décimales, pas une
-     * virgule) et doivent obligatoirement être supérieurs ou égaux à zéro.
+     * Les facteurs de pondÃ©ration utilisÃ©s sont soit des entiers, soit des
+     * rÃ©els (utiliser un point comme sÃ©parateur pour les dÃ©cimales, pas une
+     * virgule) et doivent obligatoirement Ãªtre supÃ©rieurs ou Ã©gaux Ã  zÃ©ro.
      *
      * @param $boost
      * @return XapianQuery
-     * @throws Exception si l'équation de boost n'est pas valide.
+     * @throws Exception si l'Ã©quation de boost n'est pas valide.
      */
     private function parseBoost($boost)
     {
@@ -1369,7 +1369,7 @@ class XapianDatabaseDriver extends Database
             $index=$match[1];
             $value=$match[2] or $value=$match[3];
 
-            // Détermine le préfixe de l'index
+            // DÃ©termine le prÃ©fixe de l'index
             $index=Utils::ConvertString($index, 'alphanum');
             if (!isset($this->schema->indices[$index]))
                 throw new Exception("Boost incorrect : l'index $index n'existe pas");
@@ -1394,7 +1394,7 @@ class XapianDatabaseDriver extends Database
 
     /**
      * Retourne la liste des options de recherche reconnues par {@link search()}
-     * et leur valeur par défaut.
+     * et leur valeur par dÃ©faut.
      *
      * @return array
      */
@@ -1418,7 +1418,7 @@ class XapianDatabaseDriver extends Database
             'auto'              => null,
             'defaultequation'   => null,
             'defaultfilter'     => null,
-            'autosort'          => '-', // tri auto : ordre pour une requête booléenne, cf setSortOrder.
+            'autosort'          => '-', // tri auto : ordre pour une requÃªte boolÃ©enne, cf setSortOrder.
             'docset'            => null, // un tableau de termes : array('REF'=>array(1,2,3,4...));
         );
     }
@@ -1431,27 +1431,27 @@ class XapianDatabaseDriver extends Database
         timer && Timer::enter();
         timer && Timer::enter('Initialisation');
 
-        // Combine les options de recherche passées en paramètre avec les options par défaut
+        // Combine les options de recherche passÃ©es en paramÃ¨tre avec les options par dÃ©faut
         if (is_null($options))
         {
             $options = $this->getDefaultOptions();
         }
         else
         {
-            // Supprime des options les valeurs "null" passées en paramètre
-            // Sinon, on ne récupèrera pas la valeur par défaut dans ce cas.
+            // Supprime des options les valeurs "null" passÃ©es en paramÃ¨tre
+            // Sinon, on ne rÃ©cupÃ¨rera pas la valeur par dÃ©faut dans ce cas.
             foreach($options as $key=>$value)
                 if ($value===null or $value==='' or $value===array())
                     unset($options[$key]);
 
-            // Combine les options passées en paramètre avec les options par défaut
+            // Combine les options passÃ©es en paramÃ¨tre avec les options par dÃ©faut
             $options = $options + $this->getDefaultOptions();
         }
 
-        // Crée un objet Request à partir du tableau d'options
+        // CrÃ©e un objet Request Ã  partir du tableau d'options
         $this->options = Request::create($options);        // fixme: remplacer l'objet request par un objet Parameters
 
-        // Si une équation nous a été transmise en paramètre, on la
+        // Si une Ã©quation nous a Ã©tÃ© transmise en paramÃ¨tre, on la
         // stocke comme une option
         if ($equation) $this->options->add('equation', $equation);
 
@@ -1474,7 +1474,7 @@ class XapianDatabaseDriver extends Database
             // docset : n'est pris en compte que si c'est un tableau de tableaux
             ;
 
-        // Traduit l'opérateur par défaut (defaultop) en opérateur Xapian (defaultopcode)
+        // Traduit l'opÃ©rateur par dÃ©faut (defaultop) en opÃ©rateur Xapian (defaultopcode)
         $this->options->defaultopcode=
             $this->options->convert('defaultop', array('and'=>XapianQuery::OP_AND,'or'=>XapianQuery::OP_OR))->ok();
 
@@ -1482,27 +1482,27 @@ class XapianDatabaseDriver extends Database
         if ($this->options->max > 1)
         {
             /* explication : si on est sur la 2nde page avec max=10, on affiche
-             * la 11ème réponse en premier. Si on demande alors à passer à 50
-             * notices par page, on va alors afficher les notices 11 à 50, mais
-             * on n'aura pas de lien "page précédente".
-             * Le code ci-dessus, dans ce cas, ramène "start" à 1 pour que toutes
-             * les notices soient affichées.
+             * la 11Ã¨me rÃ©ponse en premier. Si on demande alors Ã  passer Ã  50
+             * notices par page, on va alors afficher les notices 11 Ã  50, mais
+             * on n'aura pas de lien "page prÃ©cÃ©dente".
+             * Le code ci-dessus, dans ce cas, ramÃ¨ne "start" Ã  1 pour que toutes
+             * les notices soient affichÃ©es.
              */
             $this->options->start=$this->options->start-(($this->options->start-1) % $this->options->max);
         }
 
 //        echo '<h1>Contexte de recherche</h1><pre>', var_export($this->options->getParameters(),true), '</pre>';
 
-        // Met en place l'environnement de recherche lors de la première recherche
+        // Met en place l'environnement de recherche lors de la premiÃ¨re recherche
         if (is_null($this->xapianEnquire)) $this->setupSearch();
 
-        // Crée la requête à exécuter en fonction des options indiquées
+        // CrÃ©e la requÃªte Ã  exÃ©cuter en fonction des options indiquÃ©es
         $this->setupRequest();
 
-        // Définit la requête à exécuter
+        // DÃ©finit la requÃªte Ã  exÃ©cuter
         $this->xapianEnquire->set_query($this->xapianQuery);
 
-        // Si des documents pertinents ont été indiqués, crée le rset correspondant
+        // Si des documents pertinents ont Ã©tÃ© indiquÃ©s, crÃ©e le rset correspondant
         $rset=null;
         if ($t=$this->options->rset)
         {
@@ -1511,40 +1511,40 @@ class XapianDatabaseDriver extends Database
                 $rset->add_document($id);
         }
 
-        // a priori, pas de réponses
+        // a priori, pas de rÃ©ponses
         $this->eof=true;
 
-        // Définit l'ordre de tri des réponses
+        // DÃ©finit l'ordre de tri des rÃ©ponses
 
-        // Problème : une recherche '*' triée par pertinence est lente (> 30s).
-        // Force ici un tri par docid décroissant dans ce cas.
+        // ProblÃ¨me : une recherche '*' triÃ©e par pertinence est lente (> 30s).
+        // Force ici un tri par docid dÃ©croissant dans ce cas.
         // if ($this->isMatchAll($this->xapianQuery) && $this->options->sort===array('%')) $this->options->set('sort', array('-'));
-        // Depuis xapian >= 1.0.9, ce n'est plus nécessaire.
+        // Depuis xapian >= 1.0.9, ce n'est plus nÃ©cessaire.
 
         $this->setSortOrder($this->options->sort);
 
-        // Définit le score minimal souhaité
+        // DÃ©finit le score minimal souhaitÃ©
         if ($t=$this->options->minscore) $this->xapianEnquire->set_cutoff($t);
 
         timer && Timer::leave('Initialisation');
 
         // Lance la recherche
 
-        // Expérimental : support des facettes de la recherche via un TermCountMatchSpy.
+        // ExpÃ©rimental : support des facettes de la recherche via un TermCountMatchSpy.
         // Requiert la version "MatchSpy" de Xapian (en attendant que la branche
-        // MatchSpy ait été intégrée dans le trunk.
+        // MatchSpy ait Ã©tÃ© intÃ©grÃ©e dans le trunk.
         if ($t=$this->options->facets && function_exists('new_TermCountMatchSpy'))
         {
-            // Fonctionnement : on définit dans la config une clé facets qui
+            // Fonctionnement : on dÃ©finit dans la config une clÃ© facets qui
             // indique les tables de lookup qu'on souhaite utiliser comme facettes.
-            // DatabaseModule::select() nous passe cette liste dans le paramètre
+            // DatabaseModule::select() nous passe cette liste dans le paramÃ¨tre
             // '_facet' du tableau options.
-            // On crée un Spy de type XapianTermCountMatchSpy auquel on
+            // On crÃ©e un Spy de type XapianTermCountMatchSpy auquel on
             // demande de compter tous les termes provenant de ces tables
             // de lookup.
-            // L'utilisateur peut ensuite récupérer le résultat en utilisant
-            // la méthode getFacet() et en appellant searchInfo() avec les
-            // nouveaus paramètres spy* introduits.
+            // L'utilisateur peut ensuite rÃ©cupÃ©rer le rÃ©sultat en utilisant
+            // la mÃ©thode getFacet() et en appellant searchInfo() avec les
+            // nouveaus paramÃ¨tres spy* introduits.
             $this->spy=new XapianTermCountMatchSpy();
             foreach($t as $table)
             {
@@ -1568,16 +1568,16 @@ class XapianDatabaseDriver extends Database
 
         timer && Timer::enter('Finalisation');
 
-        // Détermine le nombre de réponses obtenues
+        // DÃ©termine le nombre de rÃ©ponses obtenues
         $this->count=$this->xapianMSet->get_matches_estimated();
 
-        // Si on n'a aucune réponse parce que start était "trop grand", ré-essaie en ajustant start
+        // Si on n'a aucune rÃ©ponse parce que start Ã©tait "trop grand", rÃ©-essaie en ajustant start
         if ($this->xapianMSet->is_empty() && $this->count > 1 && $this->options->start > $this->count)
         {
-            // le mset est vide, mais on a des réponses (count > 0) et le start
-            // demandé était supérieur au count obtenu.
+            // le mset est vide, mais on a des rÃ©ponses (count > 0) et le start
+            // demandÃ© Ã©tait supÃ©rieur au count obtenu.
 
-            // Modifie start pour qu'il corresponde à la première réponse de la dernière page
+            // Modifie start pour qu'il corresponde Ã  la premiÃ¨re rÃ©ponse de la derniÃ¨re page
             $this->options->start=$this->count-(($this->count-1) % $this->options->max);
 
             // Relance la recherche
@@ -1586,7 +1586,7 @@ class XapianDatabaseDriver extends Database
             timer && Timer::leave('Get_MSet (avec ajustement de start)');
         }
 
-        // Si on n'a aucune réponse, retourne false
+        // Si on n'a aucune rÃ©ponse, retourne false
         if ($this->xapianMSet->is_empty())
         {
             $this->xapianMSetIterator=null;
@@ -1594,7 +1594,7 @@ class XapianDatabaseDriver extends Database
             $result=false;
         }
 
-        // Retourne true pour indiquer qu'on a au moins une réponse
+        // Retourne true pour indiquer qu'on a au moins une rÃ©ponse
         else
         {
             $this->xapianMSetIterator=$this->xapianMSet->begin();
@@ -1609,52 +1609,52 @@ class XapianDatabaseDriver extends Database
     }
 
     /**
-     * Retourne un nuage de tags pour le ou les champs indiqués.
+     * Retourne un nuage de tags pour le ou les champs indiquÃ©s.
      *
-     * La méthode ne peut être appellée qu'après qu'une recherche ait été
-     * exécutée. Elle relance la recherche en cours en forçant un tri par
-     * pertinence et en générant un MSet contenant $checkAtLeast réponses.
+     * La mÃ©thode ne peut Ãªtre appellÃ©e qu'aprÃ¨s qu'une recherche ait Ã©tÃ©
+     * exÃ©cutÃ©e. Elle relance la recherche en cours en forÃ§ant un tri par
+     * pertinence et en gÃ©nÃ©rant un MSet contenant $checkAtLeast rÃ©ponses.
      *
-     * Elle parcourt ensuite toutes les réponses obtenues et stocke les
-     * différentes valeurs rencontrées dans les champs ($fields) demandés.
+     * Elle parcourt ensuite toutes les rÃ©ponses obtenues et stocke les
+     * diffÃ©rentes valeurs rencontrÃ©es dans les champs ($fields) demandÃ©s.
      *
-     * Les valeurs rencontrées pour chaque champ sont ensuite triées par
-     * fréquences décroissantes et filtrées.
+     * Les valeurs rencontrÃ©es pour chaque champ sont ensuite triÃ©es par
+     * frÃ©quences dÃ©croissantes et filtrÃ©es.
      *
-     * Le filtrage consiste à :
-     * - supprimer les mots et les articles qui figurent déjà dans la requête de
+     * Le filtrage consiste Ã  :
+     * - supprimer les mots et les articles qui figurent dÃ©jÃ  dans la requÃªte de
      *   l'utilisateur.
-     * - supprimer les termes qui ont une fréquence dans la base supérieure à
-     *   la fréquence maximale autorisée (cf plus bas, format de $fields).
-     * - supprimer les termes qui correspondent à l'expression régulière
-     *   ($ignoreRegExp) indiquée.
+     * - supprimer les termes qui ont une frÃ©quence dans la base supÃ©rieure Ã 
+     *   la frÃ©quence maximale autorisÃ©e (cf plus bas, format de $fields).
+     * - supprimer les termes qui correspondent Ã  l'expression rÃ©guliÃ¨re
+     *   ($ignoreRegExp) indiquÃ©e.
      *
      * @param string|array $fields un ou plusieurs champs pour lesquels vous
-     * voulez récupérer un nuage de tags. Si $fields est un tableau, le nom de
-     * chaque champ peut être indiqué soit dans la clé, soit dans la valeur.
-     * S'il est indiqué dans la clé, la valeur indique alors une fréquence
+     * voulez rÃ©cupÃ©rer un nuage de tags. Si $fields est un tableau, le nom de
+     * chaque champ peut Ãªtre indiquÃ© soit dans la clÃ©, soit dans la valeur.
+     * S'il est indiquÃ© dans la clÃ©, la valeur indique alors une frÃ©quence
      * maximale (sous forme d'un pourcentage entre 0 et 100) et les termes ayant
-     * dans la base une fréquence supérieure à ce seuil seront ignorés.
+     * dans la base une frÃ©quence supÃ©rieure Ã  ce seuil seront ignorÃ©s.
      *
-     * @param int $max le nombre maximum de tags dans chaque nuage (zéro = pas de
+     * @param int $max le nombre maximum de tags dans chaque nuage (zÃ©ro = pas de
      * limite).
      *
-     * @param int $checkAtLeast le nombre minimum de documents à examiner.
+     * @param int $checkAtLeast le nombre minimum de documents Ã  examiner.
      *
-     * @param string $ignoreRegExp expression régulière utilisée pour ignorer
-     * certains termes. Les termes qui correspondent à l'expression régulière
-     * indiquée seront ignorés.
+     * @param string $ignoreRegExp expression rÃ©guliÃ¨re utilisÃ©e pour ignorer
+     * certains termes. Les termes qui correspondent Ã  l'expression rÃ©guliÃ¨re
+     * indiquÃ©e seront ignorÃ©s.
      *
      * @return array soit un tableau de tags (si $fields est une chaine) sous la
      * forme tag=>occurences, soit un tableau de tableaux de tags sous la forme
      * field =>array($tag=>occurences). Dans les deux cas, les tags obtenus sont
-     * triés par fréquence décroissante.
+     * triÃ©s par frÃ©quence dÃ©croissante.
      */
     public function getTags($fields, $max=25, $checkAtLeast=50, $ignoreRegExp=null, $excludeExistingTerms = true)
     {
         timer && Timer::enter();
 
-        // Détermine l'ID de chacun des champs demandés
+        // DÃ©termine l'ID de chacun des champs demandÃ©s
         $result=$maxFrequency=$fieldsId=$indexId=array();
         foreach((array)$fields as $key=>$value)
         {
@@ -1672,7 +1672,7 @@ class XapianDatabaseDriver extends Database
                 $maxFreq=0;
             }
 
-            // Vérifie que le champ demandé existe
+            // VÃ©rifie que le champ demandÃ© existe
             $key=Utils::ConvertString($name, 'alphanum');
             if (! isset($this->schema->fields[$key]))
                 throw new Exception("Le champ $name n'existe pas");
@@ -1682,7 +1682,7 @@ class XapianDatabaseDriver extends Database
             $result[$name]=array();
             $fieldsId[$id] = &$result[$name];
 
-            // Détermine l'ID de l'index correspondant au champ (s'il existe)
+            // DÃ©termine l'ID de l'index correspondant au champ (s'il existe)
             if (isset($this->schema->indices[$key]))
                 $indexId[$id]=$this->schema->indices[$key]->_id;
             else
@@ -1691,10 +1691,10 @@ class XapianDatabaseDriver extends Database
             $maxFrequency[$id]=$maxFreq;
         }
 
-        // Récupère les termes de la recherche en cours
+        // RÃ©cupÃ¨re les termes de la recherche en cours
         $searchTerms=array_flip($this->searchInfo('internalqueryterms'));
 
-        // Définit un tri par pertinence
+        // DÃ©finit un tri par pertinence
         $this->setSortOrder('%');
 
         // Relance la recherche
@@ -1716,7 +1716,7 @@ class XapianDatabaseDriver extends Database
                 if (empty($data[$id])) continue;
                 foreach((array)$data[$id] as $tag)
                 {
-                    // Met à jour le nombre d'occurences de ce tag
+                    // Met Ã  jour le nombre d'occurences de ce tag
                     if (isset($tags[$tag]))
                         ++$tags[$tag];
                     else
@@ -1730,7 +1730,7 @@ class XapianDatabaseDriver extends Database
         $docCount=$this->xapianDatabase->get_doccount();
         foreach($fieldsId as $id=>&$tags)
         {
-            // Trie le tableau par occurences décroissantes
+            // Trie le tableau par occurences dÃ©croissantes
             arsort($tags, SORT_NUMERIC);
 
             $nb=0;
@@ -1739,7 +1739,7 @@ class XapianDatabaseDriver extends Database
                 // Tolenize le tag
                 $tokens=Utils::tokenize($tag);
 
-                // Si le tag est un mot unique déjà présent dans la requête, on l'ignore
+                // Si le tag est un mot unique dÃ©jÃ  prÃ©sent dans la requÃªte, on l'ignore
                 if ($excludeExistingTerms )
                 {
                     if (count($tokens)===1)
@@ -1753,7 +1753,7 @@ class XapianDatabaseDriver extends Database
                     }
                 }
 
-                // Si le tag est un article déjà présent dans la requête, on l'ignore
+                // Si le tag est un article dÃ©jÃ  prÃ©sent dans la requÃªte, on l'ignore
                 $term = $indexId[$id].':_' . implode('_', $tokens) . '_';
                 if ($excludeExistingTerms)
                 {
@@ -1764,14 +1764,14 @@ class XapianDatabaseDriver extends Database
                     }
                 }
 
-                // Si le tag matche l'expression régulière indiquée, on l'ignore
+                // Si le tag matche l'expression rÃ©guliÃ¨re indiquÃ©e, on l'ignore
                 if ($ignoreRegExp && preg_match($ignoreRegExp, $tag))
                 {
                     unset($tags[$tag]);
                     continue;
                 }
 
-                // Si le tag est présent dans plus de x% des notices, on l'ignore
+                // Si le tag est prÃ©sent dans plus de x% des notices, on l'ignore
                 if ($maxFrequency[$id])
                 {
                     $percent=round(100 * $this->xapianDatabase->get_termfreq($term) / $docCount);
@@ -1782,18 +1782,18 @@ class XapianDatabaseDriver extends Database
                     }
                 }
 
-                // Si on a obtenu plus de $max tag, terminé
+                // Si on a obtenu plus de $max tag, terminÃ©
                 ++$nb;
                 if ($max && $nb >= $max) break;
             }
 
-            // Tronque le tableau si nécessaire
+            // Tronque le tableau si nÃ©cessaire
             if ($max && count($tags)>$max)
                 $tags=array_slice($tags, 0, $max, true);
         }
         timer && Timer::leave('tags.loop');
 
-        // Remet l'ordre de tri initial tel qu'il était (peu utile mais au cas où...)
+        // Remet l'ordre de tri initial tel qu'il Ã©tait (peu utile mais au cas oÃ¹...)
         $this->setSortOrder($this->options->sort);
 
         timer && Timer::leave();
@@ -1803,9 +1803,9 @@ class XapianDatabaseDriver extends Database
 
 
     /**
-     * Indique si la requête en cours contient au moins un terme probabiliste.
+     * Indique si la requÃªte en cours contient au moins un terme probabiliste.
      *
-     * La méthode examine les termes présents dans la requête en cours et
+     * La mÃ©thode examine les termes prÃ©sents dans la requÃªte en cours et
      * retourne vrai si au moins l'un de ces termes porte sur un index de type
      * probabiliste.
      *
@@ -1813,16 +1813,16 @@ class XapianDatabaseDriver extends Database
      */
     public function isProbabilisticQuery()
     {
-        // Récupère la liste des termes de la requête
+        // RÃ©cupÃ¨re la liste des termes de la requÃªte
         $terms=$this->searchInfo('internalqueryterms');
 
         if (empty($terms)) return false;
-        // xapian < 1.0.11 avait un bug qui faisait que le terme '' était retourné
-        // si on avait une requête du type MatchAll. Pour contourner, il fallait
-        // tester si terms était un tableau vide ou un tableau contenant une
+        // xapian < 1.0.11 avait un bug qui faisait que le terme '' Ã©tait retournÃ©
+        // si on avait une requÃªte du type MatchAll. Pour contourner, il fallait
+        // tester si terms Ã©tait un tableau vide ou un tableau contenant une
         // chaine vide. C'est inutile maintenant.
 
-        // Constitue la liste des id d'index présents dans les termes
+        // Constitue la liste des id d'index prÃ©sents dans les termes
         $t=array();
         foreach($terms as $term)
         {
@@ -1838,33 +1838,33 @@ class XapianDatabaseDriver extends Database
             if (isset($t[$index->_id])) return true;
         }
 
-        // Pas de terme dans la requête
+        // Pas de terme dans la requÃªte
         return false;
     }
 
     /**
-     * Crée la requête xapian à exécuter en fonction des options de recherches
-     * indiquées.
+     * CrÃ©e la requÃªte xapian Ã  exÃ©cuter en fonction des options de recherches
+     * indiquÃ©es.
      *
-     * La méthode crée la requête finale qui sera exécutée par xapian en prenant
+     * La mÃ©thode crÃ©e la requÃªte finale qui sera exÃ©cutÃ©e par xapian en prenant
      * en compte :
      *
-     * - la ou les équations de recherche indiquées dans l'option "equation" ;
-     * - les paramètres indiqués dans l'option "auto" qui correspondent à un
+     * - la ou les Ã©quations de recherche indiquÃ©es dans l'option "equation" ;
+     * - les paramÃ¨tres indiquÃ©s dans l'option "auto" qui correspondent Ã  un
      *   nom d'index ou d'alias existant ;
-     * - le ou les filtres indiqués dans l'option "filter" ;
-     * - le ou les filtres par défaut indiqués dans l'option "defaultfilter" ;
-     * - le boost éventuel indiqué dans l'option "boost".
+     * - le ou les filtres indiquÃ©s dans l'option "filter" ;
+     * - le ou les filtres par dÃ©faut indiquÃ©s dans l'option "defaultfilter" ;
+     * - le boost Ã©ventuel indiquÃ© dans l'option "boost".
      *
-     * La requête xapian à exécuter est stockée dans {@link $xapianQuery}.
+     * La requÃªte xapian Ã  exÃ©cuter est stockÃ©e dans {@link $xapianQuery}.
      */
     private function setupRequest()
     {
     /*
-        Combinatoire utilisée pour construire l'équation de recherche :
+        Combinatoire utilisÃ©e pour construire l'Ã©quation de recherche :
         +----------+-----------------+---------------------+-------------------+
-        | Type de  |    Opérateur    | Opérateur entre les |  Opérateur entre  |
-        | requête  | entre les mots  |  valeurs d'un champ | champs différents |
+        | Type de  |    OpÃ©rateur    | OpÃ©rateur entre les |  OpÃ©rateur entre  |
+        | requÃªte  | entre les mots  |  valeurs d'un champ | champs diffÃ©rents |
         +----------+-----------------+---------------------+-------------------+
         |   PROB   |    default op   |        AND          |        AND        |
         +----------+-----------------+---------------------+-------------------+
@@ -1878,20 +1878,20 @@ class XapianDatabaseDriver extends Database
 
         timer && Timer::enter();
 
-        // "equation" : la ou les équations passées en query string dans _equation
+        // "equation" : la ou les Ã©quations passÃ©es en query string dans _equation
         $query=$this->parseQuery($this->options->equation, $this->options->defaultopcode, XapianQuery::OP_AND);
 
-        // "auto" : index et alias passés en query string
+        // "auto" : index et alias passÃ©s en query string
         if ($this->options->auto)
         {
             $love=$hate=$prob=$bool=null;
 
-            // Parcourt tous les paramètres
+            // Parcourt tous les paramÃ¨tres
             foreach($this->options->auto as $name=>$value)
             {
                 if ($value===null or $value==='' or $value===array()) continue;
 
-                // Ne garde que ceux qui correspondent à un nom d'index ou d'alias existant
+                // Ne garde que ceux qui correspondent Ã  un nom d'index ou d'alias existant
                 $indexName=strtolower(ltrim($name,'+-'));
                 if (isset($this->schema->indices[$indexName]))
                     $index=$this->schema->indices[$indexName];
@@ -1900,7 +1900,7 @@ class XapianDatabaseDriver extends Database
                 else
                     continue;
 
-                // Détermine comment il faut analyser la requête et où la stocker
+                // DÃ©termine comment il faut analyser la requÃªte et oÃ¹ la stocker
                 switch(substr($name, 0, 1))
                 {
                     case '+': // Tous les mots sont requis, donc on parse en "ET"
@@ -1908,7 +1908,7 @@ class XapianDatabaseDriver extends Database
                         if (!is_null($q)) $love[]=$q;
                         break;
 
-                    case '-': // le résultat sera combiné en "AND_NOT hate", donc on parse en "OU"
+                    case '-': // le rÃ©sultat sera combinÃ© en "AND_NOT hate", donc on parse en "OU"
                         $q=$this->parseQuery($value, $this->options->defaultopcode, XapianQuery::OP_OR, $indexName);
                         if (!is_null($q)) $hate[]=$q;
                         break;
@@ -1928,7 +1928,7 @@ class XapianDatabaseDriver extends Database
                 }
             }
 
-            // Combine entres elles les équations de même nature (les love ensembles, les prob ensembles, etc.)
+            // Combine entres elles les Ã©quations de mÃªme nature (les love ensembles, les prob ensembles, etc.)
             foreach(array
             (
                 'love'=>XapianQuery::OP_AND,
@@ -1937,19 +1937,19 @@ class XapianDatabaseDriver extends Database
                 'bool'=>XapianQuery::OP_AND,
             ) as $type=>$op)
             {
-                // Aucune requête de type $type, rien à faire
+                // Aucune requÃªte de type $type, rien Ã  faire
                 if (count($$type)===0) continue;
 
-                // Une seule requête de type $type. C'est déjà un objet XapianQuery, on l'utilise tel quel
+                // Une seule requÃªte de type $type. C'est dÃ©jÃ  un objet XapianQuery, on l'utilise tel quel
                 if (count($$type)==1)
                     $$type=array_pop($$type);
 
-                // Plusieurs requêtes de type $type : on combine tous les XapianQuery en une seule avec $op
+                // Plusieurs requÃªtes de type $type : on combine tous les XapianQuery en une seule avec $op
                 else
                     $$type=new XapianQuery($op, $$type);
             }
 
-            // Crée la partie principale de la requête sous la forme :
+            // CrÃ©e la partie principale de la requÃªte sous la forme :
             // ((query AND love AND_MAYBE prob) AND_NOT hate) FILTER bool
             // Si defaultop=AND, le AND_MAYBE devient OP_AND
             if ($love || $query)
@@ -1979,7 +1979,7 @@ class XapianDatabaseDriver extends Database
 
             if ($hate)
             {
-                // on ne peut pas faire null AND_NOT xxx. Si query est null, crée une query '*'
+                // on ne peut pas faire null AND_NOT xxx. Si query est null, crÃ©e une query '*'
                 if (is_null($query)) $query=new XapianQuery('');
                 $query=new XapianQuery(XapianQuery::OP_AND_NOT, $query, $hate);
             }
@@ -1993,7 +1993,7 @@ class XapianDatabaseDriver extends Database
             }
         }
 
-        // filter : filtres utilisateur indiqués en query string
+        // filter : filtres utilisateur indiquÃ©s en query string
         $filter=$this->parseQuery($this->options->filter, XapianQuery::OP_OR, XapianQuery::OP_AND);
         if ($filter)
         {
@@ -2003,7 +2003,7 @@ class XapianDatabaseDriver extends Database
                 $query=new XapianQuery(XapianQuery::OP_FILTER, $query, $filter);
         }
 
-        // DocSet. tableau de tableaux. la clé indique l'index
+        // DocSet. tableau de tableaux. la clÃ© indique l'index
         if (is_array($this->options->docset))
         {
             $docset = null;
@@ -2011,7 +2011,7 @@ class XapianDatabaseDriver extends Database
             {
                 $terms = array();
 
-                // Détermine le préfixe de l'index
+                // DÃ©termine le prÃ©fixe de l'index
                 $index=Utils::ConvertString($index, 'alphanum');
                 if (!isset($this->schema->indices[$index]))
                     throw new Exception("DocSet incorrect : l'index $index n'existe pas");
@@ -2034,15 +2034,15 @@ class XapianDatabaseDriver extends Database
                 $query=new XapianQuery(XapianQuery::OP_FILTER, $query, $docset);
         }
 
-        // defaultequation : si on n'a toujours pas de requête, utilise l'équation par défaut
+        // defaultequation : si on n'a toujours pas de requÃªte, utilise l'Ã©quation par dÃ©faut
         if (is_null($query))
         {
             $query=$this->parseQuery($this->options->defaultequation, XapianQuery::OP_AND, XapianQuery::OP_AND);
             if (is_null($query))
-                throw new Exception('Vous n\'avez indiqué aucun critère de sélection.');
+                throw new Exception('Vous n\'avez indiquÃ© aucun critÃ¨re de sÃ©lection.');
         }
 
-        // defaultfilter : filtres par défaut indiqués dans la config
+        // defaultfilter : filtres par dÃ©faut indiquÃ©s dans la config
         $defaultFilter=$this->parseQuery($this->options->defaultfilter, XapianQuery::OP_OR, XapianQuery::OP_AND);
         if ($defaultFilter)
         {
@@ -2052,13 +2052,13 @@ class XapianDatabaseDriver extends Database
                 $query=new XapianQuery(XapianQuery::OP_FILTER, $query, $defaultFilter);
         }
 
-        // Prend en compte le boost éventuel si on est en tri par pertinence
+        // Prend en compte le boost Ã©ventuel si on est en tri par pertinence
         if ($this->options->boost && $this->options->sort===array('%'))
             $query=new XapianQuery(XapianQuery::OP_AND_MAYBE, $query, $this->parseBoost($this->options->boost));
 
         $this->query=new UserQuery($this->options->getParameters(), $this->schema);
 
-        // Stocke la requête finale
+        // Stocke la requÃªte finale
         $this->xapianQuery=$query;
 
         timer && Timer::leave();
@@ -2066,48 +2066,48 @@ class XapianDatabaseDriver extends Database
 
 
     /**
-     * Traduit la requête interne générée par Xapian en équation de recherche.
+     * Traduit la requÃªte interne gÃ©nÃ©rÃ©e par Xapian en Ã©quation de recherche.
      *
-     * Cette fonction est utilisée en interne par
-     * {@link searchInfo('ExplainQuery')} pour expliquer la requête à
+     * Cette fonction est utilisÃ©e en interne par
+     * {@link searchInfo('ExplainQuery')} pour expliquer la requÃªte Ã 
      * l'utilisateur.
      *
-     * @param XapianQuery $query la requête à examiner.
+     * @param XapianQuery $query la requÃªte Ã  examiner.
      * @return string
      */
     private function explainQuery(XapianQuery $query)
     {
         if (is_null($query)) return '';
 
-        // Récupère la description de la requête Xapian
+        // RÃ©cupÃ¨re la description de la requÃªte Xapian
         $h=$query->get_description();
 
-        // Supprime le libellé "XapianQuery()" et le premier niveau de parenthèses
+        // Supprime le libellÃ© "XapianQuery()" et le premier niveau de parenthÃ¨ses
         if (substr($h, 0, 14) === 'Xapian::Query(') $h=substr($h, 14, -1);
 
-        // Supprime les mentions "(pos=n)" présentes dans la requête
+        // Supprime les mentions "(pos=n)" prÃ©sentes dans la requÃªte
         $h=preg_replace('~:\(pos=\d+?\)~', '', $h);
 
         // Reconstruit les expressions entre guillemets
         $h=preg_replace_callback('~\((\d+:)[a-z0-9@_]+(?: (PHRASE \d+ )\1[a-z0-9@_]+)+\)~', array($this, 'makePhrase'), $h);
 
-        // Reconstruit les recherches à l'article
+        // Reconstruit les recherches Ã  l'article
         //echo "<br /><br /><br /><pre>";var_export($h);echo '</pre>';
         $h=preg_replace_callback('~_[a-z0-9@_]+_~', array($this, 'makeValue'), $h);
 
-        // Traduits les préfixes utilisés en noms de champs
+        // Traduits les prÃ©fixes utilisÃ©s en noms de champs
         $h=preg_replace_callback('~(\d+):~',array($this,'idToName'),$h);
 
-        // Met les opérateurs booléens en gras
+        // Met les opÃ©rateurs boolÃ©ens en gras
         $h=preg_replace('~AND_MAYBE|AND_NOT|FILTER|AND|OR|PHRASE \d+~', '<strong>$0</strong>', $h);
 
-        // Si l'expression obtenue commence par une parenthèse, c'est qu'on a un niveau de parenthèses en trop
+        // Si l'expression obtenue commence par une parenthÃ¨se, c'est qu'on a un niveau de parenthÃ¨ses en trop
         if (substr($h,0,1)==='(' && substr($h, -1)===')')
         {
             $h = substr($h, 1, -1);
         }
 
-        // Va à la ligne et indente à chaque niveau de parenthèse
+        // Va Ã  la ligne et indente Ã  chaque niveau de parenthÃ¨se
         $h=strtr
         (
             $h,
@@ -2123,19 +2123,19 @@ class XapianDatabaseDriver extends Database
         $h=preg_replace('~^<br />|<br />$~', '', $h);
         $h=preg_replace('~(<div[^>]*>)<br />(\(<div)~', '$1$2', $h);
 
-        // Retourne le résultat
+        // Retourne le rÃ©sultat
         return $h;
     }
 
     /**
-     * Callback utilisé par {@link explainQuery()}.
+     * Callback utilisÃ© par {@link explainQuery()}.
      *
-     * Reconstruit une recherche "à l'article" à partir de la description faite
-     * par Xapian de la requête exécutée.
+     * Reconstruit une recherche "Ã  l'article" Ã  partir de la description faite
+     * par Xapian de la requÃªte exÃ©cutÃ©e.
      *
      * Exemple : _a_b_ -> [a b]
      *
-     * @param array $matches le tableau généré par preg_replace_callback
+     * @param array $matches le tableau gÃ©nÃ©rÃ© par preg_replace_callback
      * @return string
      */
     private function makeValue($matches)
@@ -2144,19 +2144,19 @@ class XapianDatabaseDriver extends Database
     }
 
     /**
-     * Callback utilisé par {@link explainQuery()}.
+     * Callback utilisÃ© par {@link explainQuery()}.
      *
-     * Reconstruit une expression entre guillemets à partir de la description faite
-     * par Xapian de la requête exécutée.
+     * Reconstruit une expression entre guillemets Ã  partir de la description faite
+     * par Xapian de la requÃªte exÃ©cutÃ©e.
      *
      * Exemple : a PHRASE 2 b -> "a b"
      *
-     * @param array $matches le tableau généré par preg_replace_callback
+     * @param array $matches le tableau gÃ©nÃ©rÃ© par preg_replace_callback
      * @return string
      */
     private function makePhrase($matches)
     {
-        $query = substr($matches[0], 1, -1); // l'expression est toujours entourée de parenthèses (inutiles)
+        $query = substr($matches[0], 1, -1); // l'expression est toujours entourÃ©e de parenthÃ¨ses (inutiles)
         $id = $matches[1];
         $op = $matches[2];
         $result = $id . '"' . strtr($query, array($id=>'', $op=>'')) . '"';
@@ -2164,44 +2164,44 @@ class XapianDatabaseDriver extends Database
     }
 
     /**
-     * Paramètre le MSet pour qu'il retourne les documents selon l'ordre de tri
-     * indiqué en paramètre.
+     * ParamÃ¨tre le MSet pour qu'il retourne les documents selon l'ordre de tri
+     * indiquÃ© en paramÃ¨tre.
      *
      * @param string|array $sort un tableau ou une chaine indiquant les
-     * différents critères composant l'ordre de tri souhaité.
+     * diffÃ©rents critÃ¨res composant l'ordre de tri souhaitÃ©.
      *
-     * Les critères de tri possible sont :
-     * - <code>%</code> : trier les notices par pertinence (la meilleure en tête)
-     * - <code>+</code> : trier par ordre croissant des numéros de document
-     * - <code>-</code> : trier par ordre décroissant des numéros de document
+     * Les critÃ¨res de tri possible sont :
+     * - <code>%</code> : trier les notices par pertinence (la meilleure en tÃªte)
+     * - <code>+</code> : trier par ordre croissant des numÃ©ros de document
+     * - <code>-</code> : trier par ordre dÃ©croissant des numÃ©ros de document
      * - <code>xxx+</code> : trier sur le champ xxx, par ordre croissant
-     *   (le signe plus est optionnel, c'est l'ordre par défaut)
-     * - <code>xxx-</code> : trier sur le champ xxx, par ordre décroissant
+     *   (le signe plus est optionnel, c'est l'ordre par dÃ©faut)
+     * - <code>xxx-</code> : trier sur le champ xxx, par ordre dÃ©croissant
      *
-     * Plusieurs critères de tri peuvent être combinés entres eux. Dans ce cas,
-     * le premier critère sera d'abord utilisé, puis, en cas d'égalité, le
+     * Plusieurs critÃ¨res de tri peuvent Ãªtre combinÃ©s entres eux. Dans ce cas,
+     * le premier critÃ¨re sera d'abord utilisÃ©, puis, en cas d'Ã©galitÃ©, le
      * second et ainsi de suite.
      *
-     * La combinaison des critères peut se faire soit en passant en paramètre
-     * une chaine listant dans l'ordre les différents critères, soit en passant
-     * en paramètre un tableau contenant autant d'éléments que de critères ;
+     * La combinaison des critÃ¨res peut se faire soit en passant en paramÃ¨tre
+     * une chaine listant dans l'ordre les diffÃ©rents critÃ¨res, soit en passant
+     * en paramÃ¨tre un tableau contenant autant d'Ã©lÃ©ments que de critÃ¨res ;
      * soit en combinant les deux.
      *
-     * Exemple de critères composites :
+     * Exemple de critÃ¨res composites :
      * - chaine : <code>'type'</code>, <code>'type+ date- %'</code>
      * - tableau : <code>array('type', 'date+')</code>,
      *   <code>array('type', 'date+ revue+ titre %'</code>
      *
-     * Remarque : n'importe quel caractère de ponctuation peut être utilisé
-     * pour séparer les différents critères au sein d'une même chaine (espace,
+     * Remarque : n'importe quel caractÃ¨re de ponctuation peut Ãªtre utilisÃ©
+     * pour sÃ©parer les diffÃ©rents critÃ¨res au sein d'une mÃªme chaine (espace,
      * virgule, point-virgule...)
      *
-     * @throws Exception si l'ordre de tri demandé n'est pas possible ou si
-     * la clé de tri indiquée n'existe pas dans la base.
+     * @throws Exception si l'ordre de tri demandÃ© n'est pas possible ou si
+     * la clÃ© de tri indiquÃ©e n'existe pas dans la base.
      */
     private function setSortOrder($sort)
     {
-        // Si $sort est un tableau, on concatène tous les éléments ensembles
+        // Si $sort est un tableau, on concatÃ¨ne tous les Ã©lÃ©ments ensembles
         if (is_array($sort))
             $sort=implode(',', $sort);
 
@@ -2221,10 +2221,10 @@ class XapianDatabaseDriver extends Database
             return;
         }
 
-        // On a une chaine unique avec tous les critères, on l'explose
+        // On a une chaine unique avec tous les critÃ¨res, on l'explose
         $t=preg_split('~[^a-zA-Z_%+-]+~m', $sort, -1, PREG_SPLIT_NO_EMPTY);
 
-        // Cas d'un tri simple (un seul critère indiqué)
+        // Cas d'un tri simple (un seul critÃ¨re indiquÃ©)
         $this->sortKey=array();
         if (count($t)===1)
         {
@@ -2255,15 +2255,15 @@ class XapianDatabaseDriver extends Database
                     $this->xapianEnquire->set_DocId_Order(XapianEnquire::ASCENDING);
                     break;
 
-                // Par docid décroissants
+                // Par docid dÃ©croissants
                 case '-':
                     $this->xapianEnquire->set_weighting_scheme(new XapianBoolWeight());
                     $this->xapianEnquire->set_DocId_Order(XapianEnquire::DESCENDING);
                     break;
 
-                // Sur une clé de tri existante
+                // Sur une clÃ© de tri existante
                 default:
-                    // Détermine l'ordre (croissant/décroissant)
+                    // DÃ©termine l'ordre (croissant/dÃ©croissant)
                     $lastChar=substr($key, -1);
                     $reverse=false;
                     if ($lastChar==='+' || $lastChar==='-')
@@ -2272,48 +2272,48 @@ class XapianDatabaseDriver extends Database
                         if ($lastChar==='-') $reverse=true;
                     }
 
-                    // Vérifie que la clé de tri existe dans la base
+                    // VÃ©rifie que la clÃ© de tri existe dans la base
                     $key=strtolower($key);
                     if (! isset($this->schema->sortkeys[$key]))
                         throw new Exception('Impossible de trier par : ' . $key);
 
-                    // Récupère l'id de la clé de tri (= le value slot number à utiliser)
+                    // RÃ©cupÃ¨re l'id de la clÃ© de tri (= le value slot number Ã  utiliser)
                     $id=$this->schema->sortkeys[$key]->_id;
 
                     // Trie sur cette valeur
                     $this->xapianEnquire->set_sort_by_value($id, $reverse);
 
-                    // Mémorise l'ordre de tri en cours (pour searchInfo)
+                    // MÃ©morise l'ordre de tri en cours (pour searchInfo)
                     $this->sortOrder=$key . ($reverse ? '-' : '+');
                     $this->sortKey[$key]=$id;
             }
         }
 
-        // Cas d'un tri composite (plusieurs critères de tri)
+        // Cas d'un tri composite (plusieurs critÃ¨res de tri)
         else
         {
-            // On va utiliser un sorter xapian pour créer la clé
+            // On va utiliser un sorter xapian pour crÃ©er la clÃ©
             $this->xapianSorter=new XapianMultiValueSorter();
 
-            // Réinitialise l'ordre de tri en cours
+            // RÃ©initialise l'ordre de tri en cours
             $this->sortOrder='';
 
-            // On va utiliser la méthode set_sort_by_key sauf s'il faut combiner avec la pertinence
+            // On va utiliser la mÃ©thode set_sort_by_key sauf s'il faut combiner avec la pertinence
             $function='set_sort_by_key';
 
-            // Ajoute chaque critère de tri au sorter
+            // Ajoute chaque critÃ¨re de tri au sorter
             foreach($t as $i=>$key)
             {
                 switch ($key)
                 {
-                    // Par pertinence : change la méthode à utiliser
+                    // Par pertinence : change la mÃ©thode Ã  utiliser
                     case '%':
                         if ($i===0)
                             $method='set_sort_by_relevance_then_key';
                         elseif($i===count($t)-1)
                             $method='set_sort_by_key_then_relevance';
                         else
-                            throw new Exception('Ordre de tri incorrect "'.$sort.'" : "%" peut être au début ou à la fin mais pas au milieu');
+                            throw new Exception('Ordre de tri incorrect "'.$sort.'" : "%" peut Ãªtre au dÃ©but ou Ã  la fin mais pas au milieu');
 
                         $this->sortOrder.=$key . ' ';
                         break;
@@ -2321,12 +2321,12 @@ class XapianDatabaseDriver extends Database
                     // Par docid : impossible, on ne peut pas combiner avec autre chose
                     case '+':
                     case '-':
-                        throw new Exception('Ordre de tri incorrect "'.$sort.'" : "'.$key.'" ne peut pas être utilisé avec d\'autres critères');
+                        throw new Exception('Ordre de tri incorrect "'.$sort.'" : "'.$key.'" ne peut pas Ãªtre utilisÃ© avec d\'autres critÃ¨res');
                         break;
 
-                    // Sur une clé de tri existante
+                    // Sur une clÃ© de tri existante
                     default:
-                        // Détermine l'ordre (croissant/décroissant)
+                        // DÃ©termine l'ordre (croissant/dÃ©croissant)
                         $lastChar=substr($key, -1);
                         $forward=true;
                         if ($lastChar==='+' || $lastChar==='-')
@@ -2335,24 +2335,24 @@ class XapianDatabaseDriver extends Database
                             $forward=($lastChar==='+');
                         }
 
-                        // Vérifie que la clé de tri existe dans la base
+                        // VÃ©rifie que la clÃ© de tri existe dans la base
                         $key=strtolower($key);
                         if (! isset($this->schema->sortkeys[$key]))
                             throw new Exception('Impossible de trier par : ' . $key);
 
-                        // Récupère l'id de la clé de tri (= le value slot number à utiliser)
+                        // RÃ©cupÃ¨re l'id de la clÃ© de tri (= le value slot number Ã  utiliser)
                         $id=$this->schema->sortkeys[$key]->_id;
 
-                        // Ajoute cette clé au sorter
+                        // Ajoute cette clÃ© au sorter
                         $this->xapianSorter->add($id, $forward);
 
-                        // Mémorise l'ordre de tri en cours (pour searchInfo)
+                        // MÃ©morise l'ordre de tri en cours (pour searchInfo)
                         $this->sortOrder.=$key . ($forward ? '+ ' : '- ');
                         $this->sortKey[$key]=$id;
                 }
             }
 
-            // Demande à xapian de trier en utilisant la méthode et le sorter obtenu
+            // Demande Ã  xapian de trier en utilisant la mÃ©thode et le sorter obtenu
             $this->xapianEnquire->$function($this->xapianSorter, false);
 
             // Supprime l'espace final de l'ordre en cours
@@ -2362,18 +2362,18 @@ class XapianDatabaseDriver extends Database
 
 
     /**
-     * Suggère des termes provenant de la table indiquée
+     * SuggÃ¨re des termes provenant de la table indiquÃ©e
      *
      * @param string $table
      * @return array
      */
     public function suggestTerms($table)
     {
-        // Vérifie qu'on a un enregistrement en cours
+        // VÃ©rifie qu'on a un enregistrement en cours
         if (is_null($this->xapianMSetIterator))
             throw new Exception('Pas de document courant');
 
-        // Détermine le préfixe de la table dans laquelle on veut chercher
+        // DÃ©termine le prÃ©fixe de la table dans laquelle on veut chercher
         if ($table)
         {
             $key=Utils::ConvertString($table, 'alphanum');
@@ -2411,10 +2411,10 @@ class XapianDatabaseDriver extends Database
 
     private function loadDocument()
     {
-        // Réinitialise tous les champs à leur valeur par défaut
-        // Corrige à la fois :
+        // RÃ©initialise tous les champs Ã  leur valeur par dÃ©faut
+        // Corrige Ã  la fois :
         // bug de actionReindex() qui fusionne les notices
-        // bug trouvé par SF : search(texte officiel) -> on répête les infos
+        // bug trouvÃ© par SF : search(texte officiel) -> on rÃ©pÃªte les infos
         // Voir si on peut corriger le bug autrement qu'en bouclant.
         foreach($this->fields as $name=>&$value)
             $value=null;
@@ -2511,19 +2511,19 @@ class XapianDatabaseDriver extends Database
     }
 
     /**
-     * Retourne une estimation du nombre de réponses obtenues lors de la
-     * dernière recherche exécutée.
+     * Retourne une estimation du nombre de rÃ©ponses obtenues lors de la
+     * derniÃ¨re recherche exÃ©cutÃ©e.
      *
-     * @param int|string $countType le type d'estimation à fournir ou le
-     * libellé à utiliser
+     * @param int|string $countType le type d'estimation Ã  fournir ou le
+     * libellÃ© Ã  utiliser
 
      * @return int|string
      */
     public function count($countType=0)
     {
-        // Si l'argument est une chaine, on considère que l'utilisateur veut
-        // une évaluation (arrondie) du nombre de réponses et cette chaine
-        // est le libellé à utiliser (par exemple : 'environ %d ')
+        // Si l'argument est une chaine, on considÃ¨re que l'utilisateur veut
+        // une Ã©valuation (arrondie) du nombre de rÃ©ponses et cette chaine
+        // est le libellÃ© Ã  utiliser (par exemple : 'environ %d ')
         if (is_string($countType))
         {
             if (is_null($this->xapianMSet)) return 0;
@@ -2539,7 +2539,7 @@ class XapianDatabaseDriver extends Database
 //                'max : ', $max, '<br />',
 //                'count : ', $count, '<br />';
 
-            // Si min==max, c'est qu'on a le nombre exact de réponses, pas d'évaluation
+            // Si min==max, c'est qu'on a le nombre exact de rÃ©ponses, pas d'Ã©valuation
             if ($min === $max) return $min;
 
             $unit = pow(10, floor(log10($max-$min))-1);
@@ -2558,19 +2558,19 @@ class XapianDatabaseDriver extends Database
 //                '<br />'
 //                ;
 
-            // Dans certains cas, on peut se retrouver avec une évaluation
-            // inférieure à start, ce qui génère un pager de la forme
-            // "Réponses 2461 à 2470 sur environ 2000" !
-            // Quand on détecte ce cas, passe à l'unité supérieure.
-            // Cas trouvé avec la requête "prise en +charge du +patient diabétique"
+            // Dans certains cas, on peut se retrouver avec une Ã©valuation
+            // infÃ©rieure Ã  start, ce qui gÃ©nÃ¨re un pager de la forme
+            // "RÃ©ponses 2461 Ã  2470 sur environ 2000" !
+            // Quand on dÃ©tecte ce cas, passe Ã  l'unitÃ© supÃ©rieure.
+            // Cas trouvÃ© avec la requÃªte "prise en +charge du +patient diabÃ©tique"
             // dans la base documentaire bdsp.
             if ($round < $this->options->start)
                 $round=max(1,round($count / $unit)+1) * $unit;
 
-            $round = number_format($round, 0, '.', ' ');
+            $round = number_format($round, 0, '.', 'Â ');
 
             if ($unit===0.1)
-                return '~&#160;' . $round; //  ou '±&#160;'
+                return '~&#160;' . $round; //  ou 'Â±&#160;'
 
             $result=
                 (strpos($countType, '%')===false)
@@ -2615,15 +2615,15 @@ class XapianDatabaseDriver extends Database
             case 'rank': return $this->xapianMSetIterator->get_rank()+1;
 
             case 'correctedequation':
-                // Si c'est le premier appel, corrige l'équation en cours
+                // Si c'est le premier appel, corrige l'Ã©quation en cours
                 if (is_null($this->correctedEquation))
                     $this->spellcheckEquation('^^^%s$$$');
 
-                // Coupe le format indiqué en "avant"/"après"
+                // Coupe le format indiquÃ© en "avant"/"aprÃ¨s"
                 $delim=explode('%s', $arg, 2);
                 if (! isset($delim[1])) $delim[1]='';
 
-                // Insère les délimiteurs demandés dans l'équation
+                // InsÃ¨re les dÃ©limiteurs demandÃ©s dans l'Ã©quation
                 return strtr
                 (
                     $this->correctedEquation,
@@ -2634,15 +2634,15 @@ class XapianDatabaseDriver extends Database
                     )
                 );
 
-            // Liste des mots-vides ignorés dans l'équation de recherche
+            // Liste des mots-vides ignorÃ©s dans l'Ã©quation de recherche
             case 'stopwords': return $this->getRequestStopwords(false);
             case 'internalstopwords': return $this->getRequestStopwords(true);
 
-            // Liste des termes présents dans l'équation + termes correspondants au troncatures
+            // Liste des termes prÃ©sents dans l'Ã©quation + termes correspondants au troncatures
             case 'queryterms': return $this->getQueryTerms(false);
             case 'internalqueryterms': return $this->getQueryTerms(true);
 
-            // Liste des termes du document en cours qui collent à la requête
+            // Liste des termes du document en cours qui collent Ã  la requÃªte
             case 'matchingterms': return $this->getMatchingTerms(false);
             case 'internalmatchingterms': return $this->getMatchingTerms(true);
 
@@ -2658,11 +2658,11 @@ class XapianDatabaseDriver extends Database
 //            case 'internalfilter': return is_null($this->xapianFilter) ? null : $this->xapianFilter->get_description();
             case 'internalfinalquery': return $this->xapianEnquire->get_query()->get_description();
 
-            // Le libellé de la clé de tri en cours
+            // Le libellÃ© de la clÃ© de tri en cours
             case 'sortorder':
                 return  $this->sortOrder;
 
-            // La valeur de la clé de tri pour l'enreg en cours
+            // La valeur de la clÃ© de tri pour l'enreg en cours
             case 'sortkey':
                 //return $this->sortKey;
                 if (empty($this->sortKey)) return array($this->xapianMSetIterator->get_weight());
@@ -2685,21 +2685,21 @@ class XapianDatabaseDriver extends Database
     }
 
     /**
-     * Retourne la liste des termes de recherche générés par la requête.
+     * Retourne la liste des termes de recherche gÃ©nÃ©rÃ©s par la requÃªte.
      *
-     * getQueryTerms construit la liste des termes d'index qui ont été générés
-     * par la dernière requête analysée.
+     * getQueryTerms construit la liste des termes d'index qui ont Ã©tÃ© gÃ©nÃ©rÃ©s
+     * par la derniÃ¨re requÃªte analysÃ©e.
      *
-     * La liste comprend tous les termes présents dans la requête (mais pas les
-     * mots vides) et tous les termes générés par les troncatures.
+     * La liste comprend tous les termes prÃ©sents dans la requÃªte (mais pas les
+     * mots vides) et tous les termes gÃ©nÃ©rÃ©s par les troncatures.
      *
-     * Par exemple, la requête <code>éduc* pour la santé</code> pourrait
+     * Par exemple, la requÃªte <code>Ã©duc* pour la santÃ©</code> pourrait
      * retourner <code>array('educateur', 'education', 'sante')</code>.
      *
-     * Par défaut, les termes retournés sont filtrés de manière à pouvoir être
-     * présentés à l'utilisateur (dédoublonnage des termes, suppression des
-     * préfixes internes utilisés dans les index de xapian), mais vous pouvez
-     * passer <code>false</code> en paramètre pour obtenir la liste brute.
+     * Par dÃ©faut, les termes retournÃ©s sont filtrÃ©s de maniÃ¨re Ã  pouvoir Ãªtre
+     * prÃ©sentÃ©s Ã  l'utilisateur (dÃ©doublonnage des termes, suppression des
+     * prÃ©fixes internes utilisÃ©s dans les index de xapian), mais vous pouvez
+     * passer <code>false</code> en paramÃ¨tre pour obtenir la liste brute.
      *
      * @param bool $internal flag indiquant s'il faut filtrer ou non la liste
      * des termes.
@@ -2710,10 +2710,10 @@ class XapianDatabaseDriver extends Database
     {
         $terms=array();
 
-        // Si aucune requête n'a été exécutée, retourne un tableau vide
+        // Si aucune requÃªte n'a Ã©tÃ© exÃ©cutÃ©e, retourne un tableau vide
         if (is_null($this->xapianQuery)) return $terms;
 
-        // Récupère tous les termes présents dans la requête en cours
+        // RÃ©cupÃ¨re tous les termes prÃ©sents dans la requÃªte en cours
         $begin=$this->xapianQuery->get_terms_begin();
         $end=$this->xapianQuery->get_terms_end();
         while (!$begin->equals($end))
@@ -2725,7 +2725,7 @@ class XapianDatabaseDriver extends Database
             }
             else
             {
-                // Supprime le préfixe éventuel
+                // Supprime le prÃ©fixe Ã©ventuel
                 if (false !== $pt=strpos($term, ':')) $term=substr($term,$pt+1);
 
                 // Pour les articles, supprime les underscores
@@ -2740,27 +2740,27 @@ class XapianDatabaseDriver extends Database
     }
 
     /**
-     * Retourne la liste des mots-vides présents dans la la requête.
+     * Retourne la liste des mots-vides prÃ©sents dans la la requÃªte.
      *
      * getRequestStopWords construit la liste des termes qui figuraient dans
-     * la dernière requête analysée mais qui ont été ignorés parcequ'ils
-     * figuraient dans la liste des mots-vides déinis dans la base.
+     * la derniÃ¨re requÃªte analysÃ©e mais qui ont Ã©tÃ© ignorÃ©s parcequ'ils
+     * figuraient dans la liste des mots-vides dÃ©inis dans la base.
      *
-     * Par exemple, la requête <code>outil pour le web, pour internet</code>
+     * Par exemple, la requÃªte <code>outil pour le web, pour internet</code>
      * pourrait retourner <code>array('pour', 'le')</code>.
      *
-     * Par défaut, les termes retournés sont dédoublonnés, mais vous pouvez
-     * passer <code>false</code> en paramètre pour obtenir la liste brute (dans
+     * Par dÃ©faut, les termes retournÃ©s sont dÃ©doublonnÃ©s, mais vous pouvez
+     * passer <code>false</code> en paramÃ¨tre pour obtenir la liste brute (dans
      * l'exemple ci-dessus, on obtiendrait <code>array('pour', 'le', 'pour')</code>
      *
-     * @param bool $internal flag indiquant s'il faut dédoublonner ou non la
+     * @param bool $internal flag indiquant s'il faut dÃ©doublonner ou non la
      * liste des mots-vides.
      *
      * @return array un tableau contenant la liste des termes obtenus.
      */
     private function getRequestStopWords($internal=false)
     {
-        // Liste des mots vides ignorés
+        // Liste des mots vides ignorÃ©s
         if (is_null($this->xapianQueryParser)) return array();
 
         $stopwords=array();
@@ -2768,9 +2768,9 @@ class XapianDatabaseDriver extends Database
         while(! $iterator->equals($this->xapianQueryParser->stoplist_end()))
         {
             if ($internal)
-                $stopwords[]=$iterator->get_term(); // pas de dédoublonnage
+                $stopwords[]=$iterator->get_term(); // pas de dÃ©doublonnage
             else
-                $stopwords[$iterator->get_term()]=true; // dédoublonne en même temps
+                $stopwords[$iterator->get_term()]=true; // dÃ©doublonne en mÃªme temps
             $iterator->next();
         }
         return $internal ? $stopwords : array_keys($stopwords);
@@ -2778,18 +2778,18 @@ class XapianDatabaseDriver extends Database
 
     /**
      * Retourne la liste des termes du document en cours qui correspondent aux
-     * terms de recherche générés par la requête.
+     * terms de recherche gÃ©nÃ©rÃ©s par la requÃªte.
      *
      * getMatchingTerms construit l'intersection entre la liste des termes
-     * du document en cours et la liste des termes générés par la requête.
+     * du document en cours et la liste des termes gÃ©nÃ©rÃ©s par la requÃªte.
      *
-     * Cela permet, entre autres, de comprendre pourquoi un document apparaît
-     * dans la liste des réponses.
+     * Cela permet, entre autres, de comprendre pourquoi un document apparaÃ®t
+     * dans la liste des rÃ©ponses.
      *
-     * Par défaut, les termes retournés sont filtrés de manière à pouvoir être
-     * présentés à l'utilisateur (dédoublonnage des termes, suppression des
-     * préfixes internes utilisés dans les index de xapian), mais vous pouvez
-     * passer <code>false</code> en paramètre pour obtenir la liste brute.
+     * Par dÃ©faut, les termes retournÃ©s sont filtrÃ©s de maniÃ¨re Ã  pouvoir Ãªtre
+     * prÃ©sentÃ©s Ã  l'utilisateur (dÃ©doublonnage des termes, suppression des
+     * prÃ©fixes internes utilisÃ©s dans les index de xapian), mais vous pouvez
+     * passer <code>false</code> en paramÃ¨tre pour obtenir la liste brute.
      *
      * @param bool $internal flag indiquant s'il faut filtrer ou non la liste
      * des termes.
@@ -2810,7 +2810,7 @@ class XapianDatabaseDriver extends Database
             }
             else
             {
-                // Supprime le préfixe éventuel
+                // Supprime le prÃ©fixe Ã©ventuel
                 if (false !== $pt=strpos($term, ':')) $term=substr($term,$pt+1);
 
                 // Pour les articles, supprime les underscores
@@ -2833,58 +2833,58 @@ class XapianDatabaseDriver extends Database
     }
 
     const
-        MAX_KEY=240,            // Longueur maximale d'un terme, tout compris (doit être inférieur à BTREE_MAX_KEY_LEN de xapian)
-        MAX_PREFIX=4,           // longueur maxi d'un préfixe (par exemple 'T99:')
+        MAX_KEY=240,            // Longueur maximale d'un terme, tout compris (doit Ãªtre infÃ©rieur Ã  BTREE_MAX_KEY_LEN de xapian)
+        MAX_PREFIX=4,           // longueur maxi d'un prÃ©fixe (par exemple 'T99:')
         MIN_TERM=1,             // Longueur minimale d'un terme
         MAX_TERM=236,           // =MAX_KEY-MAX_PREFIX, longueur maximale d'un terme
         MIN_ENTRY_SLOT=2,       // longueur minimale d'un mot de base dans une table de lookup
         MAX_ENTRY_SLOT=20,      // longueur maximale d'un mot de base dans une table de lookup
-        MAX_ENTRY=219           // =MAX_KEY-MAX_ENTRY_SLOT-1, longueur maximale d'une valeur dans une table des entrées (e.g. masson:Editions Masson)
+        MAX_ENTRY=219           // =MAX_KEY-MAX_ENTRY_SLOT-1, longueur maximale d'une valeur dans une table des entrÃ©es (e.g. masson:Editions Masson)
         ;
 
     /**
-     * Suggère à l'utilisateur des entrées ou des termes existant dans l'index
+     * SuggÃ¨re Ã  l'utilisateur des entrÃ©es ou des termes existant dans l'index
      * de xapian.
      *
-     * Lookup prend en paramètre un terme ou une expression et recherche dans les
-     * index de xapian toutes les entrées qui commencent par cette valeur.
+     * Lookup prend en paramÃ¨tre un terme ou une expression et recherche dans les
+     * index de xapian toutes les entrÃ©es qui commencent par cette valeur.
      *
-     * Lookup teste dans l'ordre si la "table" indiquée en paramètre correspond
+     * Lookup teste dans l'ordre si la "table" indiquÃ©e en paramÃ¨tre correspond
      * au nom d'une table de lookup, d'un alias ou d'un index existant (une
-     * exception sera générée si ce n'est pas le cas).
+     * exception sera gÃ©nÃ©rÃ©e si ce n'est pas le cas).
      *
-     * Selon la source utilisée, la nature des suggestions retournées sera
-     * différente :
-     * - S'il s'agit d'une table de lookup, lookup retourne toutes les entrées (en format riche)
-     *   qui commencent par l'expression de recherche indiquée.
-     * - S'il s'agit d'un index de type "article", lookup retourne toutes les entrées (en format
-     *   "pauvre", en minuscules non accentuées) qui commencent par l'expression recherchée.
-     * - S'il s'agit d'un index de type "mot", seul le dernier mot indiqué dans l'expression de
+     * Selon la source utilisÃ©e, la nature des suggestions retournÃ©es sera
+     * diffÃ©rente :
+     * - S'il s'agit d'une table de lookup, lookup retourne toutes les entrÃ©es (en format riche)
+     *   qui commencent par l'expression de recherche indiquÃ©e.
+     * - S'il s'agit d'un index de type "article", lookup retourne toutes les entrÃ©es (en format
+     *   "pauvre", en minuscules non accentuÃ©es) qui commencent par l'expression recherchÃ©e.
+     * - S'il s'agit d'un index de type "mot", seul le dernier mot indiquÃ© dans l'expression de
      *   recherche est pris en compte. Lokkup retourne alors tous les mots de l'index (en format
-     *   pauvre) qui commencent par le dernier des mots indiqués dans l'expression recherchée.
-     * - S'il s'agit d'un alias, les suggestions retournées correspondront au type des index
+     *   pauvre) qui commencent par le dernier des mots indiquÃ©s dans l'expression recherchÃ©e.
+     * - S'il s'agit d'un alias, les suggestions retournÃ©es correspondront au type des index
      *   composant cet alias (i.e. soit des articles, soit des termes).
      *
      * @param string $table le nom de la table de lookup, de l'alias ou de
-     * l'index à utiliser pour générer des suggestions.
+     * l'index Ã  utiliser pour gÃ©nÃ©rer des suggestions.
      *
-     * @param string $term le mot ou l'expression recherchée.
+     * @param string $term le mot ou l'expression recherchÃ©e.
      *
-     * @param int $max le nombre maximum de suggestions à retourner (0=pas de limite)
+     * @param int $max le nombre maximum de suggestions Ã  retourner (0=pas de limite)
      *
-     * @param string $format définit le format à utiliser pour la mise en
+     * @param string $format dÃ©finit le format Ã  utiliser pour la mise en
      * surbrillance des termes de recherche de l'utilisateur au sein de chacun
-     * des suggestions trouvées.
+     * des suggestions trouvÃ©es.
      *
-     * Il s'agit d'une chaine qui sera appliquée aux suggestions trouvées en utilisant
+     * Il s'agit d'une chaine qui sera appliquÃ©e aux suggestions trouvÃ©es en utilisant
      * la fonction sprintf() de php (exemple de format : <strong>%s</strong>).
      *
      * Si $format est null ou s'il s'agit d'une chaine vide, aucune surbrillance
-     * ne sera appliquée.
+     * ne sera appliquÃ©e.
      *
-     * @return array un tableau contenant les suggestions obtenues. Chaque clé
-     * du tableau contient une suggestion et la valeur associée contient le
-     * nombre d'occurences de cette entrée dans la base.
+     * @return array un tableau contenant les suggestions obtenues. Chaque clÃ©
+     * du tableau contient une suggestion et la valeur associÃ©e contient le
+     * nombre d'occurences de cette entrÃ©e dans la base.
      *
      * Exemple :
      * <code>
@@ -2895,7 +2895,7 @@ class XapianDatabaseDriver extends Database
      * )
      * </code>
      *
-     * Les suggestions retournées sont triées par ordre alphabétique croissant.
+     * Les suggestions retournÃ©es sont triÃ©es par ordre alphabÃ©tique croissant.
      */
     public function lookup($table, $value, $max=10, $format='<strong>%s</strong>')
     {
@@ -2906,7 +2906,7 @@ class XapianDatabaseDriver extends Database
          */
         $helper=null;
 
-		// Construit la version "minuscules non accentuées" du nom de la table indiquée
+		// Construit la version "minuscules non accentuÃ©es" du nom de la table indiquÃ©e
         $key=Utils::ConvertString($table, 'alphanum');
 
         // Teste s'il s'agit d'une table de lookup
@@ -2923,14 +2923,14 @@ class XapianDatabaseDriver extends Database
             $prefix='';
             foreach($this->schema->aliases[$key]->indices as $name=>$index)
             {
-                // S'il existe une table de lookup avec ce nom, on l'utilise plutôt que l'index
+                // S'il existe une table de lookup avec ce nom, on l'utilise plutÃ´t que l'index
                 if (isset($this->schema->lookuptables[$name]))
                 {
                     $item=new SimpleTableLookup();
                 	$prefix='T' . $this->schema->lookuptables[$name]->_id . ':';
                 }
 
-                // C'est un index. Détermine si c'est un index au mot ou à l'article
+                // C'est un index. DÃ©termine si c'est un index au mot ou Ã  l'article
                 else
                 {
                     $index=$this->schema->indices[$name];
@@ -2941,25 +2941,25 @@ class XapianDatabaseDriver extends Database
                     $prefix=$index->_id . ':';
                 }
 
-                // Initialise l'item et l'ajoute à l'alias
+                // Initialise l'item et l'ajoute Ã  l'alias
                 $item->setIterators($this->xapianDatabase->allterms_begin(), $this->xapianDatabase->allterms_end());
                 $item->setPrefix($prefix);
 
                 $helper->add($item);
             }
 
-            $prefix=''; // AliasLookup n'utilise pas les préfixes
+            $prefix=''; // AliasLookup n'utilise pas les prÃ©fixes
         }
 
         // Teste s'il s'agit d'un index
         elseif (isset($this->schema->indices[$key]))
         {
-            // Teste s'il s'agit d'un index "à l'article"
+            // Teste s'il s'agit d'un index "Ã  l'article"
 
             // Remarque : on ne peut pas tester directement l'index, car chacun des
-            // champs peut être indexé à l'article ou au mot. Du coup, on teste
+            // champs peut Ãªtre indexÃ© Ã  l'article ou au mot. Du coup, on teste
             // uniquement le type d'indexation du premier champ et on suppose que
-            // les autres champs de l'index sont indexés pareil.
+            // les autres champs de l'index sont indexÃ©s pareil.
 
             if (reset($this->schema->indices[$key]->fields)->values)
                 $helper=new ValueLookup();
@@ -2975,28 +2975,28 @@ class XapianDatabaseDriver extends Database
             throw new Exception("Impossible de faire un lookup sur '$table' : ce n'est ni une table de lookup, ni un alias, ni un index");
         }
 
-        // Paramétre le helper
+        // ParamÃ©tre le helper
         $helper->setIterators($this->xapianDatabase->allterms_begin(), $this->xapianDatabase->allterms_end());
         $helper->setPrefix($prefix);
 
-        // Fait le lookup et retourne les résultats
+        // Fait le lookup et retourne les rÃ©sultats
         return $helper->lookup($value, $max, $format);
     }
 
 
     /**
-     * Recherche les tokens de la base qui commencent par le terme indiqué.
+     * Recherche les tokens de la base qui commencent par le terme indiquÃ©.
      *
-     * Cette méthode est similaire à lookup, mais recherche parmi les termes
+     * Cette mÃ©thode est similaire Ã  lookup, mais recherche parmi les termes
      * d'indexation et non pas parmi les tables de lookup.
      *
-     * @param string $term le terme recherché
+     * @param string $term le terme recherchÃ©
      *
-     * @param int $max le nombre maximum de valeurs à retourner (0=pas de limite)
+     * @param int $max le nombre maximum de valeurs Ã  retourner (0=pas de limite)
      *
-     * @param int $sort l'ordre de tri souhaité pour les réponses :
-     *   - 0 : trie les réponses par nombre décroissant d'occurences dans la base (valeur par défaut)
-     *   - 1 : trie les réponses par ordre alphabétique croissant
+     * @param int $sort l'ordre de tri souhaitÃ© pour les rÃ©ponses :
+     *   - 0 : trie les rÃ©ponses par nombre dÃ©croissant d'occurences dans la base (valeur par dÃ©faut)
+     *   - 1 : trie les rÃ©ponses par ordre alphabÃ©tique croissant
      *
      * @return array
      */
@@ -3046,7 +3046,7 @@ class XapianDatabaseDriver extends Database
             $token=strtok(' ');
         }
 
-        // Trie des réponses
+        // Trie des rÃ©ponses
         if ($sort===0)
         {
             arsort($result, SORT_NUMERIC);
@@ -3105,7 +3105,7 @@ class XapianDatabaseDriver extends Database
         {
             $id=$iterator->get_docid();
             $this->xapianDatabase->delete_document($iterator->get_docid());
-            if (debug) echo ++$i, ': doc ', $id, ' supprimé<br />';
+            if (debug) echo ++$i, ': doc ', $id, ' supprimÃ©<br />';
             $iterator->next();
         }
     }
@@ -3114,51 +3114,51 @@ class XapianDatabaseDriver extends Database
     {
         $startTime=microtime(true);
 
-        // Vérifie que la base est ouverte en écriture
+        // VÃ©rifie que la base est ouverte en Ã©criture
         if (! $this->xapianDatabase instanceof XapianWritableDatabase)
-            throw new Exception('Impossible de réindexer une base de données ouverte en lecture seule.');
+            throw new Exception('Impossible de rÃ©indexer une base de donnÃ©es ouverte en lecture seule.');
 
-        // Mémorise le path actuel de la base
+        // MÃ©morise le path actuel de la base
         $path=$this->getPath();
 
-        echo '<h1>Réindexation complète de la base ', basename($path), '</h1>';
+        echo '<h1>RÃ©indexation complÃ¨te de la base ', basename($path), '</h1>';
 
-        // Sélectionne toutes les notices
+        // SÃ©lectionne toutes les notices
         $this->search('*', array('sort'=>'+', 'max'=>-1));
         $count=$this->count();
         if ($count==0)
         {
-            echo '<p>La base ne contient aucun document, il est inutile de lancer la réindexation.</p>';
+            echo '<p>La base ne contient aucun document, il est inutile de lancer la rÃ©indexation.</p>';
             return;
         }
         echo '<ol>';
 
         echo '<li>La base contient ', $count, ' notices.</li>';
 
-        // Si une base 'tmp' existe déjà, on le signale et on s'arrête
-        echo '<li>Création de la base de données temporaire...</li>';
+        // Si une base 'tmp' existe dÃ©jÃ , on le signale et on s'arrÃªte
+        echo '<li>CrÃ©ation de la base de donnÃ©es temporaire...</li>';
         $pathTmp=$path.DIRECTORY_SEPARATOR.'tmp';
         if (file_exists($pathTmp) && count(glob($pathTmp . DIRECTORY_SEPARATOR . '*'))!==0)
-            throw new Exception("Le répertoire $pathTmp contient déjà des données (réindexation précédente interrompue ?). Examinez et videz ce répertoire puis relancez la réindexation.");
+            throw new Exception("Le rÃ©pertoire $pathTmp contient dÃ©jÃ  des donnÃ©es (rÃ©indexation prÃ©cÃ©dente interrompue ?). Examinez et videz ce rÃ©pertoire puis relancez la rÃ©indexation.");
 
-        // Crée la nouvelle base dans './tmp'
+        // CrÃ©e la nouvelle base dans './tmp'
         $tmp=Database::create($pathTmp, $this->getSchema(), 'xapian');
 
-        // Crée le répertoire 'old' s'il n'existe pas déjà
+        // CrÃ©e le rÃ©pertoire 'old' s'il n'existe pas dÃ©jÃ 
         $pathOld=$path.DIRECTORY_SEPARATOR.'old';
         if (! is_dir($pathOld))
         {
             if (! @mkdir($pathOld))
-                throw new Exception('Impossible de créer le répertoire ' . $pathOld);
+                throw new Exception('Impossible de crÃ©er le rÃ©pertoire ' . $pathOld);
         }
 
-        // Données collectées pour le graphique
+        // DonnÃ©es collectÃ©es pour le graphique
         $width=560;
         $data=array();
         $step=ceil($this->count() / ($width*1/4)); // on prendra une mesure toute les step notices
 
         // Recopie les notices
-        echo '<li>Réindexation des notices...</li>';
+        echo '<li>RÃ©indexation des notices...</li>';
         $last=$start=microtime(true);
         $i=0;
         foreach ($this as $record)
@@ -3199,7 +3199,7 @@ class XapianDatabaseDriver extends Database
 
         if (($i % $step)>0) $data[$i]=round(($i%$step)/(microtime(true)-$last),0);
 
-        // Ferme la base actuelle en mettant à 'null' toutes les propriétés de $this
+        // Ferme la base actuelle en mettant Ã  'null' toutes les propriÃ©tÃ©s de $this
         echo '<li>Fermeture de la base actuelle...</li>';
 
         $me=new ReflectionObject($this);
@@ -3214,23 +3214,23 @@ class XapianDatabaseDriver extends Database
             les fichiers de la base temporaire.
 
             Potentiellement, il se peut que quelqu'un essaie d'ouvrir la base
-            entre le moment où on commence le transfert et le moment où tout
-            est transféré.
+            entre le moment oÃ¹ on commence le transfert et le moment oÃ¹ tout
+            est transfÃ©rÃ©.
 
-            Pour éviter ça, on procède en deux étapes :
-            1. on déplace vers le répertoire ./old tous les fichiers de la base
-               existante, en commençant par le fichier de version (iamflint), ce
-               qui fait que plus personne ne peut ouvrir la base dès que
-               celui-ci a été renommé ;
-            2. on transfère tous les fichier de ./tmp en ordre inverse,
-               c'est-à-dire en terminant par le fichier de version, ce qui fait
+            Pour Ã©viter Ã§a, on procÃ¨de en deux Ã©tapes :
+            1. on dÃ©place vers le rÃ©pertoire ./old tous les fichiers de la base
+               existante, en commenÃ§ant par le fichier de version (iamflint), ce
+               qui fait que plus personne ne peut ouvrir la base dÃ¨s que
+               celui-ci a Ã©tÃ© renommÃ© ;
+            2. on transfÃ¨re tous les fichier de ./tmp en ordre inverse,
+               c'est-Ã -dire en terminant par le fichier de version, ce qui fait
                que personne ne peut ouvrir la base tant qu'on n'a pas fini.
         */
 
-        // Liste des fichiers pouvant être créés pour une base flint
+        // Liste des fichiers pouvant Ãªtre crÃ©Ã©s pour une base flint
         $files=array
         (
-            // les fichiers de version doivent être en premier
+            // les fichiers de version doivent Ãªtre en premier
             'iamflint',
             'iamchert',
             'uuid', // replication stuff
@@ -3268,9 +3268,9 @@ class XapianDatabaseDriver extends Database
         );
 
 
-        // Transfère tous les fichiers existants vers le répertoire ./old
+        // TransfÃ¨re tous les fichiers existants vers le rÃ©pertoire ./old
         clearstatcache();
-        echo '<li>Transfert de la base actuelle dans le répertoire "old"...</li>';
+        echo '<li>Transfert de la base actuelle dans le rÃ©pertoire "old"...</li>';
         foreach($files as $file)
         {
             $old=$pathOld . DIRECTORY_SEPARATOR . $file;
@@ -3286,7 +3286,7 @@ class XapianDatabaseDriver extends Database
             }
         }
 
-        // Transfère les fichiers du répertoire tmp dans le répertoire de la base
+        // TransfÃ¨re les fichiers du rÃ©pertoire tmp dans le rÃ©pertoire de la base
         echo '<li>Installation de la base temporaire comme base actuelle...</li>';
         foreach(array_reverse($files) as $file)
         {
@@ -3295,34 +3295,34 @@ class XapianDatabaseDriver extends Database
             $tmp=$pathTmp . DIRECTORY_SEPARATOR . $file;
             if (file_exists($tmp))
             {
-                //echo "Déplacement de $tmp vers $h<br />";
+                //echo "DÃ©placement de $tmp vers $h<br />";
                 rename($tmp, $h);
             }
         }
 
-        // Essaie de supprimer le répertoire tmp (désormais vide)
+        // Essaie de supprimer le rÃ©pertoire tmp (dÃ©sormais vide)
         $files=glob($pathTmp . DIRECTORY_SEPARATOR . '*');
         if (count($files)!==0)
-            echo '<li><strong>Warning : il reste des fichiers dans le répertoire tmp</strong></li>';
+            echo '<li><strong>Warning : il reste des fichiers dans le rÃ©pertoire tmp</strong></li>';
 
-        // todo: en fait on n'arrive jamais à supprimer tmp. xapian garde un handle dessus ? à voir, pas indispensable de supprimer tmp
+        // todo: en fait on n'arrive jamais Ã  supprimer tmp. xapian garde un handle dessus ? Ã  voir, pas indispensable de supprimer tmp
         /*
             if (!@unlink($pathTmp))
                 echo '<p>Warning : impossible de supprimer ', $pathTmp, '</p>';
         */
 
-        // Réouvre la base
-        echo '<li>Ré-ouverture de la base...</li>';
+        // RÃ©ouvre la base
+        echo '<li>RÃ©-ouverture de la base...</li>';
         $this->doOpen($path, false);
         $this->search('*', array('sort'=>'+', 'max'=>-1));
 
-        echo '<li>La réindexation est terminée.</li>';
+        echo '<li>La rÃ©indexation est terminÃ©e.</li>';
         echo '<li>Statistiques :';
 
-        // Génère un graphique
+        // GÃ©nÃ¨re un graphique
         $type='lc';        // type de graphe
         $size=$width.'x300';    // Taille du graphe (largeur x hauteur)
-        $title=utf8_encode('Nombre de notices réindexées par seconde');
+        $title='Nombre de notices rÃ©indexÃ©es par seconde';
         $grid='5,5,1,5';  // largeur, hauteur, taille trait, taille blanc
         $xrange=min(array_keys($data)) . ',' . max(array_keys($data));
 
@@ -3354,7 +3354,7 @@ class XapianDatabaseDriver extends Database
 
         echo '<p><img style="border: 4px solid black; background-color: #fff; padding: 1em; margin: auto;" src="'.$src.'" /></p>';
         echo sprintf('<p>Minimum : %d notices/seconde, Maximum : %d notices/seconde, Moyenne : %.3F notices/seconde', $min, $max, $average);
-        echo '<p>Durée totale de la réindexation : ', Utils::friendlyElapsedTime(microtime(true)-$startTime), '.</p>';
+        echo '<p>DurÃ©e totale de la rÃ©indexation : ', Utils::friendlyElapsedTime(microtime(true)-$startTime), '.</p>';
 
         echo '</li></ol>';
     }
@@ -3364,7 +3364,7 @@ class XapianDatabaseDriver extends Database
     {
         while(ob_get_level()) ob_end_flush();
         $this->search(null, array('_sort'=>'+', '_max'=>40000));
-        echo $this->count(), ' notices à réindexer. <br />';
+        echo $this->count(), ' notices Ã  rÃ©indexer. <br />';
 
         $start=microtime(true);
         $i=0;
@@ -3391,7 +3391,7 @@ class XapianDatabaseDriver extends Database
         flush();
 
         $this->xapianDatabase->flush();
-        echo sprintf('%.2f', microtime(true)-$start), ', terminé !<br />';
+        echo sprintf('%.2f', microtime(true)-$start), ', terminÃ© !<br />';
         flush();
     }
 
@@ -3399,7 +3399,7 @@ class XapianDatabaseDriver extends Database
     {
         while(ob_get_level()) ob_end_flush();
         $this->search(null, array('_sort'=>'+', '_max'=>20000));
-        echo $this->count(), ' notices à réindexer. <br />';
+        echo $this->count(), ' notices Ã  rÃ©indexer. <br />';
 
         $start=microtime(true);
 //        $this->xapianDatabase->begin_transaction(false);
@@ -3413,7 +3413,7 @@ class XapianDatabaseDriver extends Database
                 flush();
             }
 
-            // Ré-indexe l'enregistrement
+            // RÃ©-indexe l'enregistrement
             $this->initializeDocument();
 
             // Remplace le document existant
@@ -3428,7 +3428,7 @@ class XapianDatabaseDriver extends Database
         flush();
 
         $this->xapianDatabase->flush();
-        echo sprintf('%.2f', microtime(true)-$start), ', terminé !<br />';
+        echo sprintf('%.2f', microtime(true)-$start), ', terminÃ© !<br />';
         flush();
     }
 */
@@ -3458,7 +3458,7 @@ class XapianDatabaseDriver extends Database
 }
 
 /**
- * Représente un enregistrement dans une base {@link XapianDatabase}
+ * ReprÃ©sente un enregistrement dans une base {@link XapianDatabase}
  *
  * @package     fab
  * @subpackage  database
@@ -3473,8 +3473,8 @@ class XapianDatabaseRecord extends DatabaseRecord
     private $schema=null;
 
     /**
-     * Lors d'un parcours séquentiel, numéro de l'élément de tableau
-     * en cours. Utilisé par {@link next()} pour savoir si on a atteint
+     * Lors d'un parcours sÃ©quentiel, numÃ©ro de l'Ã©lÃ©ment de tableau
+     * en cours. UtilisÃ© par {@link next()} pour savoir si on a atteint
      * la fin du tableau.
      *
      * @var unknown_type
@@ -3497,29 +3497,29 @@ class XapianDatabaseRecord extends DatabaseRecord
     public function offsetSet($offset, $value)
     {
 
-        // Version minu non accentuée du nom du champ
+        // Version minu non accentuÃ©e du nom du champ
         $key=Utils::ConvertString($offset, 'alphanum');
         $this->fields[$key]=$value;
         return;
-        // Vérifie que le champ existe
+        // VÃ©rifie que le champ existe
         if (! array_key_exists($key, $this->fields))
             throw new DatabaseFieldNotFoundException($offset);
 
-        // Vérifie que la valeur concorde avec le type du champ
+        // VÃ©rifie que la valeur concorde avec le type du champ
         switch ($this->schema->fields[$key]->_type)
         {
             case DatabaseSchema::FIELD_AUTONUMBER:
             case DatabaseSchema::FIELD_INT:
                 /*
-                 * Valeurs stockées telles quelles :
+                 * Valeurs stockÃ©es telles quelles :
                  *      null -> null
                  *      12 -> 12
-                 * Valeurs converties : (par commodité, exemple, import fichier texte)
+                 * Valeurs converties : (par commoditÃ©, exemple, import fichier texte)
                  *      '' -> null
                  *      '12' -> 12
                  * Erreurs :
-                 *      '12abc' -> exception            pas de tolérance si on caste une chaine
-                 *      true, false -> exception        un booleéen n'est pas un entier
+                 *      '12abc' -> exception            pas de tolÃ©rance si on caste une chaine
+                 *      true, false -> exception        un booleÃ©en n'est pas un entier
                  *      autres -> exception
                  */
                 if (is_null($value) || is_int($value)) break;
@@ -3537,11 +3537,11 @@ class XapianDatabaseRecord extends DatabaseRecord
 
             case DatabaseSchema::FIELD_BOOL:
                 /*
-                 * Valeurs stockées telles quelles :
+                 * Valeurs stockÃ©es telles quelles :
                  *      null -> null
                  *      true -> true
                  *      false -> false
-                 * Valeurs converties : (par commodité, exemple, import fichier texte)
+                 * Valeurs converties : (par commoditÃ©, exemple, import fichier texte)
                  *      0 -> false
                  *      1 -> true
                  *      '1','true','vrai','on' -> true
@@ -3649,13 +3649,13 @@ class XapianDatabaseRecord extends DatabaseRecord
     {
         return $this->schema->fields[key($this->fields)]->name;
         /*
-         * On ne retourne pas directement key(fields) car sinon on récupère
-         * un nom en minu sans accents qui sera ensuite utilisé dans les boucles,
+         * On ne retourne pas directement key(fields) car sinon on rÃ©cupÃ¨re
+         * un nom en minu sans accents qui sera ensuite utilisÃ© dans les boucles,
          * les callbacks, etc.
          * Si un callback a le moindre test du style if($name='Aut'), cela ne marchera
          * plus.
-         * On fait donc une indirection pour retourner comme clé le nom exact du
-         * champ tel que saisi par l'utilisateur dans le schéma.
+         * On fait donc une indirection pour retourner comme clÃ© le nom exact du
+         * champ tel que saisi par l'utilisateur dans le schÃ©ma.
          */
     }
 
@@ -3675,7 +3675,7 @@ class XapianDatabaseRecord extends DatabaseRecord
 }
 
 /**
- * Exception générée lorsqu'on essaie de modifier une base de données
+ * Exception gÃ©nÃ©rÃ©e lorsqu'on essaie de modifier une base de donnÃ©es
  * ouverte en lecture seule
  *
  * @package     fab
@@ -3690,7 +3690,7 @@ class DatabaseReadOnlyException extends LogicException
 }
 
 /**
- * Exception générée lorsqu'on essaie d'accèder à un enregistrement alors
+ * Exception gÃ©nÃ©rÃ©e lorsqu'on essaie d'accÃ¨der Ã  un enregistrement alors
  * qu'il n'y a aucun enregistrement en cours.
  *
  * @package     fab
@@ -3705,7 +3705,7 @@ class DatabaseNoRecordException extends LogicException
 }
 
 /**
- * Exception générée lorsqu'on essaie d'accéder à un champ qui n'existe pas
+ * Exception gÃ©nÃ©rÃ©e lorsqu'on essaie d'accÃ©der Ã  un champ qui n'existe pas
  * dans la base
  *
  * @package     fab
@@ -3720,8 +3720,8 @@ class DatabaseFieldNotFoundException extends InvalidArgumentException
 }
 
 /**
- * Exception générée par {@link saveRecord()} et {@link cancelUpdate()} si elles
- * sont appellées alors que l'enregistrement actuel n'est pas en cours de
+ * Exception gÃ©nÃ©rÃ©e par {@link saveRecord()} et {@link cancelUpdate()} si elles
+ * sont appellÃ©es alors que l'enregistrement actuel n'est pas en cours de
  * modification.
  *
  * @package     fab
@@ -3736,7 +3736,7 @@ class DatabaseNotEditingException extends LogicException
 }
 
 /**
- * Exception générée lorsqu'on essaie de stocker dans un champ une valeur qui
+ * Exception gÃ©nÃ©rÃ©e lorsqu'on essaie de stocker dans un champ une valeur qui
  * n'est pas compatible avec le type du champ.
  *
  * @package     fab
@@ -3775,33 +3775,33 @@ class UserQuery extends Request
 
 /*
 (
-    +(tous les _equation croisés en AND)
-    tous les champs prob/love/hate concaténés avec des espaces
+    +(tous les _equation croisÃ©s en AND)
+    tous les champs prob/love/hate concatÃ©nÃ©s avec des espaces
 )
 AND
 (
-    tous les champs bool croisés en defaultOp (occurences croisées en OR)
+    tous les champs bool croisÃ©s en defaultOp (occurences croisÃ©es en OR)
 )
 AND
 (
-    tous les _filter croisés en AND
+    tous les _filter croisÃ©s en AND
 )
 
  */
 
         /*
-            Par défaut, la requête générée va être de la forme :
-            +(_equation _equation) autres_critères
+            Par dÃ©faut, la requÃªte gÃ©nÃ©rÃ©e va Ãªtre de la forme :
+            +(_equation _equation) autres_critÃ¨res
 
-            Quand defaultop===AND, le + de début est inutile et il alourdit la lecture
-            de l'équation. Du coup, on ne le génère que si on est en "OU".
+            Quand defaultop===AND, le + de dÃ©but est inutile et il alourdit la lecture
+            de l'Ã©quation. Du coup, on ne le gÃ©nÃ¨re que si on est en "OU".
          */
         $plus = ($this->get('defaultopcode') === XapianQuery::OP_OR) ? '+' : '';
 
 
         $result=array();
 
-        // tous les _equation croisés en AND
+        // tous les _equation croisÃ©s en AND
         if ($this->equation)
         {
             $t=array();
@@ -3816,16 +3816,16 @@ AND
             $result[0] = $h;
         }
 
-        // Sépare les champs Bool des autres
+        // SÃ©pare les champs Bool des autres
         if ($this->auto)
         {
-            // Parcourt tous les paramètres
+            // Parcourt tous les paramÃ¨tres
             $t=$bool=$hate=array();
             foreach($this->auto as $name=>$value)
             {
                 if ($value===null or $value==='' or $value===array()) continue;
 
-                // Ne garde que ceux qui correspondent à un nom d'index ou d'alias existant
+                // Ne garde que ceux qui correspondent Ã  un nom d'index ou d'alias existant
                 $indexName=strtolower(ltrim($name,'+-'));
                 if (isset($this->schema->indices[$indexName]))
                     $index=$this->schema->indices[$indexName];
@@ -3840,7 +3840,7 @@ AND
 
                     $this->addBrackets($value);
 
-                    // Détermine comment il faut analyser la requête et où la stocker
+                    // DÃ©termine comment il faut analyser la requÃªte et oÃ¹ la stocker
                     switch(substr($name, 0, 1))
                     {
                         case '+':
@@ -3899,7 +3899,7 @@ AND
         }
 
 
-        // AND (tous les _filter croisés en AND)
+        // AND (tous les _filter croisÃ©s en AND)
         if ($this->filter)
         {
             $t2=array();
@@ -3918,22 +3918,22 @@ AND
     }
 
     /**
-     * Ajoute des parenthèses autour de l'équation passée au paramètre si c'est
-     * nécessaire.
+     * Ajoute des parenthÃ¨ses autour de l'Ã©quation passÃ©e au paramÃ¨tre si c'est
+     * nÃ©cessaire.
      *
-     * La méthode considère que l'équation passée en paramètre est destinée à
-     * être combinée en "ET" avec d'autres équations.
+     * La mÃ©thode considÃ¨re que l'Ã©quation passÃ©e en paramÃ¨tre est destinÃ©e Ã 
+     * Ãªtre combinÃ©e en "ET" avec d'autres Ã©quations.
      *
-     * Dans sa version actuelle, la méthode supprime de l'équation les blocs
-     * parenthésés, les phrases et les articles et ajoute des parenthèses si
+     * Dans sa version actuelle, la mÃ©thode supprime de l'Ã©quation les blocs
+     * parenthÃ©sÃ©s, les phrases et les articles et ajoute des parenthÃ¨ses si
      * ce qui reste contient un ou plusieurs espaces.
      *
-     * Idéalement, il faudrait faire un traitement beaucoup plus compliqué, mais
-     * ça revient quasiment à ré-écrire un query parser.
+     * IdÃ©alement, il faudrait faire un traitement beaucoup plus compliquÃ©, mais
+     * Ã§a revient quasiment Ã  rÃ©-Ã©crire un query parser.
      *
      * Le traitement actuel est plus simple mais semble fonctionner.
      *
-     * @param string $equation l'équation à tester.
+     * @param string $equation l'Ã©quation Ã  tester.
      */
     private function addBrackets(& $equation)
     {
@@ -3943,44 +3943,44 @@ AND
             $equation='('.$equation.')';
 
         /*
-        Explications sur l'expression régulière utilisée.
-        On veut éliminer de l'équation les expressions parenthèsées, les phrases
+        Explications sur l'expression rÃ©guliÃ¨re utilisÃ©e.
+        On veut Ã©liminer de l'Ã©quation les expressions parenthÃ¨sÃ©es, les phrases
         et les articles.
 
-        Une expression parenthèsée est définie par l'expression régulière
-        récursive suivante (source : manuel php, rechercher "masques récursifs"
+        Une expression parenthÃ¨sÃ©e est dÃ©finie par l'expression rÃ©guliÃ¨re
+        rÃ©cursive suivante (source : manuel php, rechercher "masques rÃ©cursifs"
         dans la page http://docs.php.net/manual/fr/regexp.reference.php) :
 
         $parent='
-            \(                  # une parenthèse ouvrante
-            (?:                 # début du groupe qui définit une expression parenthésée
+            \(                  # une parenthÃ¨se ouvrante
+            (?:                 # dÃ©but du groupe qui dÃ©finit une expression parenthÃ©sÃ©e
                 (?>             # "atomic grouping", supprime le backtracing (plus rapide)
-                    [^()]+      # une suite quelconque de caractères, hormis des parenthèses
+                    [^()]+      # une suite quelconque de caractÃ¨res, hormis des parenthÃ¨ses
                 )
                 |
-                (?R)            # ou un expression parenthésée (appel récursif : groupe en cours)
+                (?R)            # ou un expression parenthÃ©sÃ©e (appel rÃ©cursif : groupe en cours)
             )*
-            \)                  # une parenthèse fermante
+            \)                  # une parenthÃ¨se fermante
         ';
 
         Une phrase, avec le bloc suivant :
         $phrase='
             "                   # un guillemet ouvrant
-            [^"]*               # une suite quelconque de caractères, sauf des guillemets
+            [^"]*               # une suite quelconque de caractÃ¨res, sauf des guillemets
             "                   # un guillemet fermant
         ';
 
-        Et une recherche à l'article avec l'expression suivante :
+        Et une recherche Ã  l'article avec l'expression suivante :
         $value='
             \[                  # un crochet ouvrant
-            [^]]*               # une suite quelconque de caractères, sauf un crochet fermant
+            [^]]*               # une suite quelconque de caractÃ¨res, sauf un crochet fermant
             \]                  # un crochet fermant
         ';
 
         Si on veut les trois, il suffit de les combiner :
         $re="~$parent|$phrase|$value~x";
 
-        Ce qui donne l'expression régulière utilisée dans le code :
+        Ce qui donne l'expression rÃ©guliÃ¨re utilisÃ©e dans le code :
         */
     }
 }

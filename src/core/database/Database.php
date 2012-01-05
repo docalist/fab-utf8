@@ -2,34 +2,34 @@
 /**
  * @package     fab
  * @subpackage  database
- * @author 		Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author 		Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: Database.php 1000 2009-02-04 15:58:08Z daniel.menard.bdsp $
  */
 
 /**
- * Interface d'accès aux bases de données.
+ * Interface d'accÃ¨s aux bases de donnÃ©es.
  *
- * Database est à la fois une classe statique offrant des méthodes simples pour
- * créer ({@link create()}) ou ouvrir ({@link open()})une base de données et une
+ * Database est Ã  la fois une classe statique offrant des mÃ©thodes simples pour
+ * crÃ©er ({@link create()}) ou ouvrir ({@link open()})une base de donnÃ©es et une
  * interface pour toutes les classes descendantes.
  *
- * Database implémente l'interface Iterator. Cela permet de parcourir les
- * enregistrements très simplement en utilisant une boucle foreach :
+ * Database implÃ©mente l'interface Iterator. Cela permet de parcourir les
+ * enregistrements trÃ¨s simplement en utilisant une boucle foreach :
  *
  * <code>
  * foreach ($selection as $rank=>$record)
- *     echo 'Réponse numéro ', $rank, ' : ref ', $record['ref'], "\n";
+ *     echo 'RÃ©ponse numÃ©ro ', $rank, ' : ref ', $record['ref'], "\n";
  * </code>
  *
- * La même chose peut être faite dans un template en utilisant le tag <loop> :
+ * La mÃªme chose peut Ãªtre faite dans un template en utilisant le tag <loop> :
  *
  * <code>
  * <loop on="$selection" as="$rank,$record">
- *     Réponse numéro $rank : ref {$record['ref']}
+ *     RÃ©ponse numÃ©ro $rank : ref {$record['ref']}
  * </loop>
  * </code>
  *
- * Database implémente également l'interface ArrayAccess. Cela permet de
+ * Database implÃ©mente Ã©galement l'interface ArrayAccess. Cela permet de
  * manipuler les champs de la notice en cours comme s'il s'agissait d'un
  * tableau :
  *
@@ -44,7 +44,7 @@
  * /NON
  *
  * L'ajout, la modification et la suppression d'un enregistrement se font
- * en utilisant les méthodes {@link add()}, {@link edit()} et {@link save()}
+ * en utilisant les mÃ©thodes {@link add()}, {@link edit()} et {@link save()}
  *
  * Ajout d'un enregistrement :
  *
@@ -75,18 +75,18 @@
 abstract class Database implements ArrayAccess, Iterator
 {
     /**
-     * @var string le type de base de données en cours ('bis' ou
+     * @var string le type de base de donnÃ©es en cours ('bis' ou
      * 'xapian').
      * @access protected
      */
     protected $type=null;
 
     /**
-     * @var boolean vrai si on a atteint la fin de la sélection
+     * @var boolean vrai si on a atteint la fin de la sÃ©lection
      *
-     * Les drivers qui héritent de cette classe doivent tenir à jour cette
-     * propriété. Notamment, les fonctions {@link search()} et {@link
-     * moveNext()} doivent initialiser eof à true ou false selon qu'il y a ou
+     * Les drivers qui hÃ©ritent de cette classe doivent tenir Ã  jour cette
+     * propriÃ©tÃ©. Notamment, les fonctions {@link search()} et {@link
+     * moveNext()} doivent initialiser eof Ã  true ou false selon qu'il y a ou
      * non une notice en cours.
      *
      * @access protected
@@ -97,9 +97,9 @@ abstract class Database implements ArrayAccess, Iterator
 
 
     /**
-     * Le path complet (non relatif) de la base de données
+     * Le path complet (non relatif) de la base de donnÃ©es
      *
-     * Initialisé par {@link open()} et {@link create()}, utilisé
+     * InitialisÃ© par {@link open()} et {@link create()}, utilisÃ©
      * par {@link getPath()}
      *
      * @var string
@@ -107,12 +107,12 @@ abstract class Database implements ArrayAccess, Iterator
     private $path='';
 
     /**
-     * Le constructeur est privé car ni cette classe, ni aucun des drivers qui
-     * héritent de cette classe ne sont instanciables.
+     * Le constructeur est privÃ© car ni cette classe, ni aucun des drivers qui
+     * hÃ©ritent de cette classe ne sont instanciables.
      *
-     * L'utilisateur ne manipule cette classe que via les méthodes statiques
-     * proposées ({@link create}, {@link open}, ...) et via les méthodes
-     * non statiques implémentées par les drivers.
+     * L'utilisateur ne manipule cette classe que via les mÃ©thodes statiques
+     * proposÃ©es ({@link create}, {@link open}, ...) et via les mÃ©thodes
+     * non statiques implÃ©mentÃ©es par les drivers.
      */
 //    protected function __construct()
 //    {
@@ -120,35 +120,35 @@ abstract class Database implements ArrayAccess, Iterator
 
 
     /**
-     * Crée une base de données.
+     * CrÃ©e une base de donnÃ©es.
      *
-     * Une erreur est générée si la base de données à créer existe déjà.
+     * Une erreur est gÃ©nÃ©rÃ©e si la base de donnÃ©es Ã  crÃ©er existe dÃ©jÃ .
      *
-     * La fonction ne peut pas être surchargée dans les drivers (final).
+     * La fonction ne peut pas Ãªtre surchargÃ©e dans les drivers (final).
      *
-     * @param string $database alias ou path de la base de données à créer.
+     * @param string $database alias ou path de la base de donnÃ©es Ã  crÃ©er.
      *
-     * @param DatabaseSchema $schema tableau le schéma de la base de données
+     * @param DatabaseSchema $schema tableau le schÃ©ma de la base de donnÃ©es
      *
-     * @param string $type type de la base de données à créer. Ignoré si
-     * $database désigne un alias (dans ce cas, c'est le type indiqué dans la
+     * @param string $type type de la base de donnÃ©es Ã  crÃ©er. IgnorÃ© si
+     * $database dÃ©signe un alias (dans ce cas, c'est le type indiquÃ© dans la
      * config de l'alias qui est prioritaire).
      *
-     * @param array $options tableau contenant des options supplémentaires. Les
-     * options disponibles dépendent du backend utilisée. Chaque backend ignore
-     * silencieusement les options qu'il ne reconnait pas ou ne sait pas gérer.
+     * @param array $options tableau contenant des options supplÃ©mentaires. Les
+     * options disponibles dÃ©pendent du backend utilisÃ©e. Chaque backend ignore
+     * silencieusement les options qu'il ne reconnait pas ou ne sait pas gÃ©rer.
      */
     final public static function create($database, /* DS DatabaseSchema */ $schema, $type=null, $options=null)
     {
 /* DS
-        // Vérifie que le schéma de la base de données est correcte
+        // VÃ©rifie que le schÃ©ma de la base de donnÃ©es est correcte
         if (true !== $t=$schema->validate())
-            throw new Exception('Le schéma passé en paramètre contient des erreurs : ' . implode('<br />', $t));
+            throw new Exception('Le schÃ©ma passÃ© en paramÃ¨tre contient des erreurs : ' . implode('<br />', $t));
 
-        // Compile le schéma
+        // Compile le schÃ©ma
         $schema->compile();
 */
-        // Utilise /config/db.config pour convertir l'alias en chemin et déterminer le type de base
+        // Utilise /config/db.config pour convertir l'alias en chemin et dÃ©terminer le type de base
         $type=Config::get("db.$database.type", $type);
         $database=Config::get("db.$database.path", $database);
 
@@ -156,7 +156,7 @@ abstract class Database implements ArrayAccess, Iterator
         if (Utils::isRelativePath($database))
             $database=Utils::makePath(Runtime::$root, 'data/db', $database);
 
-        // Crée une instance de la bonne classe en fonction du type, crée la base et retourne l'objet obtenu
+        // CrÃ©e une instance de la bonne classe en fonction du type, crÃ©e la base et retourne l'objet obtenu
         switch($type=strtolower($type))
         {
             case 'bis':
@@ -172,7 +172,7 @@ abstract class Database implements ArrayAccess, Iterator
                 break;
 
             default:
-                throw new Exception("Impossible de créer la base '$database' : le type de base '$type' n'est pas supporté.");
+                throw new Exception("Impossible de crÃ©er la base '$database' : le type de base '$type' n'est pas supportÃ©.");
         }
         $db->type=$type;
         $db->path=$database;
@@ -182,24 +182,24 @@ abstract class Database implements ArrayAccess, Iterator
 
 
     /**
-     * Méthode implémentée dans les drivers : crée la base
+     * MÃ©thode implÃ©mentÃ©e dans les drivers : crÃ©e la base
      *
-     * @param string $database alias ou path de la base de données à créer.
+     * @param string $database alias ou path de la base de donnÃ©es Ã  crÃ©er.
      *
-     * @param DatabaseSchema $schema le schéma de la base de données.
-     * Lorsque cette méthode est appellée, le schéma a d'ores et déjà été
-     * validée et compilée.
+     * @param DatabaseSchema $schema le schÃ©ma de la base de donnÃ©es.
+     * Lorsque cette mÃ©thode est appellÃ©e, le schÃ©ma a d'ores et dÃ©jÃ  Ã©tÃ©
+     * validÃ©e et compilÃ©e.
      *
-     * @param array $options tableau contenant des options supplémentaires. Les
-     * options disponibles dépendent du backend utilisée. Chaque backend ignore
-     * silencieusement les options qu'il ne reconnait pas ou ne sait pas gérer.
+     * @param array $options tableau contenant des options supplÃ©mentaires. Les
+     * options disponibles dÃ©pendent du backend utilisÃ©e. Chaque backend ignore
+     * silencieusement les options qu'il ne reconnait pas ou ne sait pas gÃ©rer.
      */
     abstract protected function doCreate($database, /* DS DatabaseSchema */ $schema, $options=null);
 
 
     /**
-     * Modifie la structure d'une base de données en lui appliquant un nouveau
-     * schéma.
+     * Modifie la structure d'une base de donnÃ©es en lui appliquant un nouveau
+     * schÃ©ma.
      *
      * @param DatabaseSchema $newSchema la nouvelle structure de la base.
      */
@@ -219,24 +219,24 @@ abstract class Database implements ArrayAccess, Iterator
 
 
     /**
-     * Ouvre une base de données.
+     * Ouvre une base de donnÃ©es.
      *
-     * Une erreur est générée si la base de données à créer n'existe pas.
+     * Une erreur est gÃ©nÃ©rÃ©e si la base de donnÃ©es Ã  crÃ©er n'existe pas.
      *
-     * La fonction ne peut pas être surchargée dans les drivers (final).
+     * La fonction ne peut pas Ãªtre surchargÃ©e dans les drivers (final).
      *
-     * @param string $database alias ou path de la base de données à ouvrir.
+     * @param string $database alias ou path de la base de donnÃ©es Ã  ouvrir.
      *
      * @param boolean $readOnly true pour ouvrir la base en lecture seule, false
-     * pour l'ouvrir en lecture/écriture.
+     * pour l'ouvrir en lecture/Ã©criture.
      *
-     * @param string $type type de la base de données à ouvrir. Ignoré si
-     * $database désigne un alias (dans ce cas, c'est le type indiqué dans la
+     * @param string $type type de la base de donnÃ©es Ã  ouvrir. IgnorÃ© si
+     * $database dÃ©signe un alias (dans ce cas, c'est le type indiquÃ© dans la
      * config de l'alias qui est prioritaire).
      */
     final public static function open($database, $readOnly=true, $type=null)
     {
-        // Utilise /config/db.config pour convertir l'alias en chemin et déterminer le type de base
+        // Utilise /config/db.config pour convertir l'alias en chemin et dÃ©terminer le type de base
         $type=Config::get("db.$database.type", $type);
         $database=Config::get("db.$database.path", $database);
 
@@ -250,7 +250,7 @@ abstract class Database implements ArrayAccess, Iterator
         else
             $path=$database;
 
-        // Crée une instance de la bonne classe en fonction du type, crée la base et retourne l'objet obtenu
+        // CrÃ©e une instance de la bonne classe en fonction du type, crÃ©e la base et retourne l'objet obtenu
         debug && Debug::log("Ouverture de la base '%s' de type '%s' (%s)", $database, $type, $path);
         switch($type=strtolower($type))
         {
@@ -265,7 +265,7 @@ abstract class Database implements ArrayAccess, Iterator
                 break;
 
             default:
-                throw new Exception("Impossible d'ouvrir la base '$database' : le type de base '$type' n'est pas supporté.");
+                throw new Exception("Impossible d'ouvrir la base '$database' : le type de base '$type' n'est pas supportÃ©.");
         }
         $db->type=$type;
         $db->path=$path;
@@ -273,7 +273,7 @@ abstract class Database implements ArrayAccess, Iterator
     }
 
     /**
-     * Retourne le path de la base de données
+     * Retourne le path de la base de donnÃ©es
      *
      * La fonction retourne le path complet de la base.
      *
@@ -285,153 +285,153 @@ abstract class Database implements ArrayAccess, Iterator
     }
 
     /**
-     * Méthode implémentée dans les drivers : ouvre la base
+     * MÃ©thode implÃ©mentÃ©e dans les drivers : ouvre la base
      *
-     * @param string $database alias ou path de la base de données à créer.
+     * @param string $database alias ou path de la base de donnÃ©es Ã  crÃ©er.
      *
      * @param boolean $readOnly true pour ouvrir la base en lecture seule, false
-     * pour l'ouvrir en lecture/écriture.
+     * pour l'ouvrir en lecture/Ã©criture.
      */
     abstract protected function doOpen($database, $readOnly=true);
 
 
     /**
-     * Lance une recherche et sélectionne les notices correspondantes.
+     * Lance une recherche et sÃ©lectionne les notices correspondantes.
      *
-     * Si la recherche aboutit, la sélection est positionnée sur la première
-     * réponse obtenue (ou sur la réponse indiquée par 'start' dans les
+     * Si la recherche aboutit, la sÃ©lection est positionnÃ©e sur la premiÃ¨re
+     * rÃ©ponse obtenue (ou sur la rÃ©ponse indiquÃ©e par 'start' dans les
      * options).
      *
      * Exemple d'utilisation :
      *
      * <code>
      * if ($selection->search('type:article', array('sort'=>'-', 'start'=>10)))
-     * ... afficher les réponses obtenues
+     * ... afficher les rÃ©ponses obtenues
      * else
-     * ... aucune réponse
+     * ... aucune rÃ©ponse
      * </code>
      *
      *
-     * @param string $equation l'équation de recherche à exécuter
-     * @param array $options tableau d'options supportées par le backend qui
-     * indiquent la manière dont la recherche doit être faite.
+     * @param string $equation l'Ã©quation de recherche Ã  exÃ©cuter
+     * @param array $options tableau d'options supportÃ©es par le backend qui
+     * indiquent la maniÃ¨re dont la recherche doit Ãªtre faite.
      *
      * Options disponibles :
      *
-     * <b>'sort'</b> : une chaine indiquant la manière dont les réponses doivent être
-     * triées :
+     * <b>'sort'</b> : une chaine indiquant la maniÃ¨re dont les rÃ©ponses doivent Ãªtre
+     * triÃ©es :
      *
-     *     - '%' : trier les notices par score (la meilleure en tête)
-     *     - '+' : trier par ordre croissant de numéro de document
-     *     - '-' : trier par ordre décroissant de numéro de document
+     *     - '%' : trier les notices par score (la meilleure en tÃªte)
+     *     - '+' : trier par ordre croissant de numÃ©ro de document
+     *     - '-' : trier par ordre dÃ©croissant de numÃ©ro de document
      *     - 'xxx+' : trier sur le champ xxx, par ordre croissant
-     *     - 'xxx-' : trier sur le champ xxx, par ordre décroissant
+     *     - 'xxx-' : trier sur le champ xxx, par ordre dÃ©croissant
      *     - 'xxx+%' : trier sur le champ xxx par ordre croissant, puis par
      *       pertinence.
-     *     - 'xxx-%' : trier sur le champ xxx par ordre décroissant, puis par
+     *     - 'xxx-%' : trier sur le champ xxx par ordre dÃ©croissant, puis par
      *       pertinence.
      *
      * <b>'start'</b> : entier (>0) indiquant la notice sur laquelle se positionner
-     * une fois la recherche effectuée.
+     * une fois la recherche effectuÃ©e.
      *
-     * <b>'max'</b> : entier indiquant le nombre maximum de notices à retourner.
+     * <b>'max'</b> : entier indiquant le nombre maximum de notices Ã  retourner.
      * Permet au backend d'optimiser sa recherche en ne recherchant que les max
-     * meilleures réponses. Indiquez -1 pour obtenir toutes les réponses.
-     * Indiquez 0 si vous voulez seulement savoir combien il y a de réponses.
+     * meilleures rÃ©ponses. Indiquez -1 pour obtenir toutes les rÃ©ponses.
+     * Indiquez 0 si vous voulez seulement savoir combien il y a de rÃ©ponses.
      *
      * <b>'min_weight'</b> : entier (>=0), score minimum qu'une notice doit obtenir
-     * pour être sélectionnée (0=pas de minimum)
+     * pour Ãªtre sÃ©lectionnÃ©e (0=pas de minimum)
      *
-     * <b>'min_percent'</b> : entier (de 0 à 100), pourcentage minimum qu'une notice
-     * doit obtenir pour être sélectionnée (0=pas de minimum)
+     * <b>'min_percent'</b> : entier (de 0 Ã  100), pourcentage minimum qu'une notice
+     * doit obtenir pour Ãªtre sÃ©lectionnÃ©e (0=pas de minimum)
      *
-     * <b>'time_bias'</b> : reservé pour le futur, api non figée dans xapian.
+     * <b>'time_bias'</b> : reservÃ© pour le futur, api non figÃ©e dans xapian.
      *
-     * <b>'collapse'</b> : nom d'un champ utilisé pour regrouper les réponses
+     * <b>'collapse'</b> : nom d'un champ utilisÃ© pour regrouper les rÃ©ponses
      * obtenues. Par exemple, avec un regroupement sur le champ TypDoc, on
-     * obtiendra uniquement la meilleure réponse obtenue parmis les articles,
+     * obtiendra uniquement la meilleure rÃ©ponse obtenue parmis les articles,
      * puis la meilleures obtenues parmi les ouvrages, et ainsi de suite.
      *
-     * <b>'weighting_scheme'</b> : nom et éventuellement paramètres de l'algorithme
-     * de pertinence utilisé. Les valeurs possibles sont :
+     * <b>'weighting_scheme'</b> : nom et Ã©ventuellement paramÃ¨tres de l'algorithme
+     * de pertinence utilisÃ©. Les valeurs possibles sont :
      *     - 'bool'
      *     - 'trad'
      *     - 'trad(k)
      *     - 'bm25'
      *     - 'bm25(k1,k2,k3,b,m)'
      *
-     * @return boolean true si au moins une notice a été trouvée, false s'il n'y
-     * a aucune réponse.
+     * @return boolean true si au moins une notice a Ã©tÃ© trouvÃ©e, false s'il n'y
+     * a aucune rÃ©ponse.
      *
      */
     abstract public function search($equation=null, $options=null);
 
 
     /**
-     * Retourne des meta-informations sur la dernière recherche exécutée ou sur
-     * la notice courante de la sélection.
+     * Retourne des meta-informations sur la derniÃ¨re recherche exÃ©cutÃ©e ou sur
+     * la notice courante de la sÃ©lection.
      *
-     * @param string $what le nom de l'information à récupérer.
+     * @param string $what le nom de l'information Ã  rÃ©cupÃ©rer.
      *
-     * Les valeurs possibles dépendent du backend utilisé.
+     * Les valeurs possibles dÃ©pendent du backend utilisÃ©.
      *
      * tous:
-     * <li>'equation' : retourne l'équation de recherche telle qu'elle a été
-     * interprétée par le backend
+     * <li>'equation' : retourne l'Ã©quation de recherche telle qu'elle a Ã©tÃ©
+     * interprÃ©tÃ©e par le backend
      *
      * xapian :
      *
-     * Meta-données portant sur la sélectionc en cours
+     * Meta-donnÃ©es portant sur la sÃ©lectionc en cours
      * <li>'max_weight' : retourne le poids obtenu par la meilleure notice
-     * sélectionnée
-     * <li>'stop_words' : retourne une chaine contenant les termes présents dans
-     * l'équation qui ont été ignorés lors de la recherche (mots vides).
+     * sÃ©lectionnÃ©e
+     * <li>'stop_words' : retourne une chaine contenant les termes prÃ©sents dans
+     * l'Ã©quation qui ont Ã©tÃ© ignorÃ©s lors de la recherche (mots vides).
      * <li>'query_terms' : retourne une chaine contenant les termes de la
-     * requête qui ont été utilisés pour la recherche. Pour une recherche
-     * simple, cela retournera les termes de la requête moins les mots-vides ;
-     * pour une recherche avec troncature, ça retournera également tous les
-     * termes qui commence par le préfixe indiqué.
+     * requÃªte qui ont Ã©tÃ© utilisÃ©s pour la recherche. Pour une recherche
+     * simple, cela retournera les termes de la requÃªte moins les mots-vides ;
+     * pour une recherche avec troncature, Ã§a retournera Ã©galement tous les
+     * termes qui commence par le prÃ©fixe indiquÃ©.
      *
      *
-     * Meta-données portant sur la notice en cours au sein de la sélection :
-     *     - 'rank' : retourne le numéro de la réponse en cours (i.e. c'est
-     *       la ième réponse)
+     * Meta-donnÃ©es portant sur la notice en cours au sein de la sÃ©lection :
+     *     - 'rank' : retourne le numÃ©ro de la rÃ©ponse en cours (i.e. c'est
+     *       la iÃ¨me rÃ©ponse)
      *     - 'weight' : retourne le poids obtenu par la notice courante
-     *     - 'percent' : identique à weight, mais retourne le poids sous forme
+     *     - 'percent' : identique Ã  weight, mais retourne le poids sous forme
      *       d'un pourcentage
      *     - 'collapse' : retourne le nombre de documents similaires qui sont
-     *       "cachés" derrière la notice courante
-     *     - 'matching_terms' : retourne une chaîne contenant les termes de
-     *       l'équation de recherche sur lesquels ce document a été sélectionné.
+     *       "cachÃ©s" derriÃ¨re la notice courante
+     *     - 'matching_terms' : retourne une chaÃ®ne contenant les termes de
+     *       l'Ã©quation de recherche sur lesquels ce document a Ã©tÃ© sÃ©lectionnÃ©.
      */
     abstract public function searchInfo($what);
 
 
     /**
-     * Retourne une estimation du nombre de notices actuellement sélectionnées.
+     * Retourne une estimation du nombre de notices actuellement sÃ©lectionnÃ©es.
      *
      * @param int $countType indique l'estimation qu'on souhaite obtenir. Les
      * valeurs possibles sont :
      *
      * - 0 : estimation la plus fiable du nombre de notices. Le backend fait de
-     * son mieux pour estimer le nombre de notices sélectionnées, mais rien ne
-     * garantit qu'il n'y en ait pas en réalité plus ou moins que le nombre
-     * indiqué.
+     * son mieux pour estimer le nombre de notices sÃ©lectionnÃ©es, mais rien ne
+     * garantit qu'il n'y en ait pas en rÃ©alitÃ© plus ou moins que le nombre
+     * indiquÃ©.
      *
-     * - 1 : le nombre minimum de notices sélectionnées. Le backend garantit
-     * qu'il y a au moins ce nombre de notices dans la sélection.
+     * - 1 : le nombre minimum de notices sÃ©lectionnÃ©es. Le backend garantit
+     * qu'il y a au moins ce nombre de notices dans la sÃ©lection.
      *
-     * - 2 : le nombre maximum de notices sélectionnées. Le backend garantit
-     * qu'il n'y a pas plus de notices dnas la sélection que le nombre retourné.
+     * - 2 : le nombre maximum de notices sÃ©lectionnÃ©es. Le backend garantit
+     * qu'il n'y a pas plus de notices dnas la sÃ©lection que le nombre retournÃ©.
      */
     abstract public function count($countType=0);
 
 
     /**
-     * Passe à la notice suivante, si elle existe.
+     * Passe Ã  la notice suivante, si elle existe.
      *
      * @return boolean true si on a toujours une notice en cours, false si on a
-     * passé la fin de la sélection (eof).
+     * passÃ© la fin de la sÃ©lection (eof).
      *
      * @access protected
      */
@@ -441,10 +441,10 @@ abstract class Database implements ArrayAccess, Iterator
 //    /**
 //     * Retourne la notice en cours
 //     *
-//     * @return DatabaseRecord un objet représentant la notice en cours. Cette
-//     * objet peut être manipulé comme un tableau (utilisation dans une
+//     * @return DatabaseRecord un objet reprÃ©sentant la notice en cours. Cette
+//     * objet peut Ãªtre manipulÃ© comme un tableau (utilisation dans une
 //     * boucle foreach, lecture/modification de la valeur d'un champ en
-//     * utilisant les crochets, utilisation de count pour connaître le nombre de
+//     * utilisant les crochets, utilisation de count pour connaÃ®tre le nombre de
 //     * champs dans la base...)
 //     */
 //    abstract public function fields();
@@ -453,12 +453,12 @@ abstract class Database implements ArrayAccess, Iterator
 //    /**
 //     * Retourne la valeur d'un champ
 //     *
-//     * Cette fonction n'est pas destiné à être appellée par l'utilisatateur,
-//     * mais par les méthodes qui implémentent l'interface ArrayAccess.
+//     * Cette fonction n'est pas destinÃ© Ã  Ãªtre appellÃ©e par l'utilisatateur,
+//     * mais par les mÃ©thodes qui implÃ©mentent l'interface ArrayAccess.
 //     *
 //     * @access protected
 //     *
-//     * @param mixed $which index ou nom du champ dont la valeur sera retournée.
+//     * @param mixed $which index ou nom du champ dont la valeur sera retournÃ©e.
 //     *
 //     * @return mixed la valeur du champ ou null si ce champ ne figure pas dans
 //     * l'enregistrement courant.
@@ -469,12 +469,12 @@ abstract class Database implements ArrayAccess, Iterator
 //    /**
 //     * Modifie la valeur d'un champ
 //     *
-//     * Cette fonction n'est pas destiné à être appellée par l'utilisatateur,
-//     * mais par les méthodes qui implémentent l'interface ArrayAccess.
+//     * Cette fonction n'est pas destinÃ© Ã  Ãªtre appellÃ©e par l'utilisatateur,
+//     * mais par les mÃ©thodes qui implÃ©mentent l'interface ArrayAccess.
 //     *
 //     * @access protected
 //     *
-//     * @param mixed $which index ou nom du champ dont la valeur sera modifiée.
+//     * @param mixed $which index ou nom du champ dont la valeur sera modifiÃ©e.
 //     *
 //     * @return mixed la nouvelle valeur du champ ou null pour supprimer ce
 //     * champ de la notice en cours.
@@ -483,33 +483,33 @@ abstract class Database implements ArrayAccess, Iterator
 
 
     /**
-     * Initialise la création d'un nouvel enregistrement
+     * Initialise la crÃ©ation d'un nouvel enregistrement
      *
-     * L'enregistrement ne sera effectivement créé que lorsque {@link update()}
-     * sera appellé.
+     * L'enregistrement ne sera effectivement crÃ©Ã© que lorsque {@link update()}
+     * sera appellÃ©.
      */
     abstract public function addRecord();
 
 
     /**
-     * Passe la notice en cours en mode édition.
+     * Passe la notice en cours en mode Ã©dition.
      *
-     * L'enregistrement  ne sera effectivement créé que lorsque {@link update}
-     * sera appellé.
+     * L'enregistrement  ne sera effectivement crÃ©Ã© que lorsque {@link update}
+     * sera appellÃ©.
      *
      */
     abstract public function editRecord();
 
 
     /**
-     * Enregistre les modifications apportées à une notice après un appel à
-     * {@link add()} ou à {@link edit()}
+     * Enregistre les modifications apportÃ©es Ã  une notice aprÃ¨s un appel Ã 
+     * {@link add()} ou Ã  {@link edit()}
      */
     abstract public function saveRecord();
 
 
     /**
-     * Annule l'opération d'ajout ou de modification de notice en cours
+     * Annule l'opÃ©ration d'ajout ou de modification de notice en cours
      */
     abstract public function cancelUpdate();
 
@@ -520,19 +520,19 @@ abstract class Database implements ArrayAccess, Iterator
     abstract public function deleteRecord();
 
 
-    /* Début de l'interface ArrayAccess */
+    /* DÃ©but de l'interface ArrayAccess */
 
-    /* En fait, on implémente pas réellement ArrayAccess, on se contente
-     * de tout déléguer à record ( de type DatabaseRecord) qui lui implémente
-     * réellement l'interface.
+    /* En fait, on implÃ©mente pas rÃ©ellement ArrayAccess, on se contente
+     * de tout dÃ©lÃ©guer Ã  record ( de type DatabaseRecord) qui lui implÃ©mente
+     * rÃ©ellement l'interface.
      * Comme il n'existe pas, dans SPL, d'interface ArrayAccessDelegate, on
-     * est obligé de le faire nous-même
+     * est obligÃ© de le faire nous-mÃªme
      */
 
     /**
      * Modifie la valeur d'un champ
      *
-     * Il s'agit d'une des méthodes de l'interface ArrayAccess qui permet de
+     * Il s'agit d'une des mÃ©thodes de l'interface ArrayAccess qui permet de
      * manipuler les champs de la notice en cours comme s'il s'agissait d'un
      * tableau.
      *
@@ -541,7 +541,7 @@ abstract class Database implements ArrayAccess, Iterator
      * $selection['titre']='nouveau titre';
      * </code>
      *
-     * @param mixed $offset nom du champ à modifier
+     * @param mixed $offset nom du champ Ã  modifier
      *
      * @param mixed $value nouvelle valeur du champ
      */
@@ -555,13 +555,13 @@ abstract class Database implements ArrayAccess, Iterator
     /**
      * Retourne la valeur d'un champ
      *
-     * Il s'agit d'une des méthodes de l'interface ArrayAccess qui permet de
+     * Il s'agit d'une des mÃ©thodes de l'interface ArrayAccess qui permet de
      * manipuler les champs de la notice en cours comme s'il s'agissait d'un
      * tableau.
      *
      * Exemple : echo $selection['titre'];
      *
-     * @param mixed $offset nom du champ à retourner
+     * @param mixed $offset nom du champ Ã  retourner
      *
      * @return mixed la valeur du champ ou null si le champ n'existe pas dans la
      * notice en cours ou a la valeur 'null'.
@@ -576,20 +576,20 @@ abstract class Database implements ArrayAccess, Iterator
     /**
      * Supprime un champ de la notice en cours
      *
-     * Il s'agit d'une des méthodes de l'interface ArrayAccess qui permet de
+     * Il s'agit d'une des mÃ©thodes de l'interface ArrayAccess qui permet de
      * manipuler les champs de la notice en cours comme s'il s'agissait d'un
      * tableau.
      *
-     * Supprimer un champ de la notice en cours revient à lui affecter la
+     * Supprimer un champ de la notice en cours revient Ã  lui affecter la
      * valeur 'null'.
      *
      * Exemple :
      * <code>
      * unset($selection ['titre']);
      * </code>
-     * (équivalent à $selection['titre']=null;)
+     * (Ã©quivalent Ã  $selection['titre']=null;)
      *
-     * @param mixed $offset nom ou numéro du champ à supprimer
+     * @param mixed $offset nom ou numÃ©ro du champ Ã  supprimer
      */
     public function offsetUnset($offset)
     {
@@ -601,7 +601,7 @@ abstract class Database implements ArrayAccess, Iterator
     /**
      * Teste si un champ existe dans la notice en cours
      *
-     * Il s'agit d'une des méthodes de l'interface ArrayAccess qui permet de
+     * Il s'agit d'une des mÃ©thodes de l'interface ArrayAccess qui permet de
      * manipuler les champs de la notice en cours comme s'il s'agissait d'un
      * tableau.
      *
@@ -610,9 +610,9 @@ abstract class Database implements ArrayAccess, Iterator
      * if (isset($selection['titre']) echo 'existe';
      * </code>
      *
-     * @param mixed $offset nom ou numéro du champ à tester
+     * @param mixed $offset nom ou numÃ©ro du champ Ã  tester
      *
-     * @return boolean true si le champ existe dans la notice en cours et à une
+     * @return boolean true si le champ existe dans la notice en cours et Ã  une
      * valeur non-nulle, faux sinon.
      */
     public function offsetExists($offset)
@@ -623,16 +623,16 @@ abstract class Database implements ArrayAccess, Iterator
     /* Fin de l'interface ArrayAccess */
 
 
-    /* Début de l'interface Iterator */
+    /* DÃ©but de l'interface Iterator */
     /**
      * Ne fait rien.
      *
-     * Il s'agit d'une des méthodes de l'interface Iterator qui permet de
-     * manipuler la sélection comme un tableau.
+     * Il s'agit d'une des mÃ©thodes de l'interface Iterator qui permet de
+     * manipuler la sÃ©lection comme un tableau.
      *
-     * En théorie, rewind replace l'itérarateur sur le premier élément, mais
-     * dans notre cas, une sélection ne peut être parcourue qu'une fois du début
-     * à la fin, donc rewind ne fait rien.
+     * En thÃ©orie, rewind replace l'itÃ©rarateur sur le premier Ã©lÃ©ment, mais
+     * dans notre cas, une sÃ©lection ne peut Ãªtre parcourue qu'une fois du dÃ©but
+     * Ã  la fin, donc rewind ne fait rien.
      */
     public function rewind()
     {
@@ -641,12 +641,12 @@ abstract class Database implements ArrayAccess, Iterator
 
 
     /**
-     * Retourne la notice en cours dans la sélection.
+     * Retourne la notice en cours dans la sÃ©lection.
      *
-     * Il s'agit d'une des méthodes de l'interface Iterator qui permet de
-     * manipuler la sélection comme un tableau.
+     * Il s'agit d'une des mÃ©thodes de l'interface Iterator qui permet de
+     * manipuler la sÃ©lection comme un tableau.
      *
-     * Plus exactement, fields() retourne un itérateur sur les champs de la
+     * Plus exactement, fields() retourne un itÃ©rateur sur les champs de la
      * notice en cours.
      *
      * @return Iterator
@@ -659,11 +659,11 @@ abstract class Database implements ArrayAccess, Iterator
 
 
     /**
-     * Retourne le rang de la notice en cours, c'est à dire le numéro d'ordre
-     * de la notice en cours au sein des réponses obtenues
+     * Retourne le rang de la notice en cours, c'est Ã  dire le numÃ©ro d'ordre
+     * de la notice en cours au sein des rÃ©ponses obtenues
      *
-     * Il s'agit d'une des méthodes de l'interface Iterator qui permet de
-     * manipuler la sélection comme un tableau.
+     * Il s'agit d'une des mÃ©thodes de l'interface Iterator qui permet de
+     * manipuler la sÃ©lection comme un tableau.
      *
      * @return int
      */
@@ -675,10 +675,10 @@ abstract class Database implements ArrayAccess, Iterator
 
 
     /**
-     * Passe à la notice suivante
+     * Passe Ã  la notice suivante
      *
-     * Il s'agit d'une des méthodes de l'interface Iterator qui permet de
-     * manipuler la sélection comme un tableau.
+     * Il s'agit d'une des mÃ©thodes de l'interface Iterator qui permet de
+     * manipuler la sÃ©lection comme un tableau.
      */
     public function next()
     {
@@ -688,12 +688,12 @@ abstract class Database implements ArrayAccess, Iterator
 
 
     /**
-     * Détermine si la fin de la sélection a été atteinte.
+     * DÃ©termine si la fin de la sÃ©lection a Ã©tÃ© atteinte.
      *
-     * Il s'agit d'une des méthodes de l'interface Iterator qui permet de
-     * manipuler la sélection comme un tableau.
+     * Il s'agit d'une des mÃ©thodes de l'interface Iterator qui permet de
+     * manipuler la sÃ©lection comme un tableau.
      *
-     * @return boolean faux si la fin de la sélection a été atteinte
+     * @return boolean faux si la fin de la sÃ©lection a Ã©tÃ© atteinte
      */
     public function valid()
     {
@@ -705,25 +705,25 @@ abstract class Database implements ArrayAccess, Iterator
 
 
     /**
-     * Chercher/Remplacer à partir d'une exp rég sur l'enregistrement en cours d'une base de données ouverte
-     * (peut être appelé dans une boucle sur une sélection par exemple)
+     * Chercher/Remplacer Ã  partir d'une exp rÃ©g sur l'enregistrement en cours d'une base de donnÃ©es ouverte
+     * (peut Ãªtre appelÃ© dans une boucle sur une sÃ©lection par exemple)
      *
      * @param array fields la liste des champs sur lesquels on effectue le chercher/remplacer
-     * @param string $pattern le pattern à utiliser pour l'expression régulière de recherche
-     * @param string $replace la chaîne de remplacement pour les occurences trouvées
-     * @param int $totalCount référence qui stockera le nombre d'occurences remplacées par la fonction
+     * @param string $pattern le pattern Ã  utiliser pour l'expression rÃ©guliÃ¨re de recherche
+     * @param string $replace la chaÃ®ne de remplacement pour les occurences trouvÃ©es
+     * @param int $totalCount rÃ©fÃ©rence qui stockera le nombre d'occurences remplacÃ©es par la fonction
      *
      * @return bool false si erreur et true sinon
      */
     public function pregReplace($fields, $pattern, $replace, & $totalCount)
     {
-        // Nombre total de remplacements effectués
+        // Nombre total de remplacements effectuÃ©s
         $totalCount = 0;
 
-        // Nombre de remplacements effectués pour un champ
+        // Nombre de remplacements effectuÃ©s pour un champ
         $count = 0;
 
-        // Boucle sur tous les champs à remplacer
+        // Boucle sur tous les champs Ã  remplacer
         foreach($fields as $field)
         {
             $value=$this->record[$field];
@@ -731,7 +731,7 @@ abstract class Database implements ArrayAccess, Iterator
 
             if (is_null($value) || $value==='' ) continue;
 
-            // TODO: si possible, utiliser preg_last_error à partir de PHP 5.2.0
+            // TODO: si possible, utiliser preg_last_error Ã  partir de PHP 5.2.0
             if (is_null($value = @preg_replace($pattern, $replace, $value, -1, $count)))
                 return false;
 
@@ -743,29 +743,29 @@ abstract class Database implements ArrayAccess, Iterator
             $totalCount += $count;
         }
 
-        // Tout s'est bien déroulé
+        // Tout s'est bien dÃ©roulÃ©
         return true;
     }
 
 
 
     /**
-     * Chercher/Remplacer à partir d'une chaîne de caractères sur l'enregistrement en cours d'une base de données ouverte
-     * (peut être appelé dans une boucle sur une sélection par exemple)
+     * Chercher/Remplacer Ã  partir d'une chaÃ®ne de caractÃ¨res sur l'enregistrement en cours d'une base de donnÃ©es ouverte
+     * (peut Ãªtre appelÃ© dans une boucle sur une sÃ©lection par exemple)
      *
      * @param array fields la liste des champs sur lesquels on effectue le chercher/remplacer
-     * @param string $search la chaîne de caractères à rechercher
-     * @param string $replace la chaîne de remplacement pour les occurences trouvées
-     * @param bool $caseInsensitive indique si la recherche est (true) ou non (false) insensible à la casse
-     * @param int $totalCount référence qui stockera le nombre d'occurences remplacées par la fonction
+     * @param string $search la chaÃ®ne de caractÃ¨res Ã  rechercher
+     * @param string $replace la chaÃ®ne de remplacement pour les occurences trouvÃ©es
+     * @param bool $caseInsensitive indique si la recherche est (true) ou non (false) insensible Ã  la casse
+     * @param int $totalCount rÃ©fÃ©rence qui stockera le nombre d'occurences remplacÃ©es par la fonction
      */
      // ANCIENNE VERSION
     public function strReplace($fields, $search, $replace, $caseInsensitive = false, & $totalCount)
     {
-        // Nombre total de remplacements effectués
+        // Nombre total de remplacements effectuÃ©s
         $totalCount = 0;
 
-        // Nombre de remplacements effectués pour chaque champ
+        // Nombre de remplacements effectuÃ©s pour chaque champ
         $count = 0;
 
         // Boucle sur les champs et effectue le chercher/remplacer
@@ -781,21 +781,21 @@ abstract class Database implements ArrayAccess, Iterator
 			// TODO : A revoir car supprime les valeurs false, null, ''
 			if (is_array($value)) $value=array_filter($value);
 
-			// Met le champ à jour
+			// Met le champ Ã  jour
 			$this->record[$field]=$value;
 
-			// Met le compteur à jour
+			// Met le compteur Ã  jour
 			$totalCount += $count;
         }
     }
-    // Version utilisant un $callback de validation des données au format : array(objet, méthode)
+    // Version utilisant un $callback de validation des donnÃ©es au format : array(objet, mÃ©thode)
 //    public function strReplace($fields, $search, $originalReplace, $caseInsensitive = false, & $totalCount, $callback)
 //    {
 //        if($caseInsensitive)
 //            $search = strtolower($search);   // pour optimiser un peu la boucle principale
 //
-//        $totalCount = 0;    // nombre total de remplacements effectués
-//        $count = 0;         // nombre de remplacements effectués pour chaque champ
+//        $totalCount = 0;    // nombre total de remplacements effectuÃ©s
+//        $count = 0;         // nombre de remplacements effectuÃ©s pour chaque champ
 //
 //        echo "fields vaut ", print_r($fields), '<br />';
 //
@@ -804,36 +804,36 @@ abstract class Database implements ArrayAccess, Iterator
 //        {
 //            echo "Nouveau tour de boucle : field vaut $field<br />";
 //            $value = $this->record[$field]; // le contenu actuel du champ
-//            $replace = $originalReplace;    // au cas où modifié par la fonction de callback
+//            $replace = $originalReplace;    // au cas oÃ¹ modifiÃ© par la fonction de callback
 //
 //            if ($caseInsensitive)
 //                $value = strtolower($value);
 //
-//            echo "Avant l'appel à validData, replace vaut $replace<br />";
+//            echo "Avant l'appel Ã  validData, replace vaut $replace<br />";
 //
-//            // gestion d'un éventuel callback pour valider les données
+//            // gestion d'un Ã©ventuel callback pour valider les donnÃ©es
 //            if ($callback === null || call_user_func($callback, $field, $replace) !== false)
 //            {
-//                echo "Remplacement autorisé pour $field : replace vaut $replace<br />";
+//                echo "Remplacement autorisÃ© pour $field : replace vaut $replace<br />";
 //                $this->record[$field] = str_replace($search, $replace, $value, $count); // effectue le remplacement
 //
-//                $totalCount += $count;  // Met à jour le compteur
+//                $totalCount += $count;  // Met Ã  jour le compteur
 //            }
 //            else
 //            {
-//                echo "Remplacement refusé pour $field<br />";
+//                echo "Remplacement refusÃ© pour $field<br />";
 //            }
 //
 //        }
 //    }
 
     /**
-     * Chercher/Remplacer les champs vides de l'enregistrement en cours d'une base de données ouverte
-     * (peut être appelé dans une boucle sur une sélection par exemple)
+     * Chercher/Remplacer les champs vides de l'enregistrement en cours d'une base de donnÃ©es ouverte
+     * (peut Ãªtre appelÃ© dans une boucle sur une sÃ©lection par exemple)
      *
      * @param array fields la liste des champs sur lesquels on effectue le chercher/remplacer
-     * @param string $replace la chaîne de remplacement pour les champs vides trouvés
-     * @param int $count référence qui stockera le nombre d'occurences remplacées par la fonction
+     * @param string $replace la chaÃ®ne de remplacement pour les champs vides trouvÃ©s
+     * @param int $count rÃ©fÃ©rence qui stockera le nombre d'occurences remplacÃ©es par la fonction
      */
      public function replaceEmpty($fields, $replace, & $count)
      {
@@ -852,7 +852,7 @@ abstract class Database implements ArrayAccess, Iterator
 }
 
 /**
- * Représente un enregistrement de la base
+ * ReprÃ©sente un enregistrement de la base
  *
  * @package     fab
  * @subpackage  database
@@ -870,15 +870,15 @@ abstract class DatabaseRecord implements Iterator, ArrayAccess, Countable
         $this->database= & $database;
     }
 
-    /* Début de l'interface ArrayAccess */
+    /* DÃ©but de l'interface ArrayAccess */
     /*
-     * on implémente l'interface arrayaccess pour permettre d'accêder à
+     * on implÃ©mente l'interface arrayaccess pour permettre d'accÃªder Ã 
      * $selection->fields comme un tableau.
      * Ainsi, on peut faire echo $selection['tit'], mais on peut aussi faire
      * foreach($selection as $fields)
      *      echo $fields['tit'];
-     * L'implémentation ci-dessous de ArrayAccess se contente d'appeller les
-     * méthodes correspondantes de la sélection.
+     * L'implÃ©mentation ci-dessous de ArrayAccess se contente d'appeller les
+     * mÃ©thodes correspondantes de la sÃ©lection.
      */
 
     public function offsetSet($offset, $value)
@@ -892,7 +892,7 @@ abstract class DatabaseRecord implements Iterator, ArrayAccess, Countable
         // en fonction du type du variant
         // Dans la pratique, on utilise quasiment jamais BIS pour autre
         // chose que des chaines (si ce n'est REF). Ca me semble sans
-        // risque de caster systématiquement vers une chaine
+        // risque de caster systÃ©matiquement vers une chaine
         $value=$this->database->offsetGet($offset);
         return is_null($value) ? null : (string)$value;
 //        return $this->variantToZVal($this->parent->offsetGet($offset));
@@ -921,16 +921,16 @@ abstract class DatabaseRecord implements Iterator, ArrayAccess, Countable
 //echo "Lancement d'une recherche 'article'\n";
 //$nb=0;
 //if (! $selection->search('article', array('sort'=>'%', 'start'=>1)))
-//    echo "Aucune réponse\n";
+//    echo "Aucune rÃ©ponse\n";
 //else
 //{
-//    echo $selection->count(), " réponses\n";
+//    echo $selection->count(), " rÃ©ponses\n";
 //    $time=microtime(true);
 ////    do
 ////    {
 ////        echo
-////            '<li>Nouvelle méthode :',
-////            ' réponse n° ', $selection->searchInfo('rank') ,
+////            '<li>Nouvelle mÃ©thode :',
+////            ' rÃ©ponse nÂ° ', $selection->searchInfo('rank') ,
 ////            ', ref=', $selection['ref'],
 ////            ', typdoc=', $selection['type'],
 ////            ', titre=', $selection['tit'],
@@ -947,7 +947,7 @@ abstract class DatabaseRecord implements Iterator, ArrayAccess, Countable
 //    foreach($selection as $rank=>$fields)
 //    {
 //        echo $rank, '. ';
-//        echo 'accès direct au titre : ', $fields['tit'], "\n";
+//        echo 'accÃ¨s direct au titre : ', $fields['tit'], "\n";
 //        foreach($fields as $name=>$value)
 //            echo $name, ' : ', $value, "\n";
 //
@@ -979,10 +979,10 @@ abstract class DatabaseRecord implements Iterator, ArrayAccess, Countable
 //save();
 //
 //
-//// on n'accède plus jamais à un champ avec un numéro. uniquement par son nom
-//// si possible, rendre les noms de champ insensibles à la casse
-//// DONE implémenter un itérateur fields() sur les champs
-//// DONE implémenter un itérateur sur la sélection ??
+//// on n'accÃ¨de plus jamais Ã  un champ avec un numÃ©ro. uniquement par son nom
+//// si possible, rendre les noms de champ insensibles Ã  la casse
+//// DONE implÃ©menter un itÃ©rateur fields() sur les champs
+//// DONE implÃ©menter un itÃ©rateur sur la sÃ©lection ??
 //// DONE plus de fonction fieldsCount()
 //// fonction fieldInfo($fieldName, $infoName)->mixed
 //
@@ -995,9 +995,9 @@ abstract class DatabaseRecord implements Iterator, ArrayAccess, Countable
 //
 //// date:8+,titperio:20-,titre:20+,
 //
-//// Accès aux termes de l'index
-//// création d'un expand set (eset)
-//// création d'un result set (rset)
+//// AccÃ¨s aux termes de l'index
+//// crÃ©ation d'un expand set (eset)
+//// crÃ©ation d'un result set (rset)
 //
 //
 ?>

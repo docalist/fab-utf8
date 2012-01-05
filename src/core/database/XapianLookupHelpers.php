@@ -2,7 +2,7 @@
 /**
  * @package     fab
  * @subpackage  database
- * @author      Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author      Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: XapianLookupHelpers.php 1231 2010-12-14 11:09:19Z daniel.menard.bdsp $
  */
 
@@ -15,7 +15,7 @@
 abstract class LookupHelper
 {
     /**
-     * L'itérateur Xapian de début tel que retourné par
+     * L'itÃ©rateur Xapian de dÃ©but tel que retournÃ© par
      * {@link XapianDatabase::allterms_begin()}.
      *
      * @var XapianTermIterator
@@ -24,7 +24,7 @@ abstract class LookupHelper
 
 
     /**
-     * L'itérateur Xapian de fin tel que retourné par
+     * L'itÃ©rateur Xapian de fin tel que retournÃ© par
      * {@link XapianDatabase::allterms_end()}.
      *
      * @var XapianTermIterator
@@ -33,7 +33,7 @@ abstract class LookupHelper
 
 
     /**
-     * Le nombre maximum de suggestions à retourner.
+     * Le nombre maximum de suggestions Ã  retourner.
      *
      * @var int
      */
@@ -41,7 +41,7 @@ abstract class LookupHelper
 
 
     /**
-     * Préfixe Xapian des termes à rechercher.
+     * PrÃ©fixe Xapian des termes Ã  rechercher.
      *
      * @var string
      */
@@ -49,7 +49,7 @@ abstract class LookupHelper
 
 
     /**
-     * Tableau contenant la version {@link Utils::tokenize() tokenisée} des mots pour
+     * Tableau contenant la version {@link Utils::tokenize() tokenisÃ©e} des mots pour
      * lesquels on veut obtenir des suggestions.
      *
      * @var array
@@ -58,7 +58,7 @@ abstract class LookupHelper
 
 
     /**
-     * Le format (style {@link http://php.net/sprintf sprintf}) à utiliser pour mettre les mots de
+     * Le format (style {@link http://php.net/sprintf sprintf}) Ã  utiliser pour mettre les mots de
      * l'utilisateur en surbrillance dans les suggestions obtenues.
      *
      * @var string
@@ -67,14 +67,14 @@ abstract class LookupHelper
 
 
     /**
-     * Indique s'il faut ou non trier la liste de résultats obtenus.
+     * Indique s'il faut ou non trier la liste de rÃ©sultats obtenus.
      *
      * Pour {@link TermLookup} et {@link ValueLookup}, c'est inutile de trier : comme on parcourt
-     * l'index de façon ascendante, les résultats sont déjà triés par ordre alphabétique sur les
-     * versions tokenisées des suggestions trouvées.
+     * l'index de faÃ§on ascendante, les rÃ©sultats sont dÃ©jÃ  triÃ©s par ordre alphabÃ©tique sur les
+     * versions tokenisÃ©es des suggestions trouvÃ©es.
      *
-     * Les modules descendants ({@link SimpleTableLookup}) peuvent surcharger cette propriété
-     * pour indiquer qu'un tri des résultats est requis.
+     * Les modules descendants ({@link SimpleTableLookup}) peuvent surcharger cette propriÃ©tÃ©
+     * pour indiquer qu'un tri des rÃ©sultats est requis.
      *
      * @var bool
      */
@@ -82,7 +82,7 @@ abstract class LookupHelper
 
 
     /**
-     * Active ou désactive les messages de débogage.
+     * Active ou dÃ©sactive les messages de dÃ©bogage.
      *
      * @var bool
      */
@@ -90,8 +90,8 @@ abstract class LookupHelper
 
 
     /**
-     * Constructeur. Active le débogage si l'option 'debug' figure dans la query string
-     * de la requête en cours.
+     * Constructeur. Active le dÃ©bogage si l'option 'debug' figure dans la query string
+     * de la requÃªte en cours.
      */
     public function __construct()
     {
@@ -100,10 +100,10 @@ abstract class LookupHelper
 
 
     /**
-     * Définit les {@link XapianTermIterator itérateurs Xapian} à utiliser.
+     * DÃ©finit les {@link XapianTermIterator itÃ©rateurs Xapian} Ã  utiliser.
      *
-     * @param XapianTermIterator $begin itérateur de début.
-     * @param XapianTermIterator $end itérateur de fin.
+     * @param XapianTermIterator $begin itÃ©rateur de dÃ©but.
+     * @param XapianTermIterator $end itÃ©rateur de fin.
      */
     public function setIterators(XapianTermIterator $begin, XapianTermIterator $end)
     {
@@ -113,7 +113,7 @@ abstract class LookupHelper
 
 
     /**
-     * Définit le préfixe des termes à utiliser pour la recherche des
+     * DÃ©finit le prÃ©fixe des termes Ã  utiliser pour la recherche des
      * suggestions.
      *
      * @param string $prefix
@@ -125,10 +125,10 @@ abstract class LookupHelper
 
 
     /**
-     * Trie le tableau de suggestions par ordre alphabétique.
+     * Trie le tableau de suggestions par ordre alphabÃ©tique.
      *
-     * @param array $result le tableau de suggestions à trier.
-     * @param array $sortKeys le tableau contenant les clés de tri.
+     * @param array $result le tableau de suggestions Ã  trier.
+     * @param array $sortKeys le tableau contenant les clÃ©s de tri.
      */
     protected function sort(array & $result, array & $sortKeys)
     {
@@ -137,23 +137,23 @@ abstract class LookupHelper
 
 
     /**
-     * Recherche des suggestions pour les termes passés en paramètre.
+     * Recherche des suggestions pour les termes passÃ©s en paramÃ¨tre.
      *
      * @param string $value la chaine de recherche pour laquelle on souhaite obtenir
      * des suggestions.
      *
-     * @param int $max le nombre maximum de suggestions à retourner
-     * (valeur par défaut : 10, 0 : pas de limite).
+     * @param int $max le nombre maximum de suggestions Ã  retourner
+     * (valeur par dÃ©faut : 10, 0 : pas de limite).
      *
-     * @param string $format Le format (style {@link http://php.net/sprintf sprintf}) à
+     * @param string $format Le format (style {@link http://php.net/sprintf sprintf}) Ã 
      * utiliser pour mettre les mots de l'utilisateur en surbrillance dans les
      * suggestions obtenues.
      *
-     * @return array un tableau contenant les suggestions obtenues. Chaque clé
-     * du tableau contient une suggestion et la valeur associée contient le
-     * nombre total d'occurences de cette entrée dans la base.
+     * @return array un tableau contenant les suggestions obtenues. Chaque clÃ©
+     * du tableau contient une suggestion et la valeur associÃ©e contient le
+     * nombre total d'occurences de cette entrÃ©e dans la base.
      *
-     * Le tableau est trié par ordre alphabétique sur la version tokenisée des entrées.
+     * Le tableau est triÃ© par ordre alphabÃ©tique sur la version tokenisÃ©e des entrÃ©es.
      *
      * Exemple :
      * <code>
@@ -166,35 +166,35 @@ abstract class LookupHelper
      */
     public function lookup($value, $max=10, $format='<strong>%s</strong>')
     {
-        // Stocke le format utilisé pour la surbrillance
+        // Stocke le format utilisÃ© pour la surbrillance
         $this->format = empty($format) ? null : $format;
 
-        // Stocke le nombre de suggestions à retourner
+        // Stocke le nombre de suggestions Ã  retourner
         $this->max = ($max<=0) ? PHP_INT_MAX : $max;
 
-        // Tokenize l'expression recherchée
+        // Tokenize l'expression recherchÃ©e
         $this->words = Utils::tokenize($value);
         if (empty($this->words)) $this->words[] = ' ';
 
-        // Recherche pour chaque mot les entrées correspondantes
+        // Recherche pour chaque mot les entrÃ©es correspondantes
         if ($this->debug)
             echo get_class($this), "::getEntries(), value=<code>$value</code>, max=<code>$max</code>, format=<code>$format</code><br />";
 
         $result = $sortKeys = array();
         $this->getEntries($result, $sortKeys);
 
-        // Trie les résultats si c'est nécessaire
+        // Trie les rÃ©sultats si c'est nÃ©cessaire
         if (! $this->alreadySorted)
             $this->sort($result, $sortKeys);
 
         if ($this->debug)
         {
-            echo "<div style='float:left'>Clés de tri : <pre>", var_export($sortKeys,true), "</pre></div>";
-            echo "<div style='float:left'>Résultats : <pre>", var_export($result,true), "</pre></div>";
+            echo "<div style='float:left'>ClÃ©s de tri : <pre>", var_export($sortKeys,true), "</pre></div>";
+            echo "<div style='float:left'>RÃ©sultats : <pre>", var_export($result,true), "</pre></div>";
             echo '<hr style="clear: both" />';
         }
 
-        // Limite à $max réponses
+        // Limite Ã  $max rÃ©ponses
         if (count($result) > $this->max)
             $result=array_slice($result, 0, $this->max);
 
@@ -204,27 +204,27 @@ abstract class LookupHelper
 
 
     /**
-     * Recherche les entrées de la table  qui commencent par l'expression indiquée par
+     * Recherche les entrÃ©es de la table  qui commencent par l'expression indiquÃ©e par
      * l'utilisateur.
      *
-     * @param array $result les entrées obtenues, sous la forme d'un tableau
-     * <code>"entrée riche" => nombre total d'occurences dans la base</code>.
+     * @param array $result les entrÃ©es obtenues, sous la forme d'un tableau
+     * <code>"entrÃ©e riche" => nombre total d'occurences dans la base</code>.
      *
-     * @param array $sortKeys un tableau, synchronisé avec <code>$result</code>, contenant
-     * les versions tokenisées des entrées trouvées. Ce tableau est utilisé pour
-     * {@link sort() trier} les résultats obtenus par ordre alphabétique.
+     * @param array $sortKeys un tableau, synchronisÃ© avec <code>$result</code>, contenant
+     * les versions tokenisÃ©es des entrÃ©es trouvÃ©es. Ce tableau est utilisÃ© pour
+     * {@link sort() trier} les rÃ©sultats obtenus par ordre alphabÃ©tique.
      */
     abstract protected function getEntries(array & $result, array & $sortKeys);
 
 
     /**
      * Met en surbrillance (selon le format en cours) les termes de recherche
-     * de l'utilisateur dans l'entrée passée en paramètre.
+     * de l'utilisateur dans l'entrÃ©e passÃ©e en paramÃ¨tre.
      *
-     * @param string $entry l'entrée à surligner.
-     * @param int $length le nombre de caractères à mettre en surbrillance.
+     * @param string $entry l'entrÃ©e Ã  surligner.
+     * @param int $length le nombre de caractÃ¨res Ã  mettre en surbrillance.
      * @return string la chaine <code>$entry</code> dans laquelle la sous-chaine de
-     * 0 à <code>$length</code> est mise en surbrillance.
+     * 0 Ã  <code>$length</code> est mise en surbrillance.
      */
     protected function highlight($entry, $length)
     {
@@ -236,14 +236,14 @@ abstract class LookupHelper
 
 /**
  * LookupHelper permettant de rechercher des suggestions parmi les termes
- * simples présent dans l'index Xapian.
+ * simples prÃ©sent dans l'index Xapian.
  *
  * Contrairement aux autres, ce helper ne sait pas faire des suggestions pour
  * une chaine contenant plusieurs mots (la raison est simple : les termes dans
  * l'index sont des mots uniques).
  *
- * Si une expression contenant plusieurs mots est recherchée, seul le dernier
- * mot sera utilisé pour faire des suggestions.
+ * Si une expression contenant plusieurs mots est recherchÃ©e, seul le dernier
+ * mot sera utilisÃ© pour faire des suggestions.
  *
  * @package     fab
  * @subpackage  database
@@ -251,10 +251,10 @@ abstract class LookupHelper
 class TermLookup extends LookupHelper
 {
     /**
-     * Retourne le terme à partir duquel va démarrer la recherche dans l'index.
+     * Retourne le terme Ã  partir duquel va dÃ©marrer la recherche dans l'index.
      *
-     * Pour un lookup de type {@link TermLookup}, il s'agit de la version tokenisée du
-     * dernier mot figurant dans l'expression de recherche indiquée par l'utilisateur.
+     * Pour un lookup de type {@link TermLookup}, il s'agit de la version tokenisÃ©e du
+     * dernier mot figurant dans l'expression de recherche indiquÃ©e par l'utilisateur.
      *
      * @return string
      */
@@ -265,12 +265,12 @@ class TermLookup extends LookupHelper
 
 
     /**
-     * Formatte une entrée telle qu'elle doit être présentée à l'utilisateur.
+     * Formatte une entrÃ©e telle qu'elle doit Ãªtre prÃ©sentÃ©e Ã  l'utilisateur.
      *
-     * La méthode supprime le préfixe de l'entrée,
+     * La mÃ©thode supprime le prÃ©fixe de l'entrÃ©e,
      *
-     * @param string $entry l'entrée à formatter.
-     * @return string l'entrée mise en forme.
+     * @param string $entry l'entrÃ©e Ã  formatter.
+     * @return string l'entrÃ©e mise en forme.
      */
     protected function formatEntry($entry)
     {
@@ -283,30 +283,30 @@ class TermLookup extends LookupHelper
      */
     protected function getEntries(array & $result, array & $sortKeys)
     {
-        // Détermine l'entrée de début et la chaine recherchée
+        // DÃ©termine l'entrÃ©e de dÃ©but et la chaine recherchÃ©e
         $search = $this->getSearchTerm();
         $start = $this->prefix . $search;
         if ($this->debug) echo "search = $search, start=$start<br />";
 
-        // Va au début de la liste
+        // Va au dÃ©but de la liste
         if ($this->debug) echo "<b style='color:red'>skip_to('$start')</b><br />";
         $this->begin->skip_to($start);
 
-        // Boucle tant que les entrées commencent par ce qu'on cherche
+        // Boucle tant que les entrÃ©es commencent par ce qu'on cherche
         while (! $this->begin->equals($this->end))
         {
-            // Récupère l'entrée en cours
+            // RÃ©cupÃ¨re l'entrÃ©e en cours
             $key = $this->begin->get_term();
             if ($this->debug) echo "<li><b style='color:green'>$key</b><br /></li>";
 
-            // Si elle ne commence pas par la chaine recherchée, terminé
+            // Si elle ne commence pas par la chaine recherchÃ©e, terminÃ©
             if (strncmp($key, $start, strlen($start)) !== 0) break;
 
-            // Formatte l'entrée telle qu'elle doit être présentée à l'utilisateur
+            // Formatte l'entrÃ©e telle qu'elle doit Ãªtre prÃ©sentÃ©e Ã  l'utilisateur
             $key = $this->formatEntry($key);
             $entry = $this->highlight($key, strlen($search));
 
-            // Stocke la suggestion obtenue dans les tableaux résultat
+            // Stocke la suggestion obtenue dans les tableaux rÃ©sultat
             if (isset($result[$entry]))
             {
                 $result[$entry] = max($result[$entry], $this->begin->get_termfreq());
@@ -317,10 +317,10 @@ class TermLookup extends LookupHelper
                 $sortKeys[] = $key;
             }
 
-            // Si on a trouvé assez de suggestions, terminé
+            // Si on a trouvÃ© assez de suggestions, terminÃ©
             if (count($result) >= $this->max) break;
 
-            // Passe à l'entrée suivante dans l'index
+            // Passe Ã  l'entrÃ©e suivante dans l'index
             $this->begin->next();
         }
         if ($this->debug) echo "done<br />";
@@ -329,11 +329,11 @@ class TermLookup extends LookupHelper
 
 /**
  * LookupHelper permettant de rechercher des suggestions parmi les articles
- * présents dans l'index Xapian.
+ * prÃ©sents dans l'index Xapian.
  *
- * Ce helper recherche les articles qui commencent par l'un des mots indiqués
- * par l'utilisateur et ne retient que ceux contenant tous les mots (ou début
- * de mot) figurant dans l'expression recherchée.
+ * Ce helper recherche les articles qui commencent par l'un des mots indiquÃ©s
+ * par l'utilisateur et ne retient que ceux contenant tous les mots (ou dÃ©but
+ * de mot) figurant dans l'expression recherchÃ©e.
  *
  * @package     fab
  * @subpackage  database
@@ -341,23 +341,23 @@ class TermLookup extends LookupHelper
 class ValueLookup extends TermLookup
 {
     /*
-     * Les résultats issus d'un index "Article" sont déjà correctement triés par ordre alphabétique.
-     * Donc, c'est inutile de retrier les résultats.
+     * Les rÃ©sultats issus d'un index "Article" sont dÃ©jÃ  correctement triÃ©s par ordre alphabÃ©tique.
+     * Donc, c'est inutile de retrier les rÃ©sultats.
      *
-     * Nanmoins, j'ai trouvé un cas ou cette propriété n'est pas respectée : sur la table PasEng,
-     * en recherchant la valeur "a", on obtient les entrées
+     * Nanmoins, j'ai trouvÃ© un cas ou cette propriÃ©tÃ© n'est pas respectÃ©e : sur la table PasEng,
+     * en recherchant la valeur "a", on obtient les entrÃ©es
      * 28:_a3_chromosome_
      * 28:_a_
      *
-     * Comme on utilise un underscore à la fin des articles et que, selon l'ordre ascii, le chiffre
+     * Comme on utilise un underscore Ã  la fin des articles et que, selon l'ordre ascii, le chiffre
      * "3" (code = 51) est plus petit que l'underscore (code = 95), le tri obtenu n'est pas correct.
      *
-     * Pour que l'erreur se produise, il faut qu'on ait à la fois, dans une table des articles,
-     * un article et le même article suivi d'un chiffre (le underscore sera avant n'importe quelle
+     * Pour que l'erreur se produise, il faut qu'on ait Ã  la fois, dans une table des articles,
+     * un article et le mÃªme article suivi d'un chiffre (le underscore sera avant n'importe quelle
      * lettre).
      *
-     * A priori, ce cas est super rare, donc j'ai considéré que ce n'était pas la peine de trier
-     * à chaque fois pour si peu.
+     * A priori, ce cas est super rare, donc j'ai considÃ©rÃ© que ce n'Ã©tait pas la peine de trier
+     * Ã  chaque fois pour si peu.
      *
      * Dans le cas contraire, activer la ligne ci-dessous.
      */
@@ -366,11 +366,11 @@ class ValueLookup extends TermLookup
 
 
     /**
-     * Retourne le terme à partir duquel va démarrer la recherche dans l'index.
+     * Retourne le terme Ã  partir duquel va dÃ©marrer la recherche dans l'index.
      *
      * Pour un lookup de type {@link ValueLookup}, il s'agit d'une chaine de la forme
-     * <code>_mot1_mot2_mot3</code> construite à partir de la version tokenisée des mots qui
-     * figurent dans l'expression de recherche indiquée par l'utilisateur.
+     * <code>_mot1_mot2_mot3</code> construite Ã  partir de la version tokenisÃ©e des mots qui
+     * figurent dans l'expression de recherche indiquÃ©e par l'utilisateur.
      *
      * @return string
      */
@@ -381,13 +381,13 @@ class ValueLookup extends TermLookup
 
 
     /**
-     * Formatte une entrée telle qu'elle doit être présentée à l'utilisateur.
+     * Formatte une entrÃ©e telle qu'elle doit Ãªtre prÃ©sentÃ©e Ã  l'utilisateur.
      *
-     * En plus des traitements appliqués par la {@link TermLookup::formatEntry() méthode parente},
-     * la méthode supprime les caractères "_" présents dans l'article.
+     * En plus des traitements appliquÃ©s par la {@link TermLookup::formatEntry() mÃ©thode parente},
+     * la mÃ©thode supprime les caractÃ¨res "_" prÃ©sents dans l'article.
      *
-     * @param string $entry l'entrée à formatter.
-     * @return string l'entrée mise en forme.
+     * @param string $entry l'entrÃ©e Ã  formatter.
+     * @return string l'entrÃ©e mise en forme.
      */
     protected function formatEntry($entry)
     {
@@ -400,8 +400,8 @@ class ValueLookup extends TermLookup
      */
     protected function highlight($entry, $length)
     {
-        // Comme les articles commencent par un '_' initial qu'on a supprimé dans formatEntry(),
-        // il faut retrancher 1 à $length.
+        // Comme les articles commencent par un '_' initial qu'on a supprimÃ© dans formatEntry(),
+        // il faut retrancher 1 Ã  $length.
         return parent::highlight($entry, $length-1);
     }
 }
@@ -411,9 +411,9 @@ class ValueLookup extends TermLookup
  * LookupHelper permettant de rechercher des suggestions au sein d'une table de
  * lookup simple.
  *
- * Ce helper recherche la forme riche des entrées qui commencent par l'un des
- * mots indiqués par l'utilisateur et ne retient que celles qui commencent par l'expression
- * de recherche indiquée par l'utilisateur.
+ * Ce helper recherche la forme riche des entrÃ©es qui commencent par l'un des
+ * mots indiquÃ©s par l'utilisateur et ne retient que celles qui commencent par l'expression
+ * de recherche indiquÃ©e par l'utilisateur.
  *
  * @package     fab
  * @subpackage  database
@@ -421,30 +421,30 @@ class ValueLookup extends TermLookup
 class SimpleTableLookup extends LookupHelper
 {
     /**
-     * $charFroms et $charTo représentent les tables de conversion de caractères utilisées pour
-     * rechercher les entrées au format riche à partir de la chaine de recherche indiquée par
+     * $charFroms et $charTo reprÃ©sentent les tables de conversion de caractÃ¨res utilisÃ©es pour
+     * rechercher les entrÃ©es au format riche Ã  partir de la chaine de recherche indiquÃ©e par
      * l'utilisateur.
      *
-     * Remarque : les chaines sont "triées" de telle façon que les itérateurs utilisés
-     * par {@link SimpleTableLookup} ne font que avancer (utiliser la méthode sortByChar()
-     * qui figure en commentaires à la fin de cette classe).
+     * Remarque : les chaines sont "triÃ©es" de telle faÃ§on que les itÃ©rateurs utilisÃ©s
+     * par {@link SimpleTableLookup} ne font que avancer (utiliser la mÃ©thode sortByChar()
+     * qui figure en commentaires Ã  la fin de cette classe).
      *
-     * Par rapport aux chaines définies dans Utils::Tokenize(), j'ai ajouté tous les signes de
-     * ponctuation "tapables au clavier" pour permettre de trouver des entrées telles que
+     * Par rapport aux chaines dÃ©finies dans Utils::Tokenize(), j'ai ajoutÃ© tous les signes de
+     * ponctuation "tapables au clavier" pour permettre de trouver des entrÃ©es telles que
      * "(LA) REVUE DU PRATICIEN".
      */
-//  protected static $charFroms = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~AaÀÁÂÃÄÅàáâãäåBbCcÇçDdĞğEeÈÉÊËèéêëFfGgHhIiÌÍÎÏìíîïJjKkLlMmNnÑñOoÒÓÔÕÖòóôõöPpQqRrSsßTtŞşUuÙÚÛÜùúûüVvWwXxYyİıÿZzŒœØÆæ';
-//  protected static $charTo    =   '                                aaaaaaaaaaaaaabbccccddddeeeeeeeeeeffgghhiiiiiiiiiijjkkllmmnnnnooooooooooooppqqrrsssttttuuuuuuuuuuvvwwxxyyyyyzzœœœææ';
+//  protected static $charFroms = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~AaÃ€ÃÃ‚ÃƒÃ„Ã…Ã Ã¡Ã¢Ã£Ã¤Ã¥BbCcÃ‡Ã§DdÃÃ°EeÃˆÃ‰ÃŠÃ‹Ã¨Ã©ÃªÃ«FfGgHhIiÃŒÃÃÃÃ¬Ã­Ã®Ã¯JjKkLlMmNnÃ‘Ã±OoÃ’Ã“Ã”Ã•Ã–Ã²Ã³Ã´ÃµÃ¶PpQqRrSsÃŸTtÃÃ¾UuÃ™ÃšÃ›ÃœÃ¹ÃºÃ»Ã¼VvWwXxYyÃÃ½Ã¿ZzÅ’Å“Ã˜Ã†Ã¦';
+//  protected static $charTo    =   '                                aaaaaaaaaaaaaabbccccddddeeeeeeeeeeffgghhiiiiiiiiiijjkkllmmnnnnooooooooooooppqqrrsssttttuuuuuuuuuuvvwwxxyyyyyzzÅ“Å“Å“Ã¦Ã¦';
 
-// Version simplifiée avec des lettres en moins
-    protected static $charFroms = ' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~0123456789AaÀÁÂÃÄÅàáâãäåBbCcÇçDdĞğEeÈÉÊËèéêëFfGgHhIiìîïJjKkLlMmNnñOoôöPpQqRrSsTtŞşUuÙÚÛÜùúûüVvWwXxYyİıÿZzŒœØÆæ';
+// Version simplifiÃ©e avec des lettres en moins
+    protected static $charFroms = ' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~0123456789AaÃ€ÃÃ‚ÃƒÃ„Ã…Ã Ã¡Ã¢Ã£Ã¤Ã¥BbCcÃ‡Ã§DdÃÃ°EeÃˆÃ‰ÃŠÃ‹Ã¨Ã©ÃªÃ«FfGgHhIiÃ¬Ã®Ã¯JjKkLlMmNnÃ±OoÃ´Ã¶PpQqRrSsTtÃÃ¾UuÃ™ÃšÃ›ÃœÃ¹ÃºÃ»Ã¼VvWwXxYyÃÃ½Ã¿ZzÅ’Å“Ã˜Ã†Ã¦';
 
     /**
      * cf {@link $charFroms}.
      *
      * @var string
      */
-    protected static $charTo    =   '                                 0123456789aaaaaaaaaaaaaabbccccddddeeeeeeeeeeffgghhiiiiijjkkllmmnnnooooppqqrrssttttuuuuuuuuuuvvwwxxyyyyyzzœœœææ';
+    protected static $charTo    =   '                                 0123456789aaaaaaaaaaaaaabbccccddddeeeeeeeeeeffgghhiiiiijjkkllmmnnnooooppqqrrssttttuuuuuuuuuuvvwwxxyyyyyzzÅ“Å“Å“Ã¦Ã¦';
 
 
     /**
@@ -454,7 +454,7 @@ class SimpleTableLookup extends LookupHelper
 
 
     /**
-     * Stocke l'entrée d'index en cours.
+     * Stocke l'entrÃ©e d'index en cours.
      *
      * @var string
      */
@@ -466,36 +466,36 @@ class SimpleTableLookup extends LookupHelper
      */
     protected function getEntries(array & $result, array & $sortKeys)
     {
-        // $this->sortByChar(); die(); // Désactiver cette ligne pour trier charFroms et charTo correctement.
+        // $this->sortByChar(); die(); // DÃ©sactiver cette ligne pour trier charFroms et charTo correctement.
 
         if ($this->debug) echo '<pre>';
 
-        // Construit la version tokenizée de la chaine recherchée
-        // Entre chaque mot, on insère un caractère "¤" qui représente un espace de taille variable
-        $this->search = implode('¤', $this->words);
+        // Construit la version tokenizÃ©e de la chaine recherchÃ©e
+        // Entre chaque mot, on insÃ¨re un caractÃ¨re "Â¤" qui reprÃ©sente un espace de taille variable
+        $this->search = implode('Â¤', $this->words);
 
         // Apparemment, une fois qu'un TermIterator a atteint la fin de la liste, tous les appels
-        // ultérieurs à skip_to() "échouent" (i.e. on reste sur EOF).
-        // Pour éviter cela, on clone le TermIterator utilisé.
+        // ultÃ©rieurs Ã  skip_to() "Ã©chouent" (i.e. on reste sur EOF).
+        // Pour Ã©viter cela, on clone le TermIterator utilisÃ©.
         // Code de test :
         // $this->begin->skip_to('T5:~'); // eof===true (i.e. $this->begin->equals($this->end)
-        // $this->begin->skip_to('T5:LA'); // eof encore à true, alors que cela ne devrait pas
+        // $this->begin->skip_to('T5:LA'); // eof encore Ã  true, alors que cela ne devrait pas
 
-        // Sauvegarde l'itérateur de début
+        // Sauvegarde l'itÃ©rateur de dÃ©but
         $begin = $this->begin;
 
-        // Clone l'itérateur et recherche les entrées qui commencent par ce que l'utilisateur a tapé
+        // Clone l'itÃ©rateur et recherche les entrÃ©es qui commencent par ce que l'utilisateur a tapÃ©
         if ($this->debug) echo "<h1>this.search=$this->search</h1>";
         $this->begin = new XapianTermIterator($begin);
         $this->search($this->search, $result, $sortKeys);
 
-        // Utilise l'itérateur initial et recherche les entrées qui commencent par un blanc
+        // Utilise l'itÃ©rateur initial et recherche les entrÃ©es qui commencent par un blanc
         // exemple : "(LA) REVUE DU PRATICIEN"
         if ($this->search !== ' ') // si value=='(', words=array(' '), this.search==' ' et c'est inutile de relancer la recherche
         {
             $this->begin = $begin;
-            $this->search = '¤' . $this->search;
-            $this->entry = ''; // Réinitialise l'index pour que la recherche recommence au début
+            $this->search = 'Â¤' . $this->search;
+            $this->entry = ''; // RÃ©initialise l'index pour que la recherche recommence au dÃ©but
             if ($this->debug) echo "<h1>this.search=$this->search</h1>";
             $this->search($this->search, $result, $sortKeys);
         }
@@ -503,8 +503,8 @@ class SimpleTableLookup extends LookupHelper
 
 
     /**
-     * Génère toutes les variations de lettres possibles à l'offset indiqué et recherche les
-     * entrées correspondantes.
+     * GÃ©nÃ¨re toutes les variations de lettres possibles Ã  l'offset indiquÃ© et recherche les
+     * entrÃ©es correspondantes.
      *
      * @param string $word
      * @param array $result
@@ -513,20 +513,20 @@ class SimpleTableLookup extends LookupHelper
      */
     protected function search($word, array & $result, array & $sortKeys, $offset=0)
     {
-        // Appelle la méthode space() si c'est un "blanc" à géométrie variable
-        if ($word[$offset] === '¤')
+        // Appelle la mÃ©thode space() si c'est un "blanc" Ã  gÃ©omÃ©trie variable
+        if ($word[$offset] === 'Â¤')
             $this->space($word, $result, $sortKeys, $offset);
 
-        // Appelle la méthode letter() sinon
+        // Appelle la mÃ©thode letter() sinon
         else
             $this->letter($word, $result, $sortKeys, $offset);
     }
 
 
     /**
-     * Traite les espaces trouvés dans la chaine de recherche tokenisée.
+     * Traite les espaces trouvÃ©s dans la chaine de recherche tokenisÃ©e.
      *
-     * Génère toutes les variations possibles à l'offset indiqué et recherche les entrées
+     * GÃ©nÃ¨re toutes les variations possibles Ã  l'offset indiquÃ© et recherche les entrÃ©es
      * correspondantes.
      *
      * @param string $word
@@ -536,7 +536,7 @@ class SimpleTableLookup extends LookupHelper
      */
     protected function space($word, array & $result, array & $sortKeys, $offset)
     {
-        // Dans la chaine tokenisée, un espace représente de un à 7 caractères "blancs".
+        // Dans la chaine tokenisÃ©e, un espace reprÃ©sente de un Ã  7 caractÃ¨res "blancs".
         // Dans les autcoll, par exemple, on : "(E.N.S.P.). .. Service" (7 blancs entre P et S)
         for ($repeat=1 ; $repeat <= 7 ; $repeat++)
         {
@@ -547,9 +547,9 @@ class SimpleTableLookup extends LookupHelper
         }
 
         // Suppression des espaces en trop
-        // Exemple : l'utilisateur a tapé "BEH Web" et on a "BEHWeb" dans la table
-        // On ne le fait pas si l'espace est au début ou à la fin (sinon, on sort une seconde fois
-        // toutes les suggestions déjà trouvées)
+        // Exemple : l'utilisateur a tapÃ© "BEH Web" et on a "BEHWeb" dans la table
+        // On ne le fait pas si l'espace est au dÃ©but ou Ã  la fin (sinon, on sort une seconde fois
+        // toutes les suggestions dÃ©jÃ  trouvÃ©es)
         if ($offset > 0 && $offset < strlen($word)-1)
         {
             $this->entry='';
@@ -560,9 +560,9 @@ class SimpleTableLookup extends LookupHelper
 
 
     /**
-     * Traite les lettres et les chiffres trouvés dans la chaine de recherche tokenisée.
+     * Traite les lettres et les chiffres trouvÃ©s dans la chaine de recherche tokenisÃ©e.
      *
-     * Génère toutes les variations possibles à l'offset indiqué et recherche les entrées
+     * GÃ©nÃ¨re toutes les variations possibles Ã  l'offset indiquÃ© et recherche les entrÃ©es
      * correspondantes.
      *
      * @param string $word
@@ -576,23 +576,23 @@ class SimpleTableLookup extends LookupHelper
         $this->variations($word, $result, $sortKeys, $offset);
 
         // Recherche de sigles
-        // Exemple : l'utilisateur a tapé "SESI" et on a "S.E.S.I." dans la table
+        // Exemple : l'utilisateur a tapÃ© "SESI" et on a "S.E.S.I." dans la table
         if ($offset && ctype_alpha($word[$offset-1]))
         {
-            // Réinitialise l'index pour que la recherche recommence au début
+            // RÃ©initialise l'index pour que la recherche recommence au dÃ©but
             $this->entry = '';
 
-            // Insère un espace (un '.') juste après la lettre en cours
+            // InsÃ¨re un espace (un '.') juste aprÃ¨s la lettre en cours
             $h = substr($word, 0, $offset) . ' ' . substr($word, $offset);
 
-            // Teste s'il existe des entrées commençant par le terme obtenu
+            // Teste s'il existe des entrÃ©es commenÃ§ant par le terme obtenu
             $this->variations($h, $result, $sortKeys, $offset);
         }
     }
 
     /**
-     * Génère toutes les variations de caractère possibles à l'offset indiqué et stocke les
-     * entrées qui correspondent.
+     * GÃ©nÃ¨re toutes les variations de caractÃ¨re possibles Ã  l'offset indiquÃ© et stocke les
+     * entrÃ©es qui correspondent.
      *
      * @param string $word
      * @param array $result
@@ -601,41 +601,41 @@ class SimpleTableLookup extends LookupHelper
      */
     protected function variations($word, array & $result, array & $sortKeys, $offset)
     {
-        // Détermine le caractère pour lequel on va générer toutes les variantes
+        // DÃ©termine le caractÃ¨re pour lequel on va gÃ©nÃ©rer toutes les variantes
         $char = $word[$offset];
         $lastPos = strlen($word)-1;
 
-        // Génère toutes les variantes possibles pour ce caractère
+        // GÃ©nÃ¨re toutes les variantes possibles pour ce caractÃ¨re
         $i=0;
         while (false !== $i=strpos(self::$charTo, $char, $i))
         {
             // Modifie le mot avec la variante de la lettre en cours
             $word[$offset] = self::$charFroms[$i++];
 
-            // Construit le préfixe utilisé pour la recherche
+            // Construit le prÃ©fixe utilisÃ© pour la recherche
             $start = $this->prefix . substr($word, 0, $offset+1);
 
-            // Passe à la variante suivante s'il n'y a aucune entrée qui commence par $start
+            // Passe Ã  la variante suivante s'il n'y a aucune entrÃ©e qui commence par $start
             if (! $this->getEntry($start)) continue;
 
-            // Si on vient de traiter la dernière lettre du mot , stocke les entrées obtenues
+            // Si on vient de traiter la derniÃ¨re lettre du mot , stocke les entrÃ©es obtenues
             if ($offset === $lastPos)
             {
                 if ($this->debug) echo "MATCH<br />";
                 $this->getMatches($start, $result, $sortKeys);
             }
 
-            // Sinon, récursive et génére les variantes possibles à la position suivante
+            // Sinon, rÃ©cursive et gÃ©nÃ©re les variantes possibles Ã  la position suivante
             else
             {
-                // Passe à la lettre suivante
+                // Passe Ã  la lettre suivante
                 $this->search($word, $result, $sortKeys, $offset+1);
             }
         }
     }
 
     /**
-     * Stocke dans les tableaux résultats toutes les entrées qui commencent par le préfixe indiqué.
+     * Stocke dans les tableaux rÃ©sultats toutes les entrÃ©es qui commencent par le prÃ©fixe indiquÃ©.
      *
      * @param string $start
      * @param array $result
@@ -647,22 +647,22 @@ class SimpleTableLookup extends LookupHelper
         if (! (strncmp($start, $this->entry, strlen($start)) === 0))
             if ($this->debug) echo "<li><b style='color:RED'>ERROR start = $start, entry=$this->entry</b><br /></li>";
 
-        // Stocke toutes les entrées qui commencent par start
+        // Stocke toutes les entrÃ©es qui commencent par start
         $nb = 0;
         while (strncmp($start, $this->entry, strlen($start)) === 0)
         {
             if ($this->debug) echo "<li><b style='color:green'>$this->entry</b><br /></li>";
 
-            // Supprime le préfixe de l'entrée (par exemple "T3:")
+            // Supprime le prÃ©fixe de l'entrÃ©e (par exemple "T3:")
             $entry = substr($this->entry, strlen($this->prefix));
 
-            // Détermine la clé utilisée pour trier l'entrée
+            // DÃ©termine la clÃ© utilisÃ©e pour trier l'entrÃ©e
             $key = implode('', Utils::tokenize($entry)) ;
 
             // Met les termes en surbrillance
             $entry = $this->highlight($entry, strlen($start)-strlen($this->prefix));
 
-            // Stocke la suggestion dans le tableau résultat
+            // Stocke la suggestion dans le tableau rÃ©sultat
             if (isset($result[$entry]))
             {
                 $result[$entry] = max($result[$entry], $this->begin->get_termfreq());
@@ -673,10 +673,10 @@ class SimpleTableLookup extends LookupHelper
                 $sortKeys[] = $key;
             }
 
-            // Si on a trouvé suffisamment d'entrées, terminé
+            // Si on a trouvÃ© suffisamment d'entrÃ©es, terminÃ©
             if (++$nb > $this->max) return;
 
-            // Passe à l'entrée suivante
+            // Passe Ã  l'entrÃ©e suivante
             $this->begin->next();
 
             if ($this->begin->equals($this->end))
@@ -694,42 +694,42 @@ class SimpleTableLookup extends LookupHelper
 
 
     /**
-     * Positionne l'index sur la première entrée qui commence par le préfixe indiqué.
+     * Positionne l'index sur la premiÃ¨re entrÃ©e qui commence par le prÃ©fixe indiquÃ©.
      *
-     * La propriété $this->entry est initialisée avec l'entrée trouvée.
+     * La propriÃ©tÃ© $this->entry est initialisÃ©e avec l'entrÃ©e trouvÃ©e.
      *
-     * @param false|string $start retourne false si aucune entrée ne commence par $start ou
-     * l'entrée trouvée sinon.
+     * @param false|string $start retourne false si aucune entrÃ©e ne commence par $start ou
+     * l'entrÃ©e trouvÃ©e sinon.
      *
-     * @return bool <code>true</code> si une entrée commençant par <code>$start</code> a été
-     * trouvée, <code>false</code> sinon.
+     * @return bool <code>true</code> si une entrÃ©e commenÃ§ant par <code>$start</code> a Ã©tÃ©
+     * trouvÃ©e, <code>false</code> sinon.
      */
     protected function getEntry($start)
     {
-        // Si l'entrée en cours est plus grande que $start, inutile de faire un appel à skip_to()
+        // Si l'entrÃ©e en cours est plus grande que $start, inutile de faire un appel Ã  skip_to()
         if (strncmp($start, $this->entry, strlen($start)) < 0) return false;
 
-        // Positionne l'index sur les entrées qui commencent par start
+        // Positionne l'index sur les entrÃ©es qui commencent par start
         if ($this->debug) echo "<b style='color:red'>skip_to('$start')</b><br />";
         $this->begin->skip_to($start);
 
-        // Récupère l'entrée obtenue
+        // RÃ©cupÃ¨re l'entrÃ©e obtenue
         if ($this->begin->equals($this->end)) return false;
         $this->entry=$this->begin->get_term();
 
-        // Si elle ne commence pas par start, terminé
+        // Si elle ne commence pas par start, terminÃ©
         if (strncmp($start, $this->entry, strlen($start)) !== 0) return false;
 
-        // OK, trouvé
+        // OK, trouvÃ©
         return true;
     }
 
     /**
-     * Méthode interne utilisée pour trier les chaines charFroms et charTo
-     * de telle manière que les itérateurs Xapian ne fasse que "avancer" (ie
-     * pas de retour en arrière).
+     * MÃ©thode interne utilisÃ©e pour trier les chaines charFroms et charTo
+     * de telle maniÃ¨re que les itÃ©rateurs Xapian ne fasse que "avancer" (ie
+     * pas de retour en arriÃ¨re).
      *
-     * Pour cela, on trie les caractères d'abord par "charTo" puis par
+     * Pour cela, on trie les caractÃ¨res d'abord par "charTo" puis par
      * "charFrom".
      */
     /* Cette fonction est volontairement en commentaires, l'activer en cas de besoin... */
@@ -739,14 +739,14 @@ class SimpleTableLookup extends LookupHelper
         $charFroms = self::$charFroms;
         $charTo    = self::$charTo;
 
-        // Crée un tableau de tableaux à partir des chaines
+        // CrÃ©e un tableau de tableaux Ã  partir des chaines
         $t=array();
         for ($i=0; $i<strlen($charTo); $i++)
         {
             $t[$charTo[$i]][]=$charFroms[$i];
         }
 
-        // Tri des clés
+        // Tri des clÃ©s
         ksort($t, SORT_REGULAR);
 
         // Tri des valeurs
@@ -769,16 +769,16 @@ class SimpleTableLookup extends LookupHelper
 
         header('Content-type: text/plain; charset=CP1252');
 
-        // Affiche le résultat
+        // Affiche le rÃ©sultat
         echo "Anciennes tables :\n";
         echo '    protected static $charFroms = ', var_export($charFroms,true), ";\n";
         echo '    protected static $charTo    =   ', var_export($charTo,true), ";\n";
 
         if ($charFroms===$from && $charTo===$to)
-            echo "\nLes tables sont déjà correctement triées.\n";
+            echo "\nLes tables sont dÃ©jÃ  correctement triÃ©es.\n";
         else
         {
-            echo "\nLes tables ne sont pas correctement triées :\n";
+            echo "\nLes tables ne sont pas correctement triÃ©es :\n";
             echo "\nNouvelles tables :\n";
             echo '    protected static $charFroms = ', var_export($from,true), ";\n";
             echo '    protected static $charTo    =  ', var_export($to,true), ";\n";
@@ -791,7 +791,7 @@ class SimpleTableLookup extends LookupHelper
  * LookupHelper permettant de rechercher des suggestions au sein des index
  * composant un alias.
  *
- * AliasLookup est en fait un aggrégateur qui combine les suggestions retournées
+ * AliasLookup est en fait un aggrÃ©gateur qui combine les suggestions retournÃ©es
  * par les LookupHelper qu'il contient.
  *
  * @package     fab
@@ -806,7 +806,7 @@ class AliasLookup extends LookupHelper
 
 
     /**
-     * Liste des helpers qui ont été ajoutés via {@link add()}
+     * Liste des helpers qui ont Ã©tÃ© ajoutÃ©s via {@link add()}
      *
      * @var array
      */

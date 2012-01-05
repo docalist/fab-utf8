@@ -3,13 +3,13 @@
 /**
  * @package     fab
  * @subpackage  database
- * @author 		Daniel Ménard <Daniel.Menard@bdsp.tm.fr>
+ * @author 		Daniel MÃ©nard <Daniel.Menard@bdsp.tm.fr>
  * @version     SVN: $Id: BisDatabase.php 1027 2009-03-19 17:53:42Z daniel.menard.bdsp $
  */
 
 
 /**
- * Représente une base de données Bis
+ * ReprÃ©sente une base de donnÃ©es Bis
  *
  * @package     fab
  * @subpackage  database
@@ -17,7 +17,7 @@
 class BisDatabase extends Database
 {
     /**
-     * @var COM.Bis.Selection l'objet COM contenant la sélection en cours
+     * @var COM.Bis.Selection l'objet COM contenant la sÃ©lection en cours
      */
     private $selection=null;
 
@@ -32,12 +32,12 @@ class BisDatabase extends Database
     private $rank=0;
 
     /**
-     * @var int le rang de la première notice à retourner
+     * @var int le rang de la premiÃ¨re notice Ã  retourner
      */
     private $start=0;
 
     /**
-     * @var int le nombre maximum de notices à retourner
+     * @var int le nombre maximum de notices Ã  retourner
      */
     private $max=0;
 
@@ -45,28 +45,28 @@ class BisDatabase extends Database
 
     protected function doCreate($database, $def, $options=null)
     {
-        throw new Exception('non implémenté');
+        throw new Exception('non implÃ©mentÃ©');
     }
 
     protected function doOpen($database, $readOnly=true)
     {
-        // Ouvre la base de données
+        // Ouvre la base de donnÃ©es
         $bis=new COM('Bis.Engine');
         $db=$bis->openDatabase($database, false, $readOnly);
 
-        // Détermine le nom du premier (et normallement unique) dataset
+        // DÃ©termine le nom du premier (et normallement unique) dataset
         $dataset=$db->datasets(1)->name;
 
-        // Ouvre une sélection sur ce dataset
+        // Ouvre une sÃ©lection sur ce dataset
         $this->selection=$db->openSelection($dataset);
 
-        // Crée l'objet record
+        // CrÃ©e l'objet record
         $this->record=new BisDatabaseRecord($this, $this->selection->fields);
     }
 
     /**
      * Retourne la liste des options de recherche reconnues par {@link search()}
-     * et leur valeur par défaut.
+     * et leur valeur par dÃ©faut.
      *
      * @return array
      */
@@ -83,10 +83,10 @@ class BisDatabase extends Database
     public function search($equation=null, $options=null)
     {
 
-        // a priori, pas de réponses
+        // a priori, pas de rÃ©ponses
         $this->eof=true;
 
-        // Analyse les options indiquées (start et sort)
+        // Analyse les options indiquÃ©es (start et sort)
         if (is_array($options))
         {
             $sort=isset($options['sort']) ? $options['sort'] : null;
@@ -125,11 +125,11 @@ class BisDatabase extends Database
         // Lance la recherche
         $this->rank=0;
         $this->selection->equation=$equation;
-        // Pas de réponse ? return false
+        // Pas de rÃ©ponse ? return false
         $count=$this->selection->count();
         if ($count==0) return false;
 
-        // Si start est supérieur à count, return false
+        // Si start est supÃ©rieur Ã  count, return false
         if ($this->start>$count)
         {
             $this->selection->moveLast();
@@ -141,7 +141,7 @@ class BisDatabase extends Database
 
         $this->maxRank=($this->max==-1 ? PHP_INT_MAX : $this->start+$this->max-1);
 
-        // Gère l'ordre de tri et va sur la start-ième réponse
+        // GÃ¨re l'ordre de tri et va sur la start-iÃ¨me rÃ©ponse
         switch($sort)
         {
         	case '%':
@@ -156,7 +156,7 @@ class BisDatabase extends Database
                 while ($start--) $this->selection->moveNext();
         }
 
-        // Retourne le résultat
+        // Retourne le rÃ©sultat
         return ! $this->eof=($this->max === 0);
     }
 
@@ -232,7 +232,7 @@ class BisDatabase extends Database
 }
 
 /**
- * Représente un enregistrement dans une base {@link BisDatabase}
+ * ReprÃ©sente un enregistrement dans une base {@link BisDatabase}
  *
  * @package     fab
  * @subpackage  database
@@ -245,7 +245,7 @@ class BisDatabaseRecord extends DatabaseRecord
     private $fields=null;
 
     /**
-     * @var int Numéro du champ en corus (utilisé pour Iterator)
+     * @var int NumÃ©ro du champ en corus (utilisÃ© pour Iterator)
      */
     private $current=0;
 
@@ -271,8 +271,8 @@ class BisDatabaseRecord extends DatabaseRecord
     public function offsetGet($offset)
     {
 //        $h=$this->fields[$offset]->value;
-//        if (strpos($h, '¨') == false) return $h;
-//        return explode('¨', $h);
+//        if (strpos($h, 'Â¨') == false) return $h;
+//        return explode('Â¨', $h);
 
 //        if (isChampArticle($offset))
 //            $h=explode($h, SepUsedInDatabase());
@@ -327,7 +327,7 @@ class BisDatabaseRecord extends DatabaseRecord
 
     public function next()
     {
-//        echo "Appel de next. This.current passe à ", ($this->current+1),"<br />";
+//        echo "Appel de next. This.current passe Ã  ", ($this->current+1),"<br />";
         ++$this->current;
     }
 

@@ -2,32 +2,32 @@
 /**
  * @package     fab
  * @subpackage  Schema
- * @author      Daniel Ménard <Daniel.Menard@laposte.net>
+ * @author      Daniel MÃ©nard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id
  */
 namespace fab\Schema;
 
 
 /**
- * Classe statique utilisée pour définir les classes PHP utilisées pour représenter
- * les noeuds qui composent un schéma.
+ * Classe statique utilisÃ©e pour dÃ©finir les classes PHP utilisÃ©es pour reprÃ©senter
+ * les noeuds qui composent un schÃ©ma.
  *
- * Dans un schéma, les noeuds sont définis par un nom symbolique qui indique leur type
+ * Dans un schÃ©ma, les noeuds sont dÃ©finis par un nom symbolique qui indique leur type
  * (field, index, etc.)
  *
- * Lorsqu'un schéma est chargé en mémoire, chaque noeud est représenté par un objet
- * PHP. La méthode {@link registerNodetype()} permet de définir la classe PHP à utiliser
- * pour un nom symbolique donné.
+ * Lorsqu'un schÃ©ma est chargÃ© en mÃ©moire, chaque noeud est reprÃ©sentÃ© par un objet
+ * PHP. La mÃ©thode {@link registerNodetype()} permet de dÃ©finir la classe PHP Ã  utiliser
+ * pour un nom symbolique donnÃ©.
  *
- * Par défaut, des classes sont fournies pour tous les types de noeud. Vous pouvez
- * utiliser {@link registerNodetype()} pour remplacer une classe prédéfinie par votre
- * propre classe. Cela peut être utile pour introduire de nouvelles méthodes, pour
- * définir de nouvelles propriétés ou encore pour modifier les valeurs par défaut
+ * Par dÃ©faut, des classes sont fournies pour tous les types de noeud. Vous pouvez
+ * utiliser {@link registerNodetype()} pour remplacer une classe prÃ©dÃ©finie par votre
+ * propre classe. Cela peut Ãªtre utile pour introduire de nouvelles mÃ©thodes, pour
+ * dÃ©finir de nouvelles propriÃ©tÃ©s ou encore pour modifier les valeurs par dÃ©faut
  * d'un noeud.
  *
- * Pour cela, il suffit de définir une nouvelle classe descendante de
- * {@link fab\Schema\Node}, de surcharger sa propriété statique $defaultProperties et
- * d'appeller la méthode {@link registerNodetype()} en indiquant le nom symbolique
+ * Pour cela, il suffit de dÃ©finir une nouvelle classe descendante de
+ * {@link fab\Schema\Node}, de surcharger sa propriÃ©tÃ© statique $defaultProperties et
+ * d'appeller la mÃ©thode {@link registerNodetype()} en indiquant le nom symbolique
  * correspondant au type de noeud que vous voulez surcharger.
  *
  * @package     fab
@@ -63,10 +63,10 @@ abstract class NodesTypes
 
 
     /**
-     * Tableau inverse de {@link $typemap}, indique le nom symbolique associé
-     * à chaque classe.
+     * Tableau inverse de {@link $typemap}, indique le nom symbolique associÃ©
+     * Ã  chaque classe.
      *
-     * Utilisé et construit automatiquement par {@link nodetypeToClass()}.
+     * UtilisÃ© et construit automatiquement par {@link nodetypeToClass()}.
      *
      * @var array
      */
@@ -74,9 +74,9 @@ abstract class NodesTypes
 
 
     /**
-     * Retourne un tableau contenant toutes les associations actuellement définies.
+     * Retourne un tableau contenant toutes les associations actuellement dÃ©finies.
      *
-     * Le tableau retourné est sous la forme nom symbolique => nom de classe php.
+     * Le tableau retournÃ© est sous la forme nom symbolique => nom de classe php.
      *
      * @return array
      */
@@ -87,33 +87,33 @@ abstract class NodesTypes
 
 
     /**
-     * Définit le nom de la classe PHP à utiliser pour représenter un type de noeud
-     * donné au sein d'un schéma.
+     * DÃ©finit le nom de la classe PHP Ã  utiliser pour reprÃ©senter un type de noeud
+     * donnÃ© au sein d'un schÃ©ma.
      *
-     * @param string $nodetype le type de noeud à surcharger (nom symbolique).
-     * @param string $class le nom de la classe PHP à utiliser pour ce type de noeud.
-     * @throws \Exception si la classe indiquée n'est pas correcte (classe inexistante
-     * ou qui n'hérite pas de fab\Schema\Node).
+     * @param string $nodetype le type de noeud Ã  surcharger (nom symbolique).
+     * @param string $class le nom de la classe PHP Ã  utiliser pour ce type de noeud.
+     * @throws \Exception si la classe indiquÃ©e n'est pas correcte (classe inexistante
+     * ou qui n'hÃ©rite pas de fab\Schema\Node).
      */
     public static function registerNodetype($nodetype, $class)
     {
         if (! class_exists($class))
-            throw new \Exception("Classe $class non trouvée");
+            throw new \Exception("Classe $class non trouvÃ©e");
 
         if (! is_subclass_of($class, 'fab\Schema\Node'))
             throw new \Exception("Classe incorrecte");
 
         self::$typemap[$nodetype] = $class;
 
-        unset(self::$nodetype); // le tableau inverse doit être recréé
+        unset(self::$nodetype); // le tableau inverse doit Ãªtre recrÃ©Ã©
     }
 
 
     /**
-     * Retourne la classe PHP à utiliser pour représenter un noeud d'un type donné.
+     * Retourne la classe PHP Ã  utiliser pour reprÃ©senter un noeud d'un type donnÃ©.
      *
      * @param string $nodetype type de noeud (nom symbolique).
-     * @throws \Exception si le nom symbolique indiqué n'est pas référencé.
+     * @throws \Exception si le nom symbolique indiquÃ© n'est pas rÃ©fÃ©rencÃ©.
      * @return string
      */
     public static function nodetypeToClass($nodetype)
@@ -126,10 +126,10 @@ abstract class NodesTypes
 
 
     /**
-     * Retourne le nom symbolique associé à une classe PHP donnée.
+     * Retourne le nom symbolique associÃ© Ã  une classe PHP donnÃ©e.
      *
      * @param string $class
-     * @throws \Exception si la classe indiquée n'est pas référencée.
+     * @throws \Exception si la classe indiquÃ©e n'est pas rÃ©fÃ©rencÃ©e.
      * @return string
      */
     public static function classToNodetype($class)
@@ -145,16 +145,16 @@ abstract class NodesTypes
 
 
 /**
- * Classe de base (abstraite) représentant un noeud dans un schéma.
+ * Classe de base (abstraite) reprÃ©sentant un noeud dans un schÃ©ma.
  *
- * Un noeud est un objet qui peut contenir des propriétés (cf {@link get()},
+ * Un noeud est un objet qui peut contenir des propriÃ©tÃ©s (cf {@link get()},
  * {@link set()}, {@link has()}, {@link remove()} et {@link all()}) et des
  * noeuds enfants (cf. {@link addChild()}, {@link getChildren()},
  * {@link getChild()}, {@link hasChildren()}, {@link hasChild()},
  * {@link removeChildren()} et {@link removeChild()}).
  *
- * Un noeud dispose de propriétés par défaut (cf {@link getDefaultProperties()})
- * et de fils par défaut (cf {@link getDefaultChildren()}).
+ * Un noeud dispose de propriÃ©tÃ©s par dÃ©faut (cf {@link getDefaultProperties()})
+ * et de fils par dÃ©faut (cf {@link getDefaultChildren()}).
  *
  * @package     fab
  * @subpackage  Schema
@@ -162,9 +162,9 @@ abstract class NodesTypes
 abstract class Node
 {
     /**
-     * Propriétés prédéfinies et valeur par défaut de ce type de noeud.
+     * PropriÃ©tÃ©s prÃ©dÃ©finies et valeur par dÃ©faut de ce type de noeud.
      *
-     * Cette propriété est destinée à être surchargée par les classes descendantes.
+     * Cette propriÃ©tÃ© est destinÃ©e Ã  Ãªtre surchargÃ©e par les classes descendantes.
      *
      * @var array
      */
@@ -172,9 +172,9 @@ abstract class Node
 
 
     /**
-    * Fils par défaut du noeud.
+    * Fils par dÃ©faut du noeud.
     *
-    * Cette propriété est destinée à être surchargée par les classes descendantes.
+    * Cette propriÃ©tÃ© est destinÃ©e Ã  Ãªtre surchargÃ©e par les classes descendantes.
     *
     * @var array
     */
@@ -186,12 +186,12 @@ abstract class Node
     protected $children = null;
 
     /**
-     * Crée un nouveau noeud.
+     * CrÃ©e un nouveau noeud.
      *
-     * Un noeud contient automatiquement toutes les propriétés par défaut définies
+     * Un noeud contient automatiquement toutes les propriÃ©tÃ©s par dÃ©faut dÃ©finies
      * pour ce type de noeud.
      *
-     * @param array $parameters propriétés du noeud.
+     * @param array $parameters propriÃ©tÃ©s du noeud.
      */
     public function __construct(array $parameters = null)
     {
@@ -212,11 +212,11 @@ abstract class Node
 
 
     /**
-     * Construit un noeud à partir d'un tableau contenant ses propriétés.
+     * Construit un noeud Ã  partir d'un tableau contenant ses propriÃ©tÃ©s.
      *
-     * @param array $node un tableau contenant les propriétés du noeud.
-     * Le tableau doit contenir une propriété 'nodetype' qui indique le
-     * type du noeud à créer.
+     * @param array $node un tableau contenant les propriÃ©tÃ©s du noeud.
+     * Le tableau doit contenir une propriÃ©tÃ© 'nodetype' qui indique le
+     * type du noeud Ã  crÃ©er.
      *
      * @return Node
      */
@@ -228,11 +228,11 @@ abstract class Node
     }
 
     /**
-     * Construit un noeud à partir d'un tableau contenant ses propriétés.
+     * Construit un noeud Ã  partir d'un tableau contenant ses propriÃ©tÃ©s.
      *
-     * @param array $node un tableau contenant les propriétés du noeud.
-     * Le tableau doit contenir une propriété 'nodetype' qui indique le
-     * type du noeud à créer.
+     * @param array $node un tableau contenant les propriÃ©tÃ©s du noeud.
+     * Le tableau doit contenir une propriÃ©tÃ© 'nodetype' qui indique le
+     * type du noeud Ã  crÃ©er.
      *
      * @return Node
      */
@@ -243,7 +243,7 @@ abstract class Node
 
 
     /**
-     * Retourne les propriétés par défaut du noeud.
+     * Retourne les propriÃ©tÃ©s par dÃ©faut du noeud.
      *
      * @return array()
      */
@@ -254,7 +254,7 @@ abstract class Node
 
 
     /**
-     * Retourne les fils par défaut du noeud.
+     * Retourne les fils par dÃ©faut du noeud.
      *
      * @return array()
      */
@@ -265,7 +265,7 @@ abstract class Node
 
 
     /**
-     * Retourne un tableau contenant toutes les propriétés du noeud.
+     * Retourne un tableau contenant toutes les propriÃ©tÃ©s du noeud.
      *
      * @return array
      */
@@ -276,8 +276,8 @@ abstract class Node
 
 
     /**
-     * Retourne la propriété dont le nom est indiqué ou null si la propriété
-     * demandée n'existe pas.
+     * Retourne la propriÃ©tÃ© dont le nom est indiquÃ© ou null si la propriÃ©tÃ©
+     * demandÃ©e n'existe pas.
      *
      * @param string $name
      * @return mixed
@@ -289,10 +289,10 @@ abstract class Node
 
 
     /**
-     * Ajoute ou modifie une propriété.
+     * Ajoute ou modifie une propriÃ©tÃ©.
      *
-     * Si la valeur indiquée est <code>null</code>, la propriété est supprimée de
-     * l'objet ou revient à sa valeur par défaut si c'est une propriété prédéfinie.
+     * Si la valeur indiquÃ©e est <code>null</code>, la propriÃ©tÃ© est supprimÃ©e de
+     * l'objet ou revient Ã  sa valeur par dÃ©faut si c'est une propriÃ©tÃ© prÃ©dÃ©finie.
      *
      * @param string $name
      * @param mixed $value
@@ -311,7 +311,7 @@ abstract class Node
 
 
     /**
-     * Indique si une propriété existe.
+     * Indique si une propriÃ©tÃ© existe.
      *
      * @param string $name
      *
@@ -324,10 +324,10 @@ abstract class Node
 
 
     /**
-     * Supprime la propriété indiquée ou la réinitialise à sa valeur par défaut
-     * s'il s'agit d'une propriété prédéfinie.
+     * Supprime la propriÃ©tÃ© indiquÃ©e ou la rÃ©initialise Ã  sa valeur par dÃ©faut
+     * s'il s'agit d'une propriÃ©tÃ© prÃ©dÃ©finie.
      *
-     * Sans effet si la propriété n'existe pas.
+     * Sans effet si la propriÃ©tÃ© n'existe pas.
      *
      * @param string $name
      *
@@ -345,10 +345,10 @@ abstract class Node
 
 
     /**
-     * Ajoute un noeud fils à la propriété children du noeud.
+     * Ajoute un noeud fils Ã  la propriÃ©tÃ© children du noeud.
 
-     * @param Node $child le noeud fils à ajouter
-     * @throws Exception si le noeud n'a pas de nom ou si ce nom existe déjà.
+     * @param Node $child le noeud fils Ã  ajouter
+     * @throws Exception si le noeud n'a pas de nom ou si ce nom existe dÃ©jÃ .
      * @return $this
      */
     public function addChild(Node $child)
@@ -356,10 +356,10 @@ abstract class Node
         $name = $child->get('name');
 
         if (empty($name))
-            throw new \Exception('propriété "name" non trouvée'.var_export($child,true));
+            throw new \Exception('propriÃ©tÃ© "name" non trouvÃ©e'.var_export($child,true));
 
         if ($this->has($name))
-            throw new \Exception('un objet existe déjà avec ce nom');
+            throw new \Exception('un objet existe dÃ©jÃ  avec ce nom');
 
         $child->_parent = $this;
 
@@ -380,7 +380,7 @@ abstract class Node
 
 
     /**
-     * Retourne le noeud fils dont le nom est indiqué ou null si le noeud demandé n'existe pas.
+     * Retourne le noeud fils dont le nom est indiquÃ© ou null si le noeud demandÃ© n'existe pas.
      *
      * @param string $name
      * @return null|Node
@@ -403,7 +403,7 @@ abstract class Node
 
 
     /**
-     * Indique si le noeud fils dont le nom est indiqué existe.
+     * Indique si le noeud fils dont le nom est indiquÃ© existe.
      *
      * @param string $name
      */
@@ -428,9 +428,9 @@ abstract class Node
 
 
     /**
-     * Supprime le noeud fils dont le nom est indiqué.
+     * Supprime le noeud fils dont le nom est indiquÃ©.
      *
-     * Sans effet si le noeud indiqué n'existe pas.
+     * Sans effet si le noeud indiquÃ© n'existe pas.
      *
      * @param string $name
      * @return $this
@@ -473,16 +473,16 @@ abstract class Node
     protected static function _fromXml(\DOMNode $node, $path='', $nodetype=null)
     {
         /**
-         * Tableau utilisé pour convertir les schémas xml de la version 1 à la version 2.
+         * Tableau utilisÃ© pour convertir les schÃ©mas xml de la version 1 Ã  la version 2.
          *
          * Ce tableau contient toutes les "collections" qui existaient dans l'ancien format.
          * Pour chaque collection (on indique le path depuis la racine), on peut indiquer :
          * - true : cette collection existe toujours dans le nouveau format.
-         *   Il faut donc la créer et ajouter dedans les noeuds fils.
+         *   Il faut donc la crÃ©er et ajouter dedans les noeuds fils.
          * - une chaine contenant un type de noeud symbolique : cela signifie que cette
-         *   collection n'existe plus dans le nouveau format. Les noeuds fils doivent être
-         *   ajoutés directement dans la clé children du noeud parent et doivent être créé
-         *   en utilisant le type indiqué.
+         *   collection n'existe plus dans le nouveau format. Les noeuds fils doivent Ãªtre
+         *   ajoutÃ©s directement dans la clÃ© children du noeud parent et doivent Ãªtre crÃ©Ã©
+         *   en utilisant le type indiquÃ©.
          */
         static $oldnodes = array
         (
@@ -501,12 +501,12 @@ abstract class Node
         $result = self::create(is_null($nodetype) ? $node->tagName : $nodetype);
         $path .= "/$node->tagName";
 
-        // Les attributs du tag sont des propriétés de l'objet
+        // Les attributs du tag sont des propriÃ©tÃ©s de l'objet
         if ($node->hasAttributes())
             foreach ($node->attributes as $attribute)
                 $result->set($attribute->nodeName, self::_xmlToValue($attribute->nodeValue));
 
-        // Les noeuds fils du tag sont soit des propriétés, soit des objets enfants
+        // Les noeuds fils du tag sont soit des propriÃ©tÃ©s, soit des objets enfants
         foreach ($node->childNodes as $child)
         {
             $childpath = "$path/$child->tagName";
@@ -514,7 +514,7 @@ abstract class Node
             switch ($child->nodeType)
             {
                 case XML_ELEMENT_NODE:
-                    // Le nom de l'élément va devenir le nom de la propriété
+                    // Le nom de l'Ã©lÃ©ment va devenir le nom de la propriÃ©tÃ©
                     $name = $child->tagName;
 
                     // Collection (children ou, pour les anciens formats, fields, indices, etc.)
@@ -541,25 +541,25 @@ abstract class Node
                         }
                     }
 
-                    // Propriété
+                    // PropriÃ©tÃ©
                     else
                     {
-                        // Vérifie qu'on n'a pas à la fois un attribut et un élément de même nom (<database label="xxx"><label>yyy...)
+                        // VÃ©rifie qu'on n'a pas Ã  la fois un attribut et un Ã©lÃ©ment de mÃªme nom (<database label="xxx"><label>yyy...)
                         if ($node->attributes->getNamedItem($name))
-                            throw new \Exception("Erreur dans le source xml : la propriété '$name' apparaît à la fois comme attribut et comme élément");
+                            throw new \Exception("Erreur dans le source xml : la propriÃ©tÃ© '$name' apparaÃ®t Ã  la fois comme attribut et comme Ã©lÃ©ment");
 
-                        // Stocke la propriété
-                        $result->set($name, self::_xmlToValue($child->nodeValue)); // si plusieurs fois le même tag, c'est le dernier qui gagne
+                        // Stocke la propriÃ©tÃ©
+                        $result->set($name, self::_xmlToValue($child->nodeValue)); // si plusieurs fois le mÃªme tag, c'est le dernier qui gagne
                     }
                     break;
 
-                    // Types de noeud autorisés mais ignorés
+                    // Types de noeud autorisÃ©s mais ignorÃ©s
                 case XML_COMMENT_NODE:
                     break;
 
                     // Types de noeud interdits
                 default:
-                    throw new \Exception("les noeuds de type '".$child->nodeName . "' ne sont pas autorisés");
+                    throw new \Exception("les noeuds de type '".$child->nodeName . "' ne sont pas autorisÃ©s");
             }
         }
 
@@ -568,12 +568,12 @@ abstract class Node
 
 
     /**
-    * Fonction utilitaire utilisée par {@link xmlToObject()} pour convertir la
+    * Fonction utilitaire utilisÃ©e par {@link xmlToObject()} pour convertir la
     * valeur d'un attribut ou le contenu d'un tag.
     *
-    * Pour les booléens, la fonction reconnait les valeurs 'true' ou 'false'.
-    * Pour les autres types scalaires, la fonction encode les caractères '<',
-    * '>', '&' et '"' par l'entité xml correspondante.
+    * Pour les boolÃ©ens, la fonction reconnait les valeurs 'true' ou 'false'.
+    * Pour les autres types scalaires, la fonction encode les caractÃ¨res '<',
+    * '>', '&' et '"' par l'entitÃ© xml correspondante.
     *
     * @param scalar $value
     * @return string
@@ -585,7 +585,7 @@ abstract class Node
         {
             if($xml==='true') return true;
             if($xml==='false') return false;
-            throw new DatabaseSchemaXmlNodeException($node, 'booléen attendu');
+            throw new DatabaseSchemaXmlNodeException($node, 'boolÃ©en attendu');
         }
 
         if (is_int($dtdValue))
@@ -623,14 +623,14 @@ class Field extends Node
 {
     protected static $defaultProperties = array
     (
-		'_id'=>0,                   // Identifiant (numéro unique) du champ
-        'name'=>'',                 // Nom du champ, d'autres noms peuvent être définis via des alias
-        'type'=>'text',             // Type du champ (juste à titre d'information, non utilisé pour l'instant)
-//         '_type'=>self::FIELD_TEXT,  // Traduction de la propriété type en entier
-        'label'=>'',                // Libellé du champ
+		'_id'=>0,                   // Identifiant (numÃ©ro unique) du champ
+        'name'=>'',                 // Nom du champ, d'autres noms peuvent Ãªtre dÃ©finis via des alias
+        'type'=>'text',             // Type du champ (juste Ã  titre d'information, non utilisÃ© pour l'instant)
+//         '_type'=>self::FIELD_TEXT,  // Traduction de la propriÃ©tÃ© type en entier
+        'label'=>'',                // LibellÃ© du champ
         'description'=>'',          // Description
         'defaultstopwords'=>true,   // Utiliser les mots-vides de la base
-        'stopwords'=>'',            // Liste spécifique de mots-vides à appliquer à ce champ
+        'stopwords'=>'',            // Liste spÃ©cifique de mots-vides Ã  appliquer Ã  ce champ
     );
 }
 
@@ -657,18 +657,18 @@ class Index extends Node
 {
     protected static $defaultProperties = array
     (
-    	'_id'=>0,                   // Identifiant (numéro unique) de l'index
+    	'_id'=>0,                   // Identifiant (numÃ©ro unique) de l'index
         'name'=>'',                 // Nom de l'index
-        'label'=>'',                // Libellé de l'index
+        'label'=>'',                // LibellÃ© de l'index
         'description'=>'',          // Description de l'index
         'type'=>'probabilistic',    // Type d'index : 'probabilistic' ou 'boolean'
         'spelling'=>false,          // Ajouter les termes de cet index dans le correcteur orthographique
-//         '_type'=>self::INDEX_PROBABILISTIC, // Traduction de la propriété type en entier
+//         '_type'=>self::INDEX_PROBABILISTIC, // Traduction de la propriÃ©tÃ© type en entier
     );
 }
 
 /**
- * Un champ indexé
+ * Un champ indexÃ©
  */
 class IndexField extends Node
 {
@@ -680,10 +680,10 @@ class IndexField extends Node
         'phrases'=>false,   // Indexer les phrases
         'values'=>false,    // Indexer les valeurs
         'count'=>false,     // Compter le nombre de valeurs (empty, has1, has2...)
-        'global'=>false,    // DEPRECATED : n'est plus utilisé, conservé pour compatibilité
-        'start'=>'',        // Position ou chaine indiquant le début du texte à indexer
-        'end'=>'',          // Position ou chain indquant la fin du texte à indexer
-        'weight'=>1         // Poids des tokens ajoutés à cet index
+        'global'=>false,    // DEPRECATED : n'est plus utilisÃ©, conservÃ© pour compatibilitÃ©
+        'start'=>'',        // Position ou chaine indiquant le dÃ©but du texte Ã  indexer
+        'end'=>'',          // Position ou chain indquant la fin du texte Ã  indexer
+        'weight'=>1         // Poids des tokens ajoutÃ©s Ã  cet index
     );
 }
 
@@ -705,12 +705,12 @@ class Alias extends Node
 {
     protected static $defaultProperties = array
     (
-    	'_id'=>0,                // Identifiant (numéro unique) de l'alias (non utilisé)
+    	'_id'=>0,                // Identifiant (numÃ©ro unique) de l'alias (non utilisÃ©)
         'name'=>'',              // Nom de l'alias
-        'label'=>'',             // Libellé de l'index
+        'label'=>'',             // LibellÃ© de l'index
         'description'=>'',       // Description de l'index
         'type'=>'probabilistic', // Type d'index : 'probabilistic' ou 'boolean'
-//         '_type'=>self::INDEX_PROBABILISTIC, // Traduction de la propriété type en entier
+//         '_type'=>self::INDEX_PROBABILISTIC, // Traduction de la propriÃ©tÃ© type en entier
     );
 }
 
@@ -721,7 +721,7 @@ class AliasIndex extends Node
 {
     protected static $defaultProperties = array
     (
-        '_id'=>0,      // Identifiant (numéro unique) du champ
+        '_id'=>0,      // Identifiant (numÃ©ro unique) du champ
         'name'=>'',    // Nom de l'index
     );
 }
@@ -744,11 +744,11 @@ class LookupTable extends Node
 {
     protected static $defaultProperties = array
     (
-    	'_id'=>0,                        // Identifiant (numéro unique) de la table
+    	'_id'=>0,                        // Identifiant (numÃ©ro unique) de la table
         'name'=>'',                      // Nom de la table
-        'label'=>'',                     // Libellé de l'index
+        'label'=>'',                     // LibellÃ© de l'index
         'description'=>'',               // Description de l'index
-        'type'=>'simple',                // type de table : "simple" ou "inversée"
+        'type'=>'simple',                // type de table : "simple" ou "inversÃ©e"
 //         '_type'=>self::LOOKUP_SIMPLE,    // Traduction de type en entier
     );
 }
@@ -760,17 +760,17 @@ class LookupTableField extends Node
 {
     protected static $defaultProperties = array
     (
-    	'_id'=>0,       // Identifiant (numéro unique) du champ
+    	'_id'=>0,       // Identifiant (numÃ©ro unique) du champ
         'name'=>'',     // Nom du champ
-        'startvalue'=>1,// Indice du premier article à prendre en compte (1-based)
-        'endvalue'=>0,  // Indice du dernier article à prendre en compte (0=jusqu'à la fin)
-        'start'=>'',    // Position de début ou chaine délimitant le début de la valeur à ajouter à la table
-        'end'=>''       // Longueur ou chaine délimitant la fin de la valeur à ajouter à la table
+        'startvalue'=>1,// Indice du premier article Ã  prendre en compte (1-based)
+        'endvalue'=>0,  // Indice du dernier article Ã  prendre en compte (0=jusqu'Ã  la fin)
+        'start'=>'',    // Position de dÃ©but ou chaine dÃ©limitant le dÃ©but de la valeur Ã  ajouter Ã  la table
+        'end'=>''       // Longueur ou chaine dÃ©limitant la fin de la valeur Ã  ajouter Ã  la table
     );
 }
 
 /**
- * Liste des clés de tri.
+ * Liste des clÃ©s de tri.
  */
 class Sortkeys extends Node
 {
@@ -781,32 +781,32 @@ class Sortkeys extends Node
 }
 
 /**
- * Une clé de tri
+ * Une clÃ© de tri
  */
 class Sortkey extends Node
 {
     protected static $defaultProperties = array
     (
-    	'_id'=>0,             // Identifiant (numéro unique) de la clé de tri
-        'name'=>'',           // Nom de la clé de tri
-        'label'=>'',          // Libellé de l'index
+    	'_id'=>0,             // Identifiant (numÃ©ro unique) de la clÃ© de tri
+        'name'=>'',           // Nom de la clÃ© de tri
+        'label'=>'',          // LibellÃ© de l'index
         'description'=>'',    // Description de l'index
-        'type'=>'string',     // Type de la clé à créer ('string' ou 'number')
+        'type'=>'string',     // Type de la clÃ© Ã  crÃ©er ('string' ou 'number')
     );
 }
 
 /**
- * Un champ dans une clé de tri.
+ * Un champ dans une clÃ© de tri.
  */
 class SortkeyField extends Node
 {
     protected static $defaultProperties = array
     (
-        '_id'=>0,       // Identifiant (numéro unique) du champ
+        '_id'=>0,       // Identifiant (numÃ©ro unique) du champ
         'name'=>'',     // Nom du champ
-        'start'=>'',    // Position de début ou chaine délimitant le début de la valeur à ajouter à la clé
-        'end'=>'',      // Longueur ou chaine délimitant la fin de la valeur à ajouter à la clé
-        'length'=>0,    // Longueur totale de la partie de clé (tronquée ou paddée à cette taille)
+        'start'=>'',    // Position de dÃ©but ou chaine dÃ©limitant le dÃ©but de la valeur Ã  ajouter Ã  la clÃ©
+        'end'=>'',      // Longueur ou chaine dÃ©limitant la fin de la valeur Ã  ajouter Ã  la clÃ©
+        'length'=>0,    // Longueur totale de la partie de clÃ© (tronquÃ©e ou paddÃ©e Ã  cette taille)
     );
 }
 
@@ -814,28 +814,28 @@ class SortkeyField extends Node
 namespace fab;
 
 /**
- * Représente un schéma.
+ * ReprÃ©sente un schÃ©ma.
  */
 class Schema extends Schema\Node
 {
     /**
-     * Propriétés par défaut du schéma.
+     * PropriÃ©tÃ©s par dÃ©faut du schÃ©ma.
      *
      * @var array
      */
     protected static $defaultProperties = array
     (
-        'version' => '2.0',        // Version du schéma
-    	'label' => '',             // Un libellé court décrivant la base
+        'version' => '2.0',        // Version du schÃ©ma
+    	'label' => '',             // Un libellÃ© court dÃ©crivant la base
         'description' => '',       // Description, notes, historique des modifs...
-        'stopwords' => '',         // Liste par défaut des mots-vides à ignorer lors de l'indexation
+        'stopwords' => '',         // Liste par dÃ©faut des mots-vides Ã  ignorer lors de l'indexation
         'indexstopwords' => false, // Faut-il indexer les mots vides ?
-        'creation' => '',          // Date de création du schéma
-        'lastupdate' => '',        // Date de dernière modification du schéma
+        'creation' => '',          // Date de crÃ©ation du schÃ©ma
+        'lastupdate' => '',        // Date de derniÃ¨re modification du schÃ©ma
     );
 
     /**
-    * Fils par défaut du schéma.
+    * Fils par dÃ©faut du schÃ©ma.
     *
     * @var array
     */
@@ -843,7 +843,7 @@ class Schema extends Schema\Node
 
 
     /**
-     * Crée un schéma à partir d'une chaine au format JSON.
+     * CrÃ©e un schÃ©ma Ã  partir d'une chaine au format JSON.
      *
      * @param string $json
      * @return Schema
@@ -865,25 +865,25 @@ class Schema extends Schema\Node
 
     public static function fromXml($xmlSource)
     {
-        // Crée un document XML
+        // CrÃ©e un document XML
         $xml=new \domDocument();
         $xml->preserveWhiteSpace=false;
 
-        // gestion des erreurs : voir comment 1 à http://fr.php.net/manual/en/function.dom-domdocument-loadxml.php
+        // gestion des erreurs : voir comment 1 Ã  http://fr.php.net/manual/en/function.dom-domdocument-loadxml.php
         libxml_clear_errors(); // >PHP5.1
         libxml_use_internal_errors(true);// >PHP5.1
 
         // Charge le document
         if (! $xml->loadXML($xmlSource))
         {
-            $h="Schéma incorrect, ce n'est pas un fichier xml valide :<br />\n";
+            $h="SchÃ©ma incorrect, ce n'est pas un fichier xml valide :<br />\n";
             foreach (libxml_get_errors() as $error)
                 $h.= "- ligne $error->line : $error->message<br />\n";
-            libxml_clear_errors(); // libère la mémoire utilisée par les erreurs
+            libxml_clear_errors(); // libÃ¨re la mÃ©moire utilisÃ©e par les erreurs
             throw new \Exception($h);
         }
 
-        // Convertit le schéma xml en objet
+        // Convertit le schÃ©ma xml en objet
         $o=self::_fromXml($xml->documentElement);
 
         return $o;
@@ -901,37 +901,37 @@ class Schema extends Schema\Node
         // Stocke le type de noeud
         $result = array('nodetype' => $node->tagName);
 
-        // Les attributs du tag sont des propriétés de l'objet
+        // Les attributs du tag sont des propriÃ©tÃ©s de l'objet
         if ($node->hasAttributes())
         {
             foreach ($node->attributes as $attribute)
             {
-                // Le nom de l'attribut va devenir le nom de la propriété
+                // Le nom de l'attribut va devenir le nom de la propriÃ©tÃ©
                 $name = $attribute->nodeName;
 
-                // Définit la propriété
+                // DÃ©finit la propriÃ©tÃ©
                 $result[$name] = self::_xmlToValue($attribute->nodeValue);
             }
         }
 
-        // Les noeuds fils du tag sont soit des propriétés, soit des objets enfants
+        // Les noeuds fils du tag sont soit des propriÃ©tÃ©s, soit des objets enfants
         foreach ($node->childNodes as $child)
         {
             switch ($child->nodeType)
             {
                 case XML_ELEMENT_NODE:
-                    // Le nom de l'élément va devenir le nom de la propriété
+                    // Le nom de l'Ã©lÃ©ment va devenir le nom de la propriÃ©tÃ©
                     $name = $child->tagName;
 
-                    // Une propriété
+                    // Une propriÃ©tÃ©
                     if (!isset($isCollection[$name]))
                     {
-                        // Vérifie qu'on n'a pas à la fois un attribut et un élément de même nom (<database label="xxx"><label>yyy...)
+                        // VÃ©rifie qu'on n'a pas Ã  la fois un attribut et un Ã©lÃ©ment de mÃªme nom (<database label="xxx"><label>yyy...)
                         if (isset($result[$name]))
-                            throw new \Exception("'$name' apparaît à la fois comme attribut et comme élément");
+                            throw new \Exception("'$name' apparaÃ®t Ã  la fois comme attribut et comme Ã©lÃ©ment");
 
-                        // Stocke la propriété
-                        $result[$name] = self::_xmlToValue($child->nodeValue); // si plusieurs fois le même tag, c'est le dernier qui gagne
+                        // Stocke la propriÃ©tÃ©
+                        $result[$name] = self::_xmlToValue($child->nodeValue); // si plusieurs fois le mÃªme tag, c'est le dernier qui gagne
                     }
 
                     // Cas d'un tableau
@@ -945,13 +945,13 @@ class Schema extends Schema\Node
                     }
                     break;
 
-                    // Types de noeud autorisés mais ignorés
+                    // Types de noeud autorisÃ©s mais ignorÃ©s
                 case XML_COMMENT_NODE:
                     break;
 
                     // Types de noeud interdits
                 default:
-                    throw new \Exception("les noeuds de type '".$child->nodeName . "' ne sont pas autorisés");
+                    throw new \Exception("les noeuds de type '".$child->nodeName . "' ne sont pas autorisÃ©s");
             }
         }
         return $result;
