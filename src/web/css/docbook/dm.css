@@ -1,18 +1,17 @@
-@CHARSET "ISO-8859-1";
 /*
-    Cette feuille de style est destinée à être appliquée à un document
-    xml au format docbook, pas à une page html.
-    Elle permet d'avoir un rendu à peu près wysiwyg du fichier docbook.
+    Cette feuille de style est destinÃ©e Ã  Ãªtre appliquÃ©e Ã  un document
+    xml au format docbook, pas Ã  une page html.
+    Elle permet d'avoir un rendu Ã  peu prÃ¨s wysiwyg du fichier docbook.
     
     $Id: dm.css 921 2008-11-27 16:24:04Z daniel.menard.bdsp $
 */    
 
-/* débug */
+/* dÃ©bug */
 *
 {
     color: red;
     background-color: #FFC0CB;
-    /* affiche en rose tous les éléments inconnus */
+    /* affiche en rose tous les Ã©lÃ©ments inconnus */
 }    
 sect1, sect2, sect3, sect4, example, all,
 title, para, link, ulink,
@@ -20,12 +19,12 @@ itemizedlist, orderedlist, listitem,
 emphasis,
 table, tgroup, thead, tbody, tfooter, row, entry
 {
-    background-color: transparent; /* OK pour tous les éléments connus */
+    background-color: transparent; /* OK pour tous les Ã©lÃ©ments connus */
 }
 
 *[role]
 {
-   background-color: red; /* repère en rouge les éléments inconnus qui ont un attribut role */
+   background-color: red; /* repÃ¨re en rouge les Ã©lÃ©ments inconnus qui ont un attribut role */
 }
 /* fin debug */
 
@@ -45,7 +44,7 @@ title
 /* Sections et titres de section */
 sect1
 {
-    background-color: white; /* OK pour tous les éléments connus */
+    background-color: white; /* OK pour tous les Ã©lÃ©ments connus */
     padding: 1em;
 }
 
@@ -99,7 +98,7 @@ sect4 title
 
 /* 
     Admonitions (note, tip, warning...)
-    icones utilisées : 34x34px
+    icones utilisÃ©es : 34x34px
 */
 
 note:before,
@@ -240,7 +239,7 @@ itemizedlist listitem
         
 orderedlist listitem
 {
-    list-style-type: circle; /* decimal ne marche pas sous FF 2 : toujours zéro */
+    list-style-type: circle; /* decimal ne marche pas sous FF 2 : toujours zÃ©ro */
     display: list-item;
     color: #008;
 }
@@ -252,12 +251,12 @@ ulink, link
     color: blue;
     text-decoration: underline;
 }
-/* lien juste affiché, non fonctionnel */
+/* lien juste affichÃ©, non fonctionnel */
 ulink:after
 {
   content: " [" attr(url) "]";
 }
-/* lien juste affiché, non fonctionnel */
+/* lien juste affichÃ©, non fonctionnel */
 link:after
 {
   content: " [" attr(linkend) "]";
@@ -340,7 +339,7 @@ command
 
 
 
-/* tables : code inspiré des feuilles de styles de firefox (/res/html.css) */
+/* tables : code inspirÃ© des feuilles de styles de firefox (/res/html.css) */
 
 table
 {
@@ -354,7 +353,7 @@ table title
     /* max-width: 100%; */
     /* 
         evite que le titre de la table soit plus large que la table
-        sinon, la table n'est plus centrée. Apparemment, faire margin: auto
+        sinon, la table n'est plus centrÃ©e. Apparemment, faire margin: auto
         sur tgroup ne suffit pas
     */
     display: block;
@@ -417,7 +416,7 @@ thead entry
     background-color: #A97;
 }
 
-/* Numérotation des titres */
+/* NumÃ©rotation des titres */
 sect1
 {
     counter-increment: sect1;

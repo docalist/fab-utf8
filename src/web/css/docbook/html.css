@@ -1,13 +1,12 @@
-@CHARSET "ISO-8859-1";
 /*
-    Cette feuille de style est destinée à être appliquée à un document
-    xml au format docbook, pas à une page html.
-    Elle permet d'avoir un rendu à peu près wysiwyg du fichier docbook.
+    Cette feuille de style est destinÃ©e Ã  Ãªtre appliquÃ©e Ã  un document
+    xml au format docbook, pas Ã  une page html.
+    Elle permet d'avoir un rendu Ã  peu prÃ¨s wysiwyg du fichier docbook.
     
     $Id: html.css 820 2008-06-26 13:04:29Z daniel.menard.bdsp $
 */    
 
-/* débug */
+/* dÃ©bug */
 html
 {
     font-size: 76%;
@@ -18,11 +17,11 @@ itemizedlist, orderedlist, listitem,
 emphasis,
 table, tgroup, thead, tbody, tfooter, row, entry
 {
-    background-color: transparent; /* OK pour tous les éléments connus */
+    background-color: transparent; /* OK pour tous les Ã©lÃ©ments connus */
 }
 *[role]
 {
-   background-color: red; /* repère en rouge les éléments inconnus qui ont un attribut role */
+   background-color: red; /* repÃ¨re en rouge les Ã©lÃ©ments inconnus qui ont un attribut role */
 }
 /* fin debug */
 
@@ -164,7 +163,7 @@ div.sect4 h4
 
 /* 
     Admonitions (note, tip, warning...)
-    icones utilisées : 34x34px
+    icones utilisÃ©es : 34x34px
 */
 
 div.note, div.tip, div.example, div.warning, div.important, div.caution
@@ -279,7 +278,7 @@ ul li
         
 ol li
 {
-    list-style-type: circle; /* decimal ne marche pas sous FF 2 : toujours zéro */
+    list-style-type: circle; /* decimal ne marche pas sous FF 2 : toujours zÃ©ro */
     display: list-item;
     color: #008;
 }
@@ -376,7 +375,7 @@ code.var
 }
 
 
-/* tables : code inspiré des feuilles de styles de firefox (/res/html.css) */
+/* tables : code inspirÃ© des feuilles de styles de firefox (/res/html.css) */
 
 table
 {
@@ -391,7 +390,7 @@ div.table div.title
     text-align: center;
     /* 
         evite que le titre de la table soit plus large que la table
-        sinon, la table n'est plus centrée. Apparemment, faire margin: auto
+        sinon, la table n'est plus centrÃ©e. Apparemment, faire margin: auto
         sur tgroup ne suffit pas
     */
 }    
@@ -452,7 +451,7 @@ th
     background: #A97;
 }
 
-/* Numérotation des titres */
+/* NumÃ©rotation des titres */
 sect1
 {
     counter-increment: sect1;
@@ -562,7 +561,7 @@ span.value
 }
 
 
-/* icones pour repérer les différents types de lien */
+/* icones pour repÃ©rer les diffÃ©rents types de lien */
 a.external
 {
     padding-right: 14px;
