@@ -12,10 +12,10 @@ function checkAll(formId, value)
 \}
 </script>
 <h1>Module d'auto-test</h1>
-<p>Sélectionnez les tests que vous voulez exécuter :</p>
+<p>SÃ©lectionnez les tests que vous voulez exÃ©cuter :</p>
 <form class="form" method="post" id="tests" action="Run">
     <fieldset>
-        <legend>Tests à exécuter</legend>
+        <legend>Tests Ã  exÃ©cuter</legend>
         <div nustyle="float: right">
             <button onclick="checkAll('tests',true);return false">Tout</button>
             <button onclick="checkAll('tests',false);return false">Rien</button>
@@ -29,7 +29,7 @@ function checkAll(formId, value)
     <if test="extension_loaded('xdebug')">
         <fieldset>
             <legend>Couverture de code</legend>
-            <checkbox name="codecoverage" value="1" label="Générer un rapport de couverture de code" />
+            <checkbox name="codecoverage" value="1" label="GÃ©nÃ©rer un rapport de couverture de code" />
         </fieldset>
     </if>
     <div class="buttons">

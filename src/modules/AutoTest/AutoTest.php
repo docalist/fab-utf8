@@ -53,7 +53,7 @@ class AutoTest extends Module
             $path = Utils::makePath($root, $prefix);
 
             if (! is_dir($path))
-                echo "Warning : le rÈpertoire '$save' indiquÈ dans le fichier de confiruation AutoTest.config n'existe pas.";
+                echo "Warning : le r√©pertoire '$save' indiqu√© dans le fichier de confiruation AutoTest.config n'existe pas.";
             else
                 $this->findTests($path, $prefix);
         }
@@ -64,11 +64,11 @@ class AutoTest extends Module
     {
         if (! $files=Utils::get($_POST['test'], false))
         {
-        	echo "<p>Aucun test n'a ÈtÈ indiquÈ</p>";
+        	echo "<p>Aucun test n'a √©t√© indiqu√©</p>";
             return;
         }
 
-        $tests=new PHPUnit_Framework_TestSuite('AutoTest des composants sÈlectionnÈs');
+        $tests=new PHPUnit_Framework_TestSuite('AutoTest des composants s√©lectionn√©s');
         $result = new PHPUnit_Framework_TestResult;
         $result->addListener(new SimpleTestListener);
 
@@ -79,10 +79,10 @@ class AutoTest extends Module
             $reportDir=Runtime::$webRoot.'codeCoverage/';
             if (!is_dir($reportDir))
             {
-                echo "<p>CrÈation du rÈpertoire $reportDir pour le rapport de couverture de code...</p>";
+                echo "<p>Cr√©ation du r√©pertoire $reportDir pour le rapport de couverture de code...</p>";
             	if (!@mkdir($reportDir))
                 {
-                	throw new Exception("Impossible de crÈer le rÈpertoire $reportDir pour le rapport de couverture de code");
+                	throw new Exception("Impossible de cr√©er le r√©pertoire $reportDir pour le rapport de couverture de code");
                 }
             }
             $reportUrl=Runtime::$realHome.'codeCoverage/index.html';
@@ -97,7 +97,7 @@ class AutoTest extends Module
         {
             $class=substr(basename($path), 0, -4); // /dir/CacheTest.php -> CacheTest
 
-            debug && Debug::log('ExÈcution de %s', $path);
+            debug && Debug::log('Ex√©cution de %s', $path);
 
             require_once($path);
             PHPUnit_Util_Filter::addFileToFilter($path);
@@ -114,7 +114,7 @@ class AutoTest extends Module
         echo '<h1 style="clear: both;">Bilan des tests</h1>';
         if ($result->count()==0)
         {
-            echo '<p>Aucun test n\'a ÈtÈ exÈcutÈ</p>';
+            echo '<p>Aucun test n\'a √©t√© ex√©cut√©</p>';
         }
         else
         {
@@ -145,7 +145,7 @@ class AutoTest extends Module
         {
             echo "<hr /><h1>Generation du rapport de couverture de code</h1>";
             PHPUnit_Util_Report::render($result, $reportDir);
-            echo '<p>Le rapport a ÈtÈ gÈnÈrÈ dans le rÈpertoire ', $reportDir, 'du serveur<br />';
+            echo '<p>Le rapport a √©t√© g√©n√©r√© dans le r√©pertoire ', $reportDir, 'du serveur<br />';
             echo '<a href="'.$reportUrl.'">Cliquez sur ce lien pour le consulter</a></p>';
         }
     }
@@ -265,9 +265,9 @@ class SimpleTestListener implements PHPUnit_Framework_TestListener
 class AutoTestCase extends PHPUnit_Framework_TestCase
 {
     /**
-     * Supprime les 'blancs' prÈsents dans la chaine passÈe en paramËtre.
+     * Supprime les 'blancs' pr√©sents dans la chaine pass√©e en param√®tre.
      *
-     * @param string $string la chaine ‡ normaliser
+     * @param string $string la chaine √† normaliser
      * @return string
      */
     private function normalizeSpaces($string)
@@ -280,7 +280,7 @@ class AutoTestCase extends PHPUnit_Framework_TestCase
         error_reporting(0);
         $old=set_include_path(Runtime::$fabRoot.'lib/');
 
-        restore_error_handler(); // HACK: supprime le gestionnaire de fab ‡ cause de Text_Diff (E_STRICT causes fatal error)
+        restore_error_handler(); // HACK: supprime le gestionnaire de fab √† cause de Text_Diff (E_STRICT causes fatal error)
         require_once(Runtime::$fabRoot.'lib/Text/Diff.php');
         require_once(Runtime::$fabRoot.'lib/Text/Diff/Renderer.php');
         require_once(Runtime::$fabRoot.'lib/Text/Diff/Renderer/unified.php');
@@ -297,7 +297,7 @@ class AutoTestCase extends PHPUnit_Framework_TestCase
 //        parent::assertThat($value, $constraint, $message.'yyy');
 //    }
 
-    function assertNoDiff($expected, $result, $message='Le rÈsultat obtenu est diffÈrent du rÈsultat attendu')
+    function assertNoDiff($expected, $result, $message='Le r√©sultat obtenu est diff√©rent du r√©sultat attendu')
     {
         if (true)
         {
@@ -314,60 +314,60 @@ class AutoTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * ExÈcute chacun des test prÈsents dans le fichier testfile en appellant pour chaque
-     * test le callback indiquÈ.
+     * Ex√©cute chacun des test pr√©sents dans le fichier testfile en appellant pour chaque
+     * test le callback indiqu√©.
      *
-     * Un fichier testfile est un moyen pratique d'exÈcuter plusieurs tests consistant
-     * ‡ comparer le texte du rÈsultat obtenu avec celui du rÈsultat attendu.
+     * Un fichier testfile est un moyen pratique d'ex√©cuter plusieurs tests consistant
+     * √† comparer le texte du r√©sultat obtenu avec celui du r√©sultat attendu.
      *
-     * Le format des fichiers testfile est inspirÈ de celui des fichiers phpt de php.
+     * Le format des fichiers testfile est inspir√© de celui des fichiers phpt de php.
      *
-     * Le fichier contient plusieurs tests, sÈparÈs par une ligne commencant par "===="
-     * (au moins quatre signes Ègal).
+     * Le fichier contient plusieurs tests, s√©par√©s par une ligne commencant par "===="
+     * (au moins quatre signes √©gal).
      *
-     * Tout ce qui prÈcËde la premiËre sÈparation est considÈrÈ comme du commentaire et
-     * est ignorÈ. Cela permet de documenter le fichier (historique, numÈro de version, etc.)
+     * Tout ce qui pr√©c√®de la premi√®re s√©paration est consid√©r√© comme du commentaire et
+     * est ignor√©. Cela permet de documenter le fichier (historique, num√©ro de version, etc.)
      *
      * Chaque test se compose de sections. Chaque section commence par une ligne de la forme
-     * '--section--' (c'est-‡-dire au moins deux tirets, le nom de la section puis au moins deux tirets)
-     * et se termine au dÈbut de la section suivante ou ‡ la fin du test.
+     * '--section--' (c'est-√†-dire au moins deux tirets, le nom de la section puis au moins deux tirets)
+     * et se termine au d√©but de la section suivante ou √† la fin du test.
      *
-     * Des espaces sont autorisÈs avant et aprËs les deux sÈries d'au moins deux tirets.
-     * Le nom de la section n'est pas sensible ‡ la casse des caractËres.
+     * Des espaces sont autoris√©s avant et apr√®s les deux s√©ries d'au moins deux tirets.
+     * Le nom de la section n'est pas sensible √† la casse des caract√®res.
      *
-     * Dans chaque section, les espaces de dÈbut et de fin (espaces, tabulations, retours ‡ la
-     * ligne) sont ignorÈs.
+     * Dans chaque section, les espaces de d√©but et de fin (espaces, tabulations, retours √† la
+     * ligne) sont ignor√©s.
      *
      * Les sections reconnues sont les suivantes :
      *
-     * - --test-- : optionnel, un libellÈ dÈcrivant le test effectuÈ
+     * - --test-- : optionnel, un libell√© d√©crivant le test effectu√©
      *
-     * - --file-- : obligatoire, le source du test ‡ exÈcuter. Il peut s'agir d'un bout de code
+     * - --file-- : obligatoire, le source du test √† ex√©cuter. Il peut s'agir d'un bout de code
      * php, d'un template ou de n'importe quoi d'autre qui soit compatible avec le callback
-     * utilisÈ.
+     * utilis√©.
      *
-     * - --expect-- : obligatoire : le rÈsultat attendu.
+     * - --expect-- : obligatoire : le r√©sultat attendu.
      *
-     * - --expect exception ExceptionClassName-- : indique qu'on s'attend ‡ ce que l'exÈcution du test gÈnËre
-     * une exception. Si ExceptionClassName est indiquÈ, l'exception gÈnÈrÈe doit correspondre.
+     * - --expect exception ExceptionClassName-- : indique qu'on s'attend √† ce que l'ex√©cution du test g√©n√®re
+     * une exception. Si ExceptionClassName est indiqu√©, l'exception g√©n√©r√©e doit correspondre.
      *
-     * - --comment-- : permet de commenter le test, de l'expliquer. Cette section est ignorÈe par le programme.
+     * - --comment-- : permet de commenter le test, de l'expliquer. Cette section est ignor√©e par le programme.
      *
-     * - --skip-- : permet d'ignorer un test. Le contenu de cette section n'est pas utilisÈe par le programme,
-     * mais vous pouvez y inclure des commentaires expliquant pourquoi le test est passÈ.
+     * - --skip-- : permet d'ignorer un test. Le contenu de cette section n'est pas utilis√©e par le programme,
+     * mais vous pouvez y inclure des commentaires expliquant pourquoi le test est pass√©.
      *
-     * @param string $path le path du fichier testfile ‡ exÈcuter.
+     * @param string $path le path du fichier testfile √† ex√©cuter.
      *
-     * @param callback $callback la fonction callback ‡ appeller pour chacun des tests du fichier.
-     * La fonction callback doit prendre en seul paramËtre : le contenu de la section --file-- du fichier
+     * @param callback $callback la fonction callback √† appeller pour chacun des tests du fichier.
+     * La fonction callback doit prendre en seul param√®tre : le contenu de la section --file-- du fichier
      *
      * @return void
      */
     function runTestFile($path, $callback)
     {
-        // VÈrifie le callback
+        // V√©rifie le callback
         if (! is_callable($callback))
-            throw new Exception('Le callback indiquÈ ne peut pas Ítre appellÈ');
+            throw new Exception('Le callback indiqu√© ne peut pas √™tre appell√©');
 
         // Charge le fichier de tests
         //$tests=file_get_contents($path);
@@ -380,7 +380,7 @@ class AutoTestCase extends PHPUnit_Framework_TestCase
         $tests=implode('',$tests);
         $tests=preg_split('~\s*={4,}\s*~s', $tests);
 
-        // Ignore tout ce qui prÈcËde la premiËre ligne de sÈparation des tests
+        // Ignore tout ce qui pr√©c√®de la premi√®re ligne de s√©paration des tests
         unset($tests[0]);
 
         if (is_string($callback)) $h=$callback; else $h=$callback[1];
@@ -389,12 +389,12 @@ class AutoTestCase extends PHPUnit_Framework_TestCase
         // Initialise tous les tests
         foreach ($tests as $test)
         {
-            // SÈpare les diffÈrentes sections du test
+            // S√©pare les diff√©rentes sections du test
             $t=preg_split('~^\s*-{2,}\s*([a-zA-Z ]+)\s*-{2,}\s*~ms', $test, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-            // Le premier ÈlÈment doit Ítre vide, sinon, c'est qu'on a du texte entre la ligne de '===' et la premiËre section
+            // Le premier √©l√©ment doit √™tre vide, sinon, c'est qu'on a du texte entre la ligne de '===' et la premi√®re section
             if (trim($t[0]) !== '')
-                throw new Exception("Erreur dans le fichier de test '$path' : texte '$t[0]' trouvÈ aprËs la ligne '====='");
+                throw new Exception("Erreur dans le fichier de test '$path' : texte '$t[0]' trouv√© apr√®s la ligne '====='");
             unset($t[0]);
 
             // on a maintenant un tableau dont les indices impairs contiennent les noms de section et les pairs les valeurs
@@ -402,7 +402,7 @@ class AutoTestCase extends PHPUnit_Framework_TestCase
             $name='';
             foreach ($t as $i=>$section)
             {
-                // Stocke et vÈrifie le nom de la section en cours
+                // Stocke et v√©rifie le nom de la section en cours
                 if ($i % 2 == 1)
                 {
                     $name=strtolower($section);
@@ -416,7 +416,7 @@ class AutoTestCase extends PHPUnit_Framework_TestCase
                     }
 
                     if(isset($test[$name]))
-                        throw new Exception("Erreur dans le fichier de test '$path', section '$name' rÈpÈtÈe pour l'un des test");
+                        throw new Exception("Erreur dans le fichier de test '$path', section '$name' r√©p√©t√©e pour l'un des test");
 
                     if (! in_array($name,array('test','file','expect','comment','skip', 'line')))
                         throw new Exception("Erreur dans le fichier de test '$path', section '$name' inconnue");
@@ -429,11 +429,11 @@ class AutoTestCase extends PHPUnit_Framework_TestCase
                 }
             }
 
-            // Ignore les tests vides ne contenant aucune section (par exemple ‡ la fin du fichier)
+            // Ignore les tests vides ne contenant aucune section (par exemple √† la fin du fichier)
             if (count($test)===0) continue;
             if (count($test)==1 && isset($test['line'])) continue;
 
-            // VÈrifie que les sections obligatoires sont prÈsentes
+            // V√©rifie que les sections obligatoires sont pr√©sentes
             if (!isset($test['skip']))
                 foreach(array('file','expect') as $name)
                     if (! isset($test[$name]))
@@ -476,15 +476,15 @@ class AutoTestFile extends AutoTestCase
     public function runit()
     {
         $test=$this->test;
-        // ExÈcute le test
+        // Ex√©cute le test
         if (isset($test['skip']))
         {
-            $this->markTestSkipped( isset($test['skip']) && $test['skip']!=='' ? $test['skip'] : '--skip-- indiquÈ');
+            $this->markTestSkipped( isset($test['skip']) && $test['skip']!=='' ? $test['skip'] : '--skip-- indiqu√©');
         }
         else
         {
 //            echo '<li>',isset($test['test']) ? $test['test'] : $test['file'];
-            // on attend un Èchec
+            // on attend un √©chec
             if (isset($test['exception']))
             {
                 try
@@ -493,11 +493,11 @@ class AutoTestFile extends AutoTestCase
                 }
                 catch (Exception $e)
                 {
-                    // VÈrifie que c'est bien une exception du bon type
+                    // V√©rifie que c'est bien une exception du bon type
                     if ((get_class($e) !== $test['exception']) && (! is_subclass_of($e, $test['exception'])))
-                        $this->fail("Le code a gÈnÈrÈ une exception de type '".get_class($e)."' au lieu d'une exception de type '".$test['exception']."'");
+                        $this->fail("Le code a g√©n√©r√© une exception de type '".get_class($e)."' au lieu d'une exception de type '".$test['exception']."'");
 
-                    // VÈrifie que les mots attendus figurent dans le message
+                    // V√©rifie que les mots attendus figurent dans le message
                     if (trim($test['expect'])==='') return;
                     $diff=array_diff
                     (
@@ -510,11 +510,11 @@ class AutoTestFile extends AutoTestCase
                     // Tout est OK
                     return;
                 }
-                // Aucune exception n'a ÈtÈ gÈnÈrÈe
-                $this->fail("Le code aurait d˚ gÈnÈrer une exception de type ".$test['exception']);
+                // Aucune exception n'a √©t√© g√©n√©r√©e
+                $this->fail("Le code aurait d√ª g√©n√©rer une exception de type ".$test['exception']);
             }
 
-            // On attend un succËs
+            // On attend un succ√®s
             else
             {
                 $result=call_user_func($this->callback, $test['file']);
