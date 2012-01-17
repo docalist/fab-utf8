@@ -7,6 +7,11 @@
  * @version     SVN: $Id: AdminSchemas.php 1196 2010-07-16 16:21:13Z daniel.menard.bdsp $
  */
 
+use Fooltext\Schema\Schema;
+use Fooltext\Schema\Collection;
+use Fooltext\Schema\Field;
+use Fooltext\Schema\Alias;
+
 /**
  * Module d'administration des schémas.
  *
@@ -65,7 +70,6 @@ class AdminSchemas extends AdminFiles
         );
     }
 
-
     /**
      * Retourne la liste des schémas connus du système.
      *
@@ -110,24 +114,32 @@ class AdminSchemas extends AdminFiles
         $path='data/schemas/';
         $path=Utils::searchFile($schema, Runtime::$root . $path, Runtime::$fabRoot . $path);
         if ($path === false) return false;
-        return new DatabaseSchema(file_get_contents($path));
+        return Schema::fromXml(file_get_contents($path));
     }
 
-    public function getPropertiesAsAttributes(fab\Schema\Node $node)
+    /**
+     * Retourne les propriétés du noeud passé en paramètre sous la forme d'une
+     * chaine encodée en JSON.
+     *
+     * Le code JSON retourné ne contient que les propriétés de base, pas les collections
+     * (i.e. les propriétés de type "Nodes" sont supprimées).
+     *
+     * Cette méthode est utilisée dans le template de EditSchema pour stocker les
+     * propriétés du noeud dans l'attribut data du tag.
+     *
+     * @param Fooltext\Schema\Node $node
+     * @return string
+     */
+    public function nodeProperties(Fooltext\Schema\Node $node)
     {
-        $h='"'; // ferme 'l'attribut <hack="> ouvert dans le template
-        foreach($node->getProperties() as $key=>$value)
+        $data = $node->data;
+        foreach($data as $name => $value)
         {
-//            if ($key === 'name') continue;
-            if (is_array($value)) continue;
-            if (is_object($value)) continue;
-            if (is_bool($value)) $value = $value ? 'true' : 'false';
-
-            $h.= ' data-' . $key . '="' . htmlspecialchars($value) . '"';
+            if ($value instanceof Fooltext\Schema\Nodes) unset($data[$name]);
         }
-        $h .= ' hack2="'; // contrecarre le guillemet fermant de <hack=">
-        return $h;
+        return htmlspecialchars(json_encode($data));
     }
+
 
     /**
      * Edite un schéma de l'application.
@@ -136,11 +148,6 @@ class AdminSchemas extends AdminFiles
      */
     public function actionEditSchema($file)
     {
-        require(Runtime::$fabRoot.('/core/database/Schema.php'));
-
-//         echo "<pre>", var_dump(new fab\Schema\SortKey,true), "</pre>";
-//         return;
-
         $dir='data/schemas/';
 
         // Vérifie que le fichier indiqué existe
@@ -148,79 +155,75 @@ class AdminSchemas extends AdminFiles
         if (! file_exists($path))
             throw new Exception("Le schéma $file n'existe pas.");
 
-//         $schema = fab\Schema::fromXml(file_get_contents($path));
-//         echo '<pre style="overflow: hidden;width: 49%; float: left; border : 1px solid red">';
-//         var_dump($schema);
-//         echo "</pre>";
-//         return;
-
         // Charge le schéma
-//         $schema=new DatabaseSchema(file_get_contents($path));
-        $schema = fab\Schema::fromXml(file_get_contents($path));
+         $schema = Fooltext\Schema\Schema::fromXml(file_get_contents($path));
 
         // Valide et redresse le schéma, ignore les éventuelles erreurs
-//        $schema->validate();
-//        $schema=Utils::utf8Encode($schema);
-/*
-        $props = array('version', 'creation', 'lastupdate', 'label','description', 'stopwords', 'indexstopwords');
-        $schema->properties = array();
-        foreach($props as $prop)
-            $schema->properties[$prop] = $schema->$prop;
-*/
+        $schema->validate();
 
-        $types = array();
-        foreach (fab\Schema\NodesTypes::all() as $type=>$class)
-        {
-            $node = array();
+        // Crée la config (liste des tables, liste des analyseurs, etc.
+        $config = new stdClass();
+        $config->analyzer = $this->getAnalyzers();
+        $config->datasource = array('Codes pays', 'Codes langues');
 
-            // Fils autorisés
-            if (is_subclass_of($class, 'fab\Schema\NodesCollection'))
-                $node['valid_children'] = $class::getValidChildren();
-            else
-                $node['valid_children'] = array();
-
-            // Propriétés par défaut du noeud
-            $node['defaults'] = $class::getDefaultProperties();
-
-            // Icones
-            $icons = $class::getIcons();
-            $path = Routing::linkFor("/FabWeb/modules/AdminSchemas/images");
-            foreach($icons as $key => & $icon)
-                $icon = "$path/$icon";
-            $node['icon'] = $icons;
-
-            // Libellés à utiliser
-            $node['label'] = $class::getLabels();
-
-            $types[$type] = $node;
-        }
-        $treeConfig = array
-        (
-        	'types' => array
-        	(
-        	    'valid_children' => 'schema',
-        	    'types' => $types
-        	)
-    	);
-//         echo '<pre>', var_export($treeConfig,true), '</pre>';
-// return;
         // Charge le schéma dans l'éditeur
         Template::run
         (
             Config::get('template'),
             array
             (
-                'schema'=>$schema, // hum.... envoie de l'utf-8 dans une page html déclarée en iso-8859-1...
-        		//'schema'=>$schema->toJson(), // hum.... envoie de l'utf-8 dans une page html déclarée en iso-8859-1...
-                'saveUrl'=>'SaveSchema',
-                'saveParams'=>"{file:'$file'}",
-                'title'=>'Modification de '.$file,
-                'file'=>$file,
-                'treeConfig'=>$treeConfig,
+                'schema' => $schema,
+                'saveUrl' => 'SaveSchema',
+                'file' => $file,
+                'config' => $config,
             )
         );
     }
 
+    protected function getClassDoc($class)
+    {
+        require_once Runtime::$fabRoot . 'modules/AutoDoc/AutoDoc.php';
+
+        $r = new ReflectionClass($class);
+        $doc = $r->getDocComment();
+
+        Config::set('admonitions', array()); // bidouille
+        $doc = new DocBlock($doc);
+
+        $doc = $doc->shortDescription . "\n" . $doc->longDescription;
+        $doc = strtr($doc, array("<li>" =>"- "));
+        $doc = strip_tags($doc);
+        $doc = strtr($doc, array("\n " =>" \n"));
+        //$doc = html_entity_decode($doc);
+        $doc = html_entity_decode($doc, ENT_QUOTES, 'UTF-8');
+
+        $doc = trim($doc);
+        return $doc;
+    }
+
+    /**
+     * Retourne la liste des analyseurs qui sont définis dans la config.
+     *
+     * Utilisé par l'éditeur de schémas (cf actionEditSchema).
+     */
+    protected function getAnalyzers()
+    {
+        $result = array();
+        $t = Config::get('analyzer');
+        foreach($t as & $group)
+        {
+            foreach($group['items'] as & $class)
+            {
+                $class = array
+                (
+                    'name' => substr($class, strrpos($class, '\\') + 1),
+                    'class' => $class,
+                    'doc' => $this->getClassDoc($class),
+                );
+            }
+        }
+        return $t;
+    }
 
     /**
      * Vérifie et sauvegarde un schéma.
@@ -249,62 +252,28 @@ class AdminSchemas extends AdminFiles
      */
     public function actionSaveSchema($file, $schema)
     {
-        require(Runtime::$fabRoot.('/core/database/Schema.php'));
-/*
-        echo "<pre>";
-        var_export($schema);
-        echo "</pre>";
+        $file = 'test.xml';
 
-        $o=Utils::utf8Decode(json_decode(Utils::utf8Encode($schema), true));
-        echo "<pre>";
-        var_export($o);
-        echo "</pre>";
-        return;
-        $dir='data/schemas/';
+//        require(Runtime::$fabRoot.('/core/database/Schema.php'));
 
         // Vérifie que le fichier indiqué existe
-        $path=Runtime::$root.$dir.$file;
+        $path=Runtime::$root . 'data/schemas/' . $file;
         if (! file_exists($path))
+        {
             throw new Exception("Le schéma $file n'existe pas.");
-*/
+        }
+
         // Charge le schéma
-        //$schema=new DatabaseSchema($schema);
-//         echo "<pre>$schema</pre>";
-//         return;
+        $schema = Schema::fromJson($schema);
 
-$schema = fab\Schema::fromJson($schema);
-
-// echo '<pre style="overflow: hidden;width: 49%; float: left; border : 1px solid red">';
-// print_r($schema);
-// echo "</pre>";
-// return;
-//$xml = $schema->toXml(true);
-// $xml = $schema->toJson(4);
-// echo '<pre>', htmlentities($xml, ENT_NOQUOTES, 'utf-8'), '</pre>';
-// return;
-
-// echo '<pre style="overflow: hidden;width: 49%; float: left; border : 1px solid red">';
-// print_r($schema);
-// echo "</pre>";
-
-$xml = $schema->toXml(true);
-echo '<pre>', htmlentities($xml, ENT_NOQUOTES, 'utf-8'), '</pre>';
-return
-
-$test = fab\Schema::fromXml($xml);
-echo '<pre style="overflow: hidden;width: 49%; float: left; border : 1px solid red">';
-print_r($test);
-echo "</pre>";
-//         echo json_encode($schema);
-//         echo json_last_error();
-        //echo $schema->toXml();
-return;
         // Valide le schéma et détecte les erreurs éventuelles
-        $result=$schema->validate();
+        $result = $schema->validate();
 
-        // S'il y a des erreurs, retourne un tableau JSON contenant la liste
+        // S'il y a des erreurs, retourne un tableau JSON contenant la liste des erreurs
         if ($result !== true)
+        {
             return Response::create('JSON')->setContent($result);
+        }
 
         // Compile le schéma (attribution des ID, etc.)
         $schema->compile();
@@ -312,8 +281,8 @@ return;
         // Met à jour la date de dernière modification (et de création éventuellement)
         $schema->setLastUpdate();
 
-        // Aucune erreur : sauvegarde le schéma
-        file_put_contents($path, $schema->toXml());
+        // Sauvegarde le schéma
+        file_put_contents($path, $schema->toXml(true));
 
         // Retourne l'url vers laquelle on redirige l'utilisateur
         return Response::create('JSON')->setContent
