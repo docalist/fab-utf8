@@ -11,26 +11,58 @@
                 data-properties="{$this->nodeProperties($schema)}">
                 <a>Schéma $file</a>
                 <ul>
-                    <loop on="{$schema->collections}" as="$name, $collection">
-                        <li rel="Collection" id="collection" 
-                            data-properties="{$this->nodeProperties($collection)}">
-                            <a>$name</a>
-                            <ul>
-                                <loop on="{$collection->fields}" as="$name, $field">
-                                    <li rel="Field" 
-                                        data-properties="{$this->nodeProperties($field)}">
-                                        <a>$name</a>
+                    /* Liste des champs */
+                    <li id="fields" rel="Fields">
+                        <a>Liste des champs</a>
+                        <ul>
+                            <loop on="{$schema->fields}" as="$field">
+                                /* Groupe de champs */
+                                <if test="{$field->has('fields')}">
+                                    <li rel="Group" data-properties="{$this->nodeProperties($field)}">
+                                        <a>{$field->name}</a>
+                                        <ul>
+                                            <loop on="{$field->fields}" as="$field">
+                                                <li rel="Field" data-properties="{$this->nodeProperties($field)}">
+                                                    <a>{$field->name}</a>
+                                                </li>
+                                            </loop>
+                                        </ul>
                                     </li>
-                                </loop>
-                                <loop on="{$collection->aliases}" as="$name, $alias">
-                                    <li rel="Alias" 
-                                    data-properties="{$this->nodeProperties($alias)}">
-                                        <a>$name</a>
+                                </if>
+                                
+                                /* Champ simple */
+                                <else>
+                                    <li rel="Field" data-properties="{$this->nodeProperties($field)}">
+                                        <a>{$field->name}</a>
                                     </li>
-                                </loop>
-                            </ul>
-                        </li>
-                    </loop>
+                                </else>
+                            </loop>
+                        </ul>
+                    </li>
+
+                    /* Liste des index */
+                    <li id="indices" rel="Indices">
+                        <a>Liste des index</a>
+                        <ul>
+                            <loop on="{$schema->indices}" as="$index">
+                                <li rel="Index" data-properties="{$this->nodeProperties($index)}">
+                                    <a>{$index->name}</a>
+                                </li>
+                            </loop>
+                        </ul>
+                    </li>
+                    
+                    /* Liste des alias */
+                    <li id="aliases" rel="Aliases">
+                        <a>Liste des alias</a>
+                        <ul>
+                            <loop on="{$schema->aliases}" as="$alias">
+                                <li rel="Alias" data-properties="{$this->nodeProperties($alias)}">
+                                    <a>{$alias->name}</a>
+                                </li>
+                            </loop>
+                        </ul>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -40,8 +72,9 @@
         Editeur de propriétés : affiche les propriétés du noeud sélectionné.
     */
     <form id="form" class="form">
+        <p id="form-title"></p>
+        <table><thead><tr><th>Nom</th><th>Valeur</th></tr></thead><tbody></tbody></table>
         <div id="schema-toolbar"></div>
-        <table><tbody></tbody></table>
     </form>
     
     /*
@@ -56,6 +89,6 @@
 
 <script type="text/javascript">
     jQuery(document).ready(function() \{
-    	 jQuery('#schema').schemaEditor({$schema->toJson()}, {json_encode($config)});
-	\});    
+         jQuery('#schema').schemaEditor({json_encode($config)});
+    \});    
 </script>

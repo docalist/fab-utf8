@@ -7,6 +7,8 @@
  * @version     SVN: $Id: AdminSchemas.php 1196 2010-07-16 16:21:13Z daniel.menard.bdsp $
  */
 
+use Fooltext\Schema\NodeNames;
+
 use Fooltext\Schema\Schema;
 use Fooltext\Schema\Collection;
 use Fooltext\Schema\Field;
@@ -130,17 +132,63 @@ class AdminSchemas extends AdminFiles
      * @param Fooltext\Schema\Node $node
      * @return string
      */
-    public function nodeProperties(Fooltext\Schema\Node $node)
+    public function nodeProperties(Fooltext\Schema\BaseNode $node)
     {
         $data = $node->data;
         foreach($data as $name => $value)
         {
+            if ($node->propertyIsIgnored($name)) unset($data[$name]);
             if ($value instanceof Fooltext\Schema\Nodes) unset($data[$name]);
+            if ($value instanceof Fooltext\Schema\NodeNames)
+            {
+                $data[$name] = array_values($value->getData());
+            }
         }
+//         echo "<pre>"; print_r($data); echo "</pre>";
         return htmlspecialchars(json_encode($data));
     }
 
-
+public function getTestSchema()
+{
+    return new Fooltext\Schema\Schema
+    (
+            array
+            (
+                    'stopwords' => 'le la les de du des a c en',
+                    'document' => 'Notice',
+                    'label' => 'test',
+                    'fields' => array
+                    (
+                            array('name'=>'REF'),
+                            array('name'=>'Type'),
+                            array('name'=>'Titre'),
+                            array('name'=>'ISBN'),
+                            array('name'=>'Visible'),
+                            array
+                            (
+                                    'name'=>'AutPhys',
+                                    'fields' => array
+                                    (
+                                            array('name'=>'firstname'),
+                                            array('name'=>'surname'),
+                                            array('name'=>'role')
+                                    )
+                            )
+                    ),
+                    'indices' => array
+                    (
+                            array('name'=>'REF', 'fields'=>array('REF', 'ISBN')),
+                            array('name'=>'TI', 'fields'=>array('Titre')),
+                            array('name'=>'AU', 'fields'=>array('AutPhys.firstname', 'AutPhys.surname'))
+                    ),
+                    'aliases' => array
+                    (
+                            array('name'=>'id', 'indices' => array('ref')),
+                            array('name'=>'default', 'indices' => array('ref', 'ti','au'))
+                    ),
+            )
+    );
+}
     /**
      * Edite un schéma de l'application.
      *
@@ -157,9 +205,11 @@ class AdminSchemas extends AdminFiles
 
         // Charge le schéma
          $schema = Fooltext\Schema\Schema::fromXml(file_get_contents($path));
-
+//$schema = $this->getTestSchema();
         // Valide et redresse le schéma, ignore les éventuelles erreurs
-        $schema->validate();
+        $errors = array();
+        if (! $schema->validate($errors))
+            throw new Exception("Impossible d'éditer ce schéma, il contient des erreurs : " . implode("\n", $errors));
 
         // Crée la config (liste des tables, liste des analyseurs, etc.
         $config = new stdClass();
@@ -167,17 +217,12 @@ class AdminSchemas extends AdminFiles
         $config->datasource = array('Codes pays', 'Codes langues');
 
         // Charge le schéma dans l'éditeur
-        Template::run
-        (
-            Config::get('template'),
-            array
-            (
-                'schema' => $schema,
-                'saveUrl' => 'SaveSchema',
-                'file' => $file,
-                'config' => $config,
-            )
-        );
+        return Response::create('html')->setTemplate($this, Config::get('template'), array(
+            'schema' => $schema,
+            'saveUrl' => 'SaveSchema',
+            'file' => $file,
+            'config' => $config,
+        ));
     }
 
     protected function getClassDoc($class)
@@ -252,7 +297,7 @@ class AdminSchemas extends AdminFiles
      */
     public function actionSaveSchema($file, $schema)
     {
-        $file = 'test.xml';
+//        $file = 'test.xml';
 
 //        require(Runtime::$fabRoot.('/core/database/Schema.php'));
 
@@ -263,23 +308,27 @@ class AdminSchemas extends AdminFiles
             throw new Exception("Le schéma $file n'existe pas.");
         }
 
-        // Charge le schéma
-        $schema = Schema::fromJson($schema);
-
-        // Valide le schéma et détecte les erreurs éventuelles
-        $result = $schema->validate();
-
-        // S'il y a des erreurs, retourne un tableau JSON contenant la liste des erreurs
-        if ($result !== true)
+        // Essaie de charger le schéma
+        try
         {
-            return Response::create('JSON')->setContent($result);
+            $schema = Schema::fromJson($schema);
+        }
+        catch (Exception $e)
+        {
+            return Response::create('JSON')->setContent(array($e->getMessage()));
         }
 
-        // Compile le schéma (attribution des ID, etc.)
-        $schema->compile();
+
+        // Valide le schéma, détecte les erreurs éventuelles, attribue des ID, etc.
+        // S'il y a des erreurs, retourne un tableau JSON contenant la liste des erreurs
+        $errors = array();
+        if (! $schema->validate($errors))
+        {
+            return Response::create('JSON')->setContent($errors);
+        }
 
         // Met à jour la date de dernière modification (et de création éventuellement)
-        $schema->setLastUpdate();
+        //$schema->setLastUpdate();
 
         // Sauvegarde le schéma
         file_put_contents($path, $schema->toXml(true));

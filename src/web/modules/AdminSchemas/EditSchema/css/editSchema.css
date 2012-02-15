@@ -28,7 +28,7 @@ html,body
 }
 #schema > ul
 {
-    padding-top: 15px;
+    padding-top: 10px;
 }
 
 #schema ul
@@ -49,19 +49,20 @@ html,body
 #SchemaEditor table
 {
     border-collapse : collapse;
-/*    background:#eee;*/
+    background:#f8f8f8;
     width: 100%;
+    border: 1px solid #39F;
 }
 
 #SchemaEditor thead th
 {
-/*    
-    background-color:HighLight;
-    color:HighLightText;
-    padding:0.2em;
+    background-color:#39F;
+    color: #fff;
+    padding:0.5em 0.5em;
     text-align: left;
-*/    
+    font-size: 12px;    
 }
+
 #SchemaEditor td
 {
     /* border-bottom: dotted 1px ThreeDShadow; */
@@ -74,10 +75,11 @@ html,body
 
 #SchemaEditor tbody th
 {
-    padding:0.2em;
+    padding:0.5em 0.5em;
     text-align: left;
     width: 130px;
     vertical-align: top;
+/*    color: #39F; */
 }
 
 .jstree li
@@ -106,7 +108,7 @@ html,body
 #SchemaEditor input[type="checkbox"],
 #SchemaEditor select
 {
-    margin: 0;    
+    margin: 0 0.5em 0 0;
 }
 
 /* La zone d'affichage des erreurs */
@@ -146,8 +148,7 @@ div#errors ul
     ICONES ET STYLE DES TYPES DE NOEUDS
 */
 
-.jstree li[rel="Schema"] > a,
-.jstree li[rel="Collection"] > a
+.jstree li[rel="Schema"] > a
 {
     font-weight: bold;
 }
@@ -155,6 +156,18 @@ div#errors ul
 .jstree li[rel="Field"] > a > .jstree-icon 
 {
     background-image: url(document.png);
+    background-position: 0 0;
+}
+
+.jstree li[rel="Group"] > a > .jstree-icon 
+{
+    background-image: url(report.png);
+    background-position: 0 0;
+}
+
+.jstree li[rel="Index"] > a > .jstree-icon 
+{
+    background-image: url(lightning.png);
     background-position: 0 0;
 }
 
@@ -177,14 +190,13 @@ div#errors ul
     margin: 10px 0;
 /*    line-height: 30px; */ 
 }
-#schema-toolbar a
+#schema-toolbar a, .button
 {
     display: inline-block;
-    margin: 2px 10px 2px 0;
+    margin: 0px 10px 0px 0;
     background:  #eee 5px center no-repeat ;
     color: #000;
-    /* padding: 4px 4px 4px 25px; */
-    padding: 4px 4px 4px 25px;
+    padding: 2px 8px 2px 24px;
     cursor: pointer;
     border: 1px solid #ddd;
     -webkit-border-radius: 5px;
@@ -192,43 +204,55 @@ div#errors ul
     border-radius: 5px;
 }
 
-#schema-toolbar a:hover
+#schema-toolbar a:hover, .button:hover
 {
 /*    border-color: black; */
     background-color: #e7f4f9;
 }
 
-#schema-toolbar a.save-schema
+#SchemaEditor .save-schema
 {
     background-image: url("disk-black.png");
 }
-#schema-toolbar a.add-property
+#SchemaEditor .add-property
 {
     background-image: url("property.png");
 }
-#schema-toolbar a.add-collection
-{
-    background-image: url("plus.png");
-}
-#schema-toolbar a.remove-collection
-{
-    background-image: url("minus.png");
-}
-#schema-toolbar a.add-field
+#SchemaEditor .add-field
 {
     background-image: url("document--plus.png");
 }
-#schema-toolbar a.remove-field
+#SchemaEditor .remove-field
 {
     background-image: url("document--minus.png");
 }
-#schema-toolbar a.add-alias
+#SchemaEditor .add-group
+{
+    background-image: url("report--plus.png");
+}
+#SchemaEditor .remove-group
+{
+    background-image: url("report--minus.png");
+}
+#SchemaEditor .add-index
+{
+    background-image: url("lightning--plus.png");
+}
+#SchemaEditor .remove-index
+{
+    background-image: url("lightning--minus.png");
+}
+#SchemaEditor .add-alias
 {
     background-image: url("sticky-note--plus.png");
 }
-#schema-toolbar a.remove-alias
+#SchemaEditor .remove-alias
 {
     background-image: url("sticky-note--minus.png");
+}
+#SchemaEditor .add-analyzer
+{
+    background-image: url("gear--plus.png");
 }
 
 /* évite que tout le tree bouge quand fait un hover sur le plus long des libellés */

@@ -5,8 +5,16 @@
  * Il utilise le composant jsTree : http://www.jstree.com/
  */
 (function ($) {
-    $.fn.schemaEditor = function (schema, config) {
+    $.fn.schemaEditor = function (config) {
 
+        var widgetList = {
+            'textbox': 'Textbox (zone de texte sur une seule ligne)', 
+            'textarea': 'TextArea (zone de texte sur plusieurs lignes)', 
+            'checklist': 'CheckList (liste de cases à cocher)', 
+            'radiolist': 'RadioList (liste de boutons radio)', 
+            'select': 'Select (menu déroulant)' 
+        };
+        
         /**
          * Définition des différents types de noeuds présent dans le schéma / dans l'arbre.
          * 
@@ -22,48 +30,100 @@
          */
         var types = {
             Schema : {
-                valid_children : [ 'Collection' ],
+                valid_children : ['Fields', 'Indices', 'Aliases'],
                 defaults : {
-                    version: null,
+                    format: null,
                     label: "",
                     description: "",
                     stopwords: "",
                     indexstopwords: true,
                     creation: null,
-                    lastupdate: null
+                    lastupdate: null,
+                    version: "1",
+                    document: '\\Fooltext\\Document\\Document',
+                    docid: '',
+                    notes:''
                 },
                 form_title : 'Propriétés du schéma',
-                toolbar : [ buttonSave, buttonAddCollection, buttonAddProperty ]
+                toolbar : [buttonSave, buttonAddProperty]
             },
-            Collection : {
-                valid_children : ['Field', 'Alias'], // ['Fields', 'Aliases'],
+            Fields : {
+                valid_children : ['Field', 'Group'],
                 defaults : {},
-                form_title : 'Collection <em>%1</em>',
-                toolbar : [ buttonSave, buttonAddProperty, buttonAddField, buttonAddAlias, buttonAddCollection,
-                        buttonRemoveCollection ]
+                form_title : 'Liste des champs du schéma',
+                toolbar : [buttonSave, buttonAddField, buttonAddGroup]
             },
             Field : {
                 valid_children : [],
                 defaults : {
-                    '_id' : null,
-                    'name' : '',
-                    'type' : [ 'text', 'bool', 'int', 'autonumber' ],
-                    '_type' : null,
-                    'label' : '',
-                    'description' : '',
-                    'widget' : [ 'textbox', 'textarea', 'checklist', 'radiolist', 'select' ],
-                    'datasource' : '', // array('pays','langues','typdocs'),
-                    'analyzer' : analyzerWidget, // array('DefaultMapper', 'HtmlMapper'),
-                    'weight' : 1,
+                    name: 'Nouveau champ',
+                    type: [ 'text', 'int', 'autonumber', 'bool', 'date'],
+                    repeatable: false,
+                    label: '',
+                    description: '',
+                    widget: widgetList,
+                    datasource: '',
+                    notes: '',
+                    _id: null
                 },
-                form_title : 'Champ %1',
-                toolbar : [ buttonSave, buttonAddProperty, buttonAddField, buttonAddAlias, buttonRemoveField,  ]
+                form_title : 'Propriétés du champ %1',
+                toolbar : [buttonSave, buttonAddField, buttonAddGroup, buttonAddProperty, buttonRemoveField]
+            },
+            Group : {
+                valid_children : ['Field'],
+                defaults : {
+                    name : 'Nouveau groupe de champs',
+                    repeatable: false,
+                    label : '',
+                    description : '',
+                    notes: '',
+                    _id : null
+                },
+                form_title : 'Propriétés du groupe de champs %1',
+                toolbar : [buttonSave, buttonAddField, buttonAddGroup, buttonAddProperty, buttonRemoveGroup]
+            },
+            Indices : {
+                valid_children : ['Index'],
+                defaults : {
+                },
+                form_title : 'Liste des index du schéma',
+                toolbar : [buttonSave, buttonAddIndex]
+            },
+            Index : {
+                valid_children : [],
+                defaults : {
+                    name: 'Nouvel index',
+                    label: '',
+                    description: '',
+                    analyzer: analyzerWidget,
+                    weight: 1,
+                    widget: widgetList,
+                    datasource: '',
+                    notes: '',
+                    fields: fieldsWidget,
+                    _id: null,
+                    _slot: null
+                },
+                form_title : "Propriétés de l'index %1",
+                toolbar : [buttonSave, buttonAddIndex, buttonAddProperty, buttonRemoveIndex]
+            },
+            Aliases : {
+                valid_children : ['Alias'],
+                defaults : {},
+                form_title : 'Liste des alias du schéma',
+                toolbar : [buttonSave, buttonAddAlias]
             },
             Alias : {
                 valid_children : [],
-                defaults : {},
-                form_title : "Alias %1",
-                toolbar : [ buttonSave, buttonAddProperty, buttonAddField, buttonAddAlias, buttonRemoveAlias,  ]
+                defaults : {
+                    name: 'Nouvel Alias',
+                    label: '',
+                    description: '',
+                    notes: '',
+                    indices: indicesWidget
+                },
+                form_title : "Propriétés de l'alias %1",
+                toolbar : [buttonSave, buttonAddAlias, buttonAddProperty, buttonRemoveAlias]
             },
         };
         
@@ -91,7 +151,7 @@
             },
 
             core: {
-                initially_open : ["#root", "#collection"],
+                initially_open : ["#root", "#fields", "#indices", "#aliases"],
                 strings: {
                     loading : "Chargement en cours...", 
                     new_node : "Entrez un nom", 
@@ -192,7 +252,7 @@
         /**
          * Expression régulière utilisée pour masquer certaines propriétés.
          */
-        var hiddenProperties = /_stopwords|_type/; // /^_/;
+        var hiddenProperties = /format|_stopwords|_type/; // /^_/;
 
         /**
          * Crée le composant jstree qui représente la hiérarchie du schéma
@@ -227,10 +287,12 @@
             var properties = node.data('properties');
 
             // Crée la barre d'outils
+            setTitle(node);
             loadToolbar(node);
 
             // Ajoute toutes les propriétés du noeud dans le formulaire
             var form=$('#form table tbody').empty();
+            var nbProps = 0;
             for(var name in properties) {
                 var addAutoheight = false;
 
@@ -271,7 +333,13 @@
                     ctl = $('<select />');
                     for (var i in def) {
                         var option = $('<option />').text(def[i]);
-                        if (properties[name] == def[i]) option.attr('selected', true);
+                        if (isNaN(parseInt(i))) {
+                            option.attr('value', i);
+                            if (properties[name] == i) option.attr('selected', true);
+                        } else {
+                            if (properties[name] == def[i]) option.attr('selected', true);
+                        }
+                    
                         ctl.append(option);
                     }
                 }
@@ -321,11 +389,19 @@
                 var td=$('<td />').append(ctl);
                 var tr=$('<tr />').append(th).append(td);
                 form.append(tr);
-
+                ++nbProps;
+                
                 // Ajoute l'autoheight
                 if (addAutoheight) {
                     ctl.addClass('autoheight').change(autoheight).keyup(autoheight).keydown(autoheight).trigger('change');
                 }
+            }
+            if (nbProps === 0) {
+                $('#form table').hide();
+                $("<p id='noprops'>Cet élément n'a pas de propriétés.</p>").insertBefore('#form table');
+            } else {
+                $('#form table').show();
+                $('#noprops').remove();
             }
             
             // au moment où le contrôle est ajouté dans le formulaire, le navigateur n'a pas encore fait 
@@ -339,32 +415,48 @@
             window.setTimeout(function() {
                 $('.rename').change(function() {
                     var node = tree.get_selected()[0];
+                    var type = tree._get_type(node);
                     var oldname = tree.get_text(node);
                     var newname = $(this).val();
-                    if (oldname === newname) return;
+                    
+                    if (oldname === newname) {
+                        return;
+                    }
 
                     tree.rename_node(node, newname);
-
-                    // recherche tous les types de noeuds qui ont une référence vers 
-                    // ce noeud
-                    for (var i in types) {
-                        for (var name in types[i].defaults) {
-                            var value = types[i].defaults[name];
-                            if (value === '@' + type) {
-                                $('li[rel=' + i +']').each(function() {
-                                     if ($(this).data(name) === oldname) {
-                                        $(this).data(name, newname);
-                                        if (name === 'name') {
-                                            console.log ('+ modif dans le tree');
-                                            tree.rename_node(this, newname);
-                                        }
-                                     }
-                                });
+                    
+                    var selector, prop;
+                    if (type === 'Field') { // on a renommé un champ, il faut mettre à jour les index
+                        selector = 'li[rel=Index]';
+                        prop = 'fields';
+                    } else if (type === 'Index') { // on a renommé un index, il faut mettre à jour les alias
+                        selector = 'li[rel=Alias]';
+                        prop = 'indices';
+                    } else {
+                        return;
+                    }
+                    
+                    $(selector).each(function() {
+                        var data = $(this).data('properties');
+                        var fields = data[prop];
+                        for (var i in fields){
+                            if (fields[i] === oldname) {
+                                fields[i] = newname;
                             }
                         }
-                    };
+                        $(this).data('properties', data);
+                   });
                 });
             }, 2);
+        }
+        
+        function setTitle(node)
+        {
+            var type = $(node).attr('rel');
+            var title = types[type].form_title + ' :';
+            var name = tree.get_text(node);
+            
+            $('#form-title').text(title.format(name));
         }
 
         /**
@@ -398,91 +490,73 @@
 
         // Générateurs de boutons
         function buttonSave(toolbar, node) {
-            toolbar.add('save-schema', 'Enregistrer', saveSchema);
+            toolbar.add('save-schema', 'Enregistrer le schéma...', saveSchema);
         }
 
         function buttonAddProperty(toolbar, node) {
-            toolbar.add('add-property', 'Nouvelle propriété', addProperty);
-        }
-
-        function buttonAddCollection(toolbar, node) {
-            var position = (tree._get_type(node) === 'Collection') ? "after" : 'last';
-            toolbar.add('add-collection', 'Nouvelle collection', function() {
-                addNode(node, 'Collection', position)
-            });
-        }
-
-        function buttonRemoveCollection(toolbar, node) {
-            toolbar.add('remove-collection', 'Supprimer la collection', function() {
-                removeNode(node)
-            });
+            toolbar.add('add-property', 'Nouvelle propriété...', addProperty);
         }
 
         function buttonAddField(toolbar, node) {
-            var position;
-            
-            switch (tree._get_type(node)) {
-                case 'Collection': // on insère avant le premier alias, ou à la fin si pas d'alias
-                    var children = tree._get_children(node);
-                    var n = children.filter('[rel=Alias]:first');
-                    if (n.length) {
-                        position = 'before';
-                        node = n;
-                    } else {
-                        position = 'last';
-                    }
-                    break;
-                    
-                case 'Field': // On insèe après le champ actuel
-                    position = 'after';
-                    break;
-                    
-                case 'Alias': // on insère le champ avant le premier alias trouvé
-                    var n = tree._get_prev(node, true);
-                    position = 'before';
-                    while (n && tree._get_type(n) === 'Alias') {
-                        node = n;
-                        n = tree._get_prev(node, true);
-                    }
-                    break;
-            }
-
+            // Fields:last, Field:after, Group:last, Field (dans un groupe):after
+            var position = (tree._get_type(node) === 'Field') ? "after" : 'last';
             toolbar.add('add-field', 'Nouveau champ', function() {
                 addNode(node, 'Field', position)
             });
         }
-
+        
         function buttonRemoveField(toolbar, node) {
-            toolbar.add('remove-field', 'Supprimer le champ', function() {
+            toolbar.add('remove-field', 'Supprimer le champ...', function() {
+                removeNode(node)
+            });
+        }
+
+        function buttonAddGroup(toolbar, node) {
+            var type = tree._get_type(node);
+            var parent = tree._get_parent(node);
+            var position;
+            
+            if (type === 'Field' && tree._get_type(parent) === 'Group') {
+                node = parent;
+                position = 'after';
+            }
+            else {
+                position = (type === 'Fields') ? 'last' : 'after';
+            }
+            
+            toolbar.add('add-group', 'Nouveau groupe', function() {
+                addNode(node, 'Group', position)
+            });
+        }
+
+        function buttonRemoveGroup(toolbar, node) {
+            toolbar.add('remove-group', 'Supprimer le groupe...', function() {
+                removeNode(node)
+            });
+        }
+        
+        function buttonAddIndex(toolbar, node) {
+            var position = (tree._get_type(node) === 'Index') ? "after" : 'last';
+            toolbar.add('add-index', 'Nouvel index', function() {
+                addNode(node, 'Index', position)
+            });
+        }
+
+        function buttonRemoveIndex(toolbar, node) {
+            toolbar.add('remove-index', "Supprimer l'index...", function() {
                 removeNode(node)
             });
         }
 
         function buttonAddAlias(toolbar, node) {
-            var position;
-            
-            switch (tree._get_type(node)) {
-                case 'Collection':
-                    position = 'last';
-                    break;
-
-                case 'Field':
-                    node = tree._get_parent(node);
-                    position = 'last';
-                    break;
-
-                case 'Alias':
-                    position = 'after';
-                    break;
-            }
-
+            var position = (tree._get_type(node) === 'Alias') ? "after" : 'last';
             toolbar.add('add-alias', 'Nouvel alias', function() {
                 addNode(node, 'Alias', position)
             });
         }
 
         function buttonRemoveAlias(toolbar, node) {
-            toolbar.add('remove-alias', "Supprimer l'alias", function() {
+            toolbar.add('remove-alias', "Supprimer l'alias...", function() {
                 removeNode(node)
             });
         }
@@ -545,33 +619,30 @@
             }
         }
 
+        function saveChildren(node) {
+            var result = [];
+            tree._get_children(node).each(function(){
+                var data = $(this).data('properties');
+                if ('Group' === $(this).attr('rel')) {
+                    data.fields = saveChildren(this);
+                }
+                result.push(data);
+            });
+            return result;
+        }
+        
         function saveSchema() {
             tree.deselect_all(); // force la sauvegarde du noeud en cours
             
-            // Propriétés du schéma
-            var save = $('#root').data('properties');
-            save.collections = [];
-            
-            // Sauvegarde de chacune des collections
-            $(tree._get_children('#root')).each(function(){
-                var collection = $(this).data('properties');
-                collection.fields = [];
-                collection.aliases = [];
-                save.collections.push(collection);
-                
-                // Sauvegarde des champs et des alias de la collection
-                $(tree._get_children(this)).each(function(){
-                    var type = tree._get_type(this);
-                    if (type === 'Field') {
-                        collection.fields.push($(this).data('properties'));
-                    } else if (type === 'Alias') {
-                        collection.aliases.push($(this).data('properties'));
-                    } else alert('Type non géré : ' + type);
-                });
-            });
+            var schema = $('#root').data('properties');
+            schema.fields = saveChildren('#fields');
+            schema.indices = saveChildren('#indices');
+            schema.aliases = saveChildren('#aliases');
+
+            console.log(schema);
 
             var form = $('#saveform');
-            $('textarea', form).val($.toJSON(save));
+            $('textarea', form).val($.toJSON(schema));
             
             jQuery.ajax({
                 type: 'POST',
@@ -622,14 +693,123 @@
             return false;
         }
 
+        function fieldsWidget(op, name, values) {
+            if (op === 'load') {
+                var div = $('<div />');
+                for (var i = 0; i < values.length; i++) {
+                    createSelectForFields(i < values.length ? values[i] : '').appendTo(div);
+                }
+
+                $('<a class="button add-field">Ajouter un champ</a>').appendTo(div).click(function() {
+                    createSelectForFields('').insertBefore(this);
+                    return false;
+                });
+
+                return div;
+            }
+            else if(op === 'save') {
+                var values = [];
+                $('.chooseField').each(function() {
+                    var value = $(this).val();
+                    if (value !== '') values.push(value);
+                });
+                return values;
+            }
+        }
+        
+        function createSelectForFields(value)
+        {
+            var select = $ ('<select />').addClass('chooseField');
+            
+            var option = $('<option />').attr('value', '').text('...').appendTo(select);
+            if (value === '') option.attr('selected', 'selected');
+
+            $(tree._get_children('#fields')).each(function(){
+                var type = tree._get_type(this);
+                var node = $(this).data('properties');
+           
+                if (type==='Field') {
+                    var option = $('<option />').text(node.name).attr('title', node.label).appendTo(select);
+                    if (node.name.toLowerCase() === value.toLowerCase()) {
+                        option.attr('selected', 'selected');
+                    }
+                }
+                else { // groupe
+                    var group = $('<optgroup />')
+                        .attr('label', node.name)
+                        .attr('title', node.label)
+                        .appendTo(select);
+                    
+                    $(tree._get_children(this)).each(function(){
+                        var child = $(this).data('properties');
+                        var childName = node.name + '.' + child.name;
+                        var option = $('<option />')
+                            .text(childName)
+                            .attr('value', childName)
+                            .attr('title', child.label)
+                            .appendTo(group);
+                        
+                        if (childName.toLowerCase() === value.toLowerCase()) {
+                            option.attr('selected', 'selected');
+                        }
+                    });
+                }
+            });
+
+            return select;
+        }
+
+        function indicesWidget(op, name, values) {
+            if (op === 'load') {
+                var div = $('<div />');
+                for (var i = 0; i < values.length; i++) {
+                    createSelectForIndices(i < values.length ? values[i] : '').appendTo(div);
+                }
+
+                $('<a class="button add-index">Ajouter un index</a>').appendTo(div).click(function() {
+                    createSelectForIndices('').insertBefore(this);
+                    return false;
+                });
+
+                return div;
+            }
+            else if(op === 'save') {
+                var values = [];
+                $('.chooseIndex').each(function() {
+                    var value = $(this).val();
+                    if (value !== '') values.push(value);
+                });
+                return values;
+            }
+        }
+
+        function createSelectForIndices(value)
+        {
+            var select = $ ('<select />').addClass('chooseIndex');
+            
+            var option = $('<option />').attr('value', '').text('...').appendTo(select);
+            if (value === '') option.attr('selected', 'selected');
+
+            $(tree._get_children('#indices')).each(function(){
+                var node = $(this).data('properties');
+                
+                var option = $('<option />').text(node.name).attr('title', node.label).appendTo(select);
+                if (node.name.toLowerCase() === value.toLowerCase()) {
+                    option.attr('selected', 'selected');
+                }
+            });
+
+            return select;
+        }
+        
         function analyzerWidget(op, name, values) {
             if (op === 'load') {
                 var div = $('<div />');
                 for (var i = 0; i < values.length; i++) {
-                    createSelectForAnalyzers(i < values.length ? values[i] : '').appendTo(div);//.trigger('change');
+                    createSelectForAnalyzers(i < values.length ? values[i] : '').appendTo(div);
                 }
 
-                $('<button>+</button>').appendTo(div).click(function() {
+                $('<a class="button add-index">Ajouter un analyseur</a>').appendTo(div).click(function() {
                     createSelectForAnalyzers('').insertBefore(this);
                     return false;
                 });
@@ -657,7 +837,7 @@
                 var group = $('<optgroup />').attr('label', item.label).appendTo(select);
                 $(item.items).each(function(index, item){
                     var option = $('<option />').attr('value', item.class).text(item.name).attr('title', item.doc).appendTo(group);
-                    if (item.class === value) {
+                    if (item.class.toLowerCase() === value.toLowerCase()) {
                         option.attr('selected', 'selected');
                     }
                 });
