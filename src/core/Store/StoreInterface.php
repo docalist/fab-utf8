@@ -13,7 +13,6 @@
 namespace Fab\Store;
 
 use Fab\Schema\Schema;
-use Fab\Query\Query;
 use Fab\Store\SearchRequest;
 
 /**
