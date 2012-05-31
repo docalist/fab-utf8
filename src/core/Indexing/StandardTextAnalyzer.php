@@ -1,24 +1,24 @@
 <?php
 /**
- * This file is part of the Fooltext package.
+ * This file is part of the Fab package.
  *
  * For copyright and license information, please view the
  * LICENSE.txt file that was distributed with this source code.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Indexing
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id$
  */
-namespace Fooltext\Indexing;
+namespace Fab\Indexing;
 
 /**
  * Analyseur standard pour les champs texte (titre, résumé, etc.)
  *
  * Exécute dans l'ordre les analyseurs suivants :
- * - {@link \Fooltext\Indexing\Lowercase}
- * - {@link \Fooltext\Indexing\Phrase}
- * - {@link \Fooltext\Indexing\Spelling}
+ * - {@link \Fab\Indexing\Lowercase}
+ * - {@link \Fab\Indexing\Phrase}
+ * - {@link \Fab\Indexing\Spelling}
  */
 class StandardTextAnalyzer extends MetaAnalyzer
 {
@@ -26,9 +26,9 @@ class StandardTextAnalyzer extends MetaAnalyzer
     {
         parent::__construct(array
         (
-        	'Fooltext\Indexing\Lowercase',
-        	'Fooltext\Indexing\Phrases',
-        	'Fooltext\Indexing\Spellings'
+        	'Fab\Indexing\Lowercase',
+        	'Fab\Indexing\Phrases',
+        	'Fab\Indexing\Spellings'
         ));
     }
 }

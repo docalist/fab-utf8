@@ -1,16 +1,16 @@
 <?php
 /**
- * This file is part of the Fooltext package.
+ * This file is part of the Fab package.
  *
  * For copyright and license information, please view the
  * LICENSE.txt file that was distributed with this source code.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Indexing
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id$
  */
-namespace Fooltext\Indexing;
+namespace Fab\Indexing;
 
 /**
  * Supprime les mots vides présents dans les termes ou dans les postings.

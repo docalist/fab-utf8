@@ -1,26 +1,26 @@
 <?php
 /**
- * This file is part of the Fooltext package.
+ * This file is part of the Fab package.
  *
  * For copyright and license information, please view the
  * LICENSE.txt file that was distributed with this source code.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Indexing
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id$
  */
-namespace Fooltext\Indexing;
+namespace Fab\Indexing;
 
 /**
  * Analyseur standard pour les champs articles (typdoc, auteurs, motsclés...)
  *
  * Exécute dans l'ordre les analyseurs suivants :
- * - {@link \Fooltext\Indexing\Lookup}
- * - {@link \Fooltext\Indexing\Lowercase}
- * - {@link \Fooltext\Indexing\Phrases}
- * - {@link \Fooltext\Indexing\Keywords}
- * - {@link \Fooltext\Indexing\Countable}
+ * - {@link \Fab\Indexing\Lookup}
+ * - {@link \Fab\Indexing\Lowercase}
+ * - {@link \Fab\Indexing\Phrases}
+ * - {@link \Fab\Indexing\Keywords}
+ * - {@link \Fab\Indexing\Countable}
  */
 class StandardValuesAnalyzer extends MetaAnalyzer
 {
@@ -28,12 +28,12 @@ class StandardValuesAnalyzer extends MetaAnalyzer
     {
         parent::__construct(array
         (
-        	'Fooltext\Indexing\Lookup',
-        	'Fooltext\Indexing\Lowercase',
-        	'Fooltext\Indexing\Phrases',
-        	'Fooltext\Indexing\Spellings',
-        	'Fooltext\Indexing\Keywords',
-        	'Fooltext\Indexing\Countable'
+        	'Fab\Indexing\Lookup',
+        	'Fab\Indexing\Lowercase',
+        	'Fab\Indexing\Phrases',
+        	'Fab\Indexing\Spellings',
+        	'Fab\Indexing\Keywords',
+        	'Fab\Indexing\Countable'
         ));
     }
 }

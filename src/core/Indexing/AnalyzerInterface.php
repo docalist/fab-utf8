@@ -1,16 +1,16 @@
 <?php
 /**
- * This file is part of the Fooltext package.
+ * This file is part of the Fab package.
  *
  * For copyright and license information, please view the
  * LICENSE.txt file that was distributed with this source code.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Indexing
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id$
  */
-namespace Fooltext\Indexing;
+namespace Fab\Indexing;
 
 /**
  * Interface pour les analyseurs.
@@ -21,7 +21,7 @@ interface AnalyzerInterface
     /**
      * Analyse le contenu du champ.
      *
-     * @param \Fooltext\Indexing\AnalyzerData $data structure contenant
+     * @param \Fab\Indexing\AnalyzerData $data structure contenant
      * le champ à analyser et dans laquelle les analyseurs stockent les
      * termes qu'ils produisent.
      */

@@ -1,18 +1,18 @@
 <?php
 /**
- * This file is part of the Fooltext package.
+ * This file is part of the Fab package.
  *
  * For copyright and license information, please view the
  * LICENSE.txt file that was distributed with this source code.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Indexing
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id$
  */
-namespace Fooltext\Indexing;
+namespace Fab\Indexing;
 
-use Fooltext\Indexing\AnalyzerInterface;
+use Fab\Indexing\AnalyzerInterface;
 
 /**
  * Indexe les mots du texte et stocke leur position pour permettre
@@ -26,8 +26,8 @@ use Fooltext\Indexing\AnalyzerInterface;
  *
  * Cet analyseur ne fonctionne que sur du texte préalablement convertit en
  * minuscules non accentuées : dans votre chaine d'analyse, vous devez au
- * préalable utiliser un analyseur tel que {@link \Fooltext\Indexing\Lowercase}
- * ou {@link \Fooltext\Indexing\StripTags}.
+ * préalable utiliser un analyseur tel que {@link \Fab\Indexing\Lowercase}
+ * ou {@link \Fab\Indexing\StripTags}.
  */
 class Phrases extends Words
 {
