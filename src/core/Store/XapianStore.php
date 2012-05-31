@@ -1,16 +1,16 @@
 <?php
 /**
- * This file is part of the Fooltext package.
+ * This file is part of the Fab package.
  *
  * For copyright and license information, please view the
  * LICENSE.txt file that was distributed with this source code.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Store
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id$
  */
-namespace Fooltext\Store;
+namespace Fab\Store;
 
 use Fab\Indexing\AnalyzerData;
 
@@ -22,7 +22,7 @@ use Fab\Schema\Group;
 use Fab\Schema\Index;
 use Fab\Schema\Exception\NotFound;
 
-use Fooltext\Store\SearchRequest;
+use Fab\Store\SearchRequest;
 use \XapianQueryParser;
 use \XapianSimpleStopper;
 
@@ -207,7 +207,7 @@ class XapianStore implements StoreInterface
     /*
 
     ID global attribué par xapian (int)
-    ID attribué par fooltext (lettre + int)
+    ID attribué par Fab (lettre + int)
     ID popre à une collection (int)
 
     */
