@@ -1,5 +1,5 @@
 <?php
-namespace Fooltext\Document;
+namespace Fab\Document;
 
 use Fab\Schema\Field;
 

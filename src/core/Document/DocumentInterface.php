@@ -10,7 +10,7 @@
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id: AnalyzerInterface.php 10 2011-12-13 15:45:47Z daniel.menard.35@gmail.com $
  */
-namespace Fooltext\Document;
+namespace Fab\Document;
 
 /**
  * Interface de base pour représenter un document.
