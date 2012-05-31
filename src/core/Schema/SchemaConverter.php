@@ -1,16 +1,16 @@
 <?php
 /**
- * This file is part of the Fooltext package.
+ * This file is part of the Fab package.
  *
  * For copyright and license information, please view the
  * LICENSE.txt file that was distributed with this source code.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Schema
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id$
  */
-namespace Fooltext\Schema;
+namespace Fab\Schema;
 
 use DOMElement;
 
@@ -104,10 +104,10 @@ class SchemaConverter
     {
         $props = array
         (
-            'words' => 'Fooltext\\Indexing\\Words',
-            'phrases' => 'Fooltext\\Indexing\\Phrases',
-            'values' => 'Fooltext\\Indexing\\Keywords',
-            'count' => 'Fooltext\\Indexing\\Countable',
+            'words' => 'Fab\\Indexing\\Words',
+            'phrases' => 'Fab\\Indexing\\Phrases',
+            'values' => 'Fab\\Indexing\\Keywords',
+            'count' => 'Fab\\Indexing\\Countable',
         );
 
         foreach($data as $oldindex)
@@ -153,13 +153,13 @@ class SchemaConverter
             $analyzer = array();
             foreach($t as $prop=>$nu)
             {
-                if (empty($analyzer)) $analyzer[] = 'Fooltext\\Indexing\\Lowercase';
+                if (empty($analyzer)) $analyzer[] = 'Fab\\Indexing\\Lowercase';
                 $analyzer[] = $props[$prop];
             }
 
-            if (! $defaultstopwords) $analyzer[] = 'Fooltext\\Indexing\\RemoveStopwords';
+            if (! $defaultstopwords) $analyzer[] = 'Fab\\Indexing\\RemoveStopwords';
 
-            if (isset($oldindex['spelling'])) $analyzer[] = 'Fooltext\\Indexing\\Spellings';
+            if (isset($oldindex['spelling'])) $analyzer[] = 'Fab\\Indexing\\Spellings';
 
             $index->analyzer = $analyzer;
 

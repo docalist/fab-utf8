@@ -1,16 +1,16 @@
 <?php
 /**
- * This file is part of the Fooltext package.
+ * This file is part of the Fab package.
  *
  * For copyright and license information, please view the
  * LICENSE.txt file that was distributed with this source code.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Schema
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id$
  */
-namespace Fooltext\Schema;
+namespace Fab\Schema;
 
 /**
  * Une liste de noms de champs.
@@ -18,7 +18,7 @@ namespace Fooltext\Schema;
  * Cette classe est utilisée par {@link Index::$fields} pour stocker
  * la liste des champs qui composent l'index.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Schema
  */
 class FieldNames extends NodeNames

@@ -1,16 +1,16 @@
 <?php
 /**
- * This file is part of the Fooltext package.
+ * This file is part of the Fab package.
  *
  * For copyright and license information, please view the
  * LICENSE.txt file that was distributed with this source code.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Schema
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id$
  */
-namespace Fooltext\Schema;
+namespace Fab\Schema;
 
 /**
  * Un groupe de champ (champ structuré).
@@ -22,7 +22,7 @@ namespace Fooltext\Schema;
  * @property string $description Description du groupe.
  * @property string $notes Notes et remarques internes.
  *
- * @property-read Fooltext\Schema\Fields $fields Liste des champs qui composent ce groupe.
+ * @property-read Fab\Schema\Fields $fields Liste des champs qui composent ce groupe.
  */
 class Group extends Field
 {
@@ -48,6 +48,6 @@ class Group extends Field
      */
     protected static $nodes = array
     (
-    	'fields' => 'Fooltext\\Schema\\Fields',
+    	'fields' => 'Fab\\Schema\\Fields',
     );
 }

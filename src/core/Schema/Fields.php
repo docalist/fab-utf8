@@ -1,28 +1,28 @@
 <?php
 /**
- * This file is part of the Fooltext package.
+ * This file is part of the Fab package.
  *
  * For copyright and license information, please view the
  * LICENSE.txt file that was distributed with this source code.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Schema
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id$
  */
-namespace Fooltext\Schema;
+namespace Fab\Schema;
 
 /**
  * Liste des champs définis dans une collection.
  *
  * C'est une collection d'objets {@link Field}.
  */
-use Fooltext\Schema\Field;
-use Fooltext\Schema\Group;
+use Fab\Schema\Field;
+use Fab\Schema\Group;
 
 class Fields extends Nodes
 {
-    protected static $class = 'Fooltext\\Schema\\Field';
+    protected static $class = 'Fab\\Schema\\Field';
     protected static $initialID = 'a';
 
     public function add($child)

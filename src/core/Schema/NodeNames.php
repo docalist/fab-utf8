@@ -1,24 +1,24 @@
 <?php
 /**
- * This file is part of the Fooltext package.
+ * This file is part of the Fab package.
  *
  * For copyright and license information, please view the
  * LICENSE.txt file that was distributed with this source code.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Schema
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id$
  */
-namespace Fooltext\Schema;
+namespace Fab\Schema;
 
-use Fooltext\Schema\Exception\NotFound;
+use Fab\Schema\Exception\NotFound;
 
 /**
  * Classe abstraite représentant une liste de noms de noeuds
  * (liste de noms de champ pour un index, liste d'index pour un alias).
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Schema
  */
 abstract class NodeNames extends BaseNode

@@ -1,16 +1,16 @@
 <?php
 /**
- * This file is part of the Fooltext package.
+ * This file is part of the Fab package.
  *
  * For copyright and license information, please view the
  * LICENSE.txt file that was distributed with this source code.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Schema
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id$
  */
-namespace Fooltext\Schema;
+namespace Fab\Schema;
 
 use DOMDocument;
 use SimpleXmlElement;
@@ -33,9 +33,9 @@ use XMLWriter;
  * @property string $notes Notes et remarques internes.
  * @property string $defaultindex Nom de l'index par défaut.
  *
- * @property-read Fooltext\Schema\Fields $fields Liste des champs du schéma.
- * @property-read Fooltext\Schema\Indices $indices Liste des index du schéma.
- * @property-read Fooltext\Schema\Aliases $aliases Liste des alias du schéma.
+ * @property-read Fab\Schema\Fields $fields Liste des champs du schéma.
+ * @property-read Fab\Schema\Indices $indices Liste des index du schéma.
+ * @property-read Fab\Schema\Aliases $aliases Liste des alias du schéma.
  */
 class Schema extends Node
 {
@@ -54,7 +54,7 @@ class Schema extends Node
         'creation' => '',
         'lastupdate' => '',
         'version' => '1',
-        'document' => '\\Fooltext\\Document\\Document',
+        'document' => '\\Fab\\Document\\Document',
         'docid' => '',
         'notes' => '',
         'defaultindex' => '',
@@ -67,9 +67,9 @@ class Schema extends Node
      */
     protected static $nodes = array
     (
-    	'fields' => 'Fooltext\\Schema\\Fields',
-    	'indices' => 'Fooltext\\Schema\\Indices',
-        'aliases' => 'Fooltext\\Schema\\Aliases',
+    	'fields' => 'Fab\\Schema\\Fields',
+    	'indices' => 'Fab\\Schema\\Indices',
+        'aliases' => 'Fab\\Schema\\Aliases',
     );
 
     /**

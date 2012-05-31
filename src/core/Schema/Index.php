@@ -1,16 +1,16 @@
 <?php
 /**
- * This file is part of the Fooltext package.
+ * This file is part of the Fab package.
  *
  * For copyright and license information, please view the
  * LICENSE.txt file that was distributed with this source code.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Schema
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id$
  */
-namespace Fooltext\Schema;
+namespace Fab\Schema;
 
 /**
  * Un index du schéma.
@@ -25,7 +25,7 @@ namespace Fooltext\Schema;
  * @property string $datasource Table utilisée pour les widgets comme radiolist, checklist ou select.
  * @property string $notes Notes et remarques internes.
  * @property string $_field Nom du champ principal si l'index porte sur des sous-zones, vide sinon.
- * @property-read Fooltext\Schema\FieldNames $fields Liste des champs de cet index.
+ * @property-read Fab\Schema\FieldNames $fields Liste des champs de cet index.
  * @property int $_slot Numéro du slot utilisé pour stocker les attributs (clés de tri...) de cet index.
  */
 class Index extends Node
@@ -47,7 +47,7 @@ class Index extends Node
 
     protected static $nodes = array
     (
-        'fields' => 'Fooltext\\Schema\\FieldNames',
+        'fields' => 'Fab\\Schema\\FieldNames',
     );
 
     protected static $ignore = array('_field' => true);
@@ -58,13 +58,13 @@ class Index extends Node
      * Vérifie que les analyseurs indiqués existent et stocke le résultat sous
      * forme de tableau. Le nom de classe d'un analyseur peut être indiqué avec ou
      * sans namespace. Si aucune namespace ne figure dans le nom de la classe, la
-     * méthode ajoute le namespace Fooltext\Indexing\.
+     * méthode ajoute le namespace Fab\Indexing\.
      *
      * @param string|array $value le nom de l'analyseur (ou un tableau d'analyseurs)
      * à utiliser pour ce champ.
      *
      * @throws \Exception Si l'analyseur indiqué n'existe pas ou s'il n'implémente
-     * pas l'interface {@link Fooltext\Indexing\AnalyzerInterface}.
+     * pas l'interface {@link Fab\Indexing\AnalyzerInterface}.
      */
     public function setAnalyzer($value)
     {
@@ -77,7 +77,7 @@ class Index extends Node
         {
             if (false === strpos($analyzer, '\\'))
             {
-                $analyzer = 'Fooltext\\Indexing\\' . $analyzer;
+                $analyzer = 'Fab\\Indexing\\' . $analyzer;
             }
 
             if (! class_exists($analyzer))

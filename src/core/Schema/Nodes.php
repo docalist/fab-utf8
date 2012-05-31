@@ -1,18 +1,18 @@
 <?php
 /**
- * This file is part of the Fooltext package.
+ * This file is part of the Fab package.
  *
  * For copyright and license information, please view the
  * LICENSE.txt file that was distributed with this source code.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Schema
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id$
  */
-namespace Fooltext\Schema;
+namespace Fab\Schema;
 
-use Fooltext\Schema\Exception\NotFound;
+use Fab\Schema\Exception\NotFound;
 
 /**
  * Classe abstraite représentant une collection de noeuds.
@@ -23,7 +23,7 @@ use Fooltext\Schema\Exception\NotFound;
  * La collection se charge d'attribuer un ID aux objets qui sont
  * ajoutés et stocke le dernier ID utilisé.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Schema
  */
 abstract class Nodes extends BaseNode

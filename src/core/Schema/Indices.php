@@ -1,16 +1,16 @@
 <?php
 /**
- * This file is part of the Fooltext package.
+ * This file is part of the Fab package.
  *
  * For copyright and license information, please view the
  * LICENSE.txt file that was distributed with this source code.
  *
- * @package     Fooltext
+ * @package     Fab
  * @subpackage  Schema
  * @author      Daniel Ménard <Daniel.Menard@laposte.net>
  * @version     SVN: $Id$
  */
-namespace Fooltext\Schema;
+namespace Fab\Schema;
 
 /**
  * Liste des index définis dans une collection.
@@ -19,6 +19,6 @@ namespace Fooltext\Schema;
  */
 class Indices extends Nodes
 {
-    protected static $class = 'Fooltext\\Schema\\Index';
+    protected static $class = 'Fab\\Schema\\Index';
     protected static $initialID = 'A';
 }
