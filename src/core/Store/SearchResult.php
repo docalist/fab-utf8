@@ -13,7 +13,7 @@
 namespace Fab\Store;
 
 use \Iterator;
-use Fooltext\Document\Document;
+use Fab\Document\Document;
 use Fab\Schema\Schema;
 use Fab\Schema\Fields;
 

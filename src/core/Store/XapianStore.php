@@ -14,7 +14,7 @@ namespace Fab\Store;
 
 use Fab\Indexing\AnalyzerData;
 
-use Fooltext\Document\Document;
+use Fab\Document\Document;
 use Fab\Schema\Schema;
 use Fab\Schema\FieldNames;
 use Fab\Schema\Field;

@@ -12,7 +12,7 @@
  */
 namespace Fab\Store;
 
-use Fooltext\Document\Document;
+use Fab\Document\Document;
 
 use \XapianQueryParser;
 use \XapianQuery;
